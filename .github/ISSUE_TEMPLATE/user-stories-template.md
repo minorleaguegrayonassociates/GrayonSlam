@@ -15,21 +15,17 @@
 <p>
 <h3>Tasks:</h3>
 <ol>
-<!-- <li>
-Put each bullet point within <li> [info goes here] </li>
-</li> -->
+<!-- Put each bullet point within <li> [info goes here] </li> -->
 </ol>
 </p>
 <p>
 <h3>Tests:</h3>
 <ol>
-<!-- <li>
-Put each bullet point within <li> [info goes here] </li>
-</li> -->
+<!-- Put each bullet point within <li> [info goes here] </li> -->
 </ol>
 </p>
 <p>
 <h3>Definition of Done:</h3>
-<!-- input -->
+<!-- Definition of Done goes here -->
 </p>
 
