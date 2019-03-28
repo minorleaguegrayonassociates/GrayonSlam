@@ -1,22 +1,35 @@
----
-name: User Stories template
-about: The purpose of this template is to help make a description of a software feature
-  from an end-user perspective.
-title: ''
-labels: ''
-assignees: ''
+<p>
+    <h3>Description: </h3>
+<!-- Description goes here -->
+</p>
+<p>
+    <h3>Assumptions:</h3>
+        <ul>
+		<!--- Put each bullet point within <li> [info goes here] </li> -->
+		</ul>
+</p>
+<p>
+<h3>Priority: </h3> 
+<ul><li>?</li></ul>
+</p>
+<p>
+<h3>Tasks:</h3>
+<ol>
+<!-- <li>
+Put each bullet point within <li> [info goes here] </li>
+</li> -->
+</ol>
+</p>
+<p>
+<h3>Tests:</h3>
+<ol>
+<!-- <li>
+Put each bullet point within <li> [info goes here] </li>
+</li> -->
+</ol>
+</p>
+<p>
+<h3>Definition of Done:</h3>
+<!-- input -->
+</p>
 
----
-
-As a (someone), I want to be able to (do something).
-
-### Tasks:
-* 
-
-### Tests:
-* 
-
-### Definition of done:
-* 
-
-**Priority:** (Highest/High/Medium/Low/Lowest)
