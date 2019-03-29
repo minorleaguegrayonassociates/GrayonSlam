@@ -11,8 +11,7 @@ assignees: ''
 
 ### Assumptions:
 
-### Priority:  
-
+### Estimate:
 * ?
 
 ### Tasks:
