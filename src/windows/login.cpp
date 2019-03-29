@@ -289,7 +289,7 @@ void Login::registration(QString usernameInput, QString passwordInput, QString p
     }
 
     //Write credentials to the end of file
-    qin << hashString(usernameInput) << endl
+    qin << usernameInput << endl
         << hashString(passwordInput) << endl
         << "user" << endl;
 
