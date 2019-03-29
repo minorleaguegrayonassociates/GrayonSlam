@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../res.qrc">
-    <normaloff>:/res/fff128.png</normaloff>:/res/fff128.png</iconset>
+    <normaloff>:/res/Minor_League_Grayons_With_Arms.png</normaloff>:/res/Minor_League_Grayons_With_Arms.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
@@ -33,7 +33,7 @@
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap resource="../../res.qrc">:/res/fff128.png</pixmap>
+    <pixmap resource="../../res.qrc">:/res/Minor_League_Grayons_With_Arms.png</pixmap>
    </property>
   </widget>
   <widget class="QStackedWidget" name="stackedWidget">

@@ -57,7 +57,7 @@ public:
     void errorWindow() const
     {
         QMessageBox error(QMessageBox::Critical, "Error", m_msg);
-//        error.setWindowIcon(QIcon(":/res/fff128.png"));
+        error.setWindowIcon(QIcon(":/res/Minor_League_Grayons_With_Arms.png"));
         error.exec();
     }
 
