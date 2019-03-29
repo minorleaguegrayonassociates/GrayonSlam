@@ -93,7 +93,6 @@ void Login::on_pushButton_register_clicked()
 
     m_ui->stackedWidget->setCurrentWidget(m_ui->page_register);
     m_ui->lineEdit_usernameReg->setFocus();
-//    m_ui->pushButton_confirmReg->setFocus();
 }
 
 /**
