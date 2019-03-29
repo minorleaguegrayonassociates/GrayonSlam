@@ -1,15 +1,15 @@
 #include "login.hpp"
 #include "ui_login.h"
+#include "src/utils/exceptions.hpp"
 #include <QCryptographicHash>
 #include <QTextStream>
 #include <QTimer>
 #include <QDir>
-#include "src/utils/exceptions.hpp"
 
 /* Static variables */
 Login::Type   Login::type         = Login::Type::USER;
 Login*        Login::instance     = nullptr;
-const QString Login::FILE_NAME    = "authFile.txt";
+const QString Login::FILE_NAME    = "credFile.txt";
 const QString Login::FILE_PATH    = "";
 const QString Login::FILE_ERR_MSG = "Authentication failed, contact admin!";
 
@@ -270,6 +270,7 @@ void Login::registration(QString usernameInput, QString passwordInput, QString p
     if(!authFile.open(QIODevice::ReadWrite)) { throw BadFile(FILE_ERR_MSG); }
 
     QString usernameFile;
+    usernameInput = hashString(usernameInput);
 
     /* Search for a matching username or data error in file */
     while(!qin.atEnd())
