@@ -16,6 +16,9 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+signals:
+    void logout() const;
+
 private:
     Ui::MainWindow *m_ui;
 };

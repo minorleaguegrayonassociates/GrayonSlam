@@ -26,13 +26,17 @@ CONFIG += c++14
 
 SOURCES += \
         src/main.cpp \
-        src/windows/mainwindow.cpp
+        src/windows/mainwindow.cpp \
+        src/windows/login.cpp
 
 HEADERS += \
-        src/windows/mainwindow.hpp
+        src/windows/mainwindow.hpp \
+        src/windows/login.hpp \
+        src/utils/exceptions.hpp
 
 FORMS += \
-        src/windows/mainwindow.ui
+        src/windows/mainwindow.ui \
+        src/windows/login.ui
 
 RESOURCES += \
     res.qrc
