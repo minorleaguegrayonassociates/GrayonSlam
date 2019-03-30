@@ -27,20 +27,13 @@ CONFIG += c++14
 SOURCES += \
         src/main.cpp \
         src/windows/mainwindow.cpp \
-        src/windows/login.cpp
+        src/windows/login.cpp \
+        src/datastore/parser.cpp
 
 HEADERS += \
         src/windows/mainwindow.hpp \
         src/windows/login.hpp \
-        src/utils/exceptions.hpp
-        src/datastore/parser.cpp
-
-HEADERS += \
-        src/windows/mainwindow.hpp \
-        src/datastore/parser.cpp
-
-HEADERS += \
-        src/windows/mainwindow.hpp \
+        src/utils/exceptions.hpp \
         src/datastore/parser.hpp
 
 FORMS += \

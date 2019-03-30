@@ -12,9 +12,9 @@ MainWindow::MainWindow(QWidget *parent) :
     if(QFontDatabase::addApplicationFont(":/res/fontawesome-webfont.ttf") == -1){qWarning() << "FontAwesome cannot be loaded !";}
 
     // Team Data File Path
-    teamParseDebug("./../../../src/datastore/MLBInformation.csv");
+    teamParseDebug("MLBInformation.csv");
     // Distance Data file path
-    distanceParseDebug("./../../../src/datastore/DistanceBetweenStadiums.csv");
+    distanceParseDebug("DistanceBetweenStadiums.csv");
 }
 
 MainWindow::~MainWindow()
