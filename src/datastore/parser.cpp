@@ -1,3 +1,6 @@
+#include <fstream>
+#include <sstream>
+#include <iostream>
 #include "parser.hpp"
 #include "src/utils/exceptions.hpp"
 
@@ -66,6 +69,7 @@ std::vector<std::vector<std::string>> loadData(const std::string& path)
     std::ifstream infile(path);
     int lineCount = 0;
 
+    if(path.substr((path.size()-4),path.size()) != ".csv"){throw BadFileFormat(QString::fromUtf8("Wrong File type\n"), QString::fromStdString(path));}
     // Checks if file is open if not throw error
     if (!infile.is_open()){throw BadFile(QFile::tr(path.c_str()));}
     std::string line;
@@ -83,14 +87,13 @@ std::vector<std::vector<std::string>> loadData(const std::string& path)
             // used for seperating words
             std::stringstream row(line);
             std::string word;
-            std::string wordQuotes;
             int wordCount = 0;
 
-            while (getline(row, word, ','))
+            while (getline(row, word, ',')) //Extract until a comma
             {
-               if(word[0] == '\"')
-                { 
-                   word.erase(0, 1); //Erase quotation mark
+                if(word[0] == '\"')
+                {
+                    word.erase(0, 1); //Erase quotation mark
 
                     std::string extra;
                     bool finish = false;
@@ -104,7 +107,6 @@ std::vector<std::vector<std::string>> loadData(const std::string& path)
                             extra.erase(extra.size() - 1, 1); //Remove quotation mark at the end
                             finish = true;
                         }
-
                         word += ',' + extra;
                     } while(!finish);
                 }
@@ -117,7 +119,7 @@ std::vector<std::vector<std::string>> loadData(const std::string& path)
     infile.close();
     if (lineCount == 0)
     {
-        throw  BadFileFormat(QString::fromUtf8("*.csv"), QString::fromStdString(path));
+        throw  BadFileFormat(QString::fromUtf8("Empty file!\n"), QString::fromStdString(path));
     }
     return allRows;
 }
