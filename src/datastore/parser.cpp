@@ -1,4 +1,5 @@
 #include "parser.hpp"
+#include "src/utils/exceptions.hpp"
 
 void teamParseDebug(std::string path)
 {
@@ -66,7 +67,7 @@ std::vector<std::vector<std::string>> loadData(std::string path)
     int lineCount = 0;
 
     // Checks if file is open if not throw error
-    if (!infile.is_open()){throw std::invalid_argument("File name invalid");}
+    if (!infile.is_open()){throw BadFile(QFile::tr(path.c_str()));}
     std::string line;
     while (infile.good())
     {
@@ -116,7 +117,7 @@ std::vector<std::vector<std::string>> loadData(std::string path)
     infile.close();
     if (lineCount == 0)
     {
-        throw std::invalid_argument("File Empty");
+        throw  BadFileFormat(QString::fromUtf8("*.csv"), QString::fromStdString(path));
     }
     return allRows;
 }
