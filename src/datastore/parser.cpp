@@ -89,15 +89,23 @@ std::vector<std::vector<std::string>> loadData(std::string path)
             {
                if(word[0] == '\"')
                 { 
-              
-                   std::string extra;
+                   word.erase(0, 1); //Erase quotation mark
 
-                    //Input again and stop if it ends with a quotation mark
+                    std::string extra;
+                    bool finish = false;
+
                     do
                     {
-                        std::getline(row, extra, ',');
-                        word += extra;
-                    } while(extra[extra.size()-1] == '\"');
+                        std::getline(row, extra, ','); //Extra until a comma
+
+                        if(extra.back() == '\"')
+                        {
+                            extra.erase(extra.size() - 1, 1); //Remove quotation mark at the end
+                            finish = true;
+                        }
+
+                        word += ',' + extra;
+                    } while(!finish);
                 }
                 columns.push_back(word);
                 ++wordCount;
