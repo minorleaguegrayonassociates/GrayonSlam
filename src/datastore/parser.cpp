@@ -2,7 +2,7 @@
 
 void teamParseDebug(std::string path)
 {
-    std::vector<std::vector<std::string>> teamData = loadTeamData(path);
+    std::vector<std::vector<std::string>> teamData = loadData(path);
     for (std::vector<std::vector<std::string>>::iterator it = teamData.begin(); it != teamData.end(); ++it)
     {
         std::cout << "----------Team ID: " << (*it)[0] << std::endl;
@@ -45,7 +45,7 @@ void teamParseDebug(std::string path)
 
 void distanceParseDebug(std::string path)
 {
-    std::vector<std::vector<std::string>> distanceData = loadDistanceData(path);
+    std::vector<std::vector<std::string>> distanceData = loadData(path);
     for (std::vector<std::vector<std::string>>::iterator it = distanceData.begin(); it != distanceData.end(); ++it)
     {
 
@@ -58,109 +58,59 @@ void distanceParseDebug(std::string path)
     }
 }
 
-std::vector<std::vector<std::string>> loadTeamData(std::string path)
+std::vector<std::vector<std::string>> loadData(std::string path)
 {
     // Initializing - vector will hold all lines of data within the document
     std::vector<std::vector<std::string>> allRows;
     std::ifstream infile(path, std::ios::in);
     int lineCount = 0;
 
-    // Checks if file is open if now throw error
-    if (infile.is_open())
+    // Checks if file is open if not throw error
+    if (!infile.is_open()){throw std::invalid_argument("File name invalid");}
+    std::string line;
+    while (infile.good())
     {
-        std::string line;
-        while (infile.good())
+        std::getline(infile, line);
+        if (!infile.eof())
         {
-            std::getline(infile, line);
-            if (!infile.eof())
+            if (line[0] == '#' || line[0] == ' '){continue;}
+
+            ++lineCount;
+
+            std::vector<std::string> columns;
+
+            // used for seperating words
+            std::stringstream row(line);
+            std::string word;
+            std::string wordQuotes;
+            int wordCount = 0;
+
+            while (getline(row, word, ','))
             {
-                if (line[0] == '#' || line[0] == ' ')
-                {
-                    continue; // ignore comment lines and spaces
-                }
+               if(word[0] == '\"')
+                { 
+              
+                   std::string extra;
 
-                ++lineCount;
-
-                std::vector<std::string> columns;
-
-                // used for seperating words
-                std::stringstream row(line);
-                std::string word;
-                int wordCount(0);
-
-                while (!row.eof())
-                {
-                    if (wordCount < 5 || wordCount > 6)
+                    //Input again and stop if it ends with a quotation mark
+                    do
                     {
-                        getline(row, word, ',');
-                    }
-                    else
-                    { // If  column 4 or 5 get what's between the quotes
-                        std::getline(std::getline(row, word, '\"'), word, '\"');
-                        row.ignore(1, ','); 
-                    }
-                    columns.push_back(word);
-                    ++wordCount;
+                        std::getline(row, extra, ',');
+                        word += extra;
+                    } while(extra[extra.size()-1] == '\"');
                 }
-                allRows.push_back(columns);
+                columns.push_back(word);
+                ++wordCount;
             }
+            allRows.push_back(columns);
         }
-        infile.close();
     }
-    else
-    {
-        throw std::invalid_argument("Team File name invalid");
-    }
+    infile.close();
     if (lineCount == 0)
     {
-        throw std::invalid_argument("Team File Empty");
+        throw std::invalid_argument("File Empty");
     }
     return allRows;
 }
 
-std::vector<std::vector<std::string>> loadDistanceData(std::string path)
-{
-    // Initializing - vector will hold all lines of data within the document
-    std::vector<std::vector<std::string>> allRows;
-    std::ifstream infile(path, std::ios::in);
-    int lineCount = 0;
 
-    // Checks if file is open if now throw error
-    if (infile.is_open())
-    {
-        std::string line;
-        while (infile.good())
-        {
-            std::getline(infile, line);
-            if (!infile.eof())
-            {
-                if (line[0] == '#' || line[0] == ' ')
-                {
-                    continue; // ignore comment lines and spaces
-                }
-                ++lineCount;
-
-                std::vector<std::string> columns;
-                // used for seperating words
-                std::stringstream row(line);
-                std::string word;
-
-                while (getline(row, word, ','))
-                {
-                    columns.push_back(word);
-                }
-                allRows.push_back(columns);
-            }
-        }
-        infile.close();
-    }
-    else
-    {
-        throw std::invalid_argument("Distance File name invalid");
-    }
-    if (lineCount == 0)
-    {
-        throw std::invalid_argument("Distance File Empty");
-    }
-    return allRows;
-}
