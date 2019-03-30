@@ -37,6 +37,10 @@ HEADERS += \
 
 HEADERS += \
         src/windows/mainwindow.hpp \
+        src/datastore/parser.cpp
+
+HEADERS += \
+        src/windows/mainwindow.hpp \
         src/datastore/parser.hpp
 
 FORMS += \
@@ -44,7 +48,7 @@ FORMS += \
         src/windows/login.ui
 
 RESOURCES += \
-    res.qrc
+        res.qrc
 
 
 # Default rules for deployment.
