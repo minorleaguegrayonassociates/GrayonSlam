@@ -33,8 +33,12 @@ SOURCES += \
 HEADERS += \
     src/windows/mainwindow.hpp \
     src/windows/login.hpp \
-    src/utils/exceptions.hpp \
-    src/utils/parser.hpp \
+    src/utils/exceptions.hpp
+    src/datastore/parser.cpp
+
+HEADERS += \
+    src/windows/mainwindow.hpp \
+    src/datastore/parser.hpp
 
 FORMS += \
     src/windows/mainwindow.ui \
