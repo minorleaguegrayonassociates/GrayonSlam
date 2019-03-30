@@ -4,42 +4,42 @@
 void teamParseDebug(const std::string& path)
 {
     std::vector<std::vector<std::string>> teamData = loadData(path);
-    for (std::vector<std::vector<std::string>>::iterator it = teamData.begin(); it != teamData.end(); ++it)
+    for (const std::vector<std::string>& team : teamData)
     {
-        std::cout << "----------Team ID: " << (*it)[0] << std::endl;
-        std::cout << "--------Team Name: " << (*it)[1] << std::endl;
-        std::cout << "---------Deleted?: " << (*it)[2] << std::endl;
-        std::cout << "-------Stadium ID: " << (*it)[3] << std::endl;
-        std::cout << "-----Stadium Name: " << (*it)[4] << std::endl;
-        std::cout << "-Seating Capacity: " << (*it)[5] << std::endl;
-        std::cout << "----Team Location: " << (*it)[6] << std::endl;
-        std::cout << "--Playing Surface: " << (*it)[7] << std::endl;
-        std::cout << "-----------League: " << (*it)[8] << std::endl;
-        std::cout << "------Date opened: " << (*it)[9] << std::endl;
-        std::cout << "--Distance2CtrFld: " << (*it)[10] << std::endl;
-        std::cout << "Ballpark typology: " << (*it)[11] << std::endl;
-        std::cout << "--------Roof Type: " << (*it)[12] << std::endl;
-        std::cout << "NumberOSouvenirs:  " << (*it)[13] << std::endl;
-        std::cout << "Souvenir ID:  " << (*it)[14] << std::endl;
-        std::cout << "Is deleted?:  " << (*it)[15] << std::endl;
-        std::cout << "---Souvenir:  " << (*it)[16] << std::endl;
-        std::cout << "------Price:  " << (*it)[17] << std::endl;
-        std::cout << "Souvenir ID:  " << (*it)[18] << std::endl;
-        std::cout << "Is deleted?:  " << (*it)[19] << std::endl;
-        std::cout << "---Souvenir:  " << (*it)[20] << std::endl;
-        std::cout << "------Price:  " << (*it)[21] << std::endl;
-        std::cout << "Souvenir ID:  " << (*it)[22] << std::endl;
-        std::cout << "Is deleted?:  " << (*it)[23] << std::endl;
-        std::cout << "---Souvenir:  " << (*it)[24] << std::endl;
-        std::cout << "------Price:  " << (*it)[25] << std::endl;
-        std::cout << "Souvenir ID:  " << (*it)[26] << std::endl;
-        std::cout << "Is deleted?:  " << (*it)[27] << std::endl;
-        std::cout << "---Souvenir:  " << (*it)[28] << std::endl;
-        std::cout << "------Price:  " << (*it)[29] << std::endl;
-        std::cout << "Souvenir ID:  " << (*it)[30] << std::endl;
-        std::cout << "Is deleted?:  " << (*it)[31] << std::endl;
-        std::cout << "---Souvenir:  " << (*it)[32] << std::endl;
-        std::cout << "------Price:  " << (*it)[33] << std::endl;
+        std::cout << "----------Team ID: " << team[0] << std::endl;
+        std::cout << "--------Team Name: " << team[1] << std::endl;
+        std::cout << "---------Deleted?: " << team[2] << std::endl;
+        std::cout << "-------Stadium ID: " << team[3] << std::endl;
+        std::cout << "-----Stadium Name: " << team[4] << std::endl;
+        std::cout << "-Seating Capacity: " << team[5] << std::endl;
+        std::cout << "----Team Location: " << team[6] << std::endl;
+        std::cout << "--Playing Surface: " << team[7] << std::endl;
+        std::cout << "-----------League: " << team[8] << std::endl;
+        std::cout << "------Date opened: " << team[9] << std::endl;
+        std::cout << "--Distance2CtrFld: " << team[10] << std::endl;
+        std::cout << "Ballpark typology: " << team[11] << std::endl;
+        std::cout << "--------Roof Type: " << team[12] << std::endl;
+        std::cout << "NumberOSouvenirs:  " << team[13] << std::endl;
+        std::cout << "Souvenir ID:  " << team[14] << std::endl;
+        std::cout << "Is deleted?:  " << team[15] << std::endl;
+        std::cout << "---Souvenir:  " << team[16] << std::endl;
+        std::cout << "------Price:  " << team[17] << std::endl;
+        std::cout << "Souvenir ID:  " << team[18] << std::endl;
+        std::cout << "Is deleted?:  " << team[19] << std::endl;
+        std::cout << "---Souvenir:  " << team[20] << std::endl;
+        std::cout << "------Price:  " << team[21] << std::endl;
+        std::cout << "Souvenir ID:  " << team[22] << std::endl;
+        std::cout << "Is deleted?:  " << team[23] << std::endl;
+        std::cout << "---Souvenir:  " << team[24] << std::endl;
+        std::cout << "------Price:  " << team[25] << std::endl;
+        std::cout << "Souvenir ID:  " << team[26] << std::endl;
+        std::cout << "Is deleted?:  " << team[27] << std::endl;
+        std::cout << "---Souvenir:  " << team[28] << std::endl;
+        std::cout << "------Price:  " << team[29] << std::endl;
+        std::cout << "Souvenir ID:  " << team[30] << std::endl;
+        std::cout << "Is deleted?:  " << team[31] << std::endl;
+        std::cout << "---Souvenir:  " << team[32] << std::endl;
+        std::cout << "------Price:  " << team[33] << std::endl;
         std::cout << std::endl;
     }
 }
@@ -47,14 +47,14 @@ void teamParseDebug(const std::string& path)
 void distanceParseDebug(const std::string & path)
 {
     std::vector<std::vector<std::string>> distanceData = loadData(path);
-    for (std::vector<std::vector<std::string>>::iterator it = distanceData.begin(); it != distanceData.end(); ++it)
+    for (const std::vector<std::string>& stadiumDistance : distanceData)
     {
 
-        std::cout << "Stadium ID:   " << (*it)[0] << std::endl;
-        std::cout << "Stadium Name: " << (*it)[1] << std::endl;
-        std::cout << "Stadium ID:   " << (*it)[2] << std::endl;
-        std::cout << "Stadium Name: " << (*it)[3] << std::endl;
-        std::cout << "Distance:     " << (*it)[4] << std::endl;
+        std::cout << "Stadium ID:   " << stadiumDistance[0] << std::endl;
+        std::cout << "Stadium Name: " << stadiumDistance[1] << std::endl;
+        std::cout << "Stadium ID:   " << stadiumDistance[2] << std::endl;
+        std::cout << "Stadium Name: " << stadiumDistance[3] << std::endl;
+        std::cout << "Distance:     " << stadiumDistance[4] << std::endl;
         std::cout << std::endl;
     }
 }
@@ -63,7 +63,7 @@ std::vector<std::vector<std::string>> loadData(const std::string& path)
 {
     // Initializing - vector will hold all lines of data within the document
     std::vector<std::vector<std::string>> allRows;
-    std::ifstream infile(path, std::ios::in);
+    std::ifstream infile(path);
     int lineCount = 0;
 
     // Checks if file is open if not throw error
