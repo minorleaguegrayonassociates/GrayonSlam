@@ -25,23 +25,23 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++14
 
 SOURCES += \
-        src/main.cpp \
-        src/windows/mainwindow.cpp \
-        src/windows/login.cpp \
-        src/datastore/parser.cpp
+    src/main.cpp \
+    src/windows/mainwindow.cpp \
+    src/windows/login.cpp \
+    src/datastore/parser.cpp
 
 HEADERS += \
-        src/windows/mainwindow.hpp \
-        src/windows/login.hpp \
-        src/utils/exceptions.hpp \
-        src/datastore/parser.hpp
+    src/windows/mainwindow.hpp \
+    src/windows/login.hpp \
+    src/utils/exceptions.hpp \
+    src/datastore/parser.hpp
 
 FORMS += \
-        src/windows/mainwindow.ui \
-        src/windows/login.ui
+    src/windows/mainwindow.ui \
+    src/windows/login.ui
 
 RESOURCES += \
-        res.qrc
+    res.qrc
 
 
 # Default rules for deployment.
