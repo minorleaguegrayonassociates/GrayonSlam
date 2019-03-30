@@ -1,7 +1,7 @@
 #include "parser.hpp"
 #include "src/utils/exceptions.hpp"
 
-void teamParseDebug(std::string path)
+void teamParseDebug(const std::string& path)
 {
     std::vector<std::vector<std::string>> teamData = loadData(path);
     for (std::vector<std::vector<std::string>>::iterator it = teamData.begin(); it != teamData.end(); ++it)
@@ -44,7 +44,7 @@ void teamParseDebug(std::string path)
     }
 }
 
-void distanceParseDebug(std::string path)
+void distanceParseDebug(const std::string & path)
 {
     std::vector<std::vector<std::string>> distanceData = loadData(path);
     for (std::vector<std::vector<std::string>>::iterator it = distanceData.begin(); it != distanceData.end(); ++it)
@@ -59,7 +59,7 @@ void distanceParseDebug(std::string path)
     }
 }
 
-std::vector<std::vector<std::string>> loadData(std::string path)
+std::vector<std::vector<std::string>> loadData(const std::string& path)
 {
     // Initializing - vector will hold all lines of data within the document
     std::vector<std::vector<std::string>> allRows;
