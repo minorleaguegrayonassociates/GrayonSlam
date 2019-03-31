@@ -43,6 +43,9 @@ public:
     Typology typology = Typology::RETROMODERN;
 
 private:
+    /* Static variables */
+    static int nextId;
+
     /* IDs */
     int m_id = -1;
     int m_teamId = -1;
