@@ -13,8 +13,8 @@ public:
     double getPrice() const;
 
     /* Setters */
-    void setName(const std::string&) const;
-    void setPrice(double) const;
+    void setName(const std::string&);
+    void setPrice(double);
 
     /* Public data */
     bool hidden = true;
