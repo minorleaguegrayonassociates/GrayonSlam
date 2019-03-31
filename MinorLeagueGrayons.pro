@@ -28,13 +28,13 @@ SOURCES += \
     src/main.cpp \
     src/windows/mainwindow.cpp \
     src/windows/login.cpp \
-    src/datastore/parser.cpp
+    src/utils/parser.cpp \
 
 HEADERS += \
     src/windows/mainwindow.hpp \
     src/windows/login.hpp \
     src/utils/exceptions.hpp \
-    src/datastore/parser.hpp
+    src/utils/parser.hpp \
 
 FORMS += \
     src/windows/mainwindow.ui \
@@ -42,7 +42,6 @@ FORMS += \
 
 RESOURCES += \
     res.qrc
-
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

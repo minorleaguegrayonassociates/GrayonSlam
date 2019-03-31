@@ -1,6 +1,5 @@
 #pragma once
 
-#include <stdexcept>
 #include <vector>
 
 std::vector<std::vector<std::string>> loadData(const std::string&);

@@ -47,7 +47,7 @@ void teamParseDebug(const std::string& path)
     }
 }
 
-void distanceParseDebug(const std::string & path)
+void distanceParseDebug(const std::string& path)
 {
     std::vector<std::vector<std::string>> distanceData = loadData(path);
     for (const std::vector<std::string>& stadiumDistance : distanceData)
@@ -69,9 +69,9 @@ std::vector<std::vector<std::string>> loadData(const std::string& path)
     std::ifstream infile(path);
     int lineCount = 0;
 
-    if(path.substr((path.size()-4),path.size()) != ".csv"){throw BadFileFormat(QString::fromUtf8("Wrong File type\n"), QString::fromStdString(path));}
+    if(path.substr((path.size()-4)) != ".csv"){throw BadFileFormat(QString::fromUtf8("Wrong File type\n"), QString::fromStdString(path));}
     // Checks if file is open if not throw error
-    if (!infile.is_open()){throw BadFile(QFile::tr(path.c_str()));}
+    if (!infile.is_open()){throw BadFile(QFile(QString::fromUtf8("Wrong File Path\n")));}
     std::string line;
     while (infile.good())
     {
@@ -119,6 +119,7 @@ std::vector<std::vector<std::string>> loadData(const std::string& path)
     infile.close();
     if (lineCount == 0)
     {
+        std::cout << path << std::endl;
         throw  BadFileFormat(QString::fromUtf8("Empty file!\n"), QString::fromStdString(path));
     }
     return allRows;
