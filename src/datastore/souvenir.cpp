@@ -16,6 +16,11 @@ Souvenir::Souvenir(const std::string& name, double price)
     : m_name(name), m_price(price)
 {}
 
+int Souvenir::getId() const
+{
+    return m_id;
+}
+
 std::string Souvenir::getName() const
 {
     return m_name;
