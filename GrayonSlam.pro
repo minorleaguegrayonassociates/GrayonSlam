@@ -29,14 +29,16 @@ SOURCES += \
     src/windows/mainwindow.cpp \
     src/windows/login.cpp \
     src/utils/parser.cpp \
-    src/datastore/stadium.cpp
+    src/datastore/stadium.cpp \
+    src/datastore/team.cpp
 
 HEADERS += \
     src/windows/mainwindow.hpp \
     src/windows/login.hpp \
     src/utils/exceptions.hpp \
     src/utils/parser.hpp \
-    src/datastore/stadium.hpp
+    src/datastore/stadium.hpp \
+    src/datastore/team.hpp
 
 FORMS += \
     src/windows/mainwindow.ui \
