@@ -11,8 +11,8 @@ Stadium::Stadium()
  * data is initialized to -1 (for integers) or the first item in
  * the enum.
  *
- * @param name Name of stadium
- * @param location Location of stadium
+ * @param name Stadium name
+ * @param location Stadium location
  */
 Stadium::Stadium(const std::string& name, const std::string& location)
     : m_name(name), m_location(location)
