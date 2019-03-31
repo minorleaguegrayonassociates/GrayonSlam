@@ -104,8 +104,4 @@
 56,Wrigley Field,60,Kauffman Stadium,415
 66,Yankee Stadium,78,PNC Park,315
 66,Yankee Stadium,67,Citizens Bank Park,80
-<<<<<<< HEAD
 66,Yankee Stadium,64,Citi Field,50
-=======
-66,Yankee Stadium,64,Citi Field,50
->>>>>>> Added id's for team, stadium, distances (stadiums), added souvenirs, and added a bool for hide
