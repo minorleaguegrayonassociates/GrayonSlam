@@ -67,7 +67,6 @@ std::vector<std::vector<std::string>> loadData(const std::string& path)
     // Initializing - vector will hold all lines of data within the document
     std::vector<std::vector<std::string>> allRows;
     std::ifstream infile(path);
-    int lineCount = 0;
 
     if(path.substr((path.size()-4)) != ".csv"){throw BadFileFormat(QString::fromUtf8("Wrong File type\n"), QString::fromStdString(path));}
     // Checks if file is open if not throw error
@@ -75,22 +74,18 @@ std::vector<std::vector<std::string>> loadData(const std::string& path)
     std::string line;
     while (!infile.eof())
     {
-        line.clear();
         std::getline(infile, line);
-        if (line[0] == '#' || line[0] == ' ') {continue; }
-
-        ++lineCount;
+        if (line.front() == '#' || line.front() == ' ' || line.empty()){continue;}
 
         std::vector<std::string> columns;
 
         // used for seperating words
         std::stringstream row(line);
         std::string word;
-        int wordCount = 0;
 
         while (getline(row, word, ',')) //Extract until a comma
         {
-            if(word[0] == '\"')
+            if(word.front() == '\"')
             {
                 word.erase(0, 1); //Erase quotation mark
 
@@ -110,12 +105,11 @@ std::vector<std::vector<std::string>> loadData(const std::string& path)
                 } while(!finish);
             }
             columns.push_back(word);
-            ++wordCount;
         }
         if(!columns.empty()){allRows.push_back(columns);}
     }
     infile.close();
-    if (lineCount == 0)
+    if (allRows.empty())
     {
         std::cout << path << std::endl;
         throw  BadFileFormat(QString::fromUtf8("Empty file!\n"), QString::fromStdString(path));
