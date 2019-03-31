@@ -67,50 +67,59 @@ std::vector<std::vector<std::string>> loadData(const std::string& path)
     // Initializing - vector will hold all lines of data within the document
     std::vector<std::vector<std::string>> allRows;
     std::ifstream infile(path);
+    int lineCount = 0;
 
-    if(path.substr(path.size()-4) != ".csv"){throw BadFileFormat(QString::fromUtf8("Wrong File type\n"), QString::fromStdString(path));}
+    if(path.substr((path.size()-4)) != ".csv"){throw BadFileFormat(QString::fromUtf8("Wrong File type\n"), QString::fromStdString(path));}
     // Checks if file is open if not throw error
-    if (!infile.is_open()){throw BadFile(QFile(QString::fromStdString(path)));}
+    if (!infile.is_open()){throw BadFile(QFile(QString::fromUtf8("Wrong File Path\n")));}
     std::string line;
-    while (!infile.eof())
+    while (infile.good())
     {
         std::getline(infile, line);
-        if (line.front() == '#' || line.front() == ' ' || line.empty()){continue;}
-
-        std::vector<std::string> columns;
-
-        // used for seperating words
-        std::stringstream row(line);
-        std::string word;
-
-        while (getline(row, word, ',')) //Extract until a comma
+        if (!infile.eof())
         {
-            if(word.front() == '\"')
+            if (line[0] == '#' || line[0] == ' '){continue;}
+
+            ++lineCount;
+
+            std::vector<std::string> columns;
+
+            // used for seperating words
+            std::stringstream row(line);
+            std::string word;
+            int wordCount = 0;
+
+            while (getline(row, word, ',')) //Extract until a comma
             {
-                word.erase(0, 1); //Erase quotation mark
-
-                std::string extra;
-                bool finish = false;
-
-                do
+                if(word[0] == '\"')
                 {
-                    std::getline(row, extra, ','); //Extra until a comma
+                    word.erase(0, 1); //Erase quotation mark
 
-                    if(extra.back() == '\"')
+                    std::string extra;
+                    bool finish = false;
+
+                    do
                     {
-                        extra.erase(extra.size() - 1, 1); //Remove quotation mark at the end
-                        finish = true;
-                    }
-                    word += ',' + extra;
-                } while(!finish);
+                        std::getline(row, extra, ','); //Extra until a comma
+
+                        if(extra.back() == '\"')
+                        {
+                            extra.erase(extra.size() - 1, 1); //Remove quotation mark at the end
+                            finish = true;
+                        }
+                        word += ',' + extra;
+                    } while(!finish);
+                }
+                columns.push_back(word);
+                ++wordCount;
             }
-            columns.push_back(word);
+            allRows.push_back(columns);
         }
-        if(!columns.empty()){allRows.push_back(columns);}
     }
     infile.close();
-    if (allRows.empty())
+    if (lineCount == 0)
     {
+        std::cout << path << std::endl;
         throw  BadFileFormat(QString::fromUtf8("Empty file!\n"), QString::fromStdString(path));
     }
     return allRows;
