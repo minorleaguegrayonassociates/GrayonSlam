@@ -73,48 +73,46 @@ std::vector<std::vector<std::string>> loadData(const std::string& path)
     // Checks if file is open if not throw error
     if (!infile.is_open()){throw BadFile(QFile(QString::fromUtf8("Wrong File Path\n")));}
     std::string line;
-    while (infile.good())
+    while (!infile.eof())
     {
+        line.clear();
         std::getline(infile, line);
-        if (!infile.eof())
+        if (line[0] == '#' || line[0] == ' ') {continue; }
+
+        ++lineCount;
+
+        std::vector<std::string> columns;
+
+        // used for seperating words
+        std::stringstream row(line);
+        std::string word;
+        int wordCount = 0;
+
+        while (getline(row, word, ',')) //Extract until a comma
         {
-            if (line[0] == '#' || line[0] == ' '){continue;}
-
-            ++lineCount;
-
-            std::vector<std::string> columns;
-
-            // used for seperating words
-            std::stringstream row(line);
-            std::string word;
-            int wordCount = 0;
-
-            while (getline(row, word, ',')) //Extract until a comma
+            if(word[0] == '\"')
             {
-                if(word[0] == '\"')
+                word.erase(0, 1); //Erase quotation mark
+
+                std::string extra;
+                bool finish = false;
+
+                do
                 {
-                    word.erase(0, 1); //Erase quotation mark
+                    std::getline(row, extra, ','); //Extra until a comma
 
-                    std::string extra;
-                    bool finish = false;
-
-                    do
+                    if(extra.back() == '\"')
                     {
-                        std::getline(row, extra, ','); //Extra until a comma
-
-                        if(extra.back() == '\"')
-                        {
-                            extra.erase(extra.size() - 1, 1); //Remove quotation mark at the end
-                            finish = true;
-                        }
-                        word += ',' + extra;
-                    } while(!finish);
-                }
-                columns.push_back(word);
-                ++wordCount;
+                        extra.erase(extra.size() - 1, 1); //Remove quotation mark at the end
+                        finish = true;
+                    }
+                    word += ',' + extra;
+                } while(!finish);
             }
-            allRows.push_back(columns);
+            columns.push_back(word);
+            ++wordCount;
         }
+        if(!columns.empty()){allRows.push_back(columns);}
     }
     infile.close();
     if (lineCount == 0)
