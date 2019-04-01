@@ -68,9 +68,9 @@ std::vector<std::vector<std::string>> loadData(const std::string& path)
     std::vector<std::vector<std::string>> allRows;
     std::ifstream infile(path);
 
-    if(path.substr((path.size()-4)) != ".csv"){throw BadFileFormat(QString::fromUtf8("Wrong File type\n"), QString::fromStdString(path));}
+    if(path.substr(path.size()-4) != ".csv"){throw BadFileFormat(QString::fromUtf8("Wrong File type\n"), QString::fromStdString(path));}
     // Checks if file is open if not throw error
-    if (!infile.is_open()){throw BadFile(QFile(QString::fromUtf8("Wrong File Path\n")));}
+    if (!infile.is_open()){throw BadFile(QFile(QString::fromStdString(path)));}
     std::string line;
     while (!infile.eof())
     {
@@ -111,7 +111,6 @@ std::vector<std::vector<std::string>> loadData(const std::string& path)
     infile.close();
     if (allRows.empty())
     {
-        std::cout << path << std::endl;
         throw  BadFileFormat(QString::fromUtf8("Empty file!\n"), QString::fromStdString(path));
     }
     return allRows;
