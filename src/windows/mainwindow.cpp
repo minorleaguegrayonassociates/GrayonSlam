@@ -8,8 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_ui->setupUi(this);
 
     /* Loading in font - "Font Awesome 5 Free" */
-    if(QFontDatabase::addApplicationFont(":/res/fontawesome-webfont.ttf") == -1)
-        qWarning() << "FontAwesome cannot be loaded !";
+    if(QFontDatabase::addApplicationFont(":/res/fontawesome-webfont.ttf") == -1){qWarning() << "FontAwesome cannot be loaded !";}
 
 }
 
