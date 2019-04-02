@@ -7,7 +7,6 @@ public:
     enum class League { NATIONAL, AMERICAN };
 
     /* Constructors */
-    Team();
     Team(const std::string& name, League);
 
     /* Getters */

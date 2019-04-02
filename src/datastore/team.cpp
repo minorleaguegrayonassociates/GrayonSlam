@@ -4,12 +4,6 @@
 int Team::nextId = 0;
 
 /**
- * Constructs an invalid team.
- */
-Team::Team()
-{}
-
-/**
  * Constructs a team given a name and league. The ID of this team
  * will be set to @a nextId, then @a nextId is incremented after.
  * The stadium ID is set to -1 to indicate that the team is not

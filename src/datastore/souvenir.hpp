@@ -7,7 +7,6 @@ public:
     friend class Stadium;
 
     /* Constructors */
-    Souvenir();
     Souvenir(const std::string& name, double price);
 
     /* Getters */

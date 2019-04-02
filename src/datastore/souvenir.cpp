@@ -1,12 +1,6 @@
 #include "souvenir.hpp"
 
 /**
- * Constructs an invalid souvenir.
- */
-Souvenir::Souvenir()
-{}
-
-/**
  * Constructs a souvenir given a name and price.
  *
  * @param name Souvenir name

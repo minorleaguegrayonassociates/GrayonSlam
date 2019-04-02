@@ -17,7 +17,6 @@ public:
     };
 
     /* Constructors */
-    Stadium();
     Stadium(const std::string& name, const std::string& location);
 
     /* Getters */

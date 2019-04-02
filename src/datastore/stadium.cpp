@@ -5,12 +5,6 @@
 int Stadium::nextId = 0;
 
 /**
- * Constructs an invalid stadium.
- */
-Stadium::Stadium()
-{}
-
-/**
  * Constructs a stadium given a name and location. The ID of this
  * stadium will be set to @a nextId, then @a nextID is incremented
  * after. The rest of the data is initialized to -1 (for integers)
