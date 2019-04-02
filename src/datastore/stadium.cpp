@@ -148,14 +148,11 @@ void Stadium::addSouvenir(const std::string& name, double price)
 }
 
 /**
- * Finds a valid souvenir that the stadium has given a
- * souvenir ID. If the given ID doesn't match any souvenir, an
- * invalid souvenir is returned.
+ * Finds a souvenir given a souvenir ID.
  *
- * @param id Souvenir ID to find
- * @return If found, returns a valid souvenir.
- *         If not found, returns an invalid souvenir created using
- *         a default constructed souvenir.
+ * @param id ID of souvenir to find
+ * @return If found, returns the souvenir.
+ *         If not found, @a std::invalid_argument is thrown.
  */
 Souvenir& Stadium::findSouvenir(int id)
 {
