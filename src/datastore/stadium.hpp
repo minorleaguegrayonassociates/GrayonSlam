@@ -2,6 +2,14 @@
 #include "src/datastore/souvenir.hpp"
 #include <map>
 
+/**
+ * @class Stadium class
+ *
+ * This class is used for holding information about a stadium.
+ * It can be tied to a baseball team by their ID. It holds
+ * information about the types of souvenirs that it has. The
+ * stadium's architecture is also available.
+ */
 class Stadium
 {
 public:

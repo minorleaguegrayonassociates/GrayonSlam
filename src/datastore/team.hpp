@@ -1,6 +1,14 @@
 #pragma once
 #include <string>
 
+/**
+ * @class Team class
+ *
+ * This class holds information about a team. It can be
+ * hidden from public use by the @a hidden property. Other
+ * properties of the team can be changed through @a getter
+ * functions.
+ */
 class Team
 {
 public:
