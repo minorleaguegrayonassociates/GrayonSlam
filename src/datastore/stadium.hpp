@@ -1,5 +1,6 @@
 #pragma once
-#include <string>
+#include "src/datastore/souvenir.hpp"
+#include <map>
 
 class Stadium
 {
@@ -36,6 +37,10 @@ public:
     void setYearOpened(int);
     void setCenterFieldDist(int);
 
+    /* Souvenirs */
+    void addSouvenir(const std::string& name, double price);
+    Souvenir& findSouvenir(int id);
+
     /* Public data */
     bool hidden = true;
     Roof roof = Roof::RETRACTABLE;
@@ -56,5 +61,8 @@ private:
     int m_seatCap = -1;
     int m_yearOpened = -1;
     int m_centerFieldDist = -1;
-//    std::vector<Souvenir> m_souvenirs;
+
+    /* Souvenirs */
+    int m_nextSouvenirId = 0;
+    std::map<int,Souvenir> m_souvenirs;
 };

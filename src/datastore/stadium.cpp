@@ -1,4 +1,5 @@
 #include "stadium.hpp"
+#include <stdexcept>
 
 /* Static variables */
 int Stadium::nextId = 0;
@@ -120,4 +121,52 @@ void Stadium::setYearOpened(int year)
 void Stadium::setCenterFieldDist(int dist)
 {
     if(dist >= 0) { m_centerFieldDist = dist; }
+}
+
+/**
+ * @brief Add a new souvenir
+ *
+ * Creates a new souvenir with the given name and price. The
+ * souvenir's ID is set by keeping track of how many the
+ * stadium currently has. It is then added to map.
+ *
+ * @param name Souvenir name to add
+ * @param price Souvenir price to add
+ */
+void Stadium::addSouvenir(const std::string& name, double price)
+{
+    /*
+     * Since Souvenir makes Stadium a friend class,
+     * we can directly set the ID of the Souvenir
+     */
+    Souvenir souvenir(name, price);
+    souvenir.m_id = m_nextSouvenirId;
+
+    m_souvenirs[m_nextSouvenirId] = souvenir;
+
+    m_nextSouvenirId++;
+}
+
+/**
+ * Finds a valid souvenir that the stadium has given a
+ * souvenir ID. If the given ID doesn't match any souvenir, an
+ * invalid souvenir is returned.
+ *
+ * @param id Souvenir ID to find
+ * @return If found, returns a valid souvenir.
+ *         If not found, returns an invalid souvenir created using
+ *         a default constructed souvenir.
+ */
+Souvenir& Stadium::findSouvenir(int id)
+{
+    auto iterator = m_souvenirs.find(id);
+
+    if(iterator != m_souvenirs.end())
+    {
+        return (*iterator).second;
+    }
+    else
+    {
+        throw std::invalid_argument("Souvenir ID not found: " + std::to_string(id));
+    }
 }
