@@ -1,13 +1,34 @@
 #include "souvenir.hpp"
 
 /**
- * Constructs a souvenir given a name and price.
+ * Constructs a souvenir that is unattached from a stadium.
+ */
+Souvenir::Souvenir()
+{}
+
+/**
+ * Constructs a souvenir given a name and price. This
+ * souvenir is not attached to a stadium because its
+ * ID is -1. To add it to a stadium, use @a Stadium::addSouvenir.
  *
  * @param name Souvenir name
  * @param price Souvenir price
  */
 Souvenir::Souvenir(const std::string& name, double price)
     : m_name(name), m_price(price)
+{}
+
+/**
+ * Constructs a souvenir given an ID, name, and price.
+ * This is only used to initialize the ID as well as the
+ * data within a @a Stadium object.
+ *
+ * @param id Souvenir ID for a Stadium
+ * @param name Souvenir name
+ * @param price Souvenir price
+ */
+Souvenir::Souvenir(int id, const std::string& name, double price)
+    : m_id(id), m_name(name), m_price(price)
 {}
 
 int Souvenir::getId() const

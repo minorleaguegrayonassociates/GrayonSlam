@@ -1,14 +1,17 @@
 #pragma once
-#include "src/datastore/souvenir.hpp"
+#include "souvenir.hpp"
 #include <map>
 
 /**
  * @class Stadium class
  *
  * This class is used for holding information about a stadium.
- * It can be tied to a baseball team by their ID. It holds
- * information about the types of souvenirs that it has. The
- * stadium's architecture is also available.
+ * It can also be hidden from public use through the @a hidden
+ * property. A stadium contains a list of souvenirs that it contains.
+ *
+ * Enum classes are available for information about the stadium's
+ * architecture. There is also static variables in the class to
+ * convert an enum type to an associated string.
  */
 class Stadium
 {
@@ -30,11 +33,11 @@ public:
     static const std::string TYPOLOGY_STRING[];
 
     /* Constructors */
+    Stadium();
     Stadium(const std::string& name, const std::string& location);
 
     /* Getters */
     int getId() const;
-    int getTeamId() const;
     std::string getName() const;
     std::string getLocation() const;
     int getSeatCap() const;
@@ -42,7 +45,6 @@ public:
     int getCenterFieldDist() const;
 
     /* Setters */
-    void setTeamId(int);
     void setName(const std::string&);
     void setLocation(const std::string&);
     void setSeatCap(int);
@@ -63,13 +65,10 @@ private:
     /* Static variables */
     static int nextId;
 
-    /* IDs */
+    /* Stadium information */
     int m_id = -1;
-    int m_teamId = -1;
-
-    /* Stadium data */
-    std::string m_name;
-    std::string m_location;
+    std::string m_name = "invalid";
+    std::string m_location = "invalid";
     int m_seatCap = -1;
     int m_yearOpened = -1;
     int m_centerFieldDist = -1;

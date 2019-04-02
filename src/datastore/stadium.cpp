@@ -12,6 +12,12 @@ static const std::string TYPOLOGY_STRING[] = {"Retro Modern", "Retro Classic", "
 int Stadium::nextId = 0;
 
 /**
+ * Constructs an invalid stadium.
+ */
+Stadium::Stadium()
+{}
+
+/**
  * Constructs a stadium given a name and location. The ID of this
  * stadium will be set to @a nextId, then @a nextID is incremented
  * after. The rest of the data is initialized to -1 (for integers)
@@ -29,11 +35,6 @@ Stadium::Stadium(const std::string& name, const std::string& location)
 int Stadium::getId() const
 {
     return m_id;
-}
-
-int Stadium::getTeamId() const
-{
-    return m_teamId;
 }
 
 std::string Stadium::getName() const
@@ -59,16 +60,6 @@ int Stadium::getYearOpened() const
 int Stadium::getCenterFieldDist() const
 {
     return m_centerFieldDist;
-}
-
-/**
- * Sets the team ID only if the given ID is non-negative.
- *
- * @param id Team ID
- */
-void Stadium::setTeamId(int id)
-{
-    if(id >= 0) { m_teamId = id; }
 }
 
 /**

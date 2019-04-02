@@ -1,13 +1,16 @@
 #pragma once
-#include <string>
+#include "stadium.hpp"
 
 /**
  * @class Team class
  *
  * This class holds information about a team. It can be
- * hidden from public use by the @a hidden property. Other
- * properties of the team can be changed through @a getter
- * functions.
+ * hidden from public use by the @a hidden property.
+ *
+ * A team with an ID of -1 means it's invalid.
+ *
+ * A team with a stadium ID of -1 means it doesn't reside
+ * in a stadium.
  */
 class Team
 {
@@ -15,6 +18,7 @@ public:
     enum class League { NATIONAL, AMERICAN };
 
     /* Constructors */
+    Team();
     Team(const std::string& name, League);
 
     /* Getters */
@@ -23,12 +27,12 @@ public:
     std::string getName() const;
 
     /* Setters */
+    void setStadium(const Stadium&);
     void setName(const std::string&);
-    void setStadiumId(int);
 
     /* Public data */
     bool hidden = true;
-    League league = League::NATIONAL;
+    League league;
 
 private:
     /* Static variables */
@@ -37,5 +41,5 @@ private:
     /* Data */
     int m_id = -1;
     int m_stadiumId = -1;
-    std::string m_name;
+    std::string m_name = "invalid";
 };

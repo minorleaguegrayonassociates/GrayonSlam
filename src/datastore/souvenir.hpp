@@ -5,9 +5,10 @@
  * @class Souvenir class
  *
  * This class holds information about a souvenir. It can be
- * hidden from public use by the @a hidden property. Other
- * properties of the souvenir can be changed through
- * @a getter functions.
+ * hidden from public use by the @a hidden property.
+ *
+ * A souvenir with an ID value of -1 means that it hasn't
+ * been attached to a stadium.
  */
 class Souvenir
 {
@@ -15,7 +16,11 @@ public:
     friend class Stadium;
 
     /* Constructors */
+    Souvenir();
     Souvenir(const std::string& name, double price);
+
+private:
+    Souvenir(int id, const std::string& name, double price);
 
     /* Getters */
     int getId() const;
@@ -32,6 +37,6 @@ public:
 private:
     /* Data */
     int m_id = -1;
-    std::string m_name;
+    std::string m_name = "invalid";
     double m_price = -1;
 };
