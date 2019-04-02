@@ -1,6 +1,13 @@
 #include "stadium.hpp"
 #include <stdexcept>
 
+/* Enum to strings */
+static const std::string ROOF_STRING[] = {"Rectractable", "Open", "Fixed"};
+static const std::string SURFACE_STRING[] = {"Grass", "AstroTurg GameDay Grass",
+                                             "AstroTurf GameDay Grass 3D"};
+static const std::string TYPOLOGY_STRING[] = {"Retro Modern", "Retro Classic", "Jewelbox",
+                                              "Modern", "Contemporary", "Multipurpose"};
+
 /* Static variables */
 int Stadium::nextId = 0;
 

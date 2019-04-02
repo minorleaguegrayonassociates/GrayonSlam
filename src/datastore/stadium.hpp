@@ -16,6 +16,11 @@ public:
         MODERN, CONTEMPORARY, MULTIPURPOSE
     };
 
+    /* Enum to strings */
+    static const std::string ROOF_STRING[];
+    static const std::string SURFACE_STRING[];
+    static const std::string TYPOLOGY_STRING[];
+
     /* Constructors */
     Stadium(const std::string& name, const std::string& location);
 
