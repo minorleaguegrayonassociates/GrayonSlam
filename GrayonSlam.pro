@@ -29,16 +29,21 @@ SOURCES += \
     src/windows/mainwindow.cpp \
     src/windows/login.cpp \
     src/utils/parser.cpp \
+    src/widgets/navbar.cpp \
+    src/widgets/navitem.cpp
 
 HEADERS += \
     src/windows/mainwindow.hpp \
     src/windows/login.hpp \
     src/utils/exceptions.hpp \
-    src/utils/parser.hpp
+    src/utils/parser.hpp \
+    src/widgets/navbar.hpp \
+    src/widgets/navitem.hpp
 
 FORMS += \
     src/windows/mainwindow.ui \
-    src/windows/login.ui
+    src/windows/login.ui \
+    src/widgets/navitem.ui
 
 RESOURCES += \
     res.qrc

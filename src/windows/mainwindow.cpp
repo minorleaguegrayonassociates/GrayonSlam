@@ -1,18 +1,64 @@
+#include <QMessageBox>
 #include "src/windows/mainwindow.hpp"
 #include "ui_mainwindow.h"
+#include "src/windows/login.hpp"
 
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    m_ui(new Ui::MainWindow)
+MainWindow::MainWindow() :
+    QMainWindow(nullptr),m_ui(new Ui::MainWindow)
 {
     m_ui->setupUi(this);
+
+    //Doesn't allow window resizing
+    setWindowFlags(Qt::MSWindowsFixedSizeDialogHint);
 
     /* Loading in font - "Font Awesome 5 Free" */
     if(QFontDatabase::addApplicationFont(":/res/fontawesome-webfont.ttf") == -1){qWarning() << "FontAwesome cannot be loaded !";}
 
+    /* Initialize navigation bar and items */
+
+//    m_navbar = new NavBar(m_ui->widget, 90, 220);
+//    connect(m_navbar, &NavBar::currentRowChanged, this, &MainWindow::changeView);
+//    m_navbar->addItem("\uf0c9", "Dashboard");
+//    m_navbar->addItem("\uf5a0", "Plan\na Trip");
+//    m_navbar->addItem("\uf0ca", "View\nRestaurants");
+//    if(Login::getType() == Login::Type::ADMIN)
+//        m_navbar->addItem("\uf1c0", "Inventory\nManagement");
+//    m_navbar->addItem("\uf2f5", "Logout");
 }
 
 MainWindow::~MainWindow()
 {
     delete m_ui;
+    delete m_navbar;
 }
+
+///* Private slots */
+//void MainWindow::changeView(int view)
+//{
+////    resetUi();
+
+////    Login::Type type = Login::getType();
+
+////    /* Change view */
+////    if((view == 3 && type == Login::Type::USER) || //Logout
+////       (view == 4 && type == Login::Type::ADMIN))
+////    {
+////        QMessageBox::StandardButton reply = QMessageBox::question(this, "Logout", "Are you sure you want to logout?", QMessageBox::Yes | QMessageBox::No);
+////        if(reply == QMessageBox::Yes)
+////            emit logout();
+////    }
+////    else if(view == 3 && type == Login::Type::ADMIN) //Admin view
+////    {
+
+////    }
+////    else
+////    {
+//////        m_ui->mainViews->setCurrentIndex(view);
+////    }
+//}
+
+//void MainWindow::resetUi()
+//{
+//    /* Reset views -- go here */
+
+//}
