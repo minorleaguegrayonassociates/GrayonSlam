@@ -29,12 +29,21 @@ SOURCES += \
     src/windows/mainwindow.cpp \
     src/windows/login.cpp \
     src/utils/parser.cpp \
+    src/utils/parser.cpp \
+    src/windows/login.cpp \
+    src/windows/mainwindow.cpp \
+    src/main.cpp
 
 HEADERS += \
     src/windows/mainwindow.hpp \
     src/windows/login.hpp \
     src/utils/exceptions.hpp \
-    src/utils/parser.hpp
+    src/utils/parser.hpp \
+    src/utils/exceptions.hpp \
+    src/utils/parser.hpp \
+    src/windows/login.hpp \
+    src/windows/mainwindow.hpp \
+    src/views/views.h
 
 FORMS += \
     src/windows/mainwindow.ui \
