@@ -94,33 +94,84 @@ namespace nstd
     /* MAP METHODS*/
 
     template <typename key, typename value, typename Hash>
-    map<key,value,Hash>::map(key[],value[],const int)
+    map<key,value,Hash>::map(key keys[], value values[], const int ARR_SIZE)
     {
-
+        m_primeNumIndex = 0;
+        while(TABLE_OF_PRIMES.lookupTable[m_primeNumIndex] <= ARR_SIZE) ++m_primeNumIndex;
+        m_numOfElems = ARR_SIZE;
+        m_capacity = TABLE_OF_PRIMES.lookupTable[m_primeNumIndex];
+        m_map = new node*[TABLE_OF_PRIMES.lookupTable[m_primeNumIndex]];
+        for(int i = 0; i < m_capacity; ++i) m_map[i] = 0;
+        node* tmp;
+        unsigned int hashCode;
+        unsigned int j;
+        for(int i = 0; i < ARR_SIZE; ++i)
+        {
+            tmp = new node(keys[i], values[i],false, this);
+            j = 1;
+            hashCode = hash(keys[i],0);
+            while(m_map[hashCode] != 0 && j < m_capacity)
+            {
+                hashCode = hash(keys[i],j);
+                ++j;
+            }
+            if(m_map[hashCode]) delete m_map[hashCode];
+            m_map[hashCode] = tmp;
+        }
     }
 
     template <typename key, typename value, typename Hash>
-    map<key,value,Hash>::map(const map&)
+    map<key,value,Hash>::map(const map& otherMap)
+        : m_primeNumIndex{otherMap.m_primeNumIndex},m_numOfElems{otherMap.m_numOfElems},m_capacity{otherMap.m_capacity}
     {
-
+        m_map = new node*[otherMap.m_capacity];
+        for(int i = 0; i < otherMap.m_capacity; ++i)
+        {
+            m_map[i] = new node(otherMap.m_map[i]->nodeKey,otherMap.m_map[i]->nodeValue,false, this);
+        }
     }
 
     template <typename key, typename value, typename Hash>
-    map<key,value,Hash>::map(map&&)
+    map<key,value,Hash>::map(map&& otherMap)
+        : m_primeNumIndex{otherMap.m_primeNumIndex}, m_numOfElems{otherMap.m_numOfElems},m_capacity{otherMap.m_capacity}
     {
-
+        m_map = otherMap.m_map;
+        otherMap.m_map = NULL;
     }
 
     template <typename key, typename value, typename Hash>
-    map<key,value,Hash>& map<key,value,Hash>::operator=(const map&)
+    map<key,value,Hash>& map<key,value,Hash>::operator=(const map& otherMap)
     {
-
+        if(&otherMap != this)
+        {
+            if(m_numOfElems != 0)
+            {
+                for(int i = 0; i < m_capacity; ++i)
+                {
+                    if(m_map[i]) delete m_map[i];
+                }
+                delete [] m_map;
+            }
+            m_primeNumIndex = otherMap.m_primeNumIndex;
+            m_numOfElems = otherMap.m_numOfElems;
+            m_capacity = otherMap.m_capacity;
+            m_map = new node*[otherMap.m_capacity];
+            for(int i = 0; i < otherMap.m_capacity; ++i)
+            {
+                m_map[i] = new node(otherMap.m_map[i]->nodeKey,otherMap.m_map[i]->nodeValue,false, this);
+            }
+        }
+        return *this;
     }
 
     template <typename key, typename value, typename Hash>
     map<key,value,Hash>::~map()
     {
-
+        for(int i = 0; i < m_capacity; ++i)
+        {
+            if(m_map[i]) delete m_map[i];
+        }
+        delete [] m_map;
     }
 
     template <typename key, typename value, typename Hash>
