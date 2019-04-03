@@ -7,7 +7,6 @@
  * An object created by this should not be used in a stadium
  * unless the name and price has been changed; otherwise, both
  * will be initialized to "invalid" and -1 respectively.
- *
  */
 Souvenir::Souvenir()
 {}
