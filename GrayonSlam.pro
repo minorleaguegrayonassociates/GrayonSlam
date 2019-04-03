@@ -43,7 +43,7 @@ HEADERS += \
     src/utils/parser.hpp \
     src/windows/login.hpp \
     src/windows/mainwindow.hpp \
-    src/views/views.h
+    src/views/abstractview.hpp
 
 FORMS += \
     src/windows/mainwindow.ui \

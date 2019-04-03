@@ -1,7 +1,7 @@
 #pragma once
 #include <QWidget>
 
-class AbstractViewModel
+class AbstractViewModel: public QWidget
 {
     Q_OBJECT
 public:
