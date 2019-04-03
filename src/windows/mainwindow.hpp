@@ -1,8 +1,6 @@
 #pragma once
 
-#include <QDebug>
 #include <QMainWindow>
-#include <QFontDatabase>
 #include "src/widgets/navbar.hpp"
 
 namespace Ui

@@ -1,10 +1,13 @@
-#include <QMessageBox>
-#include "src/windows/mainwindow.hpp"
+#include "mainwindow.hpp"
 #include "ui_mainwindow.h"
+#include <QMessageBox>
+#include <QDebug>
+#include <QFontDatabase>
 #include "src/windows/login.hpp"
 
-MainWindow::MainWindow() :
-    QMainWindow(nullptr),m_ui(new Ui::MainWindow)
+/* Constructors */
+MainWindow::MainWindow()
+    : QMainWindow(nullptr),m_ui(new Ui::MainWindow)
 {
     m_ui->setupUi(this);
 
@@ -15,7 +18,6 @@ MainWindow::MainWindow() :
     if(QFontDatabase::addApplicationFont(":/res/fontawesome-webfont.ttf") == -1){qWarning() << "FontAwesome cannot be loaded !";}
 
     /* Initialize navigation bar and items */
-
 //    m_navbar = new NavBar(m_ui->widget, 90, 220);
 //    connect(m_navbar, &NavBar::currentRowChanged, this, &MainWindow::changeView);
 //    m_navbar->addItem("\uf0c9", "Dashboard");
