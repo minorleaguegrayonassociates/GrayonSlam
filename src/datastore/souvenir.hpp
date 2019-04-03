@@ -19,9 +19,6 @@ public:
     Souvenir();
     Souvenir(const std::string& name, double price);
 
-private:
-    Souvenir(int id, const std::string& name, double price);
-
     /* Getters */
     int getId() const;
     std::string getName() const;

@@ -15,6 +15,9 @@
 class Team
 {
 public:
+    friend class DataStore;
+
+    /* Enum types */
     enum class League { NATIONAL, AMERICAN };
 
     /* Constructors */
