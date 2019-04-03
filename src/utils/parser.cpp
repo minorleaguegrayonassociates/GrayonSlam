@@ -6,9 +6,11 @@
 
 void teamParseDebug(const std::string& path)
 {
+    unsigned int j;
     std::vector<std::vector<std::string>> teamData = loadData(path);
     for (const std::vector<std::string>& team : teamData)
     {
+        j = 14;
         std::cout << "----------Team ID: " << team[0] << std::endl;
         std::cout << "--------Team Name: " << team[1] << std::endl;
         std::cout << "---------Deleted?: " << team[2] << std::endl;
@@ -23,26 +25,15 @@ void teamParseDebug(const std::string& path)
         std::cout << "Ballpark typology: " << team[11] << std::endl;
         std::cout << "--------Roof Type: " << team[12] << std::endl;
         std::cout << "NumberOSouvenirs:  " << team[13] << std::endl;
-        std::cout << "Souvenir ID:  " << team[14] << std::endl;
-        std::cout << "Is deleted?:  " << team[15] << std::endl;
-        std::cout << "---Souvenir:  " << team[16] << std::endl;
-        std::cout << "------Price:  " << team[17] << std::endl;
-        std::cout << "Souvenir ID:  " << team[18] << std::endl;
-        std::cout << "Is deleted?:  " << team[19] << std::endl;
-        std::cout << "---Souvenir:  " << team[20] << std::endl;
-        std::cout << "------Price:  " << team[21] << std::endl;
-        std::cout << "Souvenir ID:  " << team[22] << std::endl;
-        std::cout << "Is deleted?:  " << team[23] << std::endl;
-        std::cout << "---Souvenir:  " << team[24] << std::endl;
-        std::cout << "------Price:  " << team[25] << std::endl;
-        std::cout << "Souvenir ID:  " << team[26] << std::endl;
-        std::cout << "Is deleted?:  " << team[27] << std::endl;
-        std::cout << "---Souvenir:  " << team[28] << std::endl;
-        std::cout << "------Price:  " << team[29] << std::endl;
-        std::cout << "Souvenir ID:  " << team[30] << std::endl;
-        std::cout << "Is deleted?:  " << team[31] << std::endl;
-        std::cout << "---Souvenir:  " << team[32] << std::endl;
-        std::cout << "------Price:  " << team[33] << std::endl;
+
+        for(int i = 0; i < std::stoi(team[13]); ++i)
+        {
+            std::cout << "Souvenir ID:  " << team[j++] << std::endl;
+            std::cout << "Is deleted?:  " << team[j++] << std::endl;
+            std::cout << "---Souvenir:  " << team[j++] << std::endl;
+            std::cout << "------Price:  " << team[j++] << std::endl;
+        }
+
         std::cout << std::endl;
     }
 }
