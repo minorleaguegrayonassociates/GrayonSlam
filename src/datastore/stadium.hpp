@@ -76,4 +76,5 @@ private:
     /* Souvenirs */
     int m_nextSouvenirId = 0;
     std::map<int,Souvenir> m_souvenirs;
+    //TODO replace with nstd::map when completed as per project reqs
 };
