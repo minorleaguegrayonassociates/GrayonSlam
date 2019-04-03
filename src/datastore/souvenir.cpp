@@ -12,7 +12,9 @@ Souvenir::Souvenir()
 {}
 
 /**
- * Constructs a souvenir given a name and price.
+ * Constructs a souvenir given a name and price. If @a name is
+ * an empty string, the souvenir's name becomes "invalid". If
+ * @a price is negative, the souvenir's price becomes -1.
  *
  * This souvenir is not attached to a stadium because its
  * ID is -1. To add it to a stadium, use @a Stadium::addSouvenir.
@@ -21,8 +23,10 @@ Souvenir::Souvenir()
  * @param price Souvenir price
  */
 Souvenir::Souvenir(const std::string& name, double price)
-    : m_name(name), m_price(price)
-{}
+{
+    setName(name);
+    setPrice(price);
+}
 
 int Souvenir::getId() const
 {
