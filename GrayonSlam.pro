@@ -45,7 +45,9 @@ HEADERS += \
     src/datastore/stadium.hpp \
     src/datastore/team.hpp \
     src/datastore/souvenir.hpp \
-    src/views/view.hpp
+    src/views/view.hpp \
+    src/utils/map.hpp
+
 
 FORMS += \
     src/windows/mainwindow.ui \
