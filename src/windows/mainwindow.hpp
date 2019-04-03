@@ -23,8 +23,8 @@ signals:
     void logout() const;
 
 private slots:
-//    void changeView(int);
-//    void resetUi();
+    void changeView(int);
+    void resetUi();
 
 private:
     Ui::MainWindow* m_ui;

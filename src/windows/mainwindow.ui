@@ -14,6 +14,9 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
    <widget class="QWidget" name="widget" native="true">
     <property name="geometry">
      <rect>
@@ -23,6 +26,106 @@
       <height>600</height>
      </rect>
     </property>
+   </widget>
+   <widget class="QStackedWidget" name="mainViews">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>0</y>
+      <width>620</width>
+      <height>600</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="currentIndex">
+     <number>3</number>
+    </property>
+    <widget class="QWidget" name="dashboardView">
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <widget class="QLabel" name="label_3">
+      <property name="geometry">
+       <rect>
+        <x>110</x>
+        <y>90</y>
+        <width>100</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>Dashboard View</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="planVacationView">
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <widget class="QLabel" name="label">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>80</y>
+        <width>151</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Plan a Vacation</string>
+      </property>
+      <property name="scaledContents">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="viewTeamView">
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>70</y>
+        <width>110</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Team Listings</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="adminView">
+     <widget class="QLabel" name="label_4">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>50</y>
+        <width>101</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>admin view</string>
+      </property>
+     </widget>
+    </widget>
    </widget>
   </widget>
  </widget>

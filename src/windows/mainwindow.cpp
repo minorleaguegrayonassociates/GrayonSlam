@@ -18,14 +18,14 @@ MainWindow::MainWindow()
     if(QFontDatabase::addApplicationFont(":/res/fontawesome-webfont.ttf") == -1){qWarning() << "FontAwesome cannot be loaded !";}
 
     /* Initialize navigation bar and items */
-//    m_navbar = new NavBar(m_ui->widget, 90, 220);
-//    connect(m_navbar, &NavBar::currentRowChanged, this, &MainWindow::changeView);
-//    m_navbar->addItem("\uf0c9", "Dashboard");
-//    m_navbar->addItem("\uf5a0", "Plan\na Trip");
-//    m_navbar->addItem("\uf0ca", "View\nRestaurants");
-//    if(Login::getType() == Login::Type::ADMIN)
-//        m_navbar->addItem("\uf1c0", "Inventory\nManagement");
-//    m_navbar->addItem("\uf2f5", "Logout");
+    m_navbar = new NavBar(m_ui->widget, 90, 220);
+    connect(m_navbar, &NavBar::currentRowChanged, this, &MainWindow::changeView);
+    m_navbar->addItem("\uf0c9", "Dashboard");
+    m_navbar->addItem("\uf5b0", "Plan\na Vacation");
+    m_navbar->addItem("\uf433", "View\nTeams");
+    if(Login::getType() == Login::Type::ADMIN)
+        m_navbar->addItem("\uf085", "Inventory\nManagement");
+    m_navbar->addItem("\uf2f5", "Logout");
 }
 
 MainWindow::~MainWindow()
@@ -34,33 +34,33 @@ MainWindow::~MainWindow()
     delete m_navbar;
 }
 
-///* Private slots */
-//void MainWindow::changeView(int view)
-//{
-////    resetUi();
+/* Private slots */
+void MainWindow::changeView(int view)
+{
+    resetUi();
 
-////    Login::Type type = Login::getType();
+    Login::Type type = Login::getType();
 
-////    /* Change view */
-////    if((view == 3 && type == Login::Type::USER) || //Logout
-////       (view == 4 && type == Login::Type::ADMIN))
-////    {
-////        QMessageBox::StandardButton reply = QMessageBox::question(this, "Logout", "Are you sure you want to logout?", QMessageBox::Yes | QMessageBox::No);
-////        if(reply == QMessageBox::Yes)
-////            emit logout();
-////    }
-////    else if(view == 3 && type == Login::Type::ADMIN) //Admin view
-////    {
+    /* Change view */
+    if((view == 3 && type == Login::Type::USER) || //Logout
+       (view == 4 && type == Login::Type::ADMIN))
+    {
+        QMessageBox::StandardButton reply = QMessageBox::question(this, "Logout", "Are you sure you want to logout?", QMessageBox::Yes | QMessageBox::No);
+        if(reply == QMessageBox::Yes)
+            emit logout();
+    }
+    else if(view == 3 && type == Login::Type::ADMIN) //Admin view
+    {
+        m_ui->mainViews->setCurrentIndex(view);
+    }
+    else
+    {
+        m_ui->mainViews->setCurrentIndex(view);
+    }
+}
 
-////    }
-////    else
-////    {
-//////        m_ui->mainViews->setCurrentIndex(view);
-////    }
-//}
-
-//void MainWindow::resetUi()
-//{
-//    /* Reset views -- go here */
-
-//}
+void MainWindow::resetUi()
+{
+    /* Reset views -- go here */
+    qDebug() << "Reseting";
+}
