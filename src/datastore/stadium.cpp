@@ -23,13 +23,19 @@ Stadium::Stadium()
  * after. The rest of the data is initialized to -1 (for integers)
  * or the first item in the enum.
  *
+ * If @a name is an empty string, the name is set to "invalid".
+ * If @a location is an empty string, the location is set to "invalid".
+ *
  * @param name Stadium name
  * @param location Stadium location
  */
 Stadium::Stadium(const std::string& name, const std::string& location)
-    : m_id(nextId), m_name(name), m_location(location)
+    : m_id(nextId)
 {
     nextId++;
+
+    setName(name);
+    setLocation(location);
 }
 
 int Stadium::getId() const
