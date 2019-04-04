@@ -36,6 +36,14 @@ Stadium::Stadium(const std::string& name, const std::string& location)
 
     setName(name);
     setLocation(location);
+
+    /*
+     * Used when findSouvenir doesn't find a corresponding
+     * souvenir with the searching ID. The function will
+     * return the value at key -1, which is an uninitialized
+     * souvenir.
+     */
+    m_souvenirs[-1] = Souvenir();
 }
 
 int Stadium::getId() const
@@ -150,18 +158,11 @@ void Stadium::addSouvenir(const std::string& name, double price)
  *
  * @param id ID of souvenir to find
  * @return If found, returns the souvenir.
- *         If not found, @a std::invalid_argument is thrown.
+ *         If not found, returns an invalid souvenir.
  */
 Souvenir& Stadium::findSouvenir(int id)
 {
     auto iterator = m_souvenirs.find(id);
-
-    if(iterator != m_souvenirs.end())
-    {
-        return (*iterator).second;
-    }
-    else
-    {
-        throw std::invalid_argument("Souvenir ID not found: " + std::to_string(id));
-    }
+    return (iterator != m_souvenirs.end() ? (*iterator).second
+                                          : m_souvenirs[-1]);
 }
