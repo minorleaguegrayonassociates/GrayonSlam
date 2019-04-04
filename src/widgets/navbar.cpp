@@ -33,8 +33,6 @@ NavBar::NavBar(QWidget* parent, int minWidth, int maxWidth)
 }
 
 /**
- * @brief Set height of the bar
- *
  * Sets the height of the bar and its parent.
  * Not changing its parent will end up cutting off the bar.
  *
