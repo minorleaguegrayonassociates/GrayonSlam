@@ -30,8 +30,8 @@ int main()
     /* Display each team's info */
     for(Souvenir souvenir : souvenirs)
     {
-        std::cout << std::setw(7) << "ID: "    << souvenir.getId()    << std::endl
-                  << std::setw(7) << "Name: "  << souvenir.getName()  << std::endl
+        std::cout << std::setw(7) << "ID: "     << souvenir.getId()    << std::endl
+                  << std::setw(7) << "Name: "   << souvenir.getName()  << std::endl
                   << std::setw(7) << "Price: $" << souvenir.getPrice() << std::endl
                   << std::endl;
     }
