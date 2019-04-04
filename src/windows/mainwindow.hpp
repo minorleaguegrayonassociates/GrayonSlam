@@ -1,10 +1,10 @@
 #pragma once
 
-#include <QDebug>
 #include <QMainWindow>
-#include <QFontDatabase>
+#include "src/widgets/navbar.hpp"
 
-namespace Ui {
+namespace Ui
+{
 class MainWindow;
 }
 
@@ -13,13 +13,21 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    /* Constructors */
+    MainWindow();
+
+    /* Destructor */
+    ~MainWindow() override;
 
 signals:
     void logout() const;
 
+private slots:
+    void changeView(int);
+    void resetViews();
+
 private:
-    Ui::MainWindow *m_ui;
+    Ui::MainWindow* m_ui;
+    NavBar* m_navbar;
 };
 
