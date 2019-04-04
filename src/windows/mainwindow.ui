@@ -15,23 +15,25 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <property name="styleSheet">
-    <string notr="true">QWidget#dashboardView {
+    <string notr="true">
+QWidget#dashboardView {
 background-image: url(:/res/background_icons_red.png);
-background-color: white;
+background-color: #66A2CC;
 }
 
 QWidget#planVacationView {
 background-image: url(:/res/background_icons_purple.png);
-background-color: white;
+background-color: #66CC96;
 }
 
 QWidget#viewTeamView {
 background-image: url(:/res/background_icons_blue.png);
-background-color: white;
+background-color: #A4CC66;
 }
 
 QWidget#adminView {
 background-image: url(:/res/background_icons_orange.png);
+background-color: white;
 }</string>
    </property>
    <widget class="QWidget" name="NavBarWidget" native="true">
