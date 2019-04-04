@@ -1,5 +1,8 @@
 #include "team.hpp"
 
+/* Enum to strings */
+const std::string Team::LEAGUE_STRING[] = {"National", "American"};
+
 /* Static variables */
 int Team::nextId = 0;
 

@@ -20,6 +20,9 @@ public:
     /* Enum types */
     enum class League { NATIONAL, AMERICAN };
 
+    /* Enum to strings */
+    static const std::string LEAGUE_STRING[];
+
     /* Constructors */
     Team();
     Team(const std::string& name, League);
