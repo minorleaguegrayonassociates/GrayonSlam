@@ -19,13 +19,9 @@ public:
     friend class DataStore;
 
     /* Enum types */
-    enum class Roof { RETRACTABLE, OPEN, FIXED };
-    enum class Surface { GRASS, ASTROTURF, ASTROTURF3D };
-    enum class Typology
-    {
-        RETROMODERN, RETROCLASSIC, JEWELBOX,
-        MODERN, CONTEMPORARY, MULTIPURPOSE
-    };
+    enum Roof { RETRACTABLE, OPEN, FIXED };
+    enum Surface { GRASS, ASTROTURF, ASTROTURF3D };
+    enum Typology { RETROMODERN, RETROCLASSIC, JEWELBOX, MODERN, CONTEMPORARY, MULTIPURPOSE };
 
     /* Enum to strings */
     static const std::string ROOF_STRING[];

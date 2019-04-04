@@ -18,7 +18,7 @@ public:
     friend class DataStore;
 
     /* Enum types */
-    enum class League { NATIONAL, AMERICAN };
+    enum League { NATIONAL, AMERICAN };
 
     /* Enum to strings */
     static const std::string LEAGUE_STRING[];
