@@ -162,7 +162,5 @@ void Stadium::addSouvenir(const std::string& name, double price)
  */
 Souvenir& Stadium::findSouvenir(int id)
 {
-    auto iterator = m_souvenirs.find(id);
-    return (iterator != m_souvenirs.end() ? (*iterator).second
-                                          : m_souvenirs[-1]);
+    return m_souvenirs[id];
 }
