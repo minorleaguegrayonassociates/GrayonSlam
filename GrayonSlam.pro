@@ -30,7 +30,7 @@ SOURCES += \
     src/windows/login.cpp \
     src/utils/parser.cpp \
     src/widgets/navbar.cpp \
-    src/widgets/navbaritem.cpp
+    src/widgets/navbaritem.cpp \
     src/datastore/stadium.cpp \
     src/datastore/team.cpp \
     src/datastore/souvenir.cpp
@@ -41,7 +41,7 @@ HEADERS += \
     src/utils/exceptions.hpp \
     src/utils/parser.hpp \
     src/widgets/navbar.hpp \
-    src/widgets/navbaritem.hpp
+    src/widgets/navbaritem.hpp \
     src/datastore/stadium.hpp \
     src/datastore/team.hpp \
     src/datastore/souvenir.hpp
