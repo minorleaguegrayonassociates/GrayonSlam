@@ -1,5 +1,4 @@
 #include "stadium.hpp"
-#include <stdexcept>
 
 /* Enum to strings */
 static const std::string ROOF_STRING[] = {"Rectractable", "Open", "Fixed"};
