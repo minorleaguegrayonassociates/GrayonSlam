@@ -85,12 +85,12 @@ void NavBar::addItem(QString icon, QString label)
     QListWidget::addItem(listWidgetItem);
 
     /* Set the QListWidgetItem to hold a NavBarItem */
-    NavBarItem* NavBItem = new NavBarItem(this, icon, label);
-    setItemWidget(listWidgetItem, NavBItem);
+    NavBarItem* navBItem = new NavBarItem(this, icon, label);
+    setItemWidget(listWidgetItem, navBItem);
 
     /* Allows the NavBar and NavBarItem to expand and shrink simultaneously */
-    connect(this, &NavBar::expand, NavBItem, &NavBarItem::expand);
-    connect(this, &NavBar::shrink, NavBItem, &NavBarItem::shrink);
+    connect(this, &NavBar::expand, navBItem, &NavBarItem::expand);
+    connect(this, &NavBar::shrink, navBItem, &NavBarItem::shrink);
 }
 
 /**
