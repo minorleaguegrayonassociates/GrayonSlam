@@ -625,19 +625,6 @@ namespace nstd
     }
 
 
-    template <class T>
-    int convertToInt(T val)
-    {
-        if(typeid(T) == typeid(std::string))
-        {
-            return 0;
-        }
-        else
-        {
-            return val;
-        }
-    }
-
 
     template <typename key>
     class hash
