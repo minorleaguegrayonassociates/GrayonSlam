@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>TeamView</class>
+ <widget class="QWidget" name="TeamView">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QTreeWidget" name="treeWidget">
+   <property name="geometry">
+    <rect>
+     <x>5</x>
+     <y>1</y>
+     <width>391</width>
+     <height>291</height>
+    </rect>
+   </property>
+   <column>
+    <property name="text">
+     <string>Team</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>League</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Stadium</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Location</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Seating Capacity</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Date Opened</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Playing Surface</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Typology</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Distance to Center Field</string>
+    </property>
+   </column>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

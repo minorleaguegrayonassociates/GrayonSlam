@@ -32,7 +32,8 @@ SOURCES += \
     src/utils/parser.cpp \
     src/windows/login.cpp \
     src/windows/mainwindow.cpp \
-    src/main.cpp
+    src/main.cpp \
+    src/views/teamview.cpp
 
 HEADERS += \
     src/windows/mainwindow.hpp \
@@ -43,11 +44,13 @@ HEADERS += \
     src/utils/parser.hpp \
     src/windows/login.hpp \
     src/windows/mainwindow.hpp \
-    src/views/abstractview.hpp
+    src/views/abstractview.hpp \
+    src/views/teamview.hpp
 
 FORMS += \
     src/windows/mainwindow.ui \
-    src/windows/login.ui
+    src/windows/login.ui \
+    src/views/teamview.ui
 
 RESOURCES += \
     res.qrc
