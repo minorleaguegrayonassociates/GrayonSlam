@@ -26,7 +26,9 @@ int main()
 
         //Assign every other team to american league
         if(i % 2 == 0)
+        {
             team.league = Team::League::AMERICAN;
+        }
 
         teams.push_back(team);
     }
