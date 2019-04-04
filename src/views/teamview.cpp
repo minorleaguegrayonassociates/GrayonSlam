@@ -2,7 +2,7 @@
 #include "ui_teamview.h"
 
 TeamView::TeamView(QWidget *parent) :
-    QWidget(parent),
+    AbstractViewModel(parent),
     ui(new Ui::TeamView)
 {
     ui->setupUi(this);
@@ -11,4 +11,14 @@ TeamView::TeamView(QWidget *parent) :
 TeamView::~TeamView()
 {
     delete ui;
+}
+
+void TeamView::resetView()
+{
+    //To be implemented with data
+}
+
+void TeamView::resetUI()
+{
+    //To be implemented with data
 }
