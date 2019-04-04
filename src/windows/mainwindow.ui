@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>710</width>
+    <width>800</width>
     <height>600</height>
    </rect>
   </property>
@@ -16,8 +16,22 @@
   <widget class="QWidget" name="centralWidget">
    <property name="styleSheet">
     <string notr="true">QWidget#dashboardView {
-background-image: url(:/res/background_icon_red.png);
+background-image: url(:/res/background_icons_red.png);
 background-color: white;
+}
+
+QWidget#planVacationView {
+background-image: url(:/res/background_icons_purple.png);
+background-color: white;
+}
+
+QWidget#viewTeamView {
+background-image: url(:/res/background_icons_blue.png);
+background-color: white;
+}
+
+QWidget#adminView {
+background-image: url(:/res/background_icons_orange.png);
 }</string>
    </property>
    <widget class="QWidget" name="widget" native="true">
@@ -35,7 +49,7 @@ background-color: white;
      <rect>
       <x>90</x>
       <y>0</y>
-      <width>620</width>
+      <width>710</width>
       <height>600</height>
      </rect>
     </property>
@@ -49,7 +63,7 @@ background-color: white;
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="dashboardView">
      <property name="styleSheet">

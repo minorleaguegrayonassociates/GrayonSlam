@@ -1,10 +1,10 @@
-#include "navitem.hpp"
-#include "ui_navitem.h"
+#include "navbaritem.hpp"
+#include "ui_navbaritem.h"
 #include <QFont>
 
 /* Constructor */
-NavItem::NavItem(QListWidget* parent, QString icon, QString label)
-    : QWidget(parent), m_ui(new Ui::NavItem)
+NavBarItem::NavBarItem(QListWidget* parent, QString icon, QString label)
+    : QWidget(parent), m_ui(new Ui::NavBarItem)
 {
     m_ui->setupUi(this);
 
@@ -28,29 +28,29 @@ NavItem::NavItem(QListWidget* parent, QString icon, QString label)
 }
 
 /* Destructor */
-NavItem::~NavItem()
+NavBarItem::~NavBarItem()
 {
     delete m_ui;
 }
 
 /* Public slots */
-void NavItem::expand() const
+void NavBarItem::expand() const
 {
     m_ui->navLabel->show();
 }
 
-void NavItem::shrink() const
+void NavBarItem::shrink() const
 {
     m_ui->navLabel->hide();
 }
 
 /* Events */
-void NavItem::enterEvent(QEvent*)
+void NavBarItem::enterEvent(QEvent*)
 {
     setStyleSheet("QWidget#navIcon,QWidget#navLabel { color: black; }");
 }
 
-void NavItem::leaveEvent(QEvent*)
+void NavBarItem::leaveEvent(QEvent*)
 {
     setStyleSheet("QWidget#navIcon,QWidget#navLabel { color: white; }");
 }

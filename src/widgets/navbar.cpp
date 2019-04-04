@@ -1,10 +1,8 @@
 #include "navbar.hpp"
-#include "navitem.hpp"
+#include "src/widgets/navbaritem.hpp"
 #include <QPropertyAnimation>
 
 /**
- * @brief Constructor
- *
  * Constructs a NavBar object. It will resize its parent widget to
  * whatever initial size it needs to be and its current height.
  *
@@ -25,7 +23,7 @@ NavBar::NavBar(QWidget* parent, int minWidth, int maxWidth)
     //Sets the parent's size
     parent->resize(m_minWidth, parent->height());
 
-    /* Setting background color for highlight - when NavItem is selected this will be it's background color */
+    /* Setting background color for highlight - when NavBarItem is selected this will be it's background color */
     QPalette palette;
     palette.setColor(QPalette::Disabled, QPalette::Highlight, Qt::darkBlue);
     palette.setColor(QPalette::Inactive, QPalette::Highlight, Qt::darkBlue);
@@ -49,8 +47,6 @@ void NavBar::setHeight(int height)
 }
 
 /**
- * @brief Set minimum width of the bar
- *
  * Sets the minimum width of the bar.
  *
  * @param width The new minimum width
@@ -61,8 +57,6 @@ void NavBar::setMinWidth(int width)
 }
 
 /**
- * @brief Set maximum width of the bar
- *
  * Sets the maximum width of the bar.
  *
  * @param width The new maximum width
@@ -90,13 +84,13 @@ void NavBar::addItem(QString icon, QString label)
     listWidgetItem->setSizeHint(itemSize);
     QListWidget::addItem(listWidgetItem);
 
-    /* Set the QListWidgetItem to hold a NavItem */
-    NavItem* navItem = new NavItem(this, icon, label);
-    setItemWidget(listWidgetItem, navItem);
+    /* Set the QListWidgetItem to hold a NavBarItem */
+    NavBarItem* NavBItem = new NavBarItem(this, icon, label);
+    setItemWidget(listWidgetItem, NavBItem);
 
-    /* Allows the NavBar and NavItem to expand and shrink simultaneously */
-    connect(this, &NavBar::expand, navItem, &NavItem::expand);
-    connect(this, &NavBar::shrink, navItem, &NavItem::shrink);
+    /* Allows the NavBar and NavBarItem to expand and shrink simultaneously */
+    connect(this, &NavBar::expand, NavBItem, &NavBarItem::expand);
+    connect(this, &NavBar::shrink, NavBItem, &NavBarItem::shrink);
 }
 
 /**
@@ -123,7 +117,7 @@ void NavBar::leaveEvent(QEvent*)
     animation->setEndValue(QSize(m_minWidth, height()));
     animation->start(QAbstractAnimation::DeleteWhenStopped);
 
-    //Tells each NavItem to shrink
+    //Tells each NavBarItem to shrink
     emit shrink();
 }
 
@@ -151,6 +145,6 @@ void NavBar::enterEvent(QEvent*)
     animation->setEndValue(QSize(m_maxWidth, height()));
     animation->start(QAbstractAnimation::DeleteWhenStopped);
 
-    //Tells each NavItem to expand
+    //Tells each NavBarItem to expand
     emit expand();
 }

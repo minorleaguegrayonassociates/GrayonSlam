@@ -30,7 +30,7 @@ SOURCES += \
     src/windows/login.cpp \
     src/utils/parser.cpp \
     src/widgets/navbar.cpp \
-    src/widgets/navitem.cpp
+    src/widgets/navbaritem.cpp
 
 HEADERS += \
     src/windows/mainwindow.hpp \
@@ -38,12 +38,12 @@ HEADERS += \
     src/utils/exceptions.hpp \
     src/utils/parser.hpp \
     src/widgets/navbar.hpp \
-    src/widgets/navitem.hpp
+    src/widgets/navbaritem.hpp
 
 FORMS += \
     src/windows/mainwindow.ui \
     src/windows/login.ui \
-    src/widgets/navitem.ui
+    src/widgets/navbaritem.ui
 
 RESOURCES += \
     res.qrc

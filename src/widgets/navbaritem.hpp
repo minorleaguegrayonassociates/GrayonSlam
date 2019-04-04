@@ -3,19 +3,19 @@
 
 namespace Ui
 {
-class NavItem;
+class NavBarItem;
 }
 
-class NavItem : public QWidget
+class NavBarItem : public QWidget
 {
     Q_OBJECT
 
 public:
     /* Constructor */
-    NavItem(QListWidget* parent, QString icon, QString label);
+    NavBarItem(QListWidget* parent, QString icon, QString label);
 
     /* Destructor */
-    ~NavItem() override;
+    ~NavBarItem() override;
 
 public slots:
     void expand() const;
@@ -26,5 +26,5 @@ private:
     void enterEvent(QEvent*) override;
     void leaveEvent(QEvent*) override;
 
-    Ui::NavItem* m_ui;
+    Ui::NavBarItem* m_ui;
 };
