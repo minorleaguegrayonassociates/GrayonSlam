@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <vector>
 #include <cstdlib>
+#include <algorithm>
 #include "../src/datastore/stadium.hpp"
 
 std::string randomString(int length)
@@ -12,6 +13,19 @@ std::string randomString(int length)
         string += rand() % ('Z' - 'A') + 'A';
 
     return string;
+}
+
+void printStadium(const Stadium& stadium)
+{
+    std::cout << std::setw(19) << "ID: "                << stadium.getId()                            << std::endl
+              << std::setw(19) << "Name: "              << stadium.getName()                          << std::endl
+              << std::setw(19) << "Location: "          << stadium.getLocation()                      << std::endl
+              << std::setw(19) << "Seat cap: "          << stadium.getSeatCap()                       << std::endl
+              << std::setw(19) << "Year opened: "       << stadium.getYearOpened()                    << std::endl
+              << std::setw(19) << "Center field dist: " << stadium.getCenterFieldDist()               << std::endl
+              << std::setw(19) << "Roof: "              << Stadium::ROOF_STRING[stadium.roof]         << std::endl
+              << std::setw(19) << "Surface: "           << Stadium::SURFACE_STRING[stadium.surface]   << std::endl
+              << std::setw(19) << "Typology: "          << Stadium::TYPOLOGY_STRING[stadium.typology] << std::endl;
 }
 
 void printSouvenir(const Souvenir& souvenir)
@@ -47,21 +61,12 @@ int main()
     /* Display each stadium's info */
     for(Stadium stadium : stadiums)
     {
-        std::cout << std::setw(19) << "ID: "                << stadium.getId()                            << std::endl
-                  << std::setw(19) << "Name: "              << stadium.getName()                          << std::endl
-                  << std::setw(19) << "Location: "          << stadium.getLocation()                      << std::endl
-                  << std::setw(19) << "Seat cap: "          << stadium.getSeatCap()                       << std::endl
-                  << std::setw(19) << "Year opened: "       << stadium.getYearOpened()                    << std::endl
-                  << std::setw(19) << "Center field dist: " << stadium.getCenterFieldDist()               << std::endl
-                  << std::setw(19) << "Roof: "              << Stadium::ROOF_STRING[stadium.roof]         << std::endl
-                  << std::setw(19) << "Surface: "           << Stadium::SURFACE_STRING[stadium.surface]   << std::endl
-                  << std::setw(19) << "Typology: "          << Stadium::TYPOLOGY_STRING[stadium.typology] << std::endl;
+        printStadium(stadium);
 
-        /* Display each souvenir in the stadium */
-        for(Souvenir souvenir : stadium.getSouvenirs())
-        {
-            printSouvenir(souvenir);
-        }
+        std::vector<Souvenir> souvenirs = stadium.getSouvenirs();
+
+        //Print each souvenir
+        std::for_each(souvenirs.begin(), souvenirs.end(), [](Souvenir souvenir){ printSouvenir(souvenir); });
     }
 
     std::cout << std::endl << std::endl;
