@@ -36,14 +36,6 @@ Stadium::Stadium(const std::string& name, const std::string& location)
 
     setName(name);
     setLocation(location);
-
-    /*
-     * Used when findSouvenir doesn't find a corresponding
-     * souvenir with the searching ID. The function will
-     * return the value at key -1, which is an uninitialized
-     * souvenir.
-     */
-    m_souvenirs[-1] = Souvenir();
 }
 
 int Stadium::getId() const
