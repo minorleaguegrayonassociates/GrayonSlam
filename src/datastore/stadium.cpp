@@ -116,7 +116,7 @@ void Stadium::setSeatCap(int cap)
  */
 void Stadium::setYearOpened(int year)
 {
-    if(year >= 1800) { m_yearOpened = year; }
+    if(year >= 1839) { m_yearOpened = year; }
 }
 
 /**
