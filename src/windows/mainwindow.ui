@@ -34,7 +34,7 @@ QWidget#adminView {
 background-image: url(:/res/background_icons_orange.png);
 }</string>
    </property>
-   <widget class="QWidget" name="widget" native="true">
+   <widget class="QWidget" name="NavBarWidget" native="true">
     <property name="geometry">
      <rect>
       <x>0</x>

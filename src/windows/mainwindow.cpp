@@ -18,7 +18,7 @@ MainWindow::MainWindow()
     if(QFontDatabase::addApplicationFont(":/res/fontawesome-webfont.ttf") == -1){qWarning() << "FontAwesome cannot be loaded !";}
 
     /* Initialize navigation bar and items */
-    m_navbar = new NavBar(m_ui->widget, 90, 220);
+    m_navbar = new NavBar(m_ui->NavBarWidget, 90, 220);
     connect(m_navbar, &NavBar::currentRowChanged, this, &MainWindow::changeView);
     m_navbar->addItem("\uf0c9", "Dashboard");
     m_navbar->addItem("\uf5b0", "Plan\na Vacation");
@@ -37,7 +37,7 @@ MainWindow::~MainWindow()
 /* Private slots */
 void MainWindow::changeView(int view)
 {
-    resetUi();
+    resetViews();
 
     Login::Type type = Login::getType();
 
@@ -59,7 +59,7 @@ void MainWindow::changeView(int view)
     }
 }
 
-void MainWindow::resetUi()
+void MainWindow::resetViews()
 {
     /* Reset views -- go here */
 }

@@ -24,7 +24,7 @@ signals:
 
 private slots:
     void changeView(int);
-    void resetUi();
+    void resetViews();
 
 private:
     Ui::MainWindow* m_ui;
