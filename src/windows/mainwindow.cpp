@@ -62,5 +62,4 @@ void MainWindow::changeView(int view)
 void MainWindow::resetUi()
 {
     /* Reset views -- go here */
-    qDebug() << "Reseting";
 }

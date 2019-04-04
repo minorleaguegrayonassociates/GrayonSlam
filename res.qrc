@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>res/fontawesome-webfont.ttf</file>
         <file>res/Minor_League_Grayons_With_Arms.png</file>
+        <file>res/background_icon_red.png</file>
     </qresource>
 </RCC>
