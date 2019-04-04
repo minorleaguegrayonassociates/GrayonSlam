@@ -67,6 +67,16 @@ int Stadium::getCenterFieldDist() const
     return m_centerFieldDist;
 }
 
+std::vector<Souvenir> Stadium::getSouvenirs() const
+{
+    std::vector<Souvenir> vec;
+
+    for(auto souvenir : m_souvenirs)
+        vec.push_back(souvenir.second);
+
+    return vec;
+}
+
 /**
  * Sets the stadium name only if the given string is not empty.
  *

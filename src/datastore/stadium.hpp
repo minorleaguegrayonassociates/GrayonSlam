@@ -1,6 +1,7 @@
 #pragma once
 #include "souvenir.hpp"
 #include <map>
+#include <vector>
 
 /**
  * @class Stadium class
@@ -39,6 +40,7 @@ public:
     int getSeatCap() const;
     int getYearOpened() const;
     int getCenterFieldDist() const;
+    std::vector<Souvenir> getSouvenirs() const;
 
     /* Setters */
     void setName(const std::string&);
