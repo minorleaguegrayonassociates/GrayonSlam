@@ -17,22 +17,10 @@ namespace nstd
     template <typename key, typename value, typename Hash>
     class map;
 
-
-
-     /* PRIME LOOKUP TABLE - QUICK ACCESS*/
-    struct Primes
-    {
-        Primes():lookupTable{SieveOfEratosthenes((4000))}{}
-        Primes(int n):lookupTable{SieveOfEratosthenes(n)}{}
-        unsigned int *lookupTable;
-        ~Primes(){delete lookupTable;}
-    };
-
-    static Primes TABLE_OF_PRIMES;
-
-
     template <class k, class v, class Hash>
     std::ostream& operator<<(std::ostream& out, const map<k, v, Hash>& d);
+
+    /*CLASSES & STRUCTS */
 
     template <typename key, typename value, typename Hash = hash<key>>
     class map
@@ -40,33 +28,7 @@ namespace nstd
     private:
         struct node;
     public:
-        class iterator
-        {
-        public:
-            iterator(const iterator &);
-            iterator(int,map*,node*);
-            iterator& operator++();
-            iterator operator++(int);
-            iterator& operator--();
-            iterator operator--(int);
-            iterator operator-(int);
-            iterator operator+(int);
-            value& operator*();
-            value* operator->();
-            bool operator!=(const iterator&) const;
-            bool operator==(const iterator&) const;
-            bool isEmpty(){return (m_data == NULL ||m_data->available);}
-            node* getData(){return m_data;}
-            map* getParent(){return m_parent;}
-            void setEnd(bool isEnd){m_end= isEnd;}
-        private:
-            iterator();
-            int m_position = 0;
-            map* m_parent = nullptr;
-            node* m_data = nullptr;
-            bool m_end = false;
-        };
-
+        class iterator;
         map();
         map(key[],value[],const int);
         map(const map&);
@@ -80,32 +42,114 @@ namespace nstd
          */
         value& operator[] (const key&);
         value& operator[] (key&&);
-        iterator insert(key, value);
         std::pair<key,value> remove(key);
+        iterator insert(key, value);
         iterator find(key);
-        int size() const {return m_numOfElems;}
-        bool isEmpty() const {return (m_numOfElems == 0);}
-        int capacity() const {return m_capacity;}
-        void reserve(unsigned int);
         iterator begin() noexcept;
         iterator end() noexcept;
+        void reserve(unsigned int);
+        int size() const {return m_numOfElems;}
+        int capacity() const {return m_capacity;}
+        bool isEmpty() const {return (m_numOfElems == 0);}
         friend std::ostream& operator<< <>(std::ostream&, const map<key,value,Hash>&);
     private:
-        struct node
-        {
-            key nodeKey = key();
-            value nodeValue = value();
-            bool available = false;
-            map* parentMap = NULL;
-            node(key, value, bool, map*);
-        };
         int (*hash)(key k,int j,int capacity) = &(Hash::staticHashAlgo);
         node* m_insertFind(key, int&) const;
-        node** m_map = nullptr;
+        node** m_map = NULL;
         int m_primeNumIndex = 0;
         int m_numOfElems = 0;
         int m_capacity = 0;
     };
+
+
+    template <typename key, typename value, typename Hash>
+    class map<key,value,Hash>::iterator
+    {
+    public:
+        iterator(const iterator &);
+        iterator(int,map*,node*);
+        iterator& operator++();
+        iterator operator++(int);
+        iterator& operator--();
+        iterator operator--(int);
+        iterator operator-(int);
+        iterator operator+(int);
+        value& operator*();
+        value* operator->();
+        bool operator!=(const iterator&) const;
+        bool operator==(const iterator&) const;
+        bool isEmpty(){return (m_data == NULL ||m_data->available);}
+        node* getData(){return m_data;}
+        map* getParent(){return m_parent;}
+        void setEnd(bool isEnd){m_end= isEnd;}
+    private:
+        iterator();
+        int m_position = 0;
+        map* m_parent = NULL;
+        node* m_data = NULL;
+        bool m_end = false;
+    };
+
+
+    template <typename key, typename value, typename Hash>
+    struct map<key,value,Hash>::node
+    {
+        key nodeKey = key();
+        value nodeValue = value();
+        bool available = false;
+        map* parentMap = NULL;
+        node(key, value, bool, map*);
+    };
+
+
+    template <typename key>
+    class hash
+    {
+    public:
+        int operator()(key k, int j, int capacity)
+        {
+            return hashAlgo(k,j,capacity);
+        }
+        int hashAlgo(key k,int j, int capacity)const
+        {
+            return((static_cast<int>(k))+j*j)%capacity;
+        }
+        static int staticHashAlgo(key k,int j, int capacity)
+        {
+            return ((static_cast<int>(k))+j*j)%capacity;
+        }
+
+    };
+
+    template <>
+    class hash<std::string>
+    {
+    public:
+        int operator()(std::string k, int j, int capacity)
+        {
+            return hashAlgo(k,j,capacity);
+        }
+        int hashAlgo(std::string k, int j,int capacity)const
+        {
+            return (static_cast<int>(std::hash<std::string>{}(k))+j*j)%capacity;
+        }
+        static int staticHashAlgo(std::string k,int j, int capacity)
+        {
+            return (static_cast<int>(std::hash<std::string>{}(k))+j*j)%capacity;
+        }
+    };
+
+
+    /* PRIME LOOKUP TABLE - QUICK ACCESS*/
+   struct Primes
+   {
+       Primes():lookupTable{SieveOfEratosthenes((4000))}{}
+       Primes(int n):lookupTable{SieveOfEratosthenes(n)}{}
+       unsigned int *lookupTable;
+       ~Primes(){delete lookupTable;}
+   };
+
+    static Primes TABLE_OF_PRIMES;
 
     /* MAP METHODS*/
 
@@ -116,7 +160,6 @@ namespace nstd
         int position = -1;
         if(m_map)
         {
-
             firstElem = m_map[0];
             int i = 0;
             position = 0;
@@ -128,7 +171,6 @@ namespace nstd
             }
         }
         return iterator(position,this, firstElem);
-
     }
 
     template <typename key, typename value, typename Hash>
@@ -184,8 +226,6 @@ namespace nstd
         }
         return iterator(position, this, val);
     }
-
-
 
     template <typename key, typename value, typename Hash>
     value& map<key,value,Hash>::operator[](const key& k)
@@ -378,7 +418,6 @@ namespace nstd
        return val;
     }
 
-
     /* ITERATOR METHODS*/
 
     template <typename key, typename value, typename Hash>
@@ -415,11 +454,9 @@ namespace nstd
                 {
 
                   lastElem = m_parent->m_map[m_parent->m_capacity-1];
-                  int i = m_parent->m_capacity-1;
                   position = m_parent->m_capacity-1;
-                  while(lastElem != NULL && i >-1 && lastElem->available)
+                  for(int i = m_parent->m_capacity-1;lastElem != NULL && i >-1 && lastElem->available; --i)
                   {
-                      --i;
                       --position;
                       --lastElem;
                   }
@@ -530,7 +567,6 @@ namespace nstd
         return *this;
     }
 
-
     template <typename key, typename value, typename Hash>
     typename map<key,value,Hash>::iterator map<key,value,Hash>::iterator::operator-(int numOfSpacesMoved)
     {
@@ -539,10 +575,10 @@ namespace nstd
         for(int movement = 0; movement < numOfSpacesMoved; ++movement)
         {
 
-            for (;cpy.m_position >-1 &&cpy.m_data != nullptr && cpy.m_data->available != true; --cpy.m_position, --cpy.m_data) {}
+            for (;cpy.m_position >-1 &&cpy.m_data != NULL && cpy.m_data->available != true; --cpy.m_position, --cpy.m_data) {}
         }
         //invalidate pointer if at end
-        if(cpy.m_position == -1 || cpy.m_data->available == true){cpy.m_data = nullptr;}
+        if(cpy.m_position == -1 || cpy.m_data->available == true){cpy.m_data = NULL;}
         return cpy;
     }
 
@@ -574,16 +610,13 @@ namespace nstd
         return false;
     }
 
-
     /* NODE METHODS*/
 
     template <typename key, typename value, typename Hash>
     map<key,value,Hash>::node::node(key k, value v, bool avail, map* parent)
         : nodeKey{k},nodeValue{v},available{avail},parentMap{parent}{}
 
-
     /* PRIME LOOKUP TABLE - QUICK ACCESS*/
-
 
     unsigned int* SieveOfEratosthenes(int n)
     {
@@ -624,43 +657,6 @@ namespace nstd
         return actualPrimes;
     }
 
-
-
-    template <typename key>
-    class hash
-    {
-    public:
-        int operator()(key k, int j, int capacity)
-        {
-            return hashAlgo(k,j,capacity);
-        }
-
-        int hashAlgo(key k,int j, int capacity)const {return((static_cast<int>(k))+j*j)%capacity;}
-        static int staticHashAlgo(key k,int j, int capacity)
-        {
-            int hash = ((static_cast<int>(k))+j*j)%capacity;
-            return hash;
-        }
-
-    };
-
-
-
-
-    template <>
-    class hash<std::string>
-    {
-    public:
-        int operator()(std::string k, int j, int capacity)
-        {
-            return hashAlgo(k,j,capacity);
-        }
-
-
-        int hashAlgo(std::string k, int j,int capacity)const{return (static_cast<int>(std::hash<std::string>{}(k))+j*j)%capacity;}
-        static int staticHashAlgo(std::string k,int j, int capacity) {return (static_cast<int>(std::hash<std::string>{}(k))+j*j)%capacity;}
-    };
-
     template <class k, class v, class Hash>
     std::ostream& operator<<(std::ostream& out, const map<k, v, Hash>& d)
     {
@@ -668,9 +664,10 @@ namespace nstd
         for(int i = 0; i < d.m_capacity; ++i)
         {
             if(d.m_map[i]&& d.m_map[i]->available != true)
-            out << "Hash: "<<std::setw(2)<<std::right<< i <<" Key: " <<std::setw(3)<< d.m_map[i]->nodeKey << " Value: " << d.m_map[i]->nodeValue << "\n";
+            out << "Hash: "<<std::setw(2)<<std::right
+                << i <<" Key: " <<std::setw(3)<< d.m_map[i]->nodeKey
+                << " Value: " << d.m_map[i]->nodeValue << "\n";
         }
         return out;
     }
-
-};
+};// End nstd namespace
