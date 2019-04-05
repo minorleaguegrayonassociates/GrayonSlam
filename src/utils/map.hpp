@@ -145,7 +145,9 @@ namespace nstd
         }
         static int staticHashAlgo(key k,int j, int capacity)
         {
-            return ((static_cast<int>(k))+j*j)%capacity;
+            int hash = (((static_cast<int>(k))+j*j)%capacity);
+            if(hash < 0) hash *= -1;
+            return hash;
         }
 
     };
