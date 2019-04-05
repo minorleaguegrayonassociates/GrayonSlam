@@ -65,6 +65,9 @@ public:
     Typology typology = Typology::RETROMODERN;
 
 private:
+    /* Constructors */
+    Stadium(int id, const std::string& name, const std::string& location);
+
     /* Data */
     int m_id = -1;
     std::string m_name = "invalid";

@@ -158,3 +158,17 @@ Souvenir& Stadium::findSouvenir(int id)
 {
     return m_souvenirs[id];
 }
+
+/**
+ * Private constructor used by @a Database through friend class
+ * association. This sets the id, name, and location of the Stadium.
+ *
+ * @param id Stadium id
+ * @param name Stadium name
+ * @param location Stadium location
+ */
+Stadium::Stadium(int id, const std::string& name, const std::string& location)
+    : Stadium(name, location)
+{
+    m_id = id;
+}

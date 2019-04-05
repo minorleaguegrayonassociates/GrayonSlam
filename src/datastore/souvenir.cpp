@@ -62,3 +62,17 @@ void Souvenir::setPrice(double price)
 {
     if(price >= 0.0) { m_price = price; }
 }
+
+/**
+ * Private constructor used by @a Database through friend class
+ * association. This sets the id, name, and price of the souvenir.
+ *
+ * @param id Souvenir ID
+ * @param name Souvenir name
+ * @param price Souvenir price
+ */
+Souvenir::Souvenir(int id, const std::string& name, double price)
+    : Souvenir(name, price)
+{
+    m_id = id;
+}

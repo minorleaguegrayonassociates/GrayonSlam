@@ -46,6 +46,9 @@ public:
     League league;
 
 private:
+    /* Constructors */
+    Team(int id, const std::string& name, League);
+
     /* Data */
     int m_id = -1;
     int m_stadiumId = -1;

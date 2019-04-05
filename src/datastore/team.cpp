@@ -61,3 +61,17 @@ void Team::setName(const std::string& name)
 {
     if(!name.empty()) { m_name = name; }
 }
+
+/**
+ * Private constructor used by @a Database through friend class
+ * association. This sets the id, name, and league of the team.
+ *
+ * @param id Team ID
+ * @param name Team name
+ * @param leag Team's league
+ */
+Team::Team(int id, const std::string& name, League leag)
+    : Team(name, leag)
+{
+    m_id = id;
+}
