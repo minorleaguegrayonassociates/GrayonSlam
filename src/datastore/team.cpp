@@ -3,9 +3,6 @@
 /* Enum to strings */
 const std::string Team::LEAGUE_STRING[] = {"National", "American"};
 
-/* Static variables */
-int Team::nextId = 0;
-
 /**
  * Constructs an invalid team.
  */
@@ -24,10 +21,8 @@ Team::Team()
  * @param leag Team's league
  */
 Team::Team(const std::string& name, League leag)
-    : league(leag), m_id(nextId)
+    : league(leag)
 {
-    nextId++;
-
     setName(name);
 }
 

@@ -7,9 +7,6 @@ const std::string Stadium::SURFACE_STRING[] = {"Grass", "AstroTurg GameDay Grass
 const std::string Stadium::TYPOLOGY_STRING[] = {"Retro Modern", "Retro Classic", "Jewelbox",
                                                 "Modern", "Contemporary", "Multipurpose"};
 
-/* Static variables */
-int Stadium::nextId = 0;
-
 /**
  * Constructs an invalid stadium.
  */
@@ -29,10 +26,7 @@ Stadium::Stadium()
  * @param location Stadium location
  */
 Stadium::Stadium(const std::string& name, const std::string& location)
-    : m_id(nextId)
 {
-    nextId++;
-
     setName(name);
     setLocation(location);
 }

@@ -15,7 +15,7 @@
 class Team
 {
 public:
-    friend class DataStore;
+    friend class Database;
 
     /* Enum types */
     enum League { NATIONAL, AMERICAN };
@@ -41,9 +41,6 @@ public:
     League league;
 
 private:
-    /* Static variables */
-    static int nextId;
-
     /* Data */
     int m_id = -1;
     int m_stadiumId = -1;

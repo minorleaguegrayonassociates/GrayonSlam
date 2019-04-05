@@ -17,7 +17,7 @@
 class Stadium
 {
 public:
-    friend class DataStore;
+    friend class Database;
 
     /* Enum types */
     enum Roof { RETRACTABLE, OPEN, FIXED };
@@ -60,10 +60,7 @@ public:
     Typology typology = Typology::RETROMODERN;
 
 private:
-    /* Static variables */
-    static int nextId;
-
-    /* Stadium information */
+    /* Data */
     int m_id = -1;
     std::string m_name = "invalid";
     std::string m_location = "invalid";
