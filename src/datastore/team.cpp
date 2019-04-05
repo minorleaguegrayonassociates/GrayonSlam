@@ -3,9 +3,6 @@
 /* Enum to strings */
 const std::string Team::LEAGUE_STRING[] = {"National", "American"};
 
-/* Static variables */
-int Team::nextId = 0;
-
 /**
  * Constructs an invalid team.
  */
@@ -13,8 +10,9 @@ Team::Team()
 {}
 
 /**
- * Constructs a team given a name and league. The ID of this team
- * will be set to @a nextId, then @a nextId is incremented after.
+ * Constructs a team given a name and league. ID data will be
+ * defaulted to -1. Enum data is set to the first item in the enum.
+ *
  * If @a name is an empty string, the team's name is set to "invalid".
  *
  * The stadium ID is set to -1 to indicate that the team is not
@@ -24,10 +22,8 @@ Team::Team()
  * @param leag Team's league
  */
 Team::Team(const std::string& name, League leag)
-    : league(leag), m_id(nextId)
+    : league(leag)
 {
-    nextId++;
-
     setName(name);
 }
 
@@ -64,4 +60,18 @@ void Team::setStadium(const Stadium& stadium)
 void Team::setName(const std::string& name)
 {
     if(!name.empty()) { m_name = name; }
+}
+
+/**
+ * Private constructor used by @a Database through friend class
+ * association. This sets the id, name, and league of the team.
+ *
+ * @param id Team ID
+ * @param name Team name
+ * @param leag Team's league
+ */
+Team::Team(int id, const std::string& name, League leag)
+    : Team(name, leag)
+{
+    m_id = id;
 }

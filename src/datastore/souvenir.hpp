@@ -32,6 +32,9 @@ public:
     bool hidden = true;
 
 private:
+    /* Constructors */
+    Souvenir(int id, const std::string&name, double price);
+
     /* Data */
     int m_id = -1;
     std::string m_name = "invalid";

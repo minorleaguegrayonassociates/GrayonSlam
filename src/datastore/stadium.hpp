@@ -13,11 +13,16 @@
  * Enum classes are available for information about the stadium's
  * architecture. There is also static variables in the class to
  * convert an enum type to an associated string.
+ *
+ * Note:
+ * All stadiums have their IDs defaulted to -1. The only way for a
+ * stadium to have a valid ID is for it to be created by the
+ * @a Database class. This is why @a Database is a friend class.
  */
 class Stadium
 {
 public:
-    friend class DataStore;
+    friend class Database;
 
     /* Enum types */
     enum Roof { RETRACTABLE, OPEN, FIXED };
@@ -60,10 +65,10 @@ public:
     Typology typology = Typology::RETROMODERN;
 
 private:
-    /* Static variables */
-    static int nextId;
+    /* Constructors */
+    Stadium(int id, const std::string& name, const std::string& location);
 
-    /* Stadium information */
+    /* Data */
     int m_id = -1;
     std::string m_name = "invalid";
     std::string m_location = "invalid";

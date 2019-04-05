@@ -7,9 +7,6 @@ const std::string Stadium::SURFACE_STRING[] = {"Grass", "AstroTurg GameDay Grass
 const std::string Stadium::TYPOLOGY_STRING[] = {"Retro Modern", "Retro Classic", "Jewelbox",
                                                 "Modern", "Contemporary", "Multipurpose"};
 
-/* Static variables */
-int Stadium::nextId = 0;
-
 /**
  * Constructs an invalid stadium.
  */
@@ -17,10 +14,9 @@ Stadium::Stadium()
 {}
 
 /**
- * Constructs a stadium given a name and location. The ID of this
- * stadium will be set to @a nextId, then @a nextID is incremented
- * after. The rest of the data is initialized to -1 (for integers)
- * or the first item in the enum.
+ * Constructs a stadium given a name and location. ID and integer
+ * data will be defaulted to -1. Enum data is set to the first item
+ * in the enum.
  *
  * If @a name is an empty string, the name is set to "invalid".
  * If @a location is an empty string, the location is set to "invalid".
@@ -29,10 +25,7 @@ Stadium::Stadium()
  * @param location Stadium location
  */
 Stadium::Stadium(const std::string& name, const std::string& location)
-    : m_id(nextId)
 {
-    nextId++;
-
     setName(name);
     setLocation(location);
 }
@@ -164,4 +157,18 @@ void Stadium::addSouvenir(const std::string& name, double price)
 Souvenir& Stadium::findSouvenir(int id)
 {
     return m_souvenirs[id];
+}
+
+/**
+ * Private constructor used by @a Database through friend class
+ * association. This sets the id, name, and location of the Stadium.
+ *
+ * @param id Stadium id
+ * @param name Stadium name
+ * @param location Stadium location
+ */
+Stadium::Stadium(int id, const std::string& name, const std::string& location)
+    : Stadium(name, location)
+{
+    m_id = id;
 }
