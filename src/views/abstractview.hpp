@@ -10,6 +10,7 @@
 class View: public QWidget
 {
     Q_OBJECT
+    
 public:
 
     explicit View(QWidget* parent = nullptr)
@@ -21,5 +22,5 @@ public:
     /**
      * Resets the UI that corresponds with the given view
      */
-    virtual void resetUI() = 0;
+    virtual void resetUi() = 0;
 };
