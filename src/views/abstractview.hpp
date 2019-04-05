@@ -12,11 +12,13 @@ class View: public QWidget
     Q_OBJECT
     
 public:
-
     explicit View(QWidget* parent = nullptr)
         : QWidget(parent)
     {}
     virtual ~View(){}
+    /**
+     * Resets any internal components of the view
+     */
     virtual void resetView() = 0;
 
     /**
