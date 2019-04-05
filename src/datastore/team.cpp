@@ -10,8 +10,9 @@ Team::Team()
 {}
 
 /**
- * Constructs a team given a name and league. The ID of this team
- * will be set to @a nextId, then @a nextId is incremented after.
+ * Constructs a team given a name and league. ID data will be
+ * defaulted to -1. Enum data is set to the first item in the enum.
+ *
  * If @a name is an empty string, the team's name is set to "invalid".
  *
  * The stadium ID is set to -1 to indicate that the team is not

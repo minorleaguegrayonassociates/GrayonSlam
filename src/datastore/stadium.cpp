@@ -14,10 +14,9 @@ Stadium::Stadium()
 {}
 
 /**
- * Constructs a stadium given a name and location. The ID of this
- * stadium will be set to @a nextId, then @a nextID is incremented
- * after. The rest of the data is initialized to -1 (for integers)
- * or the first item in the enum.
+ * Constructs a stadium given a name and location. ID and integer
+ * data will be defaulted to -1. Enum data is set to the first item
+ * in the enum.
  *
  * If @a name is an empty string, the name is set to "invalid".
  * If @a location is an empty string, the location is set to "invalid".
