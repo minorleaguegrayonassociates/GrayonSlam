@@ -29,28 +29,32 @@ SOURCES += \
     src/windows/mainwindow.cpp \
     src/windows/login.cpp \
     src/utils/parser.cpp \
-    src/utils/parser.cpp \
-    src/windows/login.cpp \
-    src/windows/mainwindow.cpp \
-    src/main.cpp \
-    src/views/teamview.cpp
+    src/views/teamview.cpp \
+    src/widgets/navbar.cpp \
+    src/widgets/navbaritem.cpp \
+    src/datastore/stadium.cpp \
+    src/datastore/team.cpp \
+    src/datastore/souvenir.cpp
+
 
 HEADERS += \
     src/windows/mainwindow.hpp \
     src/windows/login.hpp \
     src/utils/exceptions.hpp \
     src/utils/parser.hpp \
-    src/utils/exceptions.hpp \
-    src/utils/parser.hpp \
-    src/windows/login.hpp \
-    src/windows/mainwindow.hpp \
     src/views/abstractview.hpp \
-    src/views/teamview.hpp
+    src/views/teamview.hpp \
+    src/widgets/navbar.hpp \
+    src/widgets/navbaritem.hpp \
+    src/datastore/stadium.hpp \
+    src/datastore/team.hpp \
+    src/datastore/souvenir.hpp
 
 FORMS += \
     src/windows/mainwindow.ui \
     src/windows/login.ui \
     src/views/teamview.ui
+    src/widgets/navbaritem.ui
 
 RESOURCES += \
     res.qrc
