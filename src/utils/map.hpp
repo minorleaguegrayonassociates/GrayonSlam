@@ -22,7 +22,7 @@ namespace nstd
      /* PRIME LOOKUP TABLE - QUICK ACCESS*/
     struct Primes
     {
-        Primes():lookupTable{SieveOfEratosthenes((3000))}{}
+        Primes():lookupTable{SieveOfEratosthenes((4000))}{}
         Primes(int n):lookupTable{SieveOfEratosthenes(n)}{}
         unsigned int *lookupTable;
         ~Primes(){delete lookupTable;}
@@ -84,12 +84,12 @@ namespace nstd
         std::pair<key,value> remove(key);
         iterator find(key);
         int size() const {return m_numOfElems;}
-        bool isEmpty() const {return (m_numOfElems?false:true);}
-        int cap() const {return m_capacity;}
+        bool isEmpty() const {return (m_numOfElems == 0);}
+        int capacity() const {return m_capacity;}
         void reserve(unsigned int);
-        friend std::ostream& operator<< <>(std::ostream&, const map<key,value,Hash>&);
         iterator begin() noexcept;
         iterator end() noexcept;
+        friend std::ostream& operator<< <>(std::ostream&, const map<key,value,Hash>&);
     private:
         struct node
         {
@@ -240,8 +240,6 @@ namespace nstd
     template <typename key, typename value, typename Hash>
     typename map<key,value,Hash>::iterator map<key,value,Hash>::insert(key k, value v)
     {
-        ++m_numOfElems;
-        if(m_numOfElems == m_capacity) reserve(TABLE_OF_PRIMES.lookupTable[m_primeNumIndex+1]);
         int findPosition = -1;
         node* found = m_insertFind(k, findPosition);
         if(found) found->available = false;
@@ -249,6 +247,8 @@ namespace nstd
         unsigned int hashCode = 0;
         if(!found)
         {
+            ++m_numOfElems;
+            if(m_numOfElems == m_capacity) reserve(TABLE_OF_PRIMES.lookupTable[m_primeNumIndex+1]);
             unsigned int j;
             tmp = new node(k, v,false, this);
             j = 1;
