@@ -9,7 +9,6 @@ namespace nstd
 {
 
     /* FORWARD DECLARATIONS*/
-    unsigned int* SieveOfEratosthenes(int n);
 
     template <typename key>
     class hash;
@@ -20,8 +19,38 @@ namespace nstd
     template <class k, class v, class Hash>
     std::ostream& operator<<(std::ostream& out, const map<k, v, Hash>& d);
 
+    unsigned int* SieveOfEratosthenes(int n);
+
     /*CLASSES & STRUCTS */
 
+    /**
+     * @class nstd::map class
+     *
+     * A data structure class that is meant to hold key value pairs and
+     * hash with the key to retrieve the value. This map is also iteratable
+     * meaning that you can start at the beginning or end and read through it
+     * as if it was a list. In the context of our project this class will relate
+     * team id's with a stadium and stadium id's with a team.
+     *
+     * This class also supports custom hashing, but the functions need to be in this
+     * format static int staticHashAlgo(key k,int j,int capacity) where the returned
+     * int from the function needs to follow this restriction 0 < hash < capacity.
+     *
+     * @code{.cpp}
+     * nstd::map<int,std::string> myMap;
+     * //will create a new key value in map if not present
+     * //othewise reassigns value at key 2
+     * myMap[2] = "Hi";
+     * //same if not present will create new value with default constructor
+     * // at key 8 otherwise returns value
+     * std::cout << myMap[8];
+     * @endcode
+     *
+     * In the code above, a new nstd::map is instantiated with the key being an int
+     * and the value being a std::string. We then assign Hi into a newly created value
+     * location. And we readout whatever is in key location 8, in our case nothing so
+     * it returns a default constructed value.
+     */
     template <typename key, typename value, typename Hash = hash<key>>
     class map
     {
