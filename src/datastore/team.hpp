@@ -26,7 +26,7 @@ public:
     enum League { NATIONAL, AMERICAN };
 
     /* Enum to strings */
-    static const std::string LEAGUE_STRING[];
+    static const std::array<std::string,2> LEAGUE_STRING;
 
     /* Constructors */
     Team();
