@@ -7,7 +7,7 @@ namespace Ui {
 class TeamView;
 }
 
-class TeamView : public AbstractViewModel
+class TeamView : public View
 {
     Q_OBJECT
 

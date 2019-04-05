@@ -2,7 +2,7 @@
 #include "ui_teamview.h"
 
 TeamView::TeamView(QWidget *parent) :
-    AbstractViewModel(parent),
+    View(parent),
     ui(new Ui::TeamView)
 {
     ui->setupUi(this);
