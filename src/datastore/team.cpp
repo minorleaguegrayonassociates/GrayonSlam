@@ -1,7 +1,7 @@
 #include "team.hpp"
 
 /* Enum to strings */
-const std::array<std::string,2> LEAGUE_STRING = {"National", "American"};
+const std::array<std::string,2> Team::LEAGUE_STRING = {"National", "American"};
 
 /**
  * Constructs an invalid team.
