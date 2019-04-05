@@ -13,6 +13,11 @@
  * Enum classes are available for information about the stadium's
  * architecture. There is also static variables in the class to
  * convert an enum type to an associated string.
+ *
+ * Note:
+ * All stadiums have their IDs defaulted to -1. The only way for a
+ * stadium to have a valid ID is for it to be created by the
+ * @a Database class. This is why @a Database is a friend class.
  */
 class Stadium
 {

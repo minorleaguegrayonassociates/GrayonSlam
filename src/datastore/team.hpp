@@ -11,6 +11,11 @@
  *
  * A team with a stadium ID of -1 means it doesn't reside
  * in a stadium.
+ *
+ * Note:
+ * All teams have their IDs defaulted to -1. The only way for a
+ * team to have a valid ID is for it to be created by the
+ * @a Database class. This is why @a Database is a friend class.
  */
 class Team
 {
