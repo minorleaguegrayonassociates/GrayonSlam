@@ -37,9 +37,8 @@ MainWindow::~MainWindow()
 /* Private slots */
 void MainWindow::changeView(int view)
 {
-    resetViews();
-
     Login::Type type = Login::getType();
+
 
     /* Change view */
     if((view == 3 && type == Login::Type::USER) || //Logout
@@ -47,15 +46,26 @@ void MainWindow::changeView(int view)
     {
         QMessageBox::StandardButton reply = QMessageBox::question(this, "Logout", "Are you sure you want to logout?", QMessageBox::Yes | QMessageBox::No);
         if(reply == QMessageBox::Yes)
+        {
             emit logout();
-    }
-    else if(view == 3 && type == Login::Type::ADMIN) //Admin view
-    {
-        m_ui->mainViews->setCurrentIndex(view);
+        }
+        else
+        {
+            m_navbar->setCurrentRow(m_view);
+        }
     }
     else
     {
-        m_ui->mainViews->setCurrentIndex(view);
+        resetViews();
+        m_view = view;
+        if(view == 3 && type == Login::Type::ADMIN) //Admin view
+            {
+                m_ui->mainViews->setCurrentIndex(view);
+            }
+            else
+            {
+                m_ui->mainViews->setCurrentIndex(view);
+            }
     }
 }
 
