@@ -2,6 +2,7 @@
 #include "souvenir.hpp"
 #include <map>
 #include <vector>
+#include <array>
 
 /**
  * @class Stadium class
@@ -30,9 +31,9 @@ public:
     enum Typology { RETROMODERN, RETROCLASSIC, JEWELBOX, MODERN, CONTEMPORARY, MULTIPURPOSE };
 
     /* Enum to strings */
-    static const std::string ROOF_STRING[];
-    static const std::string SURFACE_STRING[];
-    static const std::string TYPOLOGY_STRING[];
+    static const std::array<std::string,3> ROOF_STRING;
+    static const std::array<std::string,3> SURFACE_STRING;
+    static const std::array<std::string,6> TYPOLOGY_STRING;
 
     /* Constructors */
     Stadium();
