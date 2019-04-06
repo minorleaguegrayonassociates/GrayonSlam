@@ -161,14 +161,31 @@ Souvenir& Stadium::findSouvenir(int id)
 
 /**
  * Private constructor used by @a Database through friend class
- * association. This sets the id, name, and location of the Stadium.
+ * association. This sets all the data for the object besides
+ * @a hidden; this is done so for better readability by forcing
+ * it to be set on a different line and not buried in a
+ * constructor's arguments.
  *
  * @param id Stadium id
  * @param name Stadium name
  * @param location Stadium location
+ * @param seatCap Stadium's seat capacity
+ * @param yearOpened Stadium's opening year
+ * @param centerFieldDist Stadium's distance to the center field
+ * @param r Stadium's roof
+ * @param s Stadium's playing surface
+ * @param t Stadium's typology
  */
-Stadium::Stadium(int id, const std::string& name, const std::string& location)
+Stadium::Stadium(int id, const std::string& name, const std::string& location,
+                 int seatCap, int yearOpened, int centerFieldDist,
+                 Roof r, Surface s, Typology t)
     : Stadium(name, location)
 {
     m_id = id;
+    m_seatCap = seatCap;
+    m_yearOpened = yearOpened;
+    m_centerFieldDist = centerFieldDist;
+    roof = r;
+    surface = s;
+    typology = t;
 }
