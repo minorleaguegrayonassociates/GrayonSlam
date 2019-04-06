@@ -51,13 +51,12 @@ void MainWindow::changeView(int view)
         }
         else
         {
-            m_navbar->setCurrentRow(m_view);
+            m_navbar->setCurrentRow(m_ui->mainViews->currentIndex());
         }
     }
     else
     {
         resetViews();
-        m_view = view;
         if(view == 3 && type == Login::Type::ADMIN) //Admin view
             {
                 m_ui->mainViews->setCurrentIndex(view);
