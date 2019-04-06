@@ -2,10 +2,10 @@
 #include <QWidget>
 
 /**
- * @class AbstractViewModel class
+ * @class View class
  *
- * An abstract base class that defines 2 basic functions that
- * views must define: resetView() and resetUI()
+ * View is an abstract base class that defines 2 basic functions that
+ * views must define: resetView() and resetUi().
  */
 class View: public QWidget
 {
