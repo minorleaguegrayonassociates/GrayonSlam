@@ -39,7 +39,6 @@ void MainWindow::changeView(int view)
 {
     Login::Type type = Login::getType();
 
-
     /* Change view */
     if((view == 3 && type == Login::Type::USER) || //Logout
        (view == 4 && type == Login::Type::ADMIN))
