@@ -58,61 +58,104 @@ namespace nstd
         struct node;
     public:
         class iterator;
+
+        /* Constructors, Destructor, and Assignment */
         map();
         map(key[],value[],const int);
         map(const map&);
         map(map&&);
         map& operator=(const map&);
         ~map();
-        /**
-         * Creates an exception with a exception message.
-         *
-         * @param msg Exception message
-         */
+
+        /* Accessing */
+        iterator find(key);
         value& operator[] (const key&);
         value& operator[] (key&&);
-        std::pair<key,value> remove(key);
+        friend std::ostream& operator<< <>(std::ostream&, const map<key,value,Hash>&);
+
+        /* Mutation Operations */
         iterator insert(key, value);
-        iterator find(key);
+        std::pair<key,value> remove(key);
+        void reserve(unsigned int);
+
+        /* Iterator Getters */
         iterator begin() noexcept;
         iterator end() noexcept;
-        void reserve(unsigned int);
+
+        /* Map information*/
         int size() const {return m_numOfElems;}
         int capacity() const {return m_capacity;}
         bool isEmpty() const {return (m_numOfElems == 0);}
-        friend std::ostream& operator<< <>(std::ostream&, const map<key,value,Hash>&);
     private:
+        /* Hash Algorithm*/
         int (*hash)(key k,int j,int capacity) = &(Hash::staticHashAlgo);
+
+        /* Accessing Helper Function */
         node* m_insertFind(key, int&) const;
+
+        /* Data Members */
         node** m_map = NULL;
         int m_primeNumIndex = 0;
         int m_numOfElems = 0;
         int m_capacity = 0;
     };
 
-
+    /**
+     * @class nstd::map<key,value,Hash>::iterator class
+     *
+     * A data structure class that is meant to hold a position of a key, value pair in
+     * the corresponding map. It can be incremented and decremeneted to move through
+     * the map. It can also access the data it indexes to read the contents of the map
+     * and to write to it as well
+     *
+     * @code{.cpp}
+     * ...
+     * //will create an iterator to start of the map
+     * nstd::map<int,std::string>::iterator iter = myMap.begin();
+     * //Loop through the contents of the map
+     * while(iter != myMap.end())
+     * {
+     *   std::cout << *iter;
+     *   ++iter;
+     * }
+     * @endcode
+     *
+     * In the code above, an iterator is created that indexes the beginning of
+     * the map. It is then put into a loop and incremeneted with each pass until
+     * it reaches the end of the map. While it is being incremented, it is being
+     * the data that the iterator is indexing is being accessed and printed
+     */
     template <typename key, typename value, typename Hash>
     class map<key,value,Hash>::iterator
     {
     public:
+        /* Constructors */
         iterator(const iterator &);
         iterator(int,map*,node*);
+
+        /* Movement Operators */
         iterator& operator++();
         iterator operator++(int);
         iterator& operator--();
         iterator operator--(int);
-        iterator operator-(int);
-        iterator operator+(int);
+
+        /* Access Operators*/
         value& operator*();
         value* operator->();
+
+        /* Comparison Operators */
         bool operator!=(const iterator&) const;
         bool operator==(const iterator&) const;
+
+        /* Iterator Information */
         bool isEmpty(){return (m_data == NULL ||m_data->available);}
         node* getData(){return m_data;}
         map* getParent(){return m_parent;}
         void setEnd(bool isEnd){m_end= isEnd;}
     private:
         iterator();
+
+        /* Data Members */
         int m_position = 0;
         map* m_parent = NULL;
         node* m_data = NULL;
@@ -120,50 +163,140 @@ namespace nstd
     };
 
 
+    /**
+     * This node struct that holds internal data of the map class
+     */
     template <typename key, typename value, typename Hash>
     struct map<key,value,Hash>::node
     {
+        /* Data Memebers */
         key nodeKey = key();
         value nodeValue = value();
         bool available = false;
         map* parentMap = NULL;
+
+        /* Constructor */
         node(key, value, bool, map*);
     };
 
-
+    /**
+     * @class nstd::hash class
+     *
+     * A functor class that takes in a key of template type
+     * k and an int j for quadratic hashing and hashes it to
+     * produce a int for use in a data structure
+     *
+     * @code{.cpp}
+     *
+     * nstd::hash<int> myHash();
+     * int ar[20];
+     * ...
+     * std::cout << ar[myHash(15, 2, 20)];
+     * ...
+     * @endcode
+     *
+     * In the code above, a hash class is instantiated along side
+     * an array of size 20. Later on in the code, the key 15 is hashed with
+     * a j value of 2 for the quadratic hash and the size of the array 20 in
+     * order to access elements inside the array, which are then printed out.
+     */
     template <typename key>
     class hash
     {
     public:
+        /**
+         * @brief This method will hash the key into an int for mapping
+         * using quadratic hashing.
+         * @param k the key itself
+         * @param j the collision value, increase for more values
+         * @param capacity (capacity - 1) is max hashcode
+         * @return returns a hashcode in the form of an int
+         */
         int operator()(key k, int j, int capacity)
         {
             return hashAlgo(k,j,capacity);
         }
+        /**
+         * @brief This method is the same as operator() but named
+         * @param k the key itself
+         * @param j the collision value, increase for more values
+         * @param capacity (capacity - 1) is max hashcode
+         * @return returns a hashcode in the form of an int
+         */
         int hashAlgo(key k,int j, int capacity)const
         {
             return((static_cast<int>(k))+j*j)%capacity;
         }
+        /**
+         * @brief This method is the static version of operator()
+         * @param k the key itself
+         * @param j the collision value, increase for more values
+         * @param capacity (capacity - 1) is max hashcode
+         * @return returns a hashcode in the form of an int
+         */
         static int staticHashAlgo(key k,int j, int capacity)
         {
             int hash = (((static_cast<int>(k))+j*j)%capacity);
             if(hash < 0) hash *= -1;
             return hash;
         }
-
     };
 
+    /**
+     * @class nstd::hash class string specialization
+     *
+     * A functor class that takes in a key of type
+     * std::string and an int j for quadratic hashing and hashes it to
+     * produce a int for use in a data structure
+     *
+     * @code{.cpp}
+     *
+     * nstd::hash<std::string> myHash();
+     * int ar[20];
+     * ...
+     * std::cout << ar[myHash("Chicago", 2, 20)];
+     * ...
+     * @endcode
+     *
+     * In the code above, a hash class is instantiated along side
+     * an array of size 20. Later on in the code, the key "Chicago" is hashed with
+     * a j value of 2 for the quadratic hash and the size of the array 20 in
+     * order to access elements inside the array, which are then printed out.
+     */
     template <>
     class hash<std::string>
     {
     public:
+        /**
+         * @brief This method will hash the a string into an int for mapping
+         * with the murmur hash2/3
+         * @param k the std::string key itself
+         * @param j the collision value, increase for more values
+         * @param capacity (capacity - 1) is max hashcode
+         * @return returns a hashcode in the form of an int
+         */
         int operator()(std::string k, int j, int capacity)
         {
             return hashAlgo(k,j,capacity);
         }
+        /**
+         * @brief This method is the same as operator() but named
+         * @param k the key itself
+         * @param j the collision value, increase for more values
+         * @param capacity (capacity - 1) is max hashcode
+         * @return returns a hashcode in the form of an int
+         */
         int hashAlgo(std::string k, int j,int capacity)const
         {
             return (static_cast<int>(std::hash<std::string>{}(k))+j*j)%capacity;
         }
+        /**
+         * @brief This method is the static version of operator()
+         * @param k the key itself
+         * @param j the collision value, increase for more values
+         * @param capacity (capacity - 1) is max hashcode
+         * @return returns a hashcode in the form of an int
+         */
         static int staticHashAlgo(std::string k,int j, int capacity)
         {
             return (static_cast<int>(std::hash<std::string>{}(k))+j*j)%capacity;
@@ -174,170 +307,43 @@ namespace nstd
     /* PRIME LOOKUP TABLE - QUICK ACCESS*/
    struct Primes
    {
+       /* Constructors */
        Primes():lookupTable{SieveOfEratosthenes((4000))}{}
        Primes(int n):lookupTable{SieveOfEratosthenes(n)}{}
+
+       /* Data Members */
        unsigned int *lookupTable;
+
+       /* Destructor */
        ~Primes(){delete lookupTable;}
    };
 
+   /**
+     * @brief Static object that contains an array of primes for use by the map
+     */
     static Primes TABLE_OF_PRIMES;
 
     /* MAP METHODS*/
 
+    /**
+     * This method is the default constructor for the map. It
+     * defaults the size of the map to 31 and initializes the map to nullptrs.
+     */
     template <typename key, typename value, typename Hash>
-    typename map<key,value,Hash>::iterator map<key,value,Hash>::begin() noexcept
+    map<key,value,Hash>::map()
+        : m_map{new node*[31]}, m_primeNumIndex{10},m_numOfElems{0},m_capacity{31}
     {
-        node * firstElem = NULL;
-        int position = -1;
-        if(m_map)
+        for(int i = 0; i< m_capacity;++i)
         {
-            firstElem = m_map[0];
-            int i = 0;
-            position = 0;
-            while(firstElem != NULL && firstElem->available && i < m_capacity)
-            {
-              ++i;
-              ++position;
-              ++firstElem;
-            }
+            m_map[i]=nullptr;
         }
-        return iterator(position,this, firstElem);
     }
 
-    template <typename key, typename value, typename Hash>
-    typename map<key,value,Hash>::iterator map<key,value,Hash>::end() noexcept
-    {
-        iterator it(-1,this,NULL);
-        it.setEnd(true);
-        return it;
-    }
-
-    template <typename key, typename value, typename Hash>
-    std::pair<key,value> map<key,value,Hash>::remove(key k)
-    {
-        key resultKey = key();
-        value resultValue = value();
-        iterator found = find(k);
-        if(found.getData())
-        {
-           found.getData()->available = true;
-           resultKey = found.getData()->nodeKey;
-           resultValue = found.getData()->nodeValue;
-           --m_numOfElems;
-        }
-        return std::make_pair(resultKey, resultValue);
-    }
-
-
-    template <typename key, typename value, typename Hash>
-    typename map<key,value,Hash>::iterator map<key,value,Hash>::find(key k)
-    {
-        int position = -1;
-        node* val = NULL;
-        for(int i = 0; i < m_capacity; ++i)
-        {
-            if(m_map[i])
-            {
-                unsigned int hashCode;
-                int j;
-                j = 1; //collision j
-                hashCode = hash(k, 0, m_capacity);
-                while(m_map[hashCode] != 0 && m_map[hashCode]->available != true && j<=m_capacity)
-                {
-                    if(m_map[hashCode]->nodeKey == k)break;
-                    hashCode = hash(k, j, m_capacity);
-                    ++j;
-                }
-                if(m_map[hashCode] != 0 && m_map[hashCode]->available != true)
-                {
-                    val = m_map[hashCode];
-                    position = static_cast<int>(hashCode);
-                }
-            }
-        }
-        return iterator(position, this, val);
-    }
-
-    template <typename key, typename value, typename Hash>
-    value& map<key,value,Hash>::operator[](const key& k)
-    {
-        iterator it = find(k);
-        if(it.isEmpty())
-        {
-            it = insert(k,value());
-        }
-        return *it;
-    }
-
-    template <typename key, typename value, typename Hash>
-    value& map<key,value,Hash>::operator[] (key&& k)
-    {
-        iterator it = find(k);
-        if(it.isEmpty())
-        {
-            it = insert(k,value());
-        }
-        return *it;
-    }
-
-    template <typename key, typename value, typename Hash>
-    void map<key,value,Hash>::reserve(unsigned int newInternalSize)
-    {
-        while(TABLE_OF_PRIMES.lookupTable[m_primeNumIndex] < newInternalSize) ++m_primeNumIndex;
-        unsigned int oldCap = m_capacity;
-        m_capacity = TABLE_OF_PRIMES.lookupTable[m_primeNumIndex];
-        node ** newArr = new node*[m_capacity];
-        for(int i = 0; i < m_capacity; ++i) newArr[i] = 0;
-        node * tmp;
-        unsigned int hashCode, j;
-        for(unsigned int i = 0; i < oldCap; ++i)
-        {
-            if(m_map[i] == 0 || m_map[i]->available) continue;
-            tmp = new node(m_map[i]->nodeKey, m_map[i]->nodeValue,false, this);
-            j = 1;
-            hashCode = hash(m_map[i]->nodeKey,0, m_capacity);
-            while(newArr[hashCode] != 0)
-            {
-                hashCode = hash(m_map[i]->nodeKey, j, m_capacity);
-                ++j;
-            }
-            newArr[hashCode] = tmp;
-            delete m_map[i];
-         }
-         delete [] m_map;
-         m_map = newArr;
-    }
-
-    template <typename key, typename value, typename Hash>
-    typename map<key,value,Hash>::iterator map<key,value,Hash>::insert(key k, value v)
-    {
-        int findPosition = -1;
-        node* found = m_insertFind(k, findPosition);
-        if(found) found->available = false;
-        node* tmp;
-        unsigned int hashCode = 0;
-        if(!found)
-        {
-            ++m_numOfElems;
-            if(m_numOfElems == m_capacity) reserve(TABLE_OF_PRIMES.lookupTable[m_primeNumIndex+1]);
-            unsigned int j;
-            tmp = new node(k, v,false, this);
-            j = 1;
-            hashCode = hash(k,0,m_capacity);
-            while(m_map[hashCode] != 0 && m_map[hashCode]->available != true)
-            {
-                hashCode = hash(k, j, m_capacity);
-                ++j;
-            }
-            if(m_map[hashCode] != 0)if(m_map[hashCode]->available == true) delete m_map[hashCode];
-            m_map[hashCode] = tmp;
-            findPosition = static_cast<int>(hashCode);
-        }
-        else
-        {found->nodeKey = k; found->nodeValue = v; found->available = false; tmp = found; }
-        return iterator(findPosition,this,tmp);
-    }
-
+    /**
+     * This constructor constructs the map given parallel key and value arrays.
+     * It copies them in and sets the size to the prime number that follows the size
+     * of the arrays.
+     */
     template <typename key, typename value, typename Hash>
     map<key,value,Hash>::map(key keys[], value values[], const int ARR_SIZE)
     {
@@ -365,6 +371,9 @@ namespace nstd
         }
     }
 
+    /**
+     * This constructor constructs a map by copying the keys and values of a second map
+     */
     template <typename key, typename value, typename Hash>
     map<key,value,Hash>::map(const map& otherMap)
         : m_primeNumIndex{otherMap.m_primeNumIndex},m_numOfElems{otherMap.m_numOfElems},m_capacity{otherMap.m_capacity}
@@ -376,6 +385,9 @@ namespace nstd
         }
     }
 
+    /**
+     * This constructor copies a map by moving the pointers from the temporary map
+     */
     template <typename key, typename value, typename Hash>
     map<key,value,Hash>::map(map&& otherMap)
         : m_primeNumIndex{otherMap.m_primeNumIndex}, m_numOfElems{otherMap.m_numOfElems},m_capacity{otherMap.m_capacity}
@@ -384,6 +396,9 @@ namespace nstd
         otherMap.m_map = NULL;
     }
 
+    /**
+     * This operator overload copies the contents of one map into this map
+     */
     template <typename key, typename value, typename Hash>
     map<key,value,Hash>& map<key,value,Hash>::operator=(const map& otherMap)
     {
@@ -419,19 +434,247 @@ namespace nstd
         delete [] m_map;
     }
 
+    /**
+     * @brief This function attempts to find the key in the map and returns an iterator of its position.
+     *
+     * This function will search through the map looking for the key. If successful, it will return
+     * an iterator corresponding to its position. If unsuccessful, it will return an iterator with
+     * a position of -1 (Corresponding to end).
+     *
+     * @return iterator containing the position of the key in the map
+     */
     template <typename key, typename value, typename Hash>
-    map<key,value,Hash>::map()
-        : m_map{new node*[31]}, m_primeNumIndex{10},m_numOfElems{0},m_capacity{31}
+    typename map<key,value,Hash>::iterator map<key,value,Hash>::find(key k)
     {
-        for(int i = 0; i< m_capacity;++i)
+        int position = -1;
+        node* val = NULL;
+        for(int i = 0; i < m_capacity; ++i)
         {
-            m_map[i]=nullptr;
+            if(m_map[i])
+            {
+                unsigned int hashCode;
+                int j;
+                j = 1; //collision j
+                hashCode = hash(k, 0, m_capacity);
+                while(m_map[hashCode] != 0 && m_map[hashCode]->available != true && j<=m_capacity)
+                {
+                    if(m_map[hashCode]->nodeKey == k)break;
+                    hashCode = hash(k, j, m_capacity);
+                    ++j;
+                }
+                if(m_map[hashCode] != 0 && m_map[hashCode]->available != true)
+                {
+                    val = m_map[hashCode];
+                    position = static_cast<int>(hashCode);
+                }
+            }
+        }
+        return iterator(position, this, val);
+    }
+
+    /**
+     * @brief This function finds the value corresponding to key and returns it.
+     *
+     * This function will attempt to find the given key in the map. If it is successful,
+     * it will return the object by reference. If it cannot locate it, it will construct
+     * a new object that corresponds to the given key and inserts both the key and value.
+     *
+     * @return Value that corresponds to the given key by reference.
+     */
+    template <typename key, typename value, typename Hash>
+    value& map<key,value,Hash>::operator[](const key& k)
+    {
+        iterator it = find(k);
+        if(it.isEmpty())
+        {
+            it = insert(k,value());
+        }
+        return *it;
+    }
+
+    /**
+     * @brief This function finds the value corresponding to a temporary key and returns it.
+     *
+     * This function will attempt to find the given key in the map. If it is successful,
+     * it will return the object by reference. If it cannot locate it, it will construct
+     * a new object that corresponds to the given key and insert them both into the map.
+     *
+     * @return Value that corresponds to the given key by reference.
+     */
+    template <typename key, typename value, typename Hash>
+    value& map<key,value,Hash>::operator[] (key&& k)
+    {
+        iterator it = find(k);
+        if(it.isEmpty())
+        {
+            it = insert(k,value());
+        }
+        return *it;
+    }
+
+    /**
+     * This function iterates through the map and prints the keys and value
+     * to the ostream. This is implemented with the intent of error logging
+     */
+    template <class k, class v, class Hash>
+    std::ostream& operator<<(std::ostream& out, const map<k, v, Hash>& d)
+    {
+        out << "The key value combos inside double hash map are: \n";
+        for(int i = 0; i < d.m_capacity; ++i)
+        {
+            if(d.m_map[i]&& d.m_map[i]->available != true)
+            out << "Hash: "<<std::setw(2)<<std::right
+                << i <<" Key: " <<std::setw(3)<< d.m_map[i]->nodeKey
+                << " Value: " << d.m_map[i]->nodeValue << "\n";
+        }
+        return out;
+    }
+
+    /**
+     * @brief This function insert a key and corresponding value into the map
+     *
+     * This function will attempt to find the given key in the map. If it is successful,
+     * it will replace the old value with the new one. If it cannot locate it, it will construct
+     * a new object that corresponds to the given key and insert them both into the map.
+     *
+     * @return iterator corresponding to the position of the inserted key
+     */
+    template <typename key, typename value, typename Hash>
+    typename map<key,value,Hash>::iterator map<key,value,Hash>::insert(key k, value v)
+    {
+        int findPosition = -1;
+        node* found = m_insertFind(k, findPosition);
+        if(found) found->available = false;
+        node* tmp;
+        unsigned int hashCode = 0;
+        if(!found)
+        {
+            ++m_numOfElems;
+            if(m_numOfElems == m_capacity) reserve(TABLE_OF_PRIMES.lookupTable[m_primeNumIndex+1]);
+            unsigned int j;
+            tmp = new node(k, v,false, this);
+            j = 1;
+            hashCode = hash(k,0,m_capacity);
+            while(m_map[hashCode] != 0 && m_map[hashCode]->available != true)
+            {
+                hashCode = hash(k, j, m_capacity);
+                ++j;
+            }
+            if(m_map[hashCode] != 0)if(m_map[hashCode]->available == true) delete m_map[hashCode];
+            m_map[hashCode] = tmp;
+            findPosition = static_cast<int>(hashCode);
+        }
+        else
+        {found->nodeKey = k; found->nodeValue = v; found->available = false; tmp = found; }
+        return iterator(findPosition,this,tmp);
+    }
+
+    /**
+     * @brief This function removes the given key and corresponding value from the map.
+     *
+     * This function will attempt to find a given key in the map. If successful, it will remove
+     * it and the corresponding key in the map and return them as a pair. If it cannot locate the key,
+     * it will construct a pair of the key and value made from default constructors and return that pair.
+     *
+     * @return std::pair containing the key and value removed from the map.
+     */
+    template <typename key, typename value, typename Hash>
+    std::pair<key,value> map<key,value,Hash>::remove(key k)
+    {
+        key resultKey = key();
+        value resultValue = value();
+        iterator found = find(k);
+        if(found.getData())
+        {
+           found.getData()->available = true;
+           resultKey = found.getData()->nodeKey;
+           resultValue = found.getData()->nodeValue;
+           --m_numOfElems;
+        }
+        return std::make_pair(resultKey, resultValue);
+    }
+
+    /**
+     * If the given integer is larger than the current capacity of the map,
+     * this function will reserve room up to the nearest prime number that is larger
+     * than the given integer and rehash all of the key and value pairs.
+     */
+    template <typename key, typename value, typename Hash>
+    void map<key,value,Hash>::reserve(unsigned int newInternalSize)
+    {
+        if(newInternalSize > TABLE_OF_PRIMES.lookupTable[m_primeNumIndex] )
+        {
+            while(TABLE_OF_PRIMES.lookupTable[m_primeNumIndex] < newInternalSize) ++m_primeNumIndex;
+            unsigned int oldCap = m_capacity;
+            m_capacity = TABLE_OF_PRIMES.lookupTable[m_primeNumIndex];
+            node ** newArr = new node*[m_capacity];
+            for(int i = 0; i < m_capacity; ++i) newArr[i] = 0;
+            node * tmp;
+            unsigned int hashCode, j;
+            for(unsigned int i = 0; i < oldCap; ++i)
+            {
+                if(m_map[i] == 0 || m_map[i]->available) continue;
+                tmp = new node(m_map[i]->nodeKey, m_map[i]->nodeValue,false, this);
+                j = 1;
+                hashCode = hash(m_map[i]->nodeKey,0, m_capacity);
+                while(newArr[hashCode] != 0)
+                {
+                    hashCode = hash(m_map[i]->nodeKey, j, m_capacity);
+                    ++j;
+                }
+                newArr[hashCode] = tmp;
+                delete m_map[i];
+            }
+            delete [] m_map;
+            m_map = newArr;
         }
     }
 
-
+    /**
+     * This function will return an iterator corresponding to the beginning of the map
+     *
+     * @return iterator corresponding to the beginning of the map
+     */
     template <typename key, typename value, typename Hash>
-    typename map<key,value,Hash>::node*  map<key,value,Hash>::m_insertFind(key k, int& position) const
+    typename map<key,value,Hash>::iterator map<key,value,Hash>::begin() noexcept
+    {
+        node * firstElem = NULL;
+        int position = -1;
+        if(m_map)
+        {
+            firstElem = m_map[0];
+            int i = 0;
+            position = 0;
+            while(firstElem != NULL && firstElem->available && i < m_capacity)
+            {
+              ++i;
+              ++position;
+              ++firstElem;
+            }
+        }
+        return iterator(position,this, firstElem);
+    }
+
+    /**
+     * This function will return an iterator that corresponds to the end of the map
+     *
+     * @return iterator corresponding to the end of the map
+     */
+    template <typename key, typename value, typename Hash>
+    typename map<key,value,Hash>::iterator map<key,value,Hash>::end() noexcept
+    {
+        iterator it(-1,this,NULL);
+        it.setEnd(true);
+        return it;
+    }
+
+    /**
+     * This function is a helper function for the map in locating a key
+     * and sets the variable position to that value. Used to set iterators internal
+     * values to index of given key.
+     */
+    template <typename key, typename value, typename Hash>
+    typename map<key,value,Hash>::node* map<key,value,Hash>::m_insertFind(key k, int& position) const
     {
        node* val = NULL;
        for(int i = 0; i < m_capacity; ++i)
@@ -459,50 +702,72 @@ namespace nstd
     map<key,value,Hash>::iterator::iterator(int position, map* parent, node* data)
         : m_position{position}, m_parent{parent}, m_data{data},m_end{false}{}
 
+    /**
+     * This function overloads the preincrement operator for the iterator.
+     * It moves the Iterator to a position that is "after" its current position in the map.
+     * If the iterator arrives at one past the last element, this function will have no
+     * effect
+     */
     template <typename key, typename value, typename Hash>
-    typename map<key,value,Hash>::iterator map<key,value,Hash>::iterator::operator--(int)
+    typename map<key,value,Hash>::iterator& map<key,value,Hash>::iterator::operator++()
+    {
+        /* starts at current spot in map then goes to non null node*/
+        if(m_position != -1)
+        {
+            ++m_position, m_data = m_parent->m_map[m_position];
+            if(m_position == m_parent->m_capacity ||(m_data != NULL && m_data->available)) m_data = NULL;
+            while (m_position < m_parent->m_capacity && (m_data == NULL ||(m_data != NULL && m_data->available)))
+            {
+                ++m_position; if(m_data!= NULL) m_data = m_parent->m_map[m_position];
+                if(m_data != NULL && m_data->available) m_data = NULL;
+            }
+            //invalidate pointer if at end
+            if(m_position >= m_parent->m_capacity || m_data == NULL|| m_data->available)
+            {
+                m_position = -1;
+                m_data = NULL;
+                m_end = true;
+            }
+        }
+        return *this;
+    }
+
+    /**
+     * This function overloads the post increment operator for the iterator.
+     * It moves the Iterator to a position that is "after" its current position in the map.
+     * If the iterator arrives at one past the last element, this function will have no
+     * effect
+     */
+    template <typename key, typename value, typename Hash>
+    typename map<key,value,Hash>::iterator map<key,value,Hash>::iterator::operator++(int)
     {
         iterator cpy(*this);
         if(m_position != -1)
         {
-            --m_position, m_data = m_parent->m_map[m_position];
-            if(m_position <= -1 ||(m_data != NULL && m_data->available)) m_data = NULL;
-            while (m_position > -1 && (m_data == NULL ||(m_data != NULL && m_data->available)))
+            ++m_position, m_data = m_parent->m_map[m_position];
+            if(m_position == m_parent->m_capacity ||(m_data != NULL && m_data->available)) m_data = NULL;
+            while (m_position < m_parent->m_capacity && (m_data == NULL ||(m_data != NULL && m_data->available)))
             {
-                --m_position; if(m_data != NULL)m_data = m_parent->m_map[m_position];
+                ++m_position; if(m_data != NULL) m_data = m_parent->m_map[m_position];
                 if(m_data != NULL && m_data->available) m_data = NULL;
             }
             //invalidate pointer if at end
-            if(m_position <= -1 || m_data == NULL|| m_data->available){m_position = -1;m_data = NULL;}
-        }
-        else
-        {
-            if(m_end == true)
+            if(m_position >= m_parent->m_capacity || m_data == NULL|| m_data->available)
             {
-                node * lastElem = NULL;
-                int position = -1;
-                if(m_parent->m_map)
-                {
-
-                  lastElem = m_parent->m_map[m_parent->m_capacity-1];
-                  position = m_parent->m_capacity-1;
-                  for(int i = m_parent->m_capacity-1;lastElem != NULL && i >-1 && lastElem->available; --i)
-                  {
-                      --position;
-                      --lastElem;
-                  }
-                 }
-                if(position > -1)
-                {
-                    m_data = lastElem;
-                    m_position = position;
-                    m_end = false;
-                }
+                m_position = -1;
+                m_data = NULL;
+                m_end = true;
             }
         }
         return cpy;
     }
 
+    /**
+     * This function overloads the predecrement operator for the iterator.
+     * It moves the Iterator to a position that is "before" it in the map.
+     * If the iterator hits the beginning the post decrement is called, the
+     * iterator is invalidated
+     */
     template <typename key, typename value, typename Hash>
     typename map<key,value,Hash>::iterator& map<key,value,Hash>::iterator::operator--()
     {
@@ -550,81 +815,83 @@ namespace nstd
         return *this;
     }
 
+    /**
+     * This function overloads the post decrement operator for the iterator.
+     * It moves the Iterator to a position that is "before" it in the map.
+     * If the iterator hits the beginning the post decrement is called, the
+     * iterator is invalidated
+     */
     template <typename key, typename value, typename Hash>
-    typename map<key,value,Hash>::iterator map<key,value,Hash>::iterator::operator++(int)
+    typename map<key,value,Hash>::iterator map<key,value,Hash>::iterator::operator--(int)
     {
         iterator cpy(*this);
         if(m_position != -1)
         {
-            ++m_position, m_data = m_parent->m_map[m_position];
-            if(m_position == m_parent->m_capacity ||(m_data != NULL && m_data->available)) m_data = NULL;
-            while (m_position < m_parent->m_capacity && (m_data == NULL ||(m_data != NULL && m_data->available)))
+            --m_position, m_data = m_parent->m_map[m_position];
+            if(m_position <= -1 ||(m_data != NULL && m_data->available)) m_data = NULL;
+            while (m_position > -1 && (m_data == NULL ||(m_data != NULL && m_data->available)))
             {
-                ++m_position; if(m_data != NULL) m_data = m_parent->m_map[m_position];
+                --m_position; if(m_data != NULL)m_data = m_parent->m_map[m_position];
                 if(m_data != NULL && m_data->available) m_data = NULL;
             }
             //invalidate pointer if at end
-            if(m_position >= m_parent->m_capacity || m_data == NULL|| m_data->available)
+            if(m_position <= -1 || m_data == NULL|| m_data->available){m_position = -1;m_data = NULL;}
+        }
+        else
+        {
+            if(m_end == true)
             {
-                m_position = -1;
-                m_data = NULL;
-                m_end = true;
+                node * lastElem = NULL;
+                int position = -1;
+                if(m_parent->m_map)
+                {
+
+                  lastElem = m_parent->m_map[m_parent->m_capacity-1];
+                  position = m_parent->m_capacity-1;
+                  for(int i = m_parent->m_capacity-1;lastElem != NULL && i >-1 && lastElem->available; --i)
+                  {
+                      --position;
+                      --lastElem;
+                  }
+                 }
+                if(position > -1)
+                {
+                    m_data = lastElem;
+                    m_position = position;
+                    m_end = false;
+                }
             }
         }
         return cpy;
     }
 
-    template <typename key, typename value, typename Hash>
-    typename map<key,value,Hash>::iterator& map<key,value,Hash>::iterator::operator++()
-    {
-        /* starts at current spot in map then goes to non null node*/
-        if(m_position != -1)
-        {
-            ++m_position, m_data = m_parent->m_map[m_position];
-            if(m_position == m_parent->m_capacity ||(m_data != NULL && m_data->available)) m_data = NULL;
-            while (m_position < m_parent->m_capacity && (m_data == NULL ||(m_data != NULL && m_data->available)))
-            {
-                ++m_position; if(m_data!= NULL) m_data = m_parent->m_map[m_position];
-                if(m_data != NULL && m_data->available) m_data = NULL;
-            }
-            //invalidate pointer if at end
-            if(m_position >= m_parent->m_capacity || m_data == NULL|| m_data->available)
-            {
-                m_position = -1;
-                m_data = NULL;
-                m_end = true;
-            }
-        }
-        return *this;
-    }
-
-    template <typename key, typename value, typename Hash>
-    typename map<key,value,Hash>::iterator map<key,value,Hash>::iterator::operator-(int numOfSpacesMoved)
-    {
-        /* starts at current spot in map then goes to non null node*/
-        iterator cpy(*this);
-        for(int movement = 0; movement < numOfSpacesMoved; ++movement)
-        {
-
-            for (;cpy.m_position >-1 &&cpy.m_data != NULL && cpy.m_data->available != true; --cpy.m_position, --cpy.m_data) {}
-        }
-        //invalidate pointer if at end
-        if(cpy.m_position == -1 || cpy.m_data->available == true){cpy.m_data = NULL;}
-        return cpy;
-    }
-
+    /**
+     * This function overloads the dereference operator.
+     * When called, it will return the value that the
+     * iterator is indexing by reference.
+     */
     template <typename key, typename value, typename Hash>
     value& map<key,value,Hash>::iterator::operator*()
     {
         return m_data->nodeValue;
     }
 
+    /**
+     * This function overloads the arrow operator.
+     * When called, it will return a pointer to the value that the
+     * iterator is indexing
+     */
     template <typename key, typename value, typename Hash>
     value* map<key,value,Hash>::iterator::operator->()
     {
         return &(m_data->nodeValue);
     }
 
+    /**
+     * This function overloads the not equal operator.
+     * It is used to compare iterators's positions in the map
+     * to check if they are not at the same position
+     */
     template <typename key, typename value, typename Hash>
     bool map<key,value,Hash>::iterator::operator!=(const iterator& it) const
     {
@@ -633,6 +900,11 @@ namespace nstd
         return false;
     }
 
+    /**
+     * This function overloads the equal comparison operator.
+     * It is used to compare iterators's positions in the map
+     * to check if they are at the same position
+     */
     template <typename key, typename value, typename Hash>
     bool map<key,value,Hash>::iterator::operator==(const iterator& it) const
     {
@@ -649,6 +921,12 @@ namespace nstd
 
     /* PRIME LOOKUP TABLE - QUICK ACCESS*/
 
+    /**
+     * @brief This function will take an integer and create an array of prime
+     * values up to the given integer
+     * @param n number of values, from 0 to n to select primes from
+     * @return A pointer to an array of primes
+     */
     unsigned int* SieveOfEratosthenes(int n)
     {
         //inspired by geeksforgeeks.org
@@ -686,19 +964,5 @@ namespace nstd
         }
         delete [] primes;
         return actualPrimes;
-    }
-
-    template <class k, class v, class Hash>
-    std::ostream& operator<<(std::ostream& out, const map<k, v, Hash>& d)
-    {
-        out << "The key value combos inside double hash map are: \n";
-        for(int i = 0; i < d.m_capacity; ++i)
-        {
-            if(d.m_map[i]&& d.m_map[i]->available != true)
-            out << "Hash: "<<std::setw(2)<<std::right
-                << i <<" Key: " <<std::setw(3)<< d.m_map[i]->nodeKey
-                << " Value: " << d.m_map[i]->nodeValue << "\n";
-        }
-        return out;
     }
 };// End nstd namespace
