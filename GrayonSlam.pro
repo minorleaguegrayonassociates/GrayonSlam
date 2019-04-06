@@ -35,7 +35,6 @@ SOURCES += \
     src/datastore/team.cpp \
     src/datastore/souvenir.cpp
 
-
 HEADERS += \
     src/windows/mainwindow.hpp \
     src/windows/login.hpp \
