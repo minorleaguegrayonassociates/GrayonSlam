@@ -29,7 +29,6 @@ SOURCES += \
     src/windows/mainwindow.cpp \
     src/windows/login.cpp \
     src/utils/parser.cpp \
-    src/views/teamview.cpp \
     src/widgets/navbar.cpp \
     src/widgets/navbaritem.cpp \
     src/datastore/stadium.cpp \
@@ -43,7 +42,6 @@ HEADERS += \
     src/utils/exceptions.hpp \
     src/utils/parser.hpp \
     src/views/abstractview.hpp \
-    src/views/teamview.hpp \
     src/widgets/navbar.hpp \
     src/widgets/navbaritem.hpp \
     src/datastore/stadium.hpp \
@@ -52,8 +50,7 @@ HEADERS += \
 
 FORMS += \
     src/windows/mainwindow.ui \
-    src/windows/login.ui \
-    src/views/teamview.ui
+    src/windows/login.ui
     src/widgets/navbaritem.ui
 
 RESOURCES += \
