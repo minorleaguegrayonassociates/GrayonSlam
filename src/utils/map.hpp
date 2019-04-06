@@ -519,7 +519,7 @@ namespace nstd
     template <class k, class v, class Hash>
     std::ostream& operator<<(std::ostream& out, const map<k, v, Hash>& d)
     {
-        out << "The key value combos inside double hash map are: \n";
+        out << "The key value combos inside hash map are: \n";
         for(int i = 0; i < d.m_capacity; ++i)
         {
             if(d.m_map[i]&& d.m_map[i]->available != true)
@@ -712,13 +712,14 @@ namespace nstd
     typename map<key,value,Hash>::iterator& map<key,value,Hash>::iterator::operator++()
     {
         /* starts at current spot in map then goes to non null node*/
-        if(m_position != -1)
+        if(m_position != -1 ||m_end == true)
         {
             ++m_position, m_data = m_parent->m_map[m_position];
             if(m_position == m_parent->m_capacity ||(m_data != NULL && m_data->available)) m_data = NULL;
             while (m_position < m_parent->m_capacity && (m_data == NULL ||(m_data != NULL && m_data->available)))
             {
-                ++m_position; if(m_data!= NULL) m_data = m_parent->m_map[m_position];
+                ++m_position;
+                m_data = m_parent->m_map[m_position];
                 if(m_data != NULL && m_data->available) m_data = NULL;
             }
             //invalidate pointer if at end
@@ -742,13 +743,14 @@ namespace nstd
     typename map<key,value,Hash>::iterator map<key,value,Hash>::iterator::operator++(int)
     {
         iterator cpy(*this);
-        if(m_position != -1)
+        if(m_position != -1 ||m_end == true)
         {
             ++m_position, m_data = m_parent->m_map[m_position];
             if(m_position == m_parent->m_capacity ||(m_data != NULL && m_data->available)) m_data = NULL;
             while (m_position < m_parent->m_capacity && (m_data == NULL ||(m_data != NULL && m_data->available)))
             {
-                ++m_position; if(m_data != NULL) m_data = m_parent->m_map[m_position];
+                ++m_position;
+                m_data = m_parent->m_map[m_position];
                 if(m_data != NULL && m_data->available) m_data = NULL;
             }
             //invalidate pointer if at end
@@ -779,7 +781,7 @@ namespace nstd
             if(m_position <= -1 ||(m_data != NULL && m_data->available)) m_data = NULL;
             while (m_position > -1 && (m_data == NULL ||(m_data != NULL && m_data->available)))
             {
-                --m_position; if(m_data != NULL)m_data = m_parent->m_map[m_position];
+                --m_position; m_data = m_parent->m_map[m_position];
                 if(m_data != NULL && m_data->available) m_data = NULL;
             }
             //invalidate pointer if at end
@@ -831,7 +833,8 @@ namespace nstd
             if(m_position <= -1 ||(m_data != NULL && m_data->available)) m_data = NULL;
             while (m_position > -1 && (m_data == NULL ||(m_data != NULL && m_data->available)))
             {
-                --m_position; if(m_data != NULL)m_data = m_parent->m_map[m_position];
+                --m_position;
+                m_data = m_parent->m_map[m_position];
                 if(m_data != NULL && m_data->available) m_data = NULL;
             }
             //invalidate pointer if at end
