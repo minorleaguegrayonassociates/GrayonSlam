@@ -41,12 +41,12 @@ HEADERS += \
     src/windows/login.hpp \
     src/utils/exceptions.hpp \
     src/utils/parser.hpp \
-    src/views/abstractview.hpp \
     src/widgets/navbar.hpp \
     src/widgets/navbaritem.hpp \
     src/datastore/stadium.hpp \
     src/datastore/team.hpp \
-    src/datastore/souvenir.hpp
+    src/datastore/souvenir.hpp \
+    src/views/view.hpp
 
 FORMS += \
     src/windows/mainwindow.ui \
