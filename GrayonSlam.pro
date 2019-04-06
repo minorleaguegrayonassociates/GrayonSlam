@@ -50,7 +50,7 @@ HEADERS += \
 
 FORMS += \
     src/windows/mainwindow.ui \
-    src/windows/login.ui
+    src/windows/login.ui \
     src/widgets/navbaritem.ui
 
 RESOURCES += \
