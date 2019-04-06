@@ -57,13 +57,13 @@ void MainWindow::changeView(int view)
     {
         resetViews();
         if(view == 3 && type == Login::Type::ADMIN) //Admin view
-            {
-                m_ui->mainViews->setCurrentIndex(view);
-            }
-            else
-            {
-                m_ui->mainViews->setCurrentIndex(view);
-            }
+        {
+            m_ui->mainViews->setCurrentIndex(view);
+        }
+        else
+        {
+            m_ui->mainViews->setCurrentIndex(view);
+        }
     }
 }
 
