@@ -12,17 +12,17 @@ class View: public QWidget
     Q_OBJECT
     
 public:
-    explicit View(QWidget* parent = nullptr)
+    explicit View(QWidget* parent)
         : QWidget(parent)
     {}
     virtual ~View(){}
     /**
-     * Resets any internal components of the view
+     * The resetView function resets any internal components of the view.
      */
     virtual void resetView() = 0;
 
     /**
-     * Resets the UI that corresponds with the given view
+     * The resetUi function resets the Ui that corresponds with the given view
      */
     virtual void resetUi() = 0;
 };
