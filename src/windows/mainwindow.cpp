@@ -57,7 +57,6 @@ void MainWindow::changeView(int view)
     {
         resetViews();
         m_ui->mainViews->setCurrentIndex(view);
-
     }
 }
 
