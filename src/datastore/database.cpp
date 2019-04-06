@@ -1,6 +1,5 @@
-#include "src/datastore/database.hpp"
-#include "src/utils/parser.hpp"
-#include <QDebug>
+#include "database.hpp"
+#include "./../utils/parser.hpp"
 
 std::map<int,Team> Database::m_teams;
 std::map<int,Stadium> Database::m_stadiums;
@@ -53,9 +52,6 @@ void Database::loadFromFile(const std::string& filepath)
     std::vector<std::vector<std::string>> teamData = loadData(filepath);
     for (const std::vector<std::string>& team : teamData)
     {
-        // Souvenir index starts at 14 for each team, reseting to 14 here
-        j = 14;
-
         // Converting all string values from strings to their enum values
         tempLeague = m_database->getEnumValue(Team::LEAGUE_STRING,team[8], Team::League::AMERICAN);
         tempRoof = m_database->getEnumValue(Stadium::ROOF_STRING,team[12], Stadium::Roof::OPEN);
@@ -70,15 +66,18 @@ void Database::loadFromFile(const std::string& filepath)
         tempStadium = new Stadium(std::stoi(team[3]), team[4], team[6], std::stoi(team[5]),std::stoi(team[9]),
                                   std::stoi(team[10]), tempRoof, tempSurface, tempTypology);
 
+        // Souvenir index starts at 14 for each team, reseting to 14 here
+        j = 14;
         // Index 13 holds the number of souvenirs a stadium has
         for(int i = 0; i < std::stoi(team[13]); ++i)
         {
             tempId = std::stoi(team[j++]);      // id - not important
-            tempDeleted = std::stoi(team[j++]); // Is deleted? - bool
+            tempDeleted = (team[j++] == "0") ? true:false; // Is deleted? - bool
             tempName = team[j++];               // Souvenir Name
             tempPrice = std::stod(team[j++]);   // Souvenir Price
 
             tempStadium->addSouvenir(tempName, tempPrice); // Creating an instance of a souvenir class
+            tempStadium->getSouvenirs()[static_cast<unsigned int>(i)].hidden = tempDeleted;
         }
 
         // Insterting team and stadium in to their appropriate maps for database
@@ -87,9 +86,9 @@ void Database::loadFromFile(const std::string& filepath)
     }
 }
 
-void Database::saveToFile(const std::string& filepath)
+void Database::saveToFile(const std::string&)
 {
-    //  Save function goes here
+
 }
 
 std::map<int,Team> Database::getTeams()

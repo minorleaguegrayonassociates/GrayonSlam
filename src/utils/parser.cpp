@@ -2,7 +2,7 @@
 #include <sstream>
 #include <iostream>
 #include "parser.hpp"
-#include "src/utils/exceptions.hpp"
+#include "exceptions.hpp"
 
 void teamParseDebug(const std::string& path)
 {

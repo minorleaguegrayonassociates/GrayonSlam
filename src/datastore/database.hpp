@@ -1,9 +1,8 @@
 #pragma once
 
-#include "src/datastore/souvenir.hpp"
-#include "src/datastore/stadium.hpp"
-#include "src/datastore/team.hpp"
-#include <QDebug>
+#include "souvenir.hpp"
+#include "stadium.hpp"
+#include "team.hpp"
 
 /**
  * @class Database class
@@ -47,4 +46,6 @@ Enum Database::getEnumValue(Container arr, std::string strVal, Enum enumVal)
         else
             enumVal = static_cast<Enum>(enumVal+1);
     }
+    // Won't reach this as long as datafile isn't changed manually -- added to prevent warnings from Qt
+    return enumVal;
 }
