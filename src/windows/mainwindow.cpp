@@ -1,9 +1,11 @@
 #include "mainwindow.hpp"
 #include "ui_mainwindow.h"
+#include "src/windows/login.hpp"
+#include "src/datastore/database.hpp"
 #include <QMessageBox>
 #include <QDebug>
 #include <QFontDatabase>
-#include "src/windows/login.hpp"
+
 
 /* Constructors */
 MainWindow::MainWindow()
@@ -26,6 +28,17 @@ MainWindow::MainWindow()
     if(Login::getType() == Login::Type::ADMIN)
         m_navbar->addItem("\uf085", "Inventory\nManagement");
     m_navbar->addItem("\uf2f5", "Logout");
+
+    Database::loadFromFile("./../../GrayonSlam/src/datastore/MLBInformation.csv");
+    Database::loadFromFile("./../../GrayonSlam/src/datastore/MLBInformationExpansion.csv");
+
+    std::map<int,Team> tempTeam(Database::getTeams());
+    std::map<int,Stadium> tempStadium(Database::getStadiums());
+    for(std::map<int,Team>::iterator it = tempTeam.begin(); it != tempTeam.end(); ++it)
+    {
+        qDebug() << QString::fromStdString(it->second.getName());
+        qDebug() << QString::fromStdString(Database::findStadiumById(it->second.getStadiumId()).getName());
+    }
 }
 
 MainWindow::~MainWindow()
@@ -47,11 +60,15 @@ void MainWindow::changeView(int view)
         if(reply == QMessageBox::Yes)
         {
             emit logout();
-        }
         else
         {
             m_navbar->setCurrentRow(m_ui->mainViews->currentIndex());
         }
+
+    }
+    else if(view == 3 && type == Login::Type::ADMIN) //Admin view
+    {
+        m_ui->mainViews->setCurrentIndex(view);
     }
     else
     {

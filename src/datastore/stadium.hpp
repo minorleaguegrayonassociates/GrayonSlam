@@ -1,6 +1,7 @@
 #pragma once
 #include "souvenir.hpp"
 #include <map>
+#include <array>
 #include <vector>
 #include <array>
 
