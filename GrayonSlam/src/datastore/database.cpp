@@ -127,3 +127,24 @@ const Stadium& Database::findStadiumById(int id)
     }
     return m_stadiums.end()->second;
 }
+
+std::list<Team> Database::getListTeams()
+{
+    std::list<Team> lis;
+
+    for(auto team : m_teams)
+        lis.push_back(team.second);
+
+    return lis;
+}
+
+std::list<Stadium> Database::getListStadium()
+{
+    std::list<Stadium> lis;
+
+    for(auto stadium : m_stadiums)
+        lis.push_back(stadium.second);
+
+    return lis;
+}
+

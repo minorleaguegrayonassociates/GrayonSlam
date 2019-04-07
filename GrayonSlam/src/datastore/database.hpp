@@ -1,5 +1,6 @@
 #pragma once
 
+#include <list>
 #include "souvenir.hpp"
 #include "stadium.hpp"
 #include "team.hpp"
@@ -31,6 +32,9 @@ public:
     static std::map<int,Stadium> getStadiums();
     static const Team& findTeamById(int);
     static const Stadium& findStadiumById(int);
+    static std::list<Team> getListTeams();
+    static std::list<Stadium> getListStadium();
+
 private:
     /* Private string to Enum method*/
     template<typename Container, typename Enum>
