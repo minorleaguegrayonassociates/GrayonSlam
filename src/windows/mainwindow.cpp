@@ -4,7 +4,6 @@
 #include <QDebug>
 #include <QFontDatabase>
 #include "src/windows/login.hpp"
-#include "src/widgets/souvenirlist.hpp"
 
 /* Constructors */
 MainWindow::MainWindow()
@@ -27,14 +26,6 @@ MainWindow::MainWindow()
     if(Login::getType() == Login::Type::ADMIN)
         m_navbar->addItem("\uf085", "Inventory\nManagement");
     m_navbar->addItem("\uf2f5", "Logout");
-
-    std::vector<Souvenir> souvenirs(10);
-    SouvenirList* list = new SouvenirList(m_ui->widget);
-    list->allowHidden(true);
-    list->showQty(true);
-
-    for(Souvenir souvenir : souvenirs)
-        list->addItem(0, souvenir);
 }
 
 MainWindow::~MainWindow()
