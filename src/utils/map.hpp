@@ -21,8 +21,6 @@ namespace nstd
 
     unsigned int* SieveOfEratosthenes(int n);
 
-    /*CLASSES & STRUCTS */
-
     /**
      * @class nstd::map class
      *
@@ -64,7 +62,6 @@ namespace nstd
 
         /* Constructors, Destructor, and Assignment */
         map();
-        map(key[],value[],const int);
         map(const map&);
         map(map&&);
         map& operator=(const map&);
@@ -340,38 +337,6 @@ namespace nstd
         for(int i = 0; i< m_capacity;++i)
         {
             m_map[i]=nullptr;
-        }
-    }
-
-    /**
-     * This constructor constructs the map given parallel key and value arrays.
-     * It copies them in and sets the size to the prime number that follows the size
-     * of the arrays.
-     */
-    template <typename key, typename value, typename Hash>
-    map<key,value,Hash>::map(key keys[], value values[], const int ARR_SIZE)
-    {
-        m_primeNumIndex = 0;
-        while(TABLE_OF_PRIMES.lookupTable[m_primeNumIndex] <= ARR_SIZE) ++m_primeNumIndex;
-        m_numOfElems = ARR_SIZE;
-        m_capacity = TABLE_OF_PRIMES.lookupTable[m_primeNumIndex];
-        m_map = new node*[TABLE_OF_PRIMES.lookupTable[m_primeNumIndex]];
-        for(int i = 0; i < m_capacity; ++i) m_map[i] = 0;
-        node* tmp;
-        unsigned int hashCode;
-        unsigned int j;
-        for(int i = 0; i < ARR_SIZE; ++i)
-        {
-            tmp = new node(keys[i], values[i],false, this);
-            j = 1;
-            hashCode = hash(keys[i],0);
-            while(m_map[hashCode] != 0 && j < m_capacity)
-            {
-                hashCode = hash(keys[i],j);
-                ++j;
-            }
-            if(m_map[hashCode]) delete m_map[hashCode];
-            m_map[hashCode] = tmp;
         }
     }
 
@@ -816,6 +781,10 @@ namespace nstd
                     m_position = position;
                     m_end = false;
                 }
+                else
+                {
+                    m_data = NULL;
+                }
             }
         }
         return *this;
@@ -866,6 +835,10 @@ namespace nstd
                     m_data = lastElem;
                     m_position = position;
                     m_end = false;
+                }
+                else
+                {
+                    m_data = NULL;
                 }
             }
         }
