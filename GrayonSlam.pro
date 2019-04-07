@@ -48,7 +48,6 @@ HEADERS += \
     src/views/view.hpp \
     src/utils/map.hpp
 
-
 FORMS += \
     src/windows/mainwindow.ui \
     src/windows/login.ui \

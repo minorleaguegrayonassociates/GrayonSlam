@@ -29,8 +29,7 @@ namespace nstd
      * A data structure class that is meant to hold key value pairs and
      * hash with the key to retrieve the value. This map is also iteratable
      * meaning that you can start at the beginning or end and read through it
-     * as if it was a list. In the context of our project this class will relate
-     * team id's with a stadium and stadium id's with a team.
+     * as if it was a list.
      *
      * This class also supports custom hashing, but the functions need to be in this
      * format static int staticHashAlgo(key k,int j,int capacity) where the returned
@@ -39,23 +38,27 @@ namespace nstd
      * @code{.cpp}
      * nstd::map<int,std::string> myMap;
      * //will create a new key value in map if not present
-     * //othewise reassigns value at key 2
+     * //othewise reassigns value at key 2, this operation requires
+     * //copy assignment. As operator[] returns a refrence to the value
      * myMap[2] = "Hi";
-     * //same if not present will create new value with default constructor
-     * // at key 8 otherwise returns value
+     * Reassign into key 2, replaces "Hi" with "Hello"
+     * myMap[2] = "Hello";
+     * //myMap[2] returns a refrence to the value at key 2 and will print it out
+     * std::cout << myMap[2];
+     * //Since key 8 is not defined, the map will add key 8 to the map and use the
+     * //values default constructor to construct the value
      * std::cout << myMap[8];
      * @endcode
      *
      * In the code above, a new nstd::map is instantiated with the key being an int
-     * and the value being a std::string. We then assign Hi into a newly created value
-     * location. And we readout whatever is in key location 8, in our case nothing so
-     * it returns a default constructed value.
+     * and the value being a std::string using the default constructor. We then assign
+     * Hi into a newly created value location. Then we use the value copy assignment to
+     * reassign hello into hi. We then output what is at key 2. And we readout whatever is
+     * in key location 8, in our case nothing so it returns a default constructed value.
      */
     template <typename key, typename value, typename Hash = hash<key>>
     class map
     {
-    private:
-        struct node;
     public:
         class iterator;
 
@@ -71,11 +74,11 @@ namespace nstd
         iterator find(key);
         value& operator[] (const key&);
         value& operator[] (key&&);
-        friend std::ostream& operator<< <>(std::ostream&, const map<key,value,Hash>&);
+        friend std::ostream& operator<< <>(std::ostream&, const map&);
 
         /* Mutation Operations */
-        iterator insert(key, value);
-        std::pair<key,value> remove(key);
+        iterator insert(const key&,const value&);
+        std::pair<key,value> remove(const key&);
         void reserve(unsigned int);
 
         /* Iterator Getters */
@@ -85,13 +88,14 @@ namespace nstd
         /* Map information*/
         int size() const {return m_numOfElems;}
         int capacity() const {return m_capacity;}
-        bool isEmpty() const {return (m_numOfElems == 0);}
+        bool empty() const {return m_numOfElems == 0;}
     private:
+        struct node;
         /* Hash Algorithm*/
         int (*hash)(key k,int j,int capacity) = &(Hash::staticHashAlgo);
 
         /* Accessing Helper Function */
-        node* m_insertFind(key, int&) const;
+        node* insertFind(key, int&) const;
 
         /* Data Members */
         node** m_map = NULL;
@@ -148,7 +152,7 @@ namespace nstd
         bool operator==(const iterator&) const;
 
         /* Iterator Information */
-        bool isEmpty(){return (m_data == NULL ||m_data->available);}
+        bool isNull(){return (m_data == NULL ||m_data->available);}
         node* getData(){return m_data;}
         map* getParent(){return m_parent;}
         void setEnd(bool isEnd){m_end= isEnd;}
@@ -485,7 +489,7 @@ namespace nstd
     value& map<key,value,Hash>::operator[](const key& k)
     {
         iterator it = find(k);
-        if(it.isEmpty())
+        if(it.isNull())
         {
             it = insert(k,value());
         }
@@ -505,7 +509,7 @@ namespace nstd
     value& map<key,value,Hash>::operator[] (key&& k)
     {
         iterator it = find(k);
-        if(it.isEmpty())
+        if(it.isNull())
         {
             it = insert(k,value());
         }
@@ -540,10 +544,10 @@ namespace nstd
      * @return iterator corresponding to the position of the inserted key
      */
     template <typename key, typename value, typename Hash>
-    typename map<key,value,Hash>::iterator map<key,value,Hash>::insert(key k, value v)
+    typename map<key,value,Hash>::iterator map<key,value,Hash>::insert(const key& k,const value& v)
     {
         int findPosition = -1;
-        node* found = m_insertFind(k, findPosition);
+        node* found = insertFind(k, findPosition);
         if(found) found->available = false;
         node* tmp;
         unsigned int hashCode = 0;
@@ -579,7 +583,7 @@ namespace nstd
      * @return std::pair containing the key and value removed from the map.
      */
     template <typename key, typename value, typename Hash>
-    std::pair<key,value> map<key,value,Hash>::remove(key k)
+    std::pair<key,value> map<key,value,Hash>::remove(const key& k)
     {
         key resultKey = key();
         value resultValue = value();
@@ -674,7 +678,7 @@ namespace nstd
      * values to index of given key.
      */
     template <typename key, typename value, typename Hash>
-    typename map<key,value,Hash>::node* map<key,value,Hash>::m_insertFind(key k, int& position) const
+    typename map<key,value,Hash>::node* map<key,value,Hash>::insertFind(key k, int& position) const
     {
        node* val = NULL;
        for(int i = 0; i < m_capacity; ++i)
