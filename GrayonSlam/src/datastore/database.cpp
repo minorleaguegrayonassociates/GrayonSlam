@@ -13,20 +13,22 @@ Database::~Database()
 {}
 
 
-/*----------Team ID:  0"
-*---------Team Name:  1"
-*----------Deleted?:  2"
-*--------Stadium ID:  3"
-*------Stadium Name:  4"
-*--Seating Capacity:  5"
-*-----Team Location:  6"
-*---Playing Surface:  7"
-*------------League:  8"
-*-------Date opened:  9"
-*---Distance2CtrFld: 10"
-*-Ballpark typology: 11"
-*---------Roof Type: 12"
-*--NumberOSouvenirs: 13"*/
+/* loadFrom
+ *
+ * ----------Team ID:  0"
+ *---------Team Name:  1"
+ *----------Deleted?:  2"
+ *--------Stadium ID:  3"
+ *------Stadium Name:  4"
+ *--Seating Capacity:  5"
+ *-----Team Location:  6"
+ *---Playing Surface:  7"
+ *------------League:  8"
+ *-------Date opened:  9"
+ *---Distance2CtrFld: 10"
+ *-Ballpark typology: 11"
+ *---------Roof Type: 12"
+ *--NumberOSouvenirs: 13"*/
 
 void Database::loadFromFile(const std::string& filepath)
 {
