@@ -1,6 +1,5 @@
 #include "souvenirlistitem.hpp"
 #include "ui_souvenirlistitem.h"
-#include <QDebug>
 
 /* Constructor */
 SouvenirListItem::SouvenirListItem(QWidget* parent, StadiumId stadId, const Souvenir& souvenir)
@@ -11,13 +10,13 @@ SouvenirListItem::SouvenirListItem(QWidget* parent, StadiumId stadId, const Souv
     QFont font("Font Awesome 5 Free");
 
     /* Name */
-    font.setPixelSize(14);
+    font.setPixelSize(13);
     m_ui->name->setFont(font);
     m_ui->name->setWordWrap(true);
     m_ui->name->setText(QString::fromStdString(souvenir.getName()));
 
     /* Price */
-    font.setPixelSize(12);
+    font.setPixelSize(11);
     m_ui->price->setFont(font);
     m_ui->price->setText("\uf155 " + QString::number(souvenir.getPrice(), 'f', 2));
 
