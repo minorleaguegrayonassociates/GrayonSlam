@@ -34,15 +34,20 @@ namespace nstd
      * int from the function needs to follow this restriction 0 < hash < capacity.
      *
      * @code{.cpp}
+     * //Instantiate map
      * nstd::map<int,std::string> myMap;
+     *
      * //will create a new key value in map if not present
      * //othewise reassigns value at key 2, this operation requires
      * //copy assignment. As operator[] returns a refrence to the value
      * myMap[2] = "Hi";
-     * Reassign into key 2, replaces "Hi" with "Hello"
+     *
+     * //Reassign into key 2, replaces "Hi" with "Hello"
      * myMap[2] = "Hello";
+     *
      * //myMap[2] returns a refrence to the value at key 2 and will print it out
      * std::cout << myMap[2];
+     *
      * //Since key 8 is not defined, the map will add key 8 to the map and use the
      * //values default constructor to construct the value
      * std::cout << myMap[8];
@@ -68,7 +73,7 @@ namespace nstd
         ~map();
 
         /* Accessing */
-        iterator find(key);
+        iterator find(const key&);
         value& operator[] (const key&);
         value& operator[] (key&&);
         friend std::ostream& operator<< <>(std::ostream&, const map&);
@@ -86,6 +91,7 @@ namespace nstd
         int size() const {return m_numOfElems;}
         int capacity() const {return m_capacity;}
         bool empty() const {return m_numOfElems == 0;}
+        
     private:
         struct node;
         /* Hash Algorithm*/
@@ -104,9 +110,9 @@ namespace nstd
     /**
      * @class nstd::map<key,value,Hash>::iterator class
      *
-     * A data structure class that is meant to hold a position of a key, value pair in
-     * the corresponding map. It can be incremented and decremeneted to move through
-     * the map. It can also access the data it indexes to read the contents of the map
+     * A class that refences internal data which is meant to hold a position of a key,
+     * value pair in the corresponding map. It can be incremented and decremeneted to move
+     * through the map. It can also access the data it indexes to read the contents of the map
      * and to write to it as well
      *
      * @code{.cpp}
@@ -123,7 +129,7 @@ namespace nstd
      *
      * In the code above, an iterator is created that indexes the beginning of
      * the map. It is then put into a loop and incremeneted with each pass until
-     * it reaches the end of the map. While it is being incremented, it is being
+     * it reaches the end of the map. While it is being incremented, it is outputting
      * the data that the iterator is indexing is being accessed and printed
      */
     template <typename key, typename value, typename Hash>
@@ -132,7 +138,7 @@ namespace nstd
     public:
         /* Constructors */
         iterator(const iterator &);
-        iterator(int,map*,node*);
+        iterator(int position,map*,node*);
 
         /* Movement Operators */
         iterator& operator++();
@@ -153,9 +159,10 @@ namespace nstd
         node* getData(){return m_data;}
         map* getParent(){return m_parent;}
         void setEnd(bool isEnd){m_end= isEnd;}
+        
     private:
         iterator();
-
+       
         /* Data Members */
         int m_position = 0;
         map* m_parent = NULL;
@@ -165,14 +172,15 @@ namespace nstd
 
 
     /**
+     * @struct A node struct for holding the internal data of the map
      * This node struct that holds internal data of the map class
      */
     template <typename key, typename value, typename Hash>
     struct map<key,value,Hash>::node
     {
         /* Data Memebers */
-        key nodeKey = key();
-        value nodeValue = value();
+        key nodeKey;
+        value nodeValue;
         bool available = false;
         map* parentMap = NULL;
 
@@ -184,7 +192,7 @@ namespace nstd
      * @class nstd::hash class
      *
      * A functor class that takes in a key of template type
-     * k and an int j for quadratic hashing and hashes it to
+     * @a k and an int @a j for quadratic hashing and hashes it to
      * produce a int for use in a data structure
      *
      * @code{.cpp}
@@ -198,7 +206,7 @@ namespace nstd
      *
      * In the code above, a hash class is instantiated along side
      * an array of size 20. Later on in the code, the key 15 is hashed with
-     * a j value of 2 for the quadratic hash and the size of the array 20 in
+     * a @a j value of 2 for the quadratic hash and the size of the array 20 in
      * order to access elements inside the array, which are then printed out.
      */
     template <typename key>
@@ -206,7 +214,7 @@ namespace nstd
     {
     public:
         /**
-         * @brief This method will hash the key into an int for mapping
+         * This method will hash the key into an int for mapping
          * using quadratic hashing.
          * @param k the key itself
          * @param j the collision value, increase for more values
@@ -218,7 +226,8 @@ namespace nstd
             return hashAlgo(k,j,capacity);
         }
         /**
-         * @brief This method is the same as operator() but named
+         * This method is the same as operator() but named
+         * (i.e. hash.hashAlgo(params) vs hash(params) both are same)
          * @param k the key itself
          * @param j the collision value, increase for more values
          * @param capacity (capacity - 1) is max hashcode
@@ -226,9 +235,7 @@ namespace nstd
          */
         int hashAlgo(key k,int j, int capacity)const
         {
-            int hash = (((static_cast<int>(k))+j*j)%capacity);
-            if(hash < 0) hash *= -1;
-            return hash;
+            return std::abs(((static_cast<int>(k))+j*j)%capacity);
         }
         /**
          * @brief This method is the static version of operator()
@@ -421,7 +428,7 @@ namespace nstd
      * @return iterator containing the position of the key in the map
      */
     template <typename key, typename value, typename Hash>
-    typename map<key,value,Hash>::iterator map<key,value,Hash>::find(key k)
+    typename map<key,value,Hash>::iterator map<key,value,Hash>::find(const key& k)
     {
         int position = -1;
         node* val = NULL;
