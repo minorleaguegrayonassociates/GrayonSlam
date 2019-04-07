@@ -89,7 +89,7 @@ namespace nstd
     private:
         struct node;
         /* Hash Algorithm*/
-        int (*hash)(key k,int j,int capacity) = &(Hash::staticHashAlgo);
+        Hash hash;
 
         /* Accessing Helper Function */
         node* insertFind(key, int&) const;
@@ -226,7 +226,9 @@ namespace nstd
          */
         int hashAlgo(key k,int j, int capacity)const
         {
-            return((static_cast<int>(k))+j*j)%capacity;
+            int hash = (((static_cast<int>(k))+j*j)%capacity);
+            if(hash < 0) hash *= -1;
+            return hash;
         }
         /**
          * @brief This method is the static version of operator()
@@ -350,7 +352,10 @@ namespace nstd
         m_map = new node*[otherMap.m_capacity];
         for(int i = 0; i < otherMap.m_capacity; ++i)
         {
-            m_map[i] = new node(otherMap.m_map[i]->nodeKey,otherMap.m_map[i]->nodeValue,false, this);
+            if(otherMap.m_map[i] != NULL && otherMap.m_map[i]->available == false)
+            {
+                m_map[i] = new node(otherMap.m_map[i]->nodeKey,otherMap.m_map[i]->nodeValue,false, this);
+            }
         }
     }
 
@@ -387,7 +392,10 @@ namespace nstd
             m_map = new node*[otherMap.m_capacity];
             for(int i = 0; i < otherMap.m_capacity; ++i)
             {
-                m_map[i] = new node(otherMap.m_map[i]->nodeKey,otherMap.m_map[i]->nodeValue,false, this);
+                if(otherMap.m_map[i] != NULL && otherMap.m_map[i]->available == false)
+                {
+                    m_map[i] = new node(otherMap.m_map[i]->nodeKey,otherMap.m_map[i]->nodeValue,false, this);
+                }
             }
         }
         return *this;
