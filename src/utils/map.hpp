@@ -16,7 +16,7 @@ namespace nstd
     template <typename key, typename value, typename Hash>
     class map;
 
-    template <class k, class v, class Hash>
+    template <typename k, typename v, typename Hash>
     std::ostream& operator<<(std::ostream& out, const map<k, v, Hash>& d);
 
     unsigned int* SieveOfEratosthenes(int n);
@@ -520,7 +520,7 @@ namespace nstd
      * This function iterates through the map and prints the keys and value
      * to the ostream. This is implemented with the intent of error logging
      */
-    template <class k, class v, class Hash>
+    template <typename k, typename v, typename Hash>
     std::ostream& operator<<(std::ostream& out, const map<k, v, Hash>& d)
     {
         out << "The key value combos inside hash map are: \n";
