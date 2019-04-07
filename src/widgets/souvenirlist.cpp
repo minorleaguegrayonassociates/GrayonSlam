@@ -10,7 +10,6 @@ SouvenirList::SouvenirList(QWidget* parent)
     : QListWidget(parent)
 {
     /* List widget settings */
-    QListWidget::setStyleSheet("QListWidget { background-color: #303030; color: white; }");
     QListWidget::resize(parent->size());
     QListWidget::setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     QListWidget::setUniformItemSizes(true);
