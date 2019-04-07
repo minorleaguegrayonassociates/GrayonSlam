@@ -82,7 +82,7 @@ void SouvenirListItem::showQty(bool v)
 
 void SouvenirListItem::resetQty()
 {
-    m_ui->spinBox_qty->setValue(m_ui->spinBox_qty->minimum());
+     setQty(m_ui->spinBox_qty->minimum());
 }
 
 /* Private slots */
