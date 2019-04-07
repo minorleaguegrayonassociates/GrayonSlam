@@ -32,7 +32,7 @@ public:
 
     /* Enum to strings */
     static const std::array<std::string,3> ROOF_STRING;
-    static const std::array<std::string,3> SURFACE_STRING;
+    static const std::array<std::string,2> SURFACE_STRING;
     static const std::array<std::string,6> TYPOLOGY_STRING;
 
     /* Constructors */
