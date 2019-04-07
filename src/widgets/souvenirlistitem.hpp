@@ -17,7 +17,7 @@ class SouvenirListItem : public QWidget
 
 public:
     /* Constructor */
-    SouvenirListItem(QWidget* parent, StadiumId, const Souvenir&);
+    explicit SouvenirListItem(QWidget* parent, StadiumId, const Souvenir&);
 
     /* Destructor */
     ~SouvenirListItem() override;
@@ -25,7 +25,6 @@ public:
     /* Getters */
     int getQty() const;
     IDs getIDs() const;
-    QSize getItemSizeHint();
 
     /* Setters */
     void setQty(int);

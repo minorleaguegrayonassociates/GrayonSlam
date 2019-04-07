@@ -30,8 +30,6 @@ SouvenirListItem::SouvenirListItem(QWidget* parent, StadiumId stadId, const Souv
      */
     connect(m_ui->spinBox_qty, qOverload<int>(&QSpinBox::valueChanged),
             this, &SouvenirListItem::idAndValueEmitter);
-
-    qDebug() << sizeHint();
 }
 
 /* Destructor */
@@ -49,11 +47,6 @@ int SouvenirListItem::getQty() const
 IDs SouvenirListItem::getIDs() const
 {
     return m_ids;
-}
-
-QSize SouvenirListItem::getItemSizeHint()
-{
-    return sizeHint();
 }
 
 /* Setters */

@@ -20,16 +20,14 @@ SouvenirList::SouvenirList(QWidget* parent)
     QListWidget::setFlow(QListView::TopToBottom);
 
     //Emits a signal when a souvenir is selected with information about the souvenir
-    connect(this, &QListWidget::currentRowChanged, this, &SouvenirList::rowToIDsConverter);
+    connect(this, &QListWidget::currentRowChanged, this, &SouvenirList::rowToIDsEmitter);
 }
 
 /**
- * @brief Get IDs and its corresponding quantity
+ * Returns a map of stadium ID and souvenir ID pairs and their
+ * corresponding quantity that is determined by the spinbox value.
  *
- * Returns the IDs of the menu item (including the restaurant ID),
- * and the corresponding quantity that is determined by the spinbox value.
- *
- * @return IDs and its corresponding quantity
+ * @return Map containing the IDs and quantities
  */
 const Qtys& SouvenirList::getIDQty() const
 {
@@ -37,41 +35,35 @@ const Qtys& SouvenirList::getIDQty() const
 }
 
 /**
- * @brief Get selected IDs
+ * Attempts to convert the currently selected item into a
+ * SouvenirListItem. If successful, the IDs of the item is
+ * returned; otherwise, return invalid IDs.
  *
- * Converts the selected item into its IDs.
- *
- * @return The IDs that is selected; if nothing is selected, IDs(-1, -1) is returned.
+ * @return IDs of the selected item. If nothing is selected, @a IDs(-1,-1) is returned.
  */
 IDs SouvenirList::getSelected() const
 {
-    //Get the QListWidgetItem at the specified row
-    QListWidgetItem* item = QListWidget::item(QListWidget::currentRow());
+    SouvenirListItem* widget = castRow(QListWidget::currentRow());
 
-    //Attempt to cast the linked widget into a SouvenirListItem
-    SouvenirListItem* menuItem = dynamic_cast<SouvenirListItem*>(QListWidget::itemWidget(item));
-
-    //If successful, return the menu item's IDs
-    return (menuItem != nullptr ? menuItem->getIDs()
-                                : IDs(-1, -1));
+    return (widget != nullptr ? widget->getIDs()
+                              : IDs(-1, -1));
 }
 
 /**
- * @brief Set IDs' quantity
+ * @brief Set a specific souvenir's quantity
  *
- * Sets the IDs' corresponding quantity to a value.
- * This is done by dynamic casting all the QListWidgetItems within the list and
- * checking if its attatched SouvenirListItem widget has the right IDs.
+ * Sets the IDs' corresponding quantity to a value. This is done by
+ * casting each widget into a @a SouvenirListItem and checking if
+ * it has the matching IDs.
  *
- * @param id The IDs corresponding to a menu item
- * @param qty The value of the new quantity
+ * @param id IDs corresponding to a menu item
+ * @param qty Value of the new quantity
  */
 void SouvenirList::setQty(IDs id, int qty) const
 {
-    for(int i = 0; i < QListWidget::count(); i++)
+    for(int row = 0; row < QListWidget::count(); row++)
     {
-        QListWidgetItem* listItem = QListWidget::item(i);
-        SouvenirListItem* widget = dynamic_cast<SouvenirListItem*>(QListWidget::itemWidget(listItem));
+        SouvenirListItem* widget = castRow(row);
 
         if(widget != nullptr && id == widget->getIDs())
         {
@@ -82,45 +74,91 @@ void SouvenirList::setQty(IDs id, int qty) const
 }
 
 /**
- * @brief Add menu item to the list
+ * Sets the minimum quantity that an item's spinbox can have.
+ * This is done by going through each item and setting its
+ * attached widget's minumum quantity.
  *
- * Appends the given menu item to the list.
- * Any connections needed to the new item is done here.
- * If the menu item is hidden, it isn't added to the list unless SouvenirList::showHidden(true) is called.
+ * NOTE:
+ * When the minimum quantity is the value of the spinbox, the
+ * item is removed from the list. If you want a minimum value
+ * of 0, call this function with a value of -1.
  *
- * @param restID The restaurant ID that the menu item belongs to
- * @param menuItem The menu item to add
+ * @param qty Minimum quantity
  */
-void SouvenirList::addItem(StadiumId stadId, const Souvenir& souvenir)
+void SouvenirList::setMinQty(int qty)
 {
-    if(souvenir.hidden && !m_showHidden)
-        return;
+    m_minQty = qty;
 
-    QListWidgetItem* listItem = new QListWidgetItem(this);
+    for(int row = 0; row < QListWidget::count(); row++)
+    {
+        SouvenirListItem* widget = castRow(row);
 
-    SouvenirListItem* widget = new SouvenirListItem(this, stadId, souvenir);
-    listItem->setSizeHint(widget->getItemSizeHint());
-    QListWidget::setItemWidget(listItem, widget);
-
-    widget->showQty(m_showQty);
-
-    //Allows all MenuItem's to toggle its quantity widgets through the emitter
-    connect(this, &SouvenirList::showQtyEmitter, widget, &SouvenirListItem::showQty);
-
-    //Handles the quantity change of a menu item
-    connect(widget, &SouvenirListItem::quantityChanged, this, &SouvenirList::quantityChangedHandler);
-
-    //Resets each spinbox of each MenuItem when emitted
-    connect(this, &SouvenirList::resetQtyEmitter, widget, &SouvenirListItem::resetQty);
+        if(widget != nullptr) { widget->setMinQty(qty); };
+    }
 }
 
 /**
- * @brief Add multiple menu items to the list
+ * Sets the maximum quantity that an item's spinbox can have.
+ * This is done by going through each item and setting its
+ * attached widget's maximum quantity.
  *
- * Appends multiple menu items to the list given a restaurant.
- * Calls SouvenirList::addItem() for each menu item of the restaurant.
+ * @param qty Maximum quantity
+ */
+void SouvenirList::setMaxQty(int qty)
+{
+    m_maxQty = qty;
+
+    for(int row = 0; row < QListWidget::count(); row++)
+    {
+        SouvenirListItem* widget = castRow(row);
+
+        if(widget != nullptr) { widget->setMaxQty(qty); };
+    }
+}
+
+/**
+ * @brief Add a souvenir to the list
  *
- * @param restaurant The restaurant to add all of its items to the list
+ * Creates a new widget and item and attaches them together.
+ * The new item is added to the list with the appropriate size.
+ * Then, the widget's quantity changed signal is connected
+ * to the list's handler.
+ *
+ * @param stadId Stadium ID that the souvenir belongs to
+ * @param souvenir Souvenir to add
+ */
+void SouvenirList::addItem(StadiumId stadId, const Souvenir& souvenir)
+{
+    if(souvenir.hidden && !m_allowHidden)
+        return;
+
+    SouvenirListItem* widget = new SouvenirListItem(this, stadId, souvenir);
+
+    //Handles the quantity change of the widget
+    connect(widget, &SouvenirListItem::quantityChanged,
+            this, &SouvenirList::quantityChangedHandler);
+
+    /* Change the settings of the widget */
+    widget->showQty(m_showQty);
+    widget->setMinQty(m_minQty);
+    widget->setMaxQty(m_maxQty);
+    widget->setQty(m_minQty + 1); //Triggers widget's quantityChanged()
+
+    //Add a new item to the list
+    QListWidgetItem* item = new QListWidgetItem(this);
+    item->setSizeHint(widget->size());
+
+    //Attach the widget to the item
+    QListWidget::setItemWidget(item, widget);
+}
+
+/**
+ * @brief Add all of a stadium's souvenirs to the list
+ *
+ * Clears the current list and calls @a addItem() on each of
+ * the souvenirs in the stadium.
+ *
+ * @param stadium Stadium that holds the souvenirs
  */
 void SouvenirList::addAllItems(const Stadium& stadium)
 {
@@ -133,100 +171,121 @@ void SouvenirList::addAllItems(const Stadium& stadium)
 }
 
 /**
- * @brief Remove menu item from the list
+ * @brief Remove souvenir from the list
  *
- * Removes a menu item from the list given the corresponding restaurant and menu IDs.
- * This is done by dynamic casting all the QListWidgetItems within the list and
- * checking if its attatched SouvenirListItem widget has the right IDs.
+ * Searches through the list and looks for matching IDs by casting
+ * each widget into a @a SouvenirListItem. When found, the souvenir
+ * is removed from the IDs-quantity map as well as the list.
  *
- * @param id The IDs of the restaurant and the menu item to remove
+ * @param id IDs of the souvenir to remove
  */
 void SouvenirList::removeItem(IDs id)
 {
-    for(int i = 0; i < QListWidget::count(); i++)
+    for(int row = 0; row < QListWidget::count(); row++)
     {
-        QListWidgetItem* listItem = QListWidget::item(i);
-        SouvenirListItem* widget = dynamic_cast<SouvenirListItem*>(QListWidget::itemWidget(listItem));
+        SouvenirListItem* widget = castRow(row);
 
         if(widget != nullptr && id == widget->getIDs())
         {
             m_IDQtys.erase(widget->getIDs());
-            QListWidget::takeItem(i);
+            QListWidget::takeItem(row);
             return;
         }
     }
 }
 
 /**
- * @brief Allow hidden menu items
+ * Each item's quantity spinbox will either hide or show depending
+ * on @a show. This is useful if you need to input quantity for each item.
  *
- * Sets whether or not hidden menu items will be added or not.
- * NOTE: Calling this function after menu items are added will have no affect on those items.
- *
- * @param v Bool value
+ * @param show Show each item's quantity spinbox
  */
-void SouvenirList::showHidden(bool v)
+void SouvenirList::showQty(bool show)
 {
-    m_showHidden = v;
+    m_showQty = show;
+
+    for(int row = 0; row < QListWidget::count(); row++)
+    {
+        SouvenirListItem* widget = castRow(row);
+
+        if(widget != nullptr) { widget->showQty(show); }
+    }
 }
 
 /**
- * @brief Show the quantity spinbox
- *
- * If true, quantity spinboxes will show on each menu item.
- * This is useful if you need to input quantity for each item.
- *
- * @param v Bool value
- */
-void SouvenirList::showQty(bool v)
-{
-    m_showQty = v;
-    emit showQtyEmitter(v);
-}
-
-/**
- * @brief Reset quantities
- *
- * Clears out the container holding the IDs-quantity relationship.
+ * Clears out the container holding the IDs-quantity relationship
+ * and changes resets each widget's quantity.
  */
 void SouvenirList::resetQty()
 {
     m_IDQtys.clear();
-    emit resetQtyEmitter();
+
+    for(int row = 0; row < QListWidget::count(); row++)
+    {
+        SouvenirListItem* widget = castRow(row);
+
+        if(widget != nullptr) { widget->resetQty(); }
+    }
 }
 
 /**
- * @brief Row to IDs converter
+ * Sets whether or not hidden souvenirs will be added or not.
  *
- * Converts a row in the list to IDs.
+ * NOTE:
+ * Calling this function after items are added will have
+ * no affect on those items.
  *
- * @param row The row of the item to convert
+ * @param allow Allow hidden souvenirs to show
  */
-void SouvenirList::rowToIDsConverter(int row) const
+void SouvenirList::allowHidden(bool allow)
 {
-    //Get the QListWidgetItem at the specified row
-    QListWidgetItem* item = QListWidget::item(row);
-
-    //Attempt to cast the linked widget into a SouvenirListItem
-    SouvenirListItem* menuItem = dynamic_cast<SouvenirListItem*>(QListWidget::itemWidget(item));
-
-    //If successful, emit a signal
-    if(menuItem != nullptr)
-        emit currentSouvenirChanged(menuItem->getIDs());
+    m_allowHidden = allow;
 }
 
 /**
- * @brief Quantity change handler
+ * Converts a row in the list to IDs and emits a signal with those IDs.
  *
- * When a quantity spinbox has changed value, this function will store that new value.
+ * @param row Row of the item to convert into IDs
+ */
+void SouvenirList::rowToIDsEmitter(int row) const
+{
+    SouvenirListItem* widget = castRow(row);
+
+    if(widget != nullptr)
+    {
+        emit currentSouvenirChanged(widget->getIDs());
+    }
+}
+
+/**
+ * When a quantity spinbox has changed value, this function will
+ * store that new value. If the changing quantity is the minimum
+ * quantity, the changed item is removed from the list.
  *
- * @param id The IDs of the changed menu item
- * @param qty The new quantity value
+ * @param id IDs of the changed souvenir
+ * @param qty New quantity value
  */
 void SouvenirList::quantityChangedHandler(IDs id, int qty)
 {
-    if(qty != 0)
+    if(qty != m_minQty)
+    {
         m_IDQtys[id] = qty; //Store/replace the key with the value
+    }
     else
-        this->removeItem(id); //Erase the the key-value pair
+    {
+        removeItem(id); //Remove it from the list
+    }
+}
+
+/**
+ * Dynamic casts a QListWidgetItem at a given row in the list; the
+ * result is returned.
+ *
+ * @param row Row of an item in the list
+ * @return Pointer to a SouvenirListItem
+ */
+SouvenirListItem* SouvenirList::castRow(int row) const
+{
+    QListWidgetItem* item = QListWidget::item(row);
+    return dynamic_cast<SouvenirListItem*>(QListWidget::itemWidget(item));
 }

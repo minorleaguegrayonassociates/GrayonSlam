@@ -1,6 +1,6 @@
 #pragma once
 #include <QListWidget>
-#include "src/widgets/souvenirlistitem.hpp"
+#include "souvenirlistitem.hpp"
 
 using Qtys = std::map<IDs,int>;
 
@@ -33,28 +33,35 @@ public:
 
     /* Setters */
     void setQty(IDs, int qty) const;
+    void setMinQty(int);
+    void setMaxQty(int);
 
     /* List modifiers */
     void addItem(StadiumId, const Souvenir&);
     void addAllItems(const Stadium&);
     void removeItem(IDs);
-    void showHidden(bool);
 
     /* Quantity */
     void showQty(bool);
     void resetQty();
 
+    /* Hidden */
+    void allowHidden(bool);
+
 signals:
     void currentSouvenirChanged(IDs) const;
-    void showQtyEmitter(bool) const;
-    void resetQtyEmitter() const;
 
 private slots:
-    void rowToIDsConverter(int row) const;
+    void rowToIDsEmitter(int) const;
     void quantityChangedHandler(IDs, int qty);
 
 private:
+    SouvenirListItem* castRow(int row) const;
+
+    /* Data */
     Qtys m_IDQtys;
+    int m_minQty = 0;
+    int m_maxQty = 99;
     bool m_showQty = false;
-    bool m_showHidden = false;
+    bool m_allowHidden = false;
 };
