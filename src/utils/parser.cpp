@@ -66,7 +66,7 @@ std::vector<std::vector<std::string>> loadData(const std::string& path)
     while (!infile.eof())
     {
         std::getline(infile, line);
-        if (line.front() == '#' || line.front() == ' ' || line.empty()){continue;}
+        if (line.empty() || line.front() == '#' || line.front() == ' '){continue;}
 
         std::vector<std::string> columns;
 
