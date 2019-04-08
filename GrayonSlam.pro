@@ -49,7 +49,8 @@ HEADERS += \
     src/datastore/souvenir.hpp \
     src/views/view.hpp \
     src/widgets/souvenirlist.hpp \
-    src/widgets/souvenirlistitem.hpp
+    src/widgets/souvenirlistitem.hpp \
+    src/utils/map.hpp
 
 FORMS += \
     src/windows/mainwindow.ui \
