@@ -16,8 +16,8 @@ namespace nstd
     template <typename key, typename value, typename Hash>
     class map;
 
-    template <typename k, typename v, typename Hash>
-    std::ostream& operator<<(std::ostream& out, const map<k, v, Hash>& d);
+    template <typename key, typename value, typename Hash>
+    std::ostream& operator<<(std::ostream& out, const map<key, value, Hash>& d);
 
     unsigned int* SieveOfEratosthenes(int n);
 
@@ -91,7 +91,7 @@ namespace nstd
         int size() const {return m_numOfElems;}
         int capacity() const {return m_capacity;}
         bool empty() const {return m_numOfElems == 0;}
-        
+
     private:
         struct node;
         /* Hash Algorithm*/
@@ -101,7 +101,7 @@ namespace nstd
         node* insertFind(key, int&) const;
 
         /* Data Members */
-        node** m_map = NULL;
+        node** m_array = NULL;
         int m_primeNumIndex = 0;
         int m_numOfElems = 0;
         int m_capacity = 0;
@@ -159,10 +159,10 @@ namespace nstd
         node* getData(){return m_data;}
         map* getParent(){return m_parent;}
         void setEnd(bool isEnd){m_end= isEnd;}
-        
+
     private:
         iterator();
-       
+
         /* Data Members */
         int m_position = 0;
         map* m_parent = NULL;
@@ -181,6 +181,8 @@ namespace nstd
         /* Data Memebers */
         key nodeKey;
         value nodeValue;
+        //available is used when removing an element, marks node as free to fill in with new data
+        //but if searching not to stop search on that node
         bool available = false;
         map* parentMap = NULL;
 
@@ -246,9 +248,7 @@ namespace nstd
          */
         static int staticHashAlgo(key k,int j, int capacity)
         {
-            int hash = (((static_cast<int>(k))+j*j)%capacity);
-            if(hash < 0) hash *= -1;
-            return hash;
+            return std::abs(((static_cast<int>(k))+j*j)%capacity);
         }
     };
 
@@ -278,7 +278,7 @@ namespace nstd
     {
     public:
         /**
-         * @brief This method will hash the a string into an int for mapping
+         * This method will hash the a string into an int for mapping
          * with the murmur hash2/3
          * @param k the std::string key itself
          * @param j the collision value, increase for more values
@@ -290,7 +290,7 @@ namespace nstd
             return hashAlgo(k,j,capacity);
         }
         /**
-         * @brief This method is the same as operator() but named
+         * This method is the same as operator() but named
          * @param k the key itself
          * @param j the collision value, increase for more values
          * @param capacity (capacity - 1) is max hashcode
@@ -298,10 +298,11 @@ namespace nstd
          */
         int hashAlgo(std::string k, int j,int capacity)const
         {
-            return (static_cast<int>(std::hash<std::string>{}(k))+j*j)%capacity;
+            int hash = std::hash<std::string>{}(k) + (j*j);
+            return static_cast<int>(hash)%capacity;
         }
         /**
-         * @brief This method is the static version of operator()
+         * This method is the static version of operator()
          * @param k the key itself
          * @param j the collision value, increase for more values
          * @param capacity (capacity - 1) is max hashcode
@@ -309,20 +310,25 @@ namespace nstd
          */
         static int staticHashAlgo(std::string k,int j, int capacity)
         {
-            return (static_cast<int>(std::hash<std::string>{}(k))+j*j)%capacity;
+            int hash = std::hash<std::string>{}(k) + (j*j);
+            return static_cast<int>(hash)%capacity;
         }
     };
 
 
-    /* PRIME LOOKUP TABLE - QUICK ACCESS*/
+    /**
+    * @struct Primes (a prime lookup table struct)
+    * This struct serves as a way to instantiate a prime look up table and adds cleanup once the
+    * program has terminated
+    */
    struct Primes
    {
        /* Constructors */
-       Primes():lookupTable{SieveOfEratosthenes((4000))}{}
+       Primes():lookupTable{SieveOfEratosthenes(4000)}{}
        Primes(int n):lookupTable{SieveOfEratosthenes(n)}{}
 
        /* Data Members */
-       unsigned int *lookupTable;
+       unsigned int* lookupTable;
 
        /* Destructor */
        ~Primes(){delete lookupTable;}
@@ -341,44 +347,52 @@ namespace nstd
      */
     template <typename key, typename value, typename Hash>
     map<key,value,Hash>::map()
-        : m_map{new node*[31]}, m_primeNumIndex{10},m_numOfElems{0},m_capacity{31}
+        : m_array{new node*[31]}, m_primeNumIndex{10},m_numOfElems{0},m_capacity{31}
     {
         for(int i = 0; i< m_capacity;++i)
         {
-            m_map[i]=nullptr;
+            m_array[i]=nullptr;
         }
     }
 
     /**
      * This constructor constructs a map by copying the keys and values of a second map
+     * @param otherMap The other map to be copied from (source map)
      */
     template <typename key, typename value, typename Hash>
     map<key,value,Hash>::map(const map& otherMap)
         : m_primeNumIndex{otherMap.m_primeNumIndex},m_numOfElems{otherMap.m_numOfElems},m_capacity{otherMap.m_capacity}
     {
-        m_map = new node*[otherMap.m_capacity];
+        m_array = new node*[otherMap.m_capacity];
         for(int i = 0; i < otherMap.m_capacity; ++i)
         {
-            if(otherMap.m_map[i] != NULL && otherMap.m_map[i]->available == false)
+
+            if(otherMap.m_array[i] != NULL && otherMap.m_array[i]->available == false)
             {
-                m_map[i] = new node(otherMap.m_map[i]->nodeKey,otherMap.m_map[i]->nodeValue,false, this);
+                m_array[i] = new node(otherMap.m_array[i]->nodeKey,otherMap.m_array[i]->nodeValue,false, this);
+            }
+            else
+            {
+                m_array[i] = NULL;
             }
         }
     }
 
     /**
      * This constructor copies a map by moving the pointers from the temporary map
+     * @param otherMap the map where the data will stolen from in the move constuctor
      */
     template <typename key, typename value, typename Hash>
     map<key,value,Hash>::map(map&& otherMap)
         : m_primeNumIndex{otherMap.m_primeNumIndex}, m_numOfElems{otherMap.m_numOfElems},m_capacity{otherMap.m_capacity}
     {
-        m_map = otherMap.m_map;
-        otherMap.m_map = NULL;
+        m_array = otherMap.m_array;
+        otherMap.m_array = NULL;
     }
 
     /**
      * This operator overload copies the contents of one map into this map
+     * @param The map to be copied from
      */
     template <typename key, typename value, typename Hash>
     map<key,value,Hash>& map<key,value,Hash>::operator=(const map& otherMap)
@@ -389,33 +403,40 @@ namespace nstd
             {
                 for(int i = 0; i < m_capacity; ++i)
                 {
-                    if(m_map[i]) delete m_map[i];
+                    if(m_array[i] != NULL){ delete m_array[i]; }
                 }
-                delete [] m_map;
+                delete [] m_array;
             }
             m_primeNumIndex = otherMap.m_primeNumIndex;
             m_numOfElems = otherMap.m_numOfElems;
             m_capacity = otherMap.m_capacity;
-            m_map = new node*[otherMap.m_capacity];
+            m_array = new node*[otherMap.m_capacity];
             for(int i = 0; i < otherMap.m_capacity; ++i)
             {
-                if(otherMap.m_map[i] != NULL && otherMap.m_map[i]->available == false)
+                if(otherMap.m_array[i] != NULL && otherMap.m_array[i]->available == false)
                 {
-                    m_map[i] = new node(otherMap.m_map[i]->nodeKey,otherMap.m_map[i]->nodeValue,false, this);
+                    m_array[i] = new node(otherMap.m_array[i]->nodeKey,otherMap.m_array[i]->nodeValue,false, this);
+                }
+                else
+                {
+                    m_array[i] = NULL;
                 }
             }
         }
         return *this;
     }
 
+    /**
+    * deletes all the nodes and map array.
+    */
     template <typename key, typename value, typename Hash>
     map<key,value,Hash>::~map()
     {
         for(int i = 0; i < m_capacity; ++i)
         {
-            if(m_map[i]) delete m_map[i];
+            if(m_array[i] != NULL) delete m_array[i];
         }
-        delete [] m_map;
+        delete [] m_array;
     }
 
     /**
@@ -425,6 +446,7 @@ namespace nstd
      * an iterator corresponding to its position. If unsuccessful, it will return an iterator with
      * a position of -1 (Corresponding to end).
      *
+     * @param k the key to search for in the map
      * @return iterator containing the position of the key in the map
      */
     template <typename key, typename value, typename Hash>
@@ -434,21 +456,19 @@ namespace nstd
         node* val = NULL;
         for(int i = 0; i < m_capacity; ++i)
         {
-            if(m_map[i])
+            if(m_array[i] != NULL)
             {
-                unsigned int hashCode;
-                int j;
-                j = 1; //collision j
-                hashCode = hash(k, 0, m_capacity);
-                while(m_map[hashCode] != 0 && m_map[hashCode]->available != true && j<=m_capacity)
+                int j = 1; //collision j
+                unsigned int hashCode = hash(k, 0, m_capacity);
+                while(m_array[hashCode] != NULL && !m_array[hashCode]->available && j<=m_capacity)
                 {
-                    if(m_map[hashCode]->nodeKey == k)break;
+                    if(m_array[hashCode]->nodeKey == k){break;}
                     hashCode = hash(k, j, m_capacity);
                     ++j;
                 }
-                if(m_map[hashCode] != 0 && m_map[hashCode]->available != true)
+                if(m_array[hashCode] != 0 && !m_array[hashCode]->available)
                 {
-                    val = m_map[hashCode];
+                    val = m_array[hashCode];
                     position = static_cast<int>(hashCode);
                 }
             }
@@ -463,6 +483,7 @@ namespace nstd
      * it will return the object by reference. If it cannot locate it, it will construct
      * a new object that corresponds to the given key and inserts both the key and value.
      *
+     * @param k the key to be searched for in the array
      * @return Value that corresponds to the given key by reference.
      */
     template <typename key, typename value, typename Hash>
@@ -499,17 +520,22 @@ namespace nstd
     /**
      * This function iterates through the map and prints the keys and value
      * to the ostream. This is implemented with the intent of error logging
+     * @param out the ostream you are writing to
+     * @param d the map you are reading from
+     * @return the ostream to continue the output chain
      */
-    template <typename k, typename v, typename Hash>
-    std::ostream& operator<<(std::ostream& out, const map<k, v, Hash>& d)
+    template <typename key, typename value, typename Hash>
+    std::ostream& operator<<(std::ostream& out, const map<key, value, Hash>& d)
     {
         out << "The key value combos inside hash map are: \n";
         for(int i = 0; i < d.m_capacity; ++i)
         {
-            if(d.m_map[i]&& d.m_map[i]->available != true)
-            out << "Hash: "<<std::setw(2)<<std::right
-                << i <<" Key: " <<std::setw(3)<< d.m_map[i]->nodeKey
-                << " Value: " << d.m_map[i]->nodeValue << "\n";
+            if(d.m_array[i] != NULL && !d.m_array[i]->available)
+            {
+                out << "Hash: "<<std::setw(2)<<std::right
+                    << i <<" Key: " <<std::setw(3)<< d.m_array[i]->nodeKey
+                    << " Value: " << d.m_array[i]->nodeValue << "\n";
+            }
         }
         return out;
     }
@@ -521,6 +547,8 @@ namespace nstd
      * it will replace the old value with the new one. If it cannot locate it, it will construct
      * a new object that corresponds to the given key and insert them both into the map.
      *
+     * @param k key to be inserted
+     * @param v value to be inserted
      * @return iterator corresponding to the position of the inserted key
      */
     template <typename key, typename value, typename Hash>
@@ -528,7 +556,7 @@ namespace nstd
     {
         int findPosition = -1;
         node* found = insertFind(k, findPosition);
-        if(found) found->available = false;
+        if(found != NULL) found->available = false;
         node* tmp;
         unsigned int hashCode = 0;
         if(!found)
@@ -539,13 +567,13 @@ namespace nstd
             tmp = new node(k, v,false, this);
             j = 1;
             hashCode = hash(k,0,m_capacity);
-            while(m_map[hashCode] != 0 && m_map[hashCode]->available != true)
+            while(m_array[hashCode] != 0 && m_array[hashCode]->available != true)
             {
                 hashCode = hash(k, j, m_capacity);
                 ++j;
             }
-            if(m_map[hashCode] != 0)if(m_map[hashCode]->available == true) delete m_map[hashCode];
-            m_map[hashCode] = tmp;
+            if(m_array[hashCode] != 0)if(m_array[hashCode]->available == true) delete m_array[hashCode];
+            m_array[hashCode] = tmp;
             findPosition = static_cast<int>(hashCode);
         }
         else
@@ -597,20 +625,20 @@ namespace nstd
             unsigned int hashCode, j;
             for(unsigned int i = 0; i < oldCap; ++i)
             {
-                if(m_map[i] == 0 || m_map[i]->available) continue;
-                tmp = new node(m_map[i]->nodeKey, m_map[i]->nodeValue,false, this);
+                if(m_array[i] == 0 || m_array[i]->available) continue;
+                tmp = new node(m_array[i]->nodeKey, m_array[i]->nodeValue,false, this);
                 j = 1;
-                hashCode = hash(m_map[i]->nodeKey,0, m_capacity);
+                hashCode = hash(m_array[i]->nodeKey,0, m_capacity);
                 while(newArr[hashCode] != 0)
                 {
-                    hashCode = hash(m_map[i]->nodeKey, j, m_capacity);
+                    hashCode = hash(m_array[i]->nodeKey, j, m_capacity);
                     ++j;
                 }
                 newArr[hashCode] = tmp;
-                delete m_map[i];
+                delete m_array[i];
             }
-            delete [] m_map;
-            m_map = newArr;
+            delete [] m_array;
+            m_array = newArr;
         }
     }
 
@@ -624,9 +652,9 @@ namespace nstd
     {
         node * firstElem = NULL;
         int position = -1;
-        if(m_map)
+        if(m_array)
         {
-            firstElem = m_map[0];
+            firstElem = m_array[0];
             int i = 0;
             position = 0;
             while(firstElem != NULL && firstElem->available && i < m_capacity)
@@ -660,14 +688,15 @@ namespace nstd
     template <typename key, typename value, typename Hash>
     typename map<key,value,Hash>::node* map<key,value,Hash>::insertFind(key k, int& position) const
     {
+       //finds key does not care about availability
        node* val = NULL;
        for(int i = 0; i < m_capacity; ++i)
        {
-           if(m_map[i])
+           if(m_array[i] != NULL)
            {
-                if(m_map[i]->nodeKey == k)
+                if(m_array[i]->nodeKey == k)
                 {
-                    val = m_map[i];
+                    val = m_array[i];
                     position = i;
                     break;
                 }
@@ -698,12 +727,12 @@ namespace nstd
         /* starts at current spot in map then goes to non null node*/
         if(m_position != -1 ||m_end == true)
         {
-            ++m_position, m_data = m_parent->m_map[m_position];
+            ++m_position, m_data = m_parent->m_array[m_position];
             if(m_position == m_parent->m_capacity ||(m_data != NULL && m_data->available)) m_data = NULL;
             while (m_position < m_parent->m_capacity && (m_data == NULL ||(m_data != NULL && m_data->available)))
             {
                 ++m_position;
-                m_data = m_parent->m_map[m_position];
+                m_data = m_parent->m_array[m_position];
                 if(m_data != NULL && m_data->available) m_data = NULL;
             }
             //invalidate pointer if at end
@@ -729,12 +758,12 @@ namespace nstd
         iterator cpy(*this);
         if(m_position != -1 ||m_end == true)
         {
-            ++m_position, m_data = m_parent->m_map[m_position];
+            ++m_position, m_data = m_parent->m_array[m_position];
             if(m_position == m_parent->m_capacity ||(m_data != NULL && m_data->available)) m_data = NULL;
             while (m_position < m_parent->m_capacity && (m_data == NULL ||(m_data != NULL && m_data->available)))
             {
                 ++m_position;
-                m_data = m_parent->m_map[m_position];
+                m_data = m_parent->m_array[m_position];
                 if(m_data != NULL && m_data->available) m_data = NULL;
             }
             //invalidate pointer if at end
@@ -761,11 +790,11 @@ namespace nstd
 
         if(m_position != -1)
         {
-            --m_position, m_data = m_parent->m_map[m_position];
+            --m_position, m_data = m_parent->m_array[m_position];
             if(m_position <= -1 ||(m_data != NULL && m_data->available)) m_data = NULL;
             while (m_position > -1 && (m_data == NULL ||(m_data != NULL && m_data->available)))
             {
-                --m_position; m_data = m_parent->m_map[m_position];
+                --m_position; m_data = m_parent->m_array[m_position];
                 if(m_data != NULL && m_data->available) m_data = NULL;
             }
             //invalidate pointer if at end
@@ -777,10 +806,10 @@ namespace nstd
             {
                 node * lastElem = NULL;
                 int position = -1;
-                if(m_parent->m_map)
+                if(m_parent->m_array)
                 {
 
-                  lastElem = m_parent->m_map[m_parent->m_capacity-1];
+                  lastElem = m_parent->m_array[m_parent->m_capacity-1];
                   int i = m_parent->m_capacity-1;
                   position = m_parent->m_capacity-1;
                   while(lastElem != NULL && i >-1 && lastElem->available)
@@ -817,12 +846,12 @@ namespace nstd
         iterator cpy(*this);
         if(m_position != -1)
         {
-            --m_position, m_data = m_parent->m_map[m_position];
+            --m_position, m_data = m_parent->m_array[m_position];
             if(m_position <= -1 ||(m_data != NULL && m_data->available)) m_data = NULL;
             while (m_position > -1 && (m_data == NULL ||(m_data != NULL && m_data->available)))
             {
                 --m_position;
-                m_data = m_parent->m_map[m_position];
+                m_data = m_parent->m_array[m_position];
                 if(m_data != NULL && m_data->available) m_data = NULL;
             }
             //invalidate pointer if at end
@@ -834,10 +863,10 @@ namespace nstd
             {
                 node * lastElem = NULL;
                 int position = -1;
-                if(m_parent->m_map)
+                if(m_parent->m_array)
                 {
 
-                  lastElem = m_parent->m_map[m_parent->m_capacity-1];
+                  lastElem = m_parent->m_array[m_parent->m_capacity-1];
                   position = m_parent->m_capacity-1;
                   for(int i = m_parent->m_capacity-1;lastElem != NULL && i >-1 && lastElem->available; --i)
                   {
