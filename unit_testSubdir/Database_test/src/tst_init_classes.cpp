@@ -36,21 +36,52 @@ Init_classes::Init_classes()
         std::cout << "--------Team Name: " << it->second.getName() << std::endl;
         std::cout << "---------Deleted?: " << it->second.hidden << std::endl;
         std::cout << "-------Stadium ID: " << it->second.getStadiumId() << std::endl;
-        std::cout << "-----Stadium Name: " << Database::findStadiumById(it->second.getStadiumId()).getName() << std::endl;
-        std::cout << "-Seating Capacity: " << Database::findStadiumById(it->second.getStadiumId()).getSeatCap() << std::endl;
-        std::cout << "----Team Location: " << Database::findStadiumById(it->second.getStadiumId()).getLocation() << std::endl;
-        std::cout << "--Playing Surface: " << Database::findStadiumById(it->second.getStadiumId()).surface << std::endl;
+        std::cout << "-----Stadium Name: " << tempStadium[it->second.getStadiumId()].getName() << std::endl;
+        std::cout << "-Seating Capacity: " << tempStadium[it->second.getStadiumId()].getSeatCap() << std::endl;
+        std::cout << "----Team Location: " << tempStadium[it->second.getStadiumId()].getLocation() << std::endl;
+        std::cout << "--Playing Surface: " << tempStadium[it->second.getStadiumId()].surface << std::endl;
         std::cout << "-----------League: " << it->second.league << std::endl;
-        std::cout << "------Date opened: " << Database::findStadiumById(it->second.getStadiumId()).getYearOpened() << std::endl;
-        std::cout << "--Distance2CtrFld: " << Database::findStadiumById(it->second.getStadiumId()).getCenterFieldDist() << std::endl;
-        std::cout << "Ballpark typology: " << Database::findStadiumById(it->second.getStadiumId()).typology << std::endl;
-        std::cout << "--------Roof Type: " << Database::findStadiumById(it->second.getStadiumId()).roof << std::endl;
+        std::cout << "------Date opened: " << tempStadium[it->second.getStadiumId()].getYearOpened() << std::endl;
+        std::cout << "--Distance2CtrFld: " << tempStadium[it->second.getStadiumId()].getCenterFieldDist() << std::endl;
+        std::cout << "Ballpark typology: " << tempStadium[it->second.getStadiumId()].typology << std::endl;
+        std::cout << "--------Roof Type: " << tempStadium[it->second.getStadiumId()].roof << std::endl;
 
-        tempSouvenir = Database::findStadiumById(it->second.getStadiumId()).getSouvenirs();
+        tempSouvenir = tempStadium[it->second.getStadiumId()].getSouvenirs();
 
         std::cout << "Num. of souvenirs: "<< tempSouvenir.size() << std::endl;
 
         for(const Souvenir& item: tempSouvenir)
+        {
+            std::cout << "---------ID   " << item.getId() << std::endl;
+            std::cout << "Is deleted?:  " << item.hidden << std::endl;
+            std::cout << "---Souvenir:  " << item.getName() << std::endl;
+            std::cout << "------Price:  " << item.getPrice()<< std::endl;
+        }
+    }
+    std::vector<Souvenir> tempSouvenirVect;
+    std::vector<Team> tempTeamVector(Database::getTeamsVector());
+    std::vector<Stadium> tempStadiumVector(Database::getStadiumsVector());
+    for(unsigned int i = 0; i < tempTeamVector.size(); ++i)
+    {
+        std::cout << "----------Team ID: " << tempTeamVector[i].getId() << std::endl;
+        std::cout << "--------Team Name: " << tempTeamVector[i].getName() << std::endl;
+        std::cout << "---------Deleted?: " << tempTeamVector[i].hidden << std::endl;
+        std::cout << "-------Stadium ID: " << tempTeamVector[i].getStadiumId() << std::endl;
+        std::cout << "-----Stadium Name: " << tempStadiumVector[i].getName() << std::endl;
+        std::cout << "-Seating Capacity: " << tempStadiumVector[i].getSeatCap() << std::endl;
+        std::cout << "----Team Location: " << tempStadiumVector[i].getLocation() << std::endl;
+        std::cout << "--Playing Surface: " << tempStadiumVector[i].surface << std::endl;
+        std::cout << "-----------League: " << tempTeamVector[i].league << std::endl;
+        std::cout << "------Date opened: " << tempStadiumVector[i].getYearOpened() << std::endl;
+        std::cout << "--Distance2CtrFld: " << tempStadiumVector[i].getCenterFieldDist() << std::endl;
+        std::cout << "Ballpark typology: " << tempStadiumVector[i].typology << std::endl;
+        std::cout << "--------Roof Type: " << tempStadiumVector[i].roof << std::endl;
+
+        tempSouvenirVect = tempStadiumVector[i].getSouvenirs();
+
+        std::cout << "Num. of souvenirs: "<< tempSouvenirVect.size() << std::endl;
+
+        for(const Souvenir& item: tempSouvenirVect)
         {
             std::cout << "---------ID   " << item.getId() << std::endl;
             std::cout << "Is deleted?:  " << item.hidden << std::endl;

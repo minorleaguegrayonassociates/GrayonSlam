@@ -1,6 +1,6 @@
 #pragma once
 
-#include <list>
+#include <vector>
 #include "souvenir.hpp"
 #include "stadium.hpp"
 #include "team.hpp"
@@ -32,8 +32,8 @@ public:
     static std::map<int,Stadium> getStadiums();
     static const Team& findTeamById(int);
     static const Stadium& findStadiumById(int);
-    static std::list<Team> getListTeams();
-    static std::list<Stadium> getListStadium();
+    static std::vector<Team> getTeamsVector();
+    static std::vector<Stadium> getStadiumsVector();
 
 private:
     /* Private string to Enum method*/

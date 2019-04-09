@@ -13,7 +13,9 @@ Database::~Database()
 {}
 
 
-/* loadFrom
+/* loadFromFile
+ *
+ * @param filepath path to csv data file
  *
  * ----------Team ID:  0"
  *---------Team Name:  1"
@@ -105,46 +107,34 @@ std::map<int,Stadium> Database::getStadiums()
 
 const Team& Database::findTeamById(int id)
 {
-    for(std::map<int,Team>::iterator it = m_teams.begin(); it != m_teams.end(); ++it)
-    {
-        if(it->first == id)
-        {
-            return it->second;
-        }
-    }
-    return m_teams.end()->second;
+    return m_teams[id];
 }
 
-
+// Find stadium by id
 const Stadium& Database::findStadiumById(int id)
 {
-    for(std::map<int,Stadium>::iterator it = m_stadiums.begin(); it != m_stadiums.end(); ++it)
-    {
-        if(it->first == id)
-        {
-            return it->second;
-        }
-    }
-    return m_stadiums.end()->second;
+    return m_stadiums[id];
 }
 
-std::list<Team> Database::getListTeams()
+// Goes though Each team and push_back the teams onto a list
+std::vector<Team> Database::getTeamsVector()
 {
-    std::list<Team> lis;
+    std::vector<Team> vec;
 
     for(auto team : m_teams)
-        lis.push_back(team.second);
+        vec.push_back(team.second);
 
-    return lis;
+    return vec;
 }
 
-std::list<Stadium> Database::getListStadium()
+// Goes though Each team and push_back the teams' stadium onto a list
+std::vector<Stadium> Database::getStadiumsVector()
 {
-    std::list<Stadium> lis;
+    std::vector<Stadium> vec;
 
-    for(auto stadium : m_stadiums)
-        lis.push_back(stadium.second);
+    for(auto team : m_teams)
+        vec.push_back(m_stadiums[team.second.getStadiumId()]);
 
-    return lis;
+    return vec;
 }
 
