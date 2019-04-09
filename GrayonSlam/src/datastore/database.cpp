@@ -13,7 +13,8 @@ Database::~Database()
 {}
 
 
-/* loadFromFile
+/* *
+ * loadFromFile
  *
  * @param filepath path to csv data file
  *

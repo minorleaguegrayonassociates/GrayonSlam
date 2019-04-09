@@ -1,4 +1,4 @@
-# id, team name, deleted bool, id, stadium name, capacity, location, playing surface, league, date opened, distance to center field, ballpark typology, Rooftype 
+# id, team name, hidden bool, id, stadium name, capacity, location, playing surface, league, date opened, distance to center field, ballpark typology, Rooftype 
 1,Arizona Diamondbacks,0,61,Chase Field,"48,686","Phoenix, Arizona",Grass,National,1998,407,Retro Modern,Retractable,5,0,Baseball Cap,22.99,0,Baseball bat,89.39,0,Team pennant,17.99,0,Autographed Baseball,25.99,0,Team Jersey,199.99
 2,Atlanta Braves,0,74,Sun Trust Park,"41,149","Cumberland, Georgia",Grass,National,2017,400,Retro Modern,Open,5,0,Baseball Cap,22.99,0,Baseball bat,89.39,0,Team pennant,17.99,0,Autographed Baseball,25.99,0,Team Jersey,199.99
 3,Baltimore Orioles,0,68,Oriole Park at Camden Yards,"45,971","Baltimore, Maryland",Grass,American,1992,410,Retro Classic,Open,5,0,Baseball Cap,22.99,0,Baseball bat,89.39,0,Team pennant,17.99,0,Autographed Baseball,25.99,0,Team Jersey,199.99
