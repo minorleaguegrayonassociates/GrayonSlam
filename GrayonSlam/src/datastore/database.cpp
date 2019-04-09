@@ -48,7 +48,6 @@ void Database::loadFromFile(const std::string& filepath)
     Stadium::Typology tempTypology;
 
     // Temp souvenir variables
-    int tempId;
     bool tempDeleted;
     std::string tempName;
     double tempPrice;
@@ -75,7 +74,6 @@ void Database::loadFromFile(const std::string& filepath)
         // Index 13 holds the number of souvenirs a stadium has
         for(int i = 0; i < std::stoi(team[13]); ++i)
         {
-            tempId = std::stoi(team[j++]);      // id - not important
             tempDeleted = (team[j++] == "0") ? true:false; // Is deleted? - bool
             tempName = team[j++];               // Souvenir Name
             tempPrice = std::stod(team[j++]);   // Souvenir Price

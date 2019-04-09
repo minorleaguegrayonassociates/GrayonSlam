@@ -28,7 +28,6 @@ void teamParseDebug(const std::string& path)
 
         for(int i = 0; i < std::stoi(team[13]); ++i)
         {
-            std::cout << "Souvenir ID:  " << team[j++] << std::endl;
             std::cout << "Is deleted?:  " << team[j++] << std::endl;
             std::cout << "---Souvenir:  " << team[j++] << std::endl;
             std::cout << "------Price:  " << team[j++] << std::endl;
