@@ -32,9 +32,9 @@ public:
     enum Typology { RETROMODERN, RETROCLASSIC, JEWELBOX, MODERN, CONTEMPORARY, MULTIPURPOSE };
 
     /* Enum to strings */
-    static const std::array<std::string,3> ROOF_STRING;
-    static const std::array<std::string,2> SURFACE_STRING;
-    static const std::array<std::string,6> TYPOLOGY_STRING;
+    static const std::array< std::string,3> ROOF_STRING;
+    static const std::array< std::string,2> SURFACE_STRING;
+    static const std::array< std::string,6> TYPOLOGY_STRING;
 
     /* Constructors */
     Stadium();

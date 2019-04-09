@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "src/windows/login.hpp"
 #include "src/datastore/database.hpp"
+#include "src/utils/parser.hpp"
 #include <QMessageBox>
 #include <QDebug>
 #include <QFontDatabase>
@@ -29,8 +30,8 @@ MainWindow::MainWindow()
         m_navbar->addItem("\uf085", "Inventory\nManagement");
     m_navbar->addItem("\uf2f5", "Logout");
 
-    Database::loadFromFile("./../../../src/datastore/MLBInformation.csv");
-
+    Database::loadFromFile("./../../../src/datastore/test.csv");
+    teamParseDebug("./../../../src/datastore/MLBInformation.csv");
 }
 
 MainWindow::~MainWindow()

@@ -1,6 +1,6 @@
 #include "database.hpp"
 #include "./../utils/parser.hpp"
-#include <QDebug>
+
 std::map<int,Team> Database::m_teams;
 std::map<int,Stadium> Database::m_stadiums;
 
@@ -81,9 +81,6 @@ void Database::loadFromFile(const std::string& filepath)
 
             tempStadium->addSouvenir(tempName, tempPrice); // Creating an instance of a souvenir class
             tempStadium->findSouvenir(i).hidden = tempHidden;
-//            qDebug()<< QString::fromStdString(tempStadium->findSouvenir(i).getName());
-//            qDebug() << QString::fromUtf8("Value from file: ") << tempHidden;
-//            qDebug() << QString::fromUtf8("Value of souvenir after assignement: ") << tempStadium->findSouvenir(i).hidden;
         }
 
         // Insterting team and stadium in to their appropriate maps for database

@@ -1,4 +1,4 @@
-# id, team name, hidden bool, id, stadium name, capacity, location, playing surface, league, date opened, distance to center field, ballpark typology, Rooftype 
+# id, team name, hidden bool, id, stadium name, capacity, location, playing surface, league, date opened, distance to center field, ballpark typology, Rooftype
 1,Arizona Diamondbacks,0,61,Chase Field,48686,"Phoenix, Arizona",Grass,National,1998,407,Retro Modern,Retractable,5,0,Baseball Cap,22.99,0,Baseball bat,89.39,0,Team pennant,17.99,0,Autographed Baseball,25.99,0,Team Jersey,199.99
 2,Atlanta Braves,0,74,Sun Trust Park,41149,"Cumberland, Georgia",Grass,National,2017,400,Retro Modern,Open,5,0,Baseball Cap,22.99,0,Baseball bat,89.39,0,Team pennant,17.99,0,Autographed Baseball,25.99,0,Team Jersey,199.99
 3,Baltimore Orioles,0,68,Oriole Park at Camden Yards,45971,"Baltimore, Maryland",Grass,American,1992,410,Retro Classic,Open,5,0,Baseball Cap,22.99,0,Baseball bat,89.39,0,Team pennant,17.99,0,Autographed Baseball,25.99,0,Team Jersey,199.99
@@ -13,7 +13,7 @@
 12,Kansas City Royals,0,60,Kauffman Stadium,37903,"Kansas City, Missouri",Grass,American,1973,410,Retro Modern,Open,5,0,Baseball Cap,22.99,0,Baseball bat,89.39,0,Team pennant,17.99,0,Autographed Baseball,25.99,0,Team Jersey,199.99
 13,Los Angeles Angels,0,53,Angel Stadium,45477,"Anaheim, California",Grass,American,1966,396,Retro Modern,Open,5,0,Baseball Cap,22.99,0,Baseball bat,89.39,0,Team pennant,17.99,0,Autographed Baseball,25.99,0,Team Jersey,199.99
 14,Los Angeles Dodgers,0,55,Dodger Stadium,56000,"Los Angeles, California",Grass,National,1962,400,Modern,Open,5,0,Baseball Cap,22.99,0,Baseball bat,89.39,0,Team pennant,17.99,0,Autographed Baseball,25.99,0,Team Jersey,199.99
-15,Miami Marlins,0,73,Marlins Park,36742,"Miami, Florida",Grass,National,2012,407,Contemporary ,Retractable,5,0,Baseball Cap,22.99,0,Baseball bat,89.39,0,Team pennant,17.99,0,Autographed Baseball,25.99,0,Team Jersey,199.99
+15,Miami Marlins,0,73,Marlins Park,36742,"Miami, Florida",Grass,National,2012,407,Contemporary,Retractable,5,0,Baseball Cap,22.99,0,Baseball bat,89.39,0,Team pennant,17.99,0,Autographed Baseball,25.99,0,Team Jersey,199.99
 16,Milwaukee Brewers,0,79,Miller Park,41900,"Milwaukee, Wisconsin",Grass,National,2001,400,Retro Modern,Retractable,5,0,Baseball Cap,22.99,0,Baseball bat,89.39,0,Team pennant,17.99,0,Autographed Baseball,25.99,0,Team Jersey,199.99
 17,Minnesota Twins,0,59,Target Field,38885,"Minneapolis, Minnesota",Grass,American,2010,404,Retro Modern,Open,5,0,Baseball Cap,22.99,0,Baseball bat,89.39,0,Team pennant,17.99,0,Autographed Baseball,25.99,0,Team Jersey,199.99
 18,New York Mets,0,64,Citi Field,41922,"Queens, New York",Grass,National,2009,408,Retro Classic,Open,5,0,Baseball Cap,22.99,0,Baseball bat,89.39,0,Team pennant,17.99,0,Autographed Baseball,25.99,0,Team Jersey,199.99

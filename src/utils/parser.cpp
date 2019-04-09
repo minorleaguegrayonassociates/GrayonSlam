@@ -123,6 +123,7 @@ void saveData(const std::string& path,std::vector<Team>& teamVect,std::vector<St
     std::vector<Souvenir> tempSouvenirVect;
     outfile << "# id, team name, hidden bool, id, stadium name, capacity, location, playing surface,"
             << " league, date opened, distance to center field, ballpark typology, Rooftype" << std::endl;
+
     for(unsigned int i = 0; i < teamVect.size(); ++i)
     {
         tempLeague = Team::LEAGUE_STRING[teamVect[i].league];
@@ -143,7 +144,6 @@ void saveData(const std::string& path,std::vector<Team>& teamVect,std::vector<St
         outfile << "," << stadiumVect[i].getCenterFieldDist();
         outfile << "," << tempTypology;
         outfile << "," << tempRoof;
-//        qDebug() << QString::fromStdString(tempRoof);
 
         tempSouvenirVect = stadiumVect[i].getSouvenirs();
         outfile << ","<< tempSouvenirVect.size();
