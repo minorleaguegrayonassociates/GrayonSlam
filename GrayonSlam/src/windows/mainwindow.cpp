@@ -30,8 +30,6 @@ MainWindow::MainWindow()
     m_navbar->addItem("\uf2f5", "Logout");
 
     Database::loadFromFile("./../../../src/datastore/MLBInformation.csv");
-    Database::loadFromFile("./../../../src/datastore/MLBInformationExpansion.csv");
-    Database::loadFromFile("./../../../src/datastore/MLBInformation.csv");
 
 }
 
@@ -74,4 +72,5 @@ void MainWindow::changeView(int view)
 void MainWindow::resetViews()
 {
     /* Reset views -- go here */
+    Database::saveToFile("../../../src/datastore/test.csv");
 }

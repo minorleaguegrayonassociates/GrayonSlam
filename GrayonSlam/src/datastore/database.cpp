@@ -1,5 +1,6 @@
 #include "database.hpp"
 #include "./../utils/parser.hpp"
+#include <QString>
 
 std::map<int,Team> Database::m_teams;
 std::map<int,Stadium> Database::m_stadiums;
@@ -66,6 +67,7 @@ void Database::loadFromFile(const std::string& filepath)
         tempTeam = new Team(std::stoi(team[0]), std::stoi(team[3]), team[1], tempLeague);
         // Set's deleted bool
         tempTeam->hidden = std::stoi(team[2]);
+
         // Initializing a new Stadium class
         tempStadium = new Stadium(std::stoi(team[3]), team[4], team[6], std::stoi(team[5]),std::stoi(team[9]),
                                   std::stoi(team[10]), tempRoof, tempSurface, tempTypology);
@@ -87,11 +89,6 @@ void Database::loadFromFile(const std::string& filepath)
         m_teams.insert(std::pair<int,Team>(tempTeam->m_id,*tempTeam));
         m_stadiums.insert(std::pair<int,Stadium>(tempStadium->m_id, *tempStadium));
     }
-}
-
-void Database::saveToFile(const std::string&)
-{
-
 }
 
 std::map<int,Team> Database::getTeams()
@@ -137,3 +134,9 @@ std::vector<Stadium> Database::getStadiumsVector()
     return vec;
 }
 
+void Database::saveToFile(const std::string& path)
+{
+    std::vector<Team> tempTeamVector(Database::getTeamsVector());
+    std::vector<Stadium> tempStadiumVector(Database::getStadiumsVector());
+    saveData(path,tempTeamVector,tempStadiumVector);
+}

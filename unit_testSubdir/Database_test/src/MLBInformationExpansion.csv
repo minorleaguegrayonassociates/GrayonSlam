@@ -1,2 +1,2 @@
-# id, team name, deleted bool, id, stadium name, capacity, location, playing surface, league, date opened, distance to center field, ballpark typology, Rooftype 
-31,Las Vegas Gamblers,0,80,Las Vegas Stadium,"41,111","Las Vegas, Nevada",Grass,National,2018,400 feet (122 m),Retro Modern,Open,5,1,0,Baseball Cap,22.99,2,0,Baseball bat,89.39,3,0,Team pennant,17.99,4,0,Autographed Baseball,25.99,5,0,Team Jersey,199.99
+# id, team name, hidden bool, id, stadium name, capacity, location, playing surface, league, date opened, distance to center field, ballpark typology, Rooftype 
+31,Las Vegas Gamblers,0,80,Las Vegas Stadium,"41,111","Las Vegas, Nevada",Grass,National,2018,400,Retro Modern,Open,5,0,Baseball Cap,22.99,0,Baseball bat,89.39,0,Team pennant,17.99,0,Autographed Baseball,25.99,0,Team Jersey,199.99

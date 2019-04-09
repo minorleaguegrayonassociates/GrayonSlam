@@ -3,6 +3,7 @@
 #include <iostream>
 #include "parser.hpp"
 #include "exceptions.hpp"
+#include <QDebug>
 
 void teamParseDebug(const std::string& path)
 {
@@ -106,4 +107,45 @@ std::vector<std::vector<std::string>> loadData(const std::string& path)
     return allRows;
 }
 
+void saveData(const std::string& path,std::vector<Team>& teamVect,std::vector<Stadium>& stadiumVect)
+{
+    std::ofstream outfile(path);
 
+    if(path.substr(path.size()-4) != ".csv"){throw BadFileFormat(QString::fromUtf8("Wrong File type\n"), QString::fromStdString(path));}
+
+    if (!outfile.is_open()){throw BadFile(QFile(QString::fromStdString(path)));}
+
+    std::vector<Souvenir> tempSouvenirVect;
+    outfile << "# id, team name, hidden bool, id, stadium name, capacity, location, playing surface,"
+            << "league, date opened, distance to center field, ballpark typology, Rooftype" << std::endl;
+    for(unsigned int i = 0; i < teamVect.size(); ++i)
+    {
+        outfile << teamVect[i].getId();
+        outfile << "," << teamVect[i].getName();
+        outfile << "," << teamVect[i].hidden;
+        outfile << "," << teamVect[i].getStadiumId();
+        outfile << "," << stadiumVect[i].getName();
+        outfile << "," << stadiumVect[i].getSeatCap();
+        outfile << "," << "\"" << stadiumVect[i].getLocation() << "\"";
+        outfile << "," << Stadium::SURFACE_STRING[0];
+        outfile << "," << Team::LEAGUE_STRING[teamVect[i].league];
+        outfile << "," << stadiumVect[i].getYearOpened();
+        outfile << "," << stadiumVect[i].getCenterFieldDist();
+        outfile << "," << Stadium::TYPOLOGY_STRING[stadiumVect[i].typology];
+        outfile << "," << Stadium::ROOF_STRING[stadiumVect[i].roof];
+
+        tempSouvenirVect = stadiumVect[i].getSouvenirs();
+
+        outfile << ","<< tempSouvenirVect.size();
+
+        for(const Souvenir& item: tempSouvenirVect)
+        {
+            outfile << "," << item.hidden;
+            outfile << "," << item.getName();
+            outfile << "," << item.getPrice();
+        }
+
+//        if(i+1 < teamVect.size())
+            outfile << std::endl;
+    }
+}
