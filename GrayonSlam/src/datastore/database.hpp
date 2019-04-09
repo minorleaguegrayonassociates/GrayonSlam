@@ -64,6 +64,8 @@ private:
 template<typename Container, typename Enum>
 Enum Database::getEnumValue(Container arr, std::string strVal, Enum enumVal)
 {
+    // Arrays are automatically passed by reference
+    enumVal = static_cast<Enum>(0);
     /* Iterating through the string array until it finds a match with strVal */
     for(auto it = arr.begin(); it != arr.end(); ++it)
     {

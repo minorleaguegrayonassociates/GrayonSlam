@@ -111,15 +111,25 @@ void saveData(const std::string& path,std::vector<Team>& teamVect,std::vector<St
 {
     std::ofstream outfile(path);
 
-    if(path.substr(path.size()-4) != ".csv"){throw BadFileFormat(QString::fromUtf8("Wrong File type\n"), QString::fromStdString(path));}
+    // Temp Enum variables used to hold string of enum
+    std::string tempLeague;
+    std::string tempRoof;
+    std::string tempSurface;
+    std::string tempTypology;
 
+    if(path.substr(path.size()-4) != ".csv"){throw BadFileFormat(QString::fromUtf8("Wrong File type\n"), QString::fromStdString(path));}
     if (!outfile.is_open()){throw BadFile(QFile(QString::fromStdString(path)));}
 
     std::vector<Souvenir> tempSouvenirVect;
     outfile << "# id, team name, hidden bool, id, stadium name, capacity, location, playing surface,"
-            << "league, date opened, distance to center field, ballpark typology, Rooftype" << std::endl;
+            << " league, date opened, distance to center field, ballpark typology, Rooftype" << std::endl;
     for(unsigned int i = 0; i < teamVect.size(); ++i)
     {
+        tempLeague = Team::LEAGUE_STRING[teamVect[i].league];
+        tempRoof = Stadium::ROOF_STRING[stadiumVect[i].roof];
+        tempSurface = Stadium::SURFACE_STRING[stadiumVect[i].surface];
+        tempTypology = Stadium::TYPOLOGY_STRING[stadiumVect[i].typology];
+
         outfile << teamVect[i].getId();
         outfile << "," << teamVect[i].getName();
         outfile << "," << teamVect[i].hidden;
@@ -127,17 +137,16 @@ void saveData(const std::string& path,std::vector<Team>& teamVect,std::vector<St
         outfile << "," << stadiumVect[i].getName();
         outfile << "," << stadiumVect[i].getSeatCap();
         outfile << "," << "\"" << stadiumVect[i].getLocation() << "\"";
-        outfile << "," << Stadium::SURFACE_STRING[0];
-        outfile << "," << Team::LEAGUE_STRING[teamVect[i].league];
+        outfile << "," << tempSurface;
+        outfile << "," << tempLeague;
         outfile << "," << stadiumVect[i].getYearOpened();
         outfile << "," << stadiumVect[i].getCenterFieldDist();
-        outfile << "," << Stadium::TYPOLOGY_STRING[stadiumVect[i].typology];
-        outfile << "," << Stadium::ROOF_STRING[stadiumVect[i].roof];
+        outfile << "," << tempTypology;
+        outfile << "," << tempRoof;
+//        qDebug() << QString::fromStdString(tempRoof);
 
         tempSouvenirVect = stadiumVect[i].getSouvenirs();
-
         outfile << ","<< tempSouvenirVect.size();
-
         for(const Souvenir& item: tempSouvenirVect)
         {
             outfile << "," << item.hidden;
@@ -145,7 +154,6 @@ void saveData(const std::string& path,std::vector<Team>& teamVect,std::vector<St
             outfile << "," << item.getPrice();
         }
 
-//        if(i+1 < teamVect.size())
-            outfile << std::endl;
+        outfile << std::endl;
     }
 }

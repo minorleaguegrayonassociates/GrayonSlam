@@ -1,7 +1,6 @@
 #include "database.hpp"
 #include "./../utils/parser.hpp"
-#include <QString>
-
+#include <QDebug>
 std::map<int,Team> Database::m_teams;
 std::map<int,Stadium> Database::m_stadiums;
 
@@ -14,7 +13,8 @@ Database::~Database()
 {}
 
 
-/* *
+/* **
+ *
  * loadFromFile
  *
  * @param filepath path to csv data file
@@ -50,7 +50,7 @@ void Database::loadFromFile(const std::string& filepath)
     Stadium::Typology tempTypology;
 
     // Temp souvenir variables
-    bool tempDeleted;
+    bool tempHidden;
     std::string tempName;
     double tempPrice;
 
@@ -67,22 +67,23 @@ void Database::loadFromFile(const std::string& filepath)
         tempTeam = new Team(std::stoi(team[0]), std::stoi(team[3]), team[1], tempLeague);
         // Set's deleted bool
         tempTeam->hidden = std::stoi(team[2]);
-
         // Initializing a new Stadium class
         tempStadium = new Stadium(std::stoi(team[3]), team[4], team[6], std::stoi(team[5]),std::stoi(team[9]),
                                   std::stoi(team[10]), tempRoof, tempSurface, tempTypology);
-
         // Souvenir index starts at 14 for each team, reseting to 14 here
         j = 14;
         // Index 13 holds the number of souvenirs a stadium has
         for(int i = 0; i < std::stoi(team[13]); ++i)
         {
-            tempDeleted = (team[j++] == "0") ? true:false; // Is deleted? - bool
+            tempHidden = ((std::stoi(team[j++]) == 0)?false:true); // Is hidden? - bool
             tempName = team[j++];               // Souvenir Name
             tempPrice = std::stod(team[j++]);   // Souvenir Price
 
             tempStadium->addSouvenir(tempName, tempPrice); // Creating an instance of a souvenir class
-            tempStadium->getSouvenirs()[static_cast<unsigned int>(i)].hidden = tempDeleted;
+            tempStadium->findSouvenir(i).hidden = tempHidden;
+//            qDebug()<< QString::fromStdString(tempStadium->findSouvenir(i).getName());
+//            qDebug() << QString::fromUtf8("Value from file: ") << tempHidden;
+//            qDebug() << QString::fromUtf8("Value of souvenir after assignement: ") << tempStadium->findSouvenir(i).hidden;
         }
 
         // Insterting team and stadium in to their appropriate maps for database
