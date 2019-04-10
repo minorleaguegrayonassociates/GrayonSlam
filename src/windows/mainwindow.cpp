@@ -52,6 +52,7 @@ void MainWindow::changeView(int view)
         if(reply == QMessageBox::Yes)
         {
             emit logout();
+        }
         else
         {
             m_navbar->setCurrentRow(m_ui->mainViews->currentIndex());
