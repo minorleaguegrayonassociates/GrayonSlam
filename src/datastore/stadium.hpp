@@ -27,7 +27,7 @@ public:
 
     /* Enum types */
     enum Roof { RETRACTABLE, OPEN, FIXED };
-    enum Surface { GRASS, ASTROTURF, ASTROTURF3D };
+    enum Surface { GRASS, ASTROTURF };
     enum Typology { RETROMODERN, RETROCLASSIC, JEWELBOX, MODERN, CONTEMPORARY, MULTIPURPOSE };
 
     /* Enum to strings */
