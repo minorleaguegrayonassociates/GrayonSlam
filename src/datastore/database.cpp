@@ -1,26 +1,39 @@
 #include "database.hpp"
 #include "./../utils/parser.hpp"
 
+/**
+ * Instantiate static map containers of teams and stadiums
+ */
 std::map<int,Team> Database::m_teams;
 std::map<int,Stadium> Database::m_stadiums;
 
+/**
+ * Instantiate a static database object
+ */
 Database* Database::m_database = new Database();
 
+/**
+ * Constructor
+ */
 Database::Database()
 {}
 
+/**
+ * Destructor
+ */
 Database::~Database()
 {}
 
 
-/* **
+/**
+ * @brief Loads team, stadium, and souvenir data
  *
- * loadFromFile
+ * This functions takes a path, extracts all the data and instantiates
+ * team, stadium, and souvenir classes.
  *
- * @param filepath path to csv data file
- *
-*/
-
+ * @param filepath path to .csv data for teams,stadiums,and souvenirs
+ * @return Nothing
+ */
 void Database::loadFromFile(const std::string& filepath)
 {
     // Used to traverser through souvenirs
@@ -76,28 +89,63 @@ void Database::loadFromFile(const std::string& filepath)
     }
 }
 
+/**
+ * @brief returns map of Teams
+ *
+ * This method returns all the stadiums that are
+ * contianed within the database's map container.
+ *
+ * @param none
+ * @return m_teams is returned
+ */
 std::map<int,Team> Database::getTeams()
 {
     return m_teams;
 }
 
+/**
+ * @brief returns map of Stadiums
+ *
+ * This method returns all the Stadiums that are
+ * contianed within the database's map container.
+ *
+ * @param none
+ * @return m_stadiums is returned
+ */
 std::map<int,Stadium> Database::getStadiums()
 {
     return m_stadiums;
 }
 
+/**
+ * Finds team by it's id.
+ *
+ * @param id an int id used to find a Team
+ * @return A const reference to a Team object
+ */
 const Team& Database::findTeamById(int id)
 {
     return m_teams[id];
 }
 
-// Find stadium by id
+/**
+ * Finds Stadium by it's id.
+ *
+ * @param id an int id used to find a Stadium
+ * @return A const reference to a Stadium object
+ */
 const Stadium& Database::findStadiumById(int id)
 {
     return m_stadiums[id];
 }
 
-// Goes though Each team and push_back the teams onto a list
+
+/**
+ * Returns a vector with all the Teams
+ *
+ * @param none
+ * @return A vector with all the teams within m_teams
+ */
 std::vector<Team> Database::getTeamsVector()
 {
     std::vector<Team> vec;
@@ -108,7 +156,12 @@ std::vector<Team> Database::getTeamsVector()
     return vec;
 }
 
-// Goes though Each team and push_back the teams' stadium onto a list
+/**
+ * Returns a vector with all the Stadiums
+ *
+ * @param none
+ * @return A vector with all the teams within m_stadiums
+ */
 std::vector<Stadium> Database::getStadiumsVector()
 {
     std::vector<Stadium> vec;
@@ -119,6 +172,13 @@ std::vector<Stadium> Database::getStadiumsVector()
     return vec;
 }
 
+/**
+ * Uses the data within this class to write out the data
+ * to a csv file.
+ *
+ * @param path Where the program will write the csv file.
+ * @return nothing
+ */
 void Database::saveToFile(const std::string& path)
 {
     std::vector<Team> tempTeamVector(Database::getTeamsVector());
