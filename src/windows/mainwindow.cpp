@@ -31,7 +31,6 @@ MainWindow::MainWindow()
     m_navbar->addItem("\uf2f5", "Logout");
 
     Database::loadFromFile("./../../../src/datastore/test.csv");
-    teamParseDebug("./../../../src/datastore/MLBInformation.csv");
 }
 
 MainWindow::~MainWindow()
