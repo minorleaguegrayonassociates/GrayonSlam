@@ -1,6 +1,6 @@
 #include "database.hpp"
 #include "src/utils/parser.hpp"
-#include <QDebug>
+
 /* Instantiate static map containers of teams and stadiums */
 std::map<int,Team> Database::teams;
 std::map<int,Stadium> Database::stadiums;
@@ -25,10 +25,7 @@ void Database::loadFromFile(const std::string& filepath)
     // Used to traverser through souvenirs
     unsigned int j;
 
-    // Temp pointers that will hold initialized classes
-    Stadium* tempStadium;
-    Team* tempTeam;
-
+     /* all the variables that have "temp" temporarily hold data until the object is initialized and put into a container */
     // Temp Enum variables used to initialize class
     Team::League tempLeague;
     Stadium::Roof tempRoof;
@@ -36,6 +33,7 @@ void Database::loadFromFile(const std::string& filepath)
     Stadium::Typology tempTypology;
 
     // Temp souvenir variables
+    int souvenirCount;
     bool tempHidden;
     std::string tempName;
     double tempPrice;
@@ -50,29 +48,30 @@ void Database::loadFromFile(const std::string& filepath)
         tempTypology = m_database->getEnumValue(Stadium::TYPOLOGY_STRING,team[11], Stadium::Typology::MODERN);
 
         // Initializing a new Team class
-        tempTeam = new Team(std::stoi(team[0]), std::stoi(team[3]), team[1], tempLeague);
+        Team tempTeam(std::stoi(team[0]), std::stoi(team[3]), team[1], tempLeague);
         // Set's deleted bool
-        tempTeam->hidden = std::stoi(team[2]);
+        tempTeam.hidden = std::stoi(team[2]);
         // Initializing a new Stadium class
-        tempStadium = new Stadium(std::stoi(team[3]), team[4], team[6], std::stoi(team[5]),std::stoi(team[9]),
+        Stadium tempStadium(std::stoi(team[3]), team[4], team[6], std::stoi(team[5]),std::stoi(team[9]),
                                   std::stoi(team[10]), tempRoof, tempSurface, tempTypology);
         // Souvenir index starts at 14 for each team, reseting to 14 here
         j = 14;
 
         // Index 13 holds the number of souvenirs a stadium has
-        for(int i = 0; i < std::stoi(team[13]); ++i)
+        souvenirCount = std::stoi(team[13]);
+        for(int i = 0; i < souvenirCount; ++i)
         {
-            tempHidden = (std::stoi(team[j++]) == 1); // Is hidden? - bool
-            tempName = team[j++];                     // Souvenir Name
-            tempPrice = std::stod(team[j++]);         // Souvenir Price
+            tempHidden = std::stoi(team[j++]); // Is hidden? - bool
+            tempName = team[j++];              // Souvenir Name
+            tempPrice = std::stod(team[j++]);  // Souvenir Price
 
-            tempStadium->addSouvenir(tempName, tempPrice); // Creating an instance of a souvenir class
-            tempStadium->findSouvenir(i).hidden = tempHidden;
+            tempStadium.addSouvenir(tempName, tempPrice); // Creating an instance of a souvenir class
+            tempStadium.findSouvenir(i).hidden = tempHidden;
         }
 
         // Insterting team and stadium in to their appropriate maps for database
-        teams[tempTeam->m_id] = *tempTeam;
-        stadiums[tempStadium->m_id] = *tempStadium;
+        teams[tempTeam.m_id] = tempTeam;
+        stadiums[tempStadium.m_id] = tempStadium;
     }
 }
 
