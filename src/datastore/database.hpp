@@ -17,12 +17,6 @@
 class Database
 {
 public:
-    /* Constructor */
-    Database();
-
-    /* Destructor */
-    ~Database();
-
     /* Static methods to Load and Save from/to file */
     static void loadFromFile(const std::string&);
     static void saveToFile(const std::string&);
@@ -36,14 +30,17 @@ public:
     static std::vector<Stadium> getStadiumsVector();
 
 private:
+    /* Private Constructor */
+    Database();
+
     /* Private string to Enum method*/
     template<typename Container, typename Enum>
     Enum getEnumValue(Container , std::string , Enum);
 
     /* Private static variables */
     static Database* m_database;
-    static std::map<int,Team> m_teams;
-    static std::map<int,Stadium> m_stadiums;
+    static std::map<int,Team> teams;
+    static std::map<int,Stadium> stadiums;
 };
 
 
@@ -62,19 +59,19 @@ private:
  * @param enumVal base enum of the string that's being converted
  */
 template<typename Container, typename Enum>
-Enum Database::getEnumValue(Container arr, std::string strVal, Enum enumVal)
+Enum Database::getEnumValue(Container container, std::string strEnum, Enum enumVal)
 {
-    // Arrays are automatically passed by reference
+    // Make sure enum is set to the base enum
     enumVal = static_cast<Enum>(0);
-    /* Iterating through the string array until it finds a match with strVal */
-    for(auto it = arr.begin(); it != arr.end(); ++it)
+    /* Iterating through the string array until it finds a match with strEnum */
+    for(auto it = container.begin(); it != container.end(); ++it)
     {
-        /* If it matches return the enumVal, otherwise incement it by 1 */
-        if(*it == strVal)
+        /* If strEnum matches an index within the string array, return the enumVal at current index, otherwise incement it by 1 */
+        if(*it == strEnum)
             return enumVal;
         else
             enumVal = static_cast<Enum>(enumVal+1);
     }
-    // Won't reach this as long as datafile isn't changed manually -- added to prevent warnings from Qt
+    // If it returns this value strEnums didn't convert properly to enumVal
     return enumVal;
 }

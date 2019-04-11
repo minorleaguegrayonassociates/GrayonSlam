@@ -1,29 +1,16 @@
 #include "database.hpp"
-#include "./../utils/parser.hpp"
+#include "src/utils/parser.hpp"
+#include <QDebug>
+/* Instantiate static map containers of teams and stadiums */
+std::map<int,Team> Database::teams;
+std::map<int,Stadium> Database::stadiums;
 
-/**
- * Instantiate static map containers of teams and stadiums
- */
-std::map<int,Team> Database::m_teams;
-std::map<int,Stadium> Database::m_stadiums;
-
-/**
- * Instantiate a static database object
- */
+/* Instantiate a static database object */
 Database* Database::m_database = new Database();
 
-/**
- * Constructor
- */
+/* Constructor */
 Database::Database()
 {}
-
-/**
- * Destructor
- */
-Database::~Database()
-{}
-
 
 /**
  * @brief Loads team, stadium, and souvenir data
@@ -32,7 +19,6 @@ Database::~Database()
  * team, stadium, and souvenir classes.
  *
  * @param filepath path to .csv data for teams,stadiums,and souvenirs
- * @return Nothing
  */
 void Database::loadFromFile(const std::string& filepath)
 {
@@ -72,20 +58,21 @@ void Database::loadFromFile(const std::string& filepath)
                                   std::stoi(team[10]), tempRoof, tempSurface, tempTypology);
         // Souvenir index starts at 14 for each team, reseting to 14 here
         j = 14;
+
         // Index 13 holds the number of souvenirs a stadium has
         for(int i = 0; i < std::stoi(team[13]); ++i)
         {
-            tempHidden = ((std::stoi(team[j++]) == 0)?false:true); // Is hidden? - bool
-            tempName = team[j++];               // Souvenir Name
-            tempPrice = std::stod(team[j++]);   // Souvenir Price
+            tempHidden = (std::stoi(team[j++]) == 1); // Is hidden? - bool
+            tempName = team[j++];                     // Souvenir Name
+            tempPrice = std::stod(team[j++]);         // Souvenir Price
 
             tempStadium->addSouvenir(tempName, tempPrice); // Creating an instance of a souvenir class
             tempStadium->findSouvenir(i).hidden = tempHidden;
         }
 
         // Insterting team and stadium in to their appropriate maps for database
-        m_teams.insert(std::pair<int,Team>(tempTeam->m_id,*tempTeam));
-        m_stadiums.insert(std::pair<int,Stadium>(tempStadium->m_id, *tempStadium));
+        teams[tempTeam->m_id] = *tempTeam;
+        stadiums[tempStadium->m_id] = *tempStadium;
     }
 }
 
@@ -95,12 +82,11 @@ void Database::loadFromFile(const std::string& filepath)
  * This method returns all the stadiums that are
  * contianed within the database's map container.
  *
- * @param none
  * @return m_teams is returned
  */
 std::map<int,Team> Database::getTeams()
 {
-    return m_teams;
+    return teams;
 }
 
 /**
@@ -109,12 +95,11 @@ std::map<int,Team> Database::getTeams()
  * This method returns all the Stadiums that are
  * contianed within the database's map container.
  *
- * @param none
  * @return m_stadiums is returned
  */
 std::map<int,Stadium> Database::getStadiums()
 {
-    return m_stadiums;
+    return stadiums;
 }
 
 /**
@@ -125,7 +110,7 @@ std::map<int,Stadium> Database::getStadiums()
  */
 const Team& Database::findTeamById(int id)
 {
-    return m_teams[id];
+    return teams[id];
 }
 
 /**
@@ -136,21 +121,20 @@ const Team& Database::findTeamById(int id)
  */
 const Stadium& Database::findStadiumById(int id)
 {
-    return m_stadiums[id];
+    return stadiums[id];
 }
 
 
 /**
  * Returns a vector with all the Teams
  *
- * @param none
  * @return A vector with all the teams within m_teams
  */
 std::vector<Team> Database::getTeamsVector()
 {
     std::vector<Team> vec;
 
-    for(auto team : m_teams)
+    for(auto team : teams)
         vec.push_back(team.second);
 
     return vec;
@@ -159,15 +143,14 @@ std::vector<Team> Database::getTeamsVector()
 /**
  * Returns a vector with all the Stadiums
  *
- * @param none
  * @return A vector with all the teams within m_stadiums
  */
 std::vector<Stadium> Database::getStadiumsVector()
 {
     std::vector<Stadium> vec;
 
-    for(auto team : m_teams)
-        vec.push_back(m_stadiums[team.second.getStadiumId()]);
+    for(auto team : teams)
+        vec.push_back(stadiums[team.second.getStadiumId()]);
 
     return vec;
 }
@@ -177,7 +160,6 @@ std::vector<Stadium> Database::getStadiumsVector()
  * to a csv file.
  *
  * @param path Where the program will write the csv file.
- * @return nothing
  */
 void Database::saveToFile(const std::string& path)
 {
