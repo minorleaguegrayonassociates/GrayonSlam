@@ -161,6 +161,12 @@ void Database::saveToFile(const std::string& path)
     // Initializing - vector will hold all lines of data within the document
     std::vector<std::vector<std::string>> allRows;
 
+    /* Temp Enum variables used to hold string of enum */
+    std::string tempLeague;
+    std::string tempRoof;
+    std::string tempSurface;
+    std::string tempTypology;
+
     /* rowHeader hold the header of a save file */
     std::vector<std::string> rowHeader;
     rowHeader.push_back("# id, team name, hidden bool, id, stadium name, capacity, location, playing surface");
@@ -172,11 +178,11 @@ void Database::saveToFile(const std::string& path)
         // Will hold all the columns within a given row
         std::vector<std::string> columns;
 
-        /* Temp Enum variables used to hold string of enum - Convert enum values to their string enum version */
-        std::string tempLeague = Team::LEAGUE_STRING[teamVect[i].league];
-        std::string tempRoof = Stadium::ROOF_STRING[stadiumVect[i].roof];
-        std::string tempSurface = Stadium::SURFACE_STRING[stadiumVect[i].surface];
-        std::string tempTypology = Stadium::TYPOLOGY_STRING[stadiumVect[i].typology];
+        /* Convert enum values to their string enum version */
+        tempLeague = Team::LEAGUE_STRING[teamVect[i].league];
+        tempRoof = Stadium::ROOF_STRING[stadiumVect[i].roof];
+        tempSurface = Stadium::SURFACE_STRING[stadiumVect[i].surface];
+        tempTypology = Stadium::TYPOLOGY_STRING[stadiumVect[i].typology];
 
         /* Adds all the data that belongs to team and it's stadium to the columns vector */
         columns.push_back(std::to_string(teamVect[i].getId()));
@@ -205,7 +211,7 @@ void Database::saveToFile(const std::string& path)
             columns.push_back(item.getName());
             std::string strPrice(std::to_string(item.getPrice()));
             // Erasing trailing zeros
-            strPrice.erase(strPrice.find_first_of("0"), std::string::npos);
+            strPrice.erase( strPrice.find_first_of(".") + 3, std::string::npos);
             columns.push_back(strPrice);
         }
         /* Go though all the strings and check if it contains commas, add quotes if so */
