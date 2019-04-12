@@ -33,7 +33,9 @@ SOURCES += \
     src/widgets/navbaritem.cpp \
     src/datastore/stadium.cpp \
     src/datastore/team.cpp \
-    src/datastore/souvenir.cpp
+    src/datastore/souvenir.cpp \
+    src/widgets/souvenirlist.cpp \
+    src/widgets/souvenirlistitem.cpp
 
 HEADERS += \
     src/windows/mainwindow.hpp \
@@ -46,12 +48,15 @@ HEADERS += \
     src/datastore/team.hpp \
     src/datastore/souvenir.hpp \
     src/views/view.hpp \
+    src/widgets/souvenirlist.hpp \
+    src/widgets/souvenirlistitem.hpp \
     src/utils/map.hpp
 
 FORMS += \
     src/windows/mainwindow.ui \
     src/windows/login.ui \
-    src/widgets/navbaritem.ui
+    src/widgets/navbaritem.ui \
+    src/widgets/souvenirlistitem.ui
 
 RESOURCES += \
     res.qrc
