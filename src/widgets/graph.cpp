@@ -28,19 +28,13 @@ void graph::paintEvent(QPaintEvent*)
 //    painter.drawEllipse(QRect(79, 11, 5, 5));
 //    painter.drawEllipse(QRect(254, 159, 5, 5));
 
-    QPoint tempPoint;
-    QString tempString;
-    tempPoint.setX(79);
-    tempPoint.setY(11);
-
-    tempString = QString::fromUtf8("Safeco Park");
-
-    paintStadiums(painter, tempPoint, tempString);
-
+    paintStadiums(painter, QPoint(79,11), QString::fromUtf8("Safeco Park"));
+    paintStadiums(painter, QPoint(35,146), QString::fromUtf8("AT&T Park"));
+    paintEdge(painter, QPoint(79,11), QPoint(35,146), QString::fromUtf8("680 mi"));
     painter.end();
 }
 
-void graph::paintStadiums(QPainter& painter, QPoint& stadiumPoint,  QString& stadiumName)
+void graph::paintStadiums(QPainter& painter,const QPoint& stadiumPoint, const QString& stadiumName)
 {
     QBrush myBrush;
     myBrush.setColor(Qt::GlobalColor::blue);
@@ -52,7 +46,7 @@ void graph::paintStadiums(QPainter& painter, QPoint& stadiumPoint,  QString& sta
     paintText(painter, forText, stadiumName);
 }
 
-void graph::paintEdge(QPainter& painter,QPoint& stdmCoord1, QPoint& stdmCoord2,QString distance)
+void graph::paintEdge(QPainter& painter, const QPoint& stdmCoord1, const QPoint& stdmCoord2, const QString& distance)
 {
     QPen myPen;
     myPen.setColor(Qt::GlobalColor::red);
@@ -62,12 +56,15 @@ void graph::paintEdge(QPainter& painter,QPoint& stdmCoord1, QPoint& stdmCoord2,Q
     myPen.setStyle(Qt::PenStyle::SolidLine);
     painter.setPen(myPen);
 
-    painter.drawLine(stdmCoord1, stdmCoord2);
-    QPoint midPoint = (stdmCoord1-stdmCoord2)/2.0;
-    this->paintText(painter, midPoint, distance);
+    QPoint one = stdmCoord1 + QPoint(1,1);
+    QPoint two = stdmCoord2 - QPoint(1,1);
+    painter.drawLine(one, two);
+
+    QPoint midPoint = (one-two)/2;
+    paintText(painter, midPoint, distance);
 }
 
-void graph::paintText(QPainter& painter, QPoint& coords,QString& strToPrint)
+void graph::paintText(QPainter& painter, const QPoint& coords, const QString& strToPrint)
 {
     QPen myPen;
 

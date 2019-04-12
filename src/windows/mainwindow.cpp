@@ -90,6 +90,5 @@ void MainWindow::on_pushButton_clicked()
     animation->setStartValue(QRect(0,0,170,80));
     animation->setEndValue(QRect(709,389,170,80));
     animation->start();
-    m_graph->update();
 }
 

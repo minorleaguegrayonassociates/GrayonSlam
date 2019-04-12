@@ -13,10 +13,14 @@ Q_OBJECT
 public:
 explicit graph(QWidget* parent = nullptr);
 ~graph() override;
+
 void paintEvent(QPaintEvent*) override;
-void paintStadiums(QPainter& painter, QPoint& stadiumPoint, QString& StadiumName);
-void paintEdge(QPainter& painter,QPoint& stdmCoord1, QPoint& stdmCoord2,QString distance);
-void paintText(QPainter& painter, QPoint& ,QString&);
+
+/* setters */
+void paintStadiums(QPainter& painter, const QPoint& stadiumPoint, const QString& StadiumName);
+void paintEdge(QPainter& painter, const QPoint& stdmCoord1, const QPoint& stdmCoord2, const QString& distance);
+void paintText(QPainter& painter, const QPoint& , const QString&);
+
 private:
 Ui::graph *m_ui;
 };
