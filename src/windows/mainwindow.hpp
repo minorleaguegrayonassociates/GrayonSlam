@@ -27,7 +27,10 @@ private slots:
     void changeView(int);
     void resetViews();
 
+    void on_pushButton_clicked();
+
 private:
+    graph* m_graph;
     Ui::MainWindow* m_ui;
     NavBar* m_navbar;
     std::vector<View*> m_views;

@@ -82,3 +82,14 @@ void MainWindow::resetViews()
     std::for_each(m_views.begin(), m_views.end(),
                   [](View* view){view->resetView();});
 }
+
+void MainWindow::on_pushButton_clicked()
+{
+    QPropertyAnimation* animation  = new QPropertyAnimation(m_ui->plane, "geometry");
+    animation->setDuration(5500);
+    animation->setStartValue(QRect(0,0,170,80));
+    animation->setEndValue(QRect(709,389,170,80));
+    animation->start();
+    m_graph->update();
+}
+
