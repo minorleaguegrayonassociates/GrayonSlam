@@ -843,7 +843,7 @@ namespace nstd
             while (m_position > -1 && (m_data == NULL ||(m_data != NULL && m_data->available)))
             {
                 --m_position;
-                if(m_position < m_parent->m_capacity)m_data = m_parent->m_array[m_position];
+                if(m_position > -1)m_data = m_parent->m_array[m_position];
                 else{m_data = NULL;}
                 if(m_data != NULL && m_data->available) m_data = NULL;
             }
@@ -901,7 +901,7 @@ namespace nstd
             while (m_position > -1 && (m_data == NULL ||(m_data != NULL && m_data->available)))
             {
                 --m_position;
-                if(m_position < m_parent->m_capacity)m_data = m_parent->m_array[m_position];
+                if(m_position > -1)m_data = m_parent->m_array[m_position];
                 else{m_data = NULL;}
                 if(m_data != NULL && m_data->available) m_data = NULL;
             }
