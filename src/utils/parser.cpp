@@ -3,7 +3,6 @@
 #include <iostream>
 #include "parser.hpp"
 #include "exceptions.hpp"
-#include <QDebug>
 
 void teamParseDebug(const std::string& path)
 {

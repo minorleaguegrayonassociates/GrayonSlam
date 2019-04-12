@@ -1,9 +1,11 @@
 #pragma once
 
 #include <vector>
-#include "souvenir.hpp"
-#include "stadium.hpp"
-#include "team.hpp"
+
+#include "src/datastore/souvenir.hpp"
+#include "src/datastore/stadium.hpp"
+#include "src/datastore/team.hpp"
+#include "src/utils/map.hpp"
 
 /**
  * @class Database class
@@ -21,11 +23,11 @@ public:
     static void loadFromFile(const std::string&);
     static void saveToFile(const std::string&);
 
-     /* Getters */
-    static std::map<int,Team> getTeams();
-    static std::map<int,Stadium> getStadiums();
-    static const Team& findTeamById(int);
-    static const Stadium& findStadiumById(int);
+    /* Getters */
+    const static nstd::map<int,Team> getTeams();
+    const static nstd::map<int,Stadium> getStadiums();
+    static Team& findTeamById(int);
+    static Stadium& findStadiumById(int);
     static std::vector<Team> getTeamsVector();
     static std::vector<Stadium> getStadiumsVector();
 
@@ -39,8 +41,8 @@ private:
 
     /* Private static variables */
     static Database* database;
-    static std::map<int,Team> teams;
-    static std::map<int,Stadium> stadiums;
+    static nstd::map<int,Team> teams;
+    static nstd::map<int,Stadium> stadiums;
 };
 
 

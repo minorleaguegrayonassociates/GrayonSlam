@@ -2,8 +2,8 @@
 #include "src/utils/parser.hpp"
 
 /* Instantiate static map containers of teams and stadiums */
-std::map<int,Team> Database::teams;
-std::map<int,Stadium> Database::stadiums;
+nstd::map<int,Team> Database::teams;
+nstd::map<int,Stadium> Database::stadiums;
 
 /* Instantiate a static database object */
 Database* Database::database = new Database();
@@ -82,7 +82,7 @@ void Database::loadFromFile(const std::string& filepath)
  *
  * @return teams is returned
  */
-std::map<int,Team> Database::getTeams()
+const nstd::map<int,Team> Database::getTeams()
 {
     return teams;
 }
@@ -94,7 +94,7 @@ std::map<int,Team> Database::getTeams()
  *
  * @return stadiums is returned
  */
-std::map<int,Stadium> Database::getStadiums()
+const nstd::map<int,Stadium> Database::getStadiums()
 {
     return stadiums;
 }
@@ -105,7 +105,7 @@ std::map<int,Stadium> Database::getStadiums()
  * @param id an int id used to find a Team
  * @return A const reference to a Team object
  */
-const Team& Database::findTeamById(int id)
+Team& Database::findTeamById(int id)
 {
     return teams[id];
 }
@@ -116,7 +116,7 @@ const Team& Database::findTeamById(int id)
  * @param id an int id used to find a Stadium
  * @return A const reference to a Stadium object
  */
-const Stadium& Database::findStadiumById(int id)
+Stadium& Database::findStadiumById(int id)
 {
     return stadiums[id];
 }
@@ -132,7 +132,7 @@ std::vector<Team> Database::getTeamsVector()
     std::vector<Team> vec;
 
     for(auto team : teams)
-        vec.push_back(team.second);
+        vec.push_back(team);
 
     return vec;
 }
@@ -147,7 +147,7 @@ std::vector<Stadium> Database::getStadiumsVector()
     std::vector<Stadium> vec;
 
     for(auto team : teams)
-        vec.push_back(stadiums[team.second.getStadiumId()]);
+        vec.push_back(stadiums[team.getStadiumId()]);
 
     return vec;
 }
