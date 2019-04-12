@@ -4,54 +4,6 @@
 #include "parser.hpp"
 #include "exceptions.hpp"
 
-void teamParseDebug(const std::string& path)
-{
-    unsigned int j;
-    std::vector<std::vector<std::string>> teamData = loadData(path);
-    for (const std::vector<std::string>& team : teamData)
-    {
-        j = 14;
-        std::cout << "----------Team ID: " << team[0] << std::endl;
-        std::cout << "--------Team Name: " << team[1] << std::endl;
-        std::cout << "---------Deleted?: " << team[2] << std::endl;
-        std::cout << "-------Stadium ID: " << team[3] << std::endl;
-        std::cout << "-----Stadium Name: " << team[4] << std::endl;
-        std::cout << "-Seating Capacity: " << team[5] << std::endl;
-        std::cout << "----Team Location: " << team[6] << std::endl;
-        std::cout << "--Playing Surface: " << team[7] << std::endl;
-        std::cout << "-----------League: " << team[8] << std::endl;
-        std::cout << "------Date opened: " << team[9] << std::endl;
-        std::cout << "--Distance2CtrFld: " << team[10] << std::endl;
-        std::cout << "Ballpark typology: " << team[11] << std::endl;
-        std::cout << "--------Roof Type: " << team[12] << std::endl;
-        std::cout << "NumberOSouvenirs:  " << team[13] << std::endl;
-
-        for(int i = 0; i < std::stoi(team[13]); ++i)
-        {
-            std::cout << "Is deleted?:  " << team[j++] << std::endl;
-            std::cout << "---Souvenir:  " << team[j++] << std::endl;
-            std::cout << "------Price:  " << team[j++] << std::endl;
-        }
-
-        std::cout << std::endl;
-    }
-}
-
-void distanceParseDebug(const std::string& path)
-{
-    std::vector<std::vector<std::string>> distanceData = loadData(path);
-    for (const std::vector<std::string>& stadiumDistance : distanceData)
-    {
-
-        std::cout << "Stadium ID:   " << stadiumDistance[0] << std::endl;
-        std::cout << "Stadium Name: " << stadiumDistance[1] << std::endl;
-        std::cout << "Stadium ID:   " << stadiumDistance[2] << std::endl;
-        std::cout << "Stadium Name: " << stadiumDistance[3] << std::endl;
-        std::cout << "Distance:     " << stadiumDistance[4] << std::endl;
-        std::cout << std::endl;
-    }
-}
-
 std::vector<std::vector<std::string>> loadData(const std::string& path)
 {
     // Initializing - vector will hold all lines of data within the document
@@ -106,53 +58,28 @@ std::vector<std::vector<std::string>> loadData(const std::string& path)
     return allRows;
 }
 
-void saveData(const std::string& path,std::vector<Team>& teamVect,std::vector<Stadium>& stadiumVect)
+void saveData(const std::string& path, const std::vector<std::vector<std::string>>& allRows)
 {
+    // Creating a ofstream object that opens outfile with the given path
     std::ofstream outfile(path);
 
-    // Temp Enum variables used to hold string of enum
-    std::string tempLeague;
-    std::string tempRoof;
-    std::string tempSurface;
-    std::string tempTypology;
-
+    // Check if path file extension matches expected file extension
     if(path.substr(path.size()-4) != ".csv"){throw BadFileFormat(QString::fromUtf8("Wrong File type\n"), QString::fromStdString(path));}
+    // If file doesn't open throw BadFile error
     if (!outfile.is_open()){throw BadFile(QFile(QString::fromStdString(path)));}
-
-    std::vector<Souvenir> tempSouvenirVect;
-    outfile << "# id, team name, hidden bool, id, stadium name, capacity, location, playing surface,"
-            << " league, date opened, distance to center field, ballpark typology, Rooftype" << std::endl;
-
-    for(unsigned int i = 0; i < teamVect.size(); ++i)
+    for(std::vector<std::string> columns: allRows)
     {
-        tempLeague = Team::LEAGUE_STRING[teamVect[i].league];
-        tempRoof = Stadium::ROOF_STRING[stadiumVect[i].roof];
-        tempSurface = Stadium::SURFACE_STRING[stadiumVect[i].surface];
-        tempTypology = Stadium::TYPOLOGY_STRING[stadiumVect[i].typology];
-
-        outfile << teamVect[i].getId();
-        outfile << "," << teamVect[i].getName();
-        outfile << "," << teamVect[i].hidden;
-        outfile << "," << teamVect[i].getStadiumId();
-        outfile << "," << stadiumVect[i].getName();
-        outfile << "," << stadiumVect[i].getSeatCap();
-        outfile << "," << "\"" << stadiumVect[i].getLocation() << "\"";
-        outfile << "," << tempSurface;
-        outfile << "," << tempLeague;
-        outfile << "," << stadiumVect[i].getYearOpened();
-        outfile << "," << stadiumVect[i].getCenterFieldDist();
-        outfile << "," << tempTypology;
-        outfile << "," << tempRoof;
-
-        tempSouvenirVect = stadiumVect[i].getSouvenirs();
-        outfile << ","<< tempSouvenirVect.size();
-        for(const Souvenir& item: tempSouvenirVect)
+        /* Output first column before entering loop, first column doesn't need a comma preceding it, erase first column */
+        outfile << columns.front();
+        columns.erase(columns.begin());
+        for(const std::string& column: columns)
         {
-            outfile << "," << item.hidden;
-            outfile << "," << item.getName();
-            outfile << "," << item.getPrice();
+            /* Output each column with a comma preceding it */
+            outfile << "," << column;
         }
-
+        // Add a new line
         outfile << std::endl;
     }
+    // Close outfile
+    outfile.close();
 }
