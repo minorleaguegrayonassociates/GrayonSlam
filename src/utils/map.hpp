@@ -19,7 +19,6 @@ class map;
 template <typename key, typename value, typename Hash>
 std::ostream& operator<<(std::ostream& out, const map<key, value, Hash>& d);
 
-unsigned int* SieveOfEratosthenes(int n);
 
 /**
      * @class nstd::map class
@@ -296,24 +295,24 @@ public:
          * @param capacity (capacity - 1) is max hashcode
          * @return returns a hashcode in the form of an int
          */
-        int hashAlgo(std::string k, int j,int capacity)const
-        {
-            int hash = static_cast<int>(std::hash<std::string>{}(k)) + (j*j);
-            return hash%capacity;
-        }
-        /**
+    int hashAlgo(std::string k, int j,int capacity)const
+    {
+        int hash = static_cast<int>(std::hash<std::string>{}(k)) + (j*j);
+        return hash%capacity;
+    }
+    /**
          * This method is the static version of operator()
          * @param k the key itself
          * @param j the collision value, increase for more values
          * @param capacity (capacity - 1) is max hashcode
          * @return returns a hashcode in the form of an int
          */
-        static int staticHashAlgo(std::string k,int j, int capacity)
-        {
-            int hash = static_cast<int>(std::hash<std::string>{}(k)) + (j*j);
-            return hash%capacity;
-        }
-    };
+    static int staticHashAlgo(std::string k,int j, int capacity)
+    {
+        int hash = static_cast<int>(std::hash<std::string>{}(k)) + (j*j);
+        return hash%capacity;
+    }
+};
 
 
 /**
@@ -333,56 +332,53 @@ struct Primes
     /* Destructor */
     ~Primes(){delete lookupTable;}
 
-       /* Destructor */
-       ~Primes(){delete lookupTable;}
+    /* PRIME LOOKUP TABLE - QUICK ACCESS*/
 
-       /* PRIME LOOKUP TABLE - QUICK ACCESS*/
-
-       /**
+    /**
         * @brief This function will take an integer and create an array of prime
         * values up to the given integer
         * @param n number of values, from 0 to n to select primes from
         * @return A pointer to an array of primes
         */
-       unsigned int* SieveOfEratosthenes(int n)
-       {
-           //inspired by geeksforgeeks.org
-           int *primes = new int[static_cast<unsigned int>(n)+1];
-           if(n >1) for(int i = 2; i <=n; ++i) primes[i] = true;
-           primes[0] = false;
-           primes[1] = false;
-           unsigned int numOfPrimes = 0;
-           for(int p=2; p*p<=n; ++p)
-           {
-               if(primes[p])
-               {
-                   for(int i=p*p; i<=n; i += p)
-                   {
-                       primes[i] = false;
-                   }
-               }
-           }
-           for(int i = 0; i < n+1; ++i)
-           {
-               if(primes[i])
-               {
-                   ++numOfPrimes;
-               }
-           }
-           int index = 0;
-           unsigned int * actualPrimes = new unsigned int[numOfPrimes];
-           for(unsigned int i = 0; i < static_cast<unsigned int>(n)+1; ++i)
-           {
-               if(primes[i])
-               {
-                   actualPrimes[index] = i;
-                   ++index;
-               }
-           }
-           delete [] primes;
-           return actualPrimes;
-       }
-   };
+    unsigned int* SieveOfEratosthenes(int n)
+    {
+        //inspired by geeksforgeeks.org
+        int *primes = new int[static_cast<unsigned int>(n)+1];
+        if(n >1) for(int i = 2; i <=n; ++i) primes[i] = true;
+        primes[0] = false;
+        primes[1] = false;
+        unsigned int numOfPrimes = 0;
+        for(int p=2; p*p<=n; ++p)
+        {
+            if(primes[p])
+            {
+                for(int i=p*p; i<=n; i += p)
+                {
+                    primes[i] = false;
+                }
+            }
+        }
+        for(int i = 0; i < n+1; ++i)
+        {
+            if(primes[i])
+            {
+                ++numOfPrimes;
+            }
+        }
+        int index = 0;
+        unsigned int * actualPrimes = new unsigned int[numOfPrimes];
+        for(unsigned int i = 0; i < static_cast<unsigned int>(n)+1; ++i)
+        {
+            if(primes[i])
+            {
+                actualPrimes[index] = i;
+                ++index;
+            }
+        }
+        delete [] primes;
+        return actualPrimes;
+    }
+};
 
 /**
      * @brief Static object that contains an array of primes for use by the map
@@ -401,10 +397,7 @@ map<key,value,Hash>::map()
 {
     for(int i = 0; i< m_capacity;++i)
     {
-        for(int i = 0; i< m_capacity;++i)
-        {
-            m_array[i]=NULL;
-        }
+        m_array[i]=NULL;
     }
 }
 
@@ -710,17 +703,11 @@ typename map<key,value,Hash>::iterator map<key,value,Hash>::begin() noexcept
         firstElem = m_array[0];
         int i = 0;
         position = 0;
-        while(firstElem != NULL && firstElem->available && i < m_capacity)
+        while((firstElem == NULL || firstElem->available) && i < m_capacity)
         {
-            firstElem = m_array[0];
-            int i = 0;
-            position = 0;
-            while((firstElem == NULL || firstElem->available) && i < m_capacity)
-            {
-              ++i;
-              ++position;
-              firstElem = m_array[i];
-            }
+            ++i;
+            ++position;
+            firstElem = m_array[i];
         }
     }
     return iterator(position,this, firstElem);
@@ -790,13 +777,9 @@ typename map<key,value,Hash>::iterator& map<key,value,Hash>::iterator::operator+
         if(m_position == m_parent->m_capacity ||(m_data != NULL && m_data->available)) m_data = NULL;
         while (m_position < m_parent->m_capacity && (m_data == NULL ||(m_data != NULL && m_data->available)))
         {
-            ++m_position, m_data = m_parent->m_array[m_position];
-            if(m_position == m_parent->m_capacity ||(m_data != NULL && m_data->available)) m_data = NULL;
-            while (m_position < m_parent->m_capacity && (m_data == NULL ||(m_data != NULL && m_data->available)))
-            {
-                ++m_position;
-                if(m_position < m_parent->m_capacity)m_data = m_parent->m_array[m_position];
-                else{m_data = NULL;}
+            ++m_position;
+            if(m_position < m_parent->m_capacity)m_data = m_parent->m_array[m_position];
+            else{m_data = NULL;}
                 if(m_data != NULL && m_data->available) m_data = NULL;
             }
             //invalidate pointer if at end
@@ -826,22 +809,17 @@ typename map<key,value,Hash>::iterator map<key,value,Hash>::iterator::operator++
         if(m_position == m_parent->m_capacity ||(m_data != NULL && m_data->available)) m_data = NULL;
         while (m_position < m_parent->m_capacity && (m_data == NULL ||(m_data != NULL && m_data->available)))
         {
-            ++m_position, m_data = m_parent->m_array[m_position];
-            if(m_position == m_parent->m_capacity ||(m_data != NULL && m_data->available)) m_data = NULL;
-            while (m_position < m_parent->m_capacity && (m_data == NULL ||(m_data != NULL && m_data->available)))
-            {
-                ++m_position;
-                if(m_position < m_parent->m_capacity)m_data = m_parent->m_array[m_position];
-                else{m_data = NULL;}
-                if(m_data != NULL && m_data->available) m_data = NULL;
-            }
-            //invalidate pointer if at end
-            if(m_position >= m_parent->m_capacity || m_data == NULL|| m_data->available)
-            {
-                m_position = -1;
-                m_data = NULL;
-                m_end = true;
-            }
+            ++m_position;
+            if(m_position < m_parent->m_capacity)m_data = m_parent->m_array[m_position];
+            else{m_data = NULL;}
+            if(m_data != NULL && m_data->available) m_data = NULL;
+        }
+        //invalidate pointer if at end
+        if(m_position >= m_parent->m_capacity || m_data == NULL|| m_data->available)
+        {
+            m_position = -1;
+            m_data = NULL;
+            m_end = true;
         }
     }
     return cpy;
@@ -864,17 +842,10 @@ typename map<key,value,Hash>::iterator& map<key,value,Hash>::iterator::operator-
         if(m_position <= -1 ||(m_data != NULL && m_data->available)) m_data = NULL;
         while (m_position > -1 && (m_data == NULL ||(m_data != NULL && m_data->available)))
         {
-            --m_position, m_data = m_parent->m_array[m_position];
-            if(m_position <= -1 ||(m_data != NULL && m_data->available)) m_data = NULL;
-            while (m_position > -1 && (m_data == NULL ||(m_data != NULL && m_data->available)))
-            {
-                --m_position;
-                if(m_position > -1)m_data = m_parent->m_array[m_position];
-                else{m_data = NULL;}
-                if(m_data != NULL && m_data->available) m_data = NULL;
-            }
-            //invalidate pointer if at end
-            if(m_position <= -1 || m_data == NULL|| m_data->available){m_position = -1;m_data = NULL;}
+            --m_position;
+            if(m_position > -1)m_data = m_parent->m_array[m_position];
+            else{m_data = NULL;}
+            if(m_data != NULL && m_data->available) m_data = NULL;
         }
         //invalidate pointer if at end
         if(m_position <= -1 || m_data == NULL|| m_data->available){m_position = -1;m_data = NULL;}
@@ -929,17 +900,10 @@ typename map<key,value,Hash>::iterator map<key,value,Hash>::iterator::operator--
         if(m_position <= -1 ||(m_data != NULL && m_data->available)) m_data = NULL;
         while (m_position > -1 && (m_data == NULL ||(m_data != NULL && m_data->available)))
         {
-            --m_position, m_data = m_parent->m_array[m_position];
-            if(m_position <= -1 ||(m_data != NULL && m_data->available)) m_data = NULL;
-            while (m_position > -1 && (m_data == NULL ||(m_data != NULL && m_data->available)))
-            {
-                --m_position;
-                if(m_position > -1)m_data = m_parent->m_array[m_position];
-                else{m_data = NULL;}
-                if(m_data != NULL && m_data->available) m_data = NULL;
-            }
-            //invalidate pointer if at end
-            if(m_position <= -1 || m_data == NULL|| m_data->available){m_position = -1;m_data = NULL;}
+            --m_position;
+            if(m_position > -1)m_data = m_parent->m_array[m_position];
+            else{m_data = NULL;}
+            if(m_data != NULL && m_data->available) m_data = NULL;
         }
         //invalidate pointer if at end
         if(m_position <= -1 || m_data == NULL|| m_data->available){m_position = -1;m_data = NULL;}
@@ -1003,18 +967,18 @@ value* map<key,value,Hash>::iterator::operator->()
      * It is used to compare iterators's positions in the map
      * to check if they are not at the same position
      */
-    template <typename key, typename value, typename Hash>
-    bool map<key,value,Hash>::iterator::operator!=(const iterator& it) const
-    {
-        if(m_position !=it.m_position){return true;}
-        else if(m_data == NULL && it.m_data!=NULL){return true;}
-        else if(m_data != NULL && it.m_data==NULL){return true;}
-        else if(m_data == NULL && it.m_data==NULL){return false;}
-        else if((m_data != NULL && it.m_data!=NULL) &&(m_data->nodeKey != it.m_data->nodeKey)){return true;}
-        return false;
-    }
+template <typename key, typename value, typename Hash>
+bool map<key,value,Hash>::iterator::operator!=(const iterator& it) const
+{
+    if(m_position !=it.m_position){return true;}
+    else if(m_data == NULL && it.m_data!=NULL){return true;}
+    else if(m_data != NULL && it.m_data==NULL){return true;}
+    else if(m_data == NULL && it.m_data==NULL){return false;}
+    else if((m_data != NULL && it.m_data!=NULL) &&(m_data->nodeKey != it.m_data->nodeKey)){return true;}
+    return false;
+}
 
-    /**
+/**
      * This function overloads the equal comparison operator.
      * It is used to compare iterators's positions in the map
      * to check if they are at the same position
@@ -1033,50 +997,5 @@ template <typename key, typename value, typename Hash>
 map<key,value,Hash>::node::node(key k, value v, bool avail, map* parent)
     : nodeKey{k},nodeValue{v},available{avail},parentMap{parent}{}
 
-/* PRIME LOOKUP TABLE - QUICK ACCESS*/
 
-/**
-     * @brief This function will take an integer and create an array of prime
-     * values up to the given integer
-     * @param n number of values, from 0 to n to select primes from
-     * @return A pointer to an array of primes
-     */
-unsigned int* SieveOfEratosthenes(int n)
-{
-    //inspired by geeksforgeeks.org
-    int *primes = new int[static_cast<unsigned int>(n)+1];
-    if(n >1) for(int i = 2; i <=n; ++i) primes[i] = true;
-    primes[0] = false;
-    primes[1] = false;
-    unsigned int numOfPrimes = 0;
-    for(int p=2; p*p<=n; ++p)
-    {
-        if(primes[p])
-        {
-            for(int i=p*p; i<=n; i += p)
-            {
-                primes[i] = false;
-            }
-        }
-    }
-    for(int i = 0; i < n+1; ++i)
-    {
-        if(primes[i])
-        {
-            ++numOfPrimes;
-        }
-    }
-    int index = 0;
-    unsigned int * actualPrimes = new unsigned int[numOfPrimes];
-    for(unsigned int i = 0; i < static_cast<unsigned int>(n)+1; ++i)
-    {
-        if(primes[i])
-        {
-            actualPrimes[index] = i;
-            ++index;
-        }
-    }
-    delete [] primes;
-    return actualPrimes;
-}
 };// End nstd namespace

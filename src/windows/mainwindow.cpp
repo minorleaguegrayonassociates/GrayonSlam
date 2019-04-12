@@ -28,7 +28,7 @@ MainWindow::MainWindow()
         m_navbar->addItem("\uf085", "Inventory\nManagement");
     m_navbar->addItem("\uf2f5", "Logout");
 
-    Database::loadFromFile("./../src/datastore/MLBInformation.csv");
+    Database::loadFromFile("./../../../src/datastore/MLBInformation.csv");
 }
 
 MainWindow::~MainWindow()
@@ -70,5 +70,5 @@ void MainWindow::changeView(int view)
 void MainWindow::resetViews()
 {
     /* Reset views -- go here */
-    Database::saveToFile("./../src/datastore/MLBInformation.csv");
+    Database::saveToFile("./../../../src/datastore/MLBInformation.csv");
 }
