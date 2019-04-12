@@ -277,12 +277,8 @@ void SouvenirList::quantityChangedHandler(IDs id, int qty)
 }
 
 /**
- * Since @a QListWidgetItem can hold a pointer to a @a QWidget, we
- * can dynamic cast the @a QWidget that the @a QListWidgetItem
- * holds into a @a SouvenirListItem.
- *
- * That is exactly what this function does: dynamic casts
- * a @a QListWidgetItem at a given row and the return the result.
+ * Dynamic casts a @a QListWidgetItem at a given row into a
+ * @a SouvenirListItem and then returns the result.
  *
  * @param row Row of an item in the list
  * @return Pointer to a SouvenirListItem
