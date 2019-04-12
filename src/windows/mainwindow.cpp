@@ -1,9 +1,10 @@
 #include "mainwindow.hpp"
 #include "ui_mainwindow.h"
+#include "src/windows/login.hpp"
+#include "src/datastore/database.hpp"
+#include <QFontDatabase>
 #include <QMessageBox>
 #include <QDebug>
-#include <QFontDatabase>
-#include "src/windows/login.hpp"
 
 /* Constructors */
 MainWindow::MainWindow()
@@ -26,6 +27,8 @@ MainWindow::MainWindow()
     if(Login::getType() == Login::Type::ADMIN)
         m_navbar->addItem("\uf085", "Inventory\nManagement");
     m_navbar->addItem("\uf2f5", "Logout");
+
+    Database::loadFromFile("./../../../src/datastore/MLBInformation.csv");
 }
 
 MainWindow::~MainWindow()
@@ -63,4 +66,5 @@ void MainWindow::changeView(int view)
 void MainWindow::resetViews()
 {
     /* Reset views -- go here */
+    Database::saveToFile("./../../../src/datastore/MLBInformation.csv");
 }

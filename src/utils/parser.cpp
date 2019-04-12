@@ -2,56 +2,7 @@
 #include <sstream>
 #include <iostream>
 #include "parser.hpp"
-#include "src/utils/exceptions.hpp"
-
-void teamParseDebug(const std::string& path)
-{
-    unsigned int j;
-    std::vector<std::vector<std::string>> teamData = loadData(path);
-    for (const std::vector<std::string>& team : teamData)
-    {
-        j = 14;
-        std::cout << "----------Team ID: " << team[0] << std::endl;
-        std::cout << "--------Team Name: " << team[1] << std::endl;
-        std::cout << "---------Deleted?: " << team[2] << std::endl;
-        std::cout << "-------Stadium ID: " << team[3] << std::endl;
-        std::cout << "-----Stadium Name: " << team[4] << std::endl;
-        std::cout << "-Seating Capacity: " << team[5] << std::endl;
-        std::cout << "----Team Location: " << team[6] << std::endl;
-        std::cout << "--Playing Surface: " << team[7] << std::endl;
-        std::cout << "-----------League: " << team[8] << std::endl;
-        std::cout << "------Date opened: " << team[9] << std::endl;
-        std::cout << "--Distance2CtrFld: " << team[10] << std::endl;
-        std::cout << "Ballpark typology: " << team[11] << std::endl;
-        std::cout << "--------Roof Type: " << team[12] << std::endl;
-        std::cout << "NumberOSouvenirs:  " << team[13] << std::endl;
-
-        for(int i = 0; i < std::stoi(team[13]); ++i)
-        {
-            std::cout << "Souvenir ID:  " << team[j++] << std::endl;
-            std::cout << "Is deleted?:  " << team[j++] << std::endl;
-            std::cout << "---Souvenir:  " << team[j++] << std::endl;
-            std::cout << "------Price:  " << team[j++] << std::endl;
-        }
-
-        std::cout << std::endl;
-    }
-}
-
-void distanceParseDebug(const std::string& path)
-{
-    std::vector<std::vector<std::string>> distanceData = loadData(path);
-    for (const std::vector<std::string>& stadiumDistance : distanceData)
-    {
-
-        std::cout << "Stadium ID:   " << stadiumDistance[0] << std::endl;
-        std::cout << "Stadium Name: " << stadiumDistance[1] << std::endl;
-        std::cout << "Stadium ID:   " << stadiumDistance[2] << std::endl;
-        std::cout << "Stadium Name: " << stadiumDistance[3] << std::endl;
-        std::cout << "Distance:     " << stadiumDistance[4] << std::endl;
-        std::cout << std::endl;
-    }
-}
+#include "exceptions.hpp"
 
 std::vector<std::vector<std::string>> loadData(const std::string& path)
 {
@@ -107,4 +58,28 @@ std::vector<std::vector<std::string>> loadData(const std::string& path)
     return allRows;
 }
 
+void saveData(const std::string& path, const std::vector<std::vector<std::string>>& allRows)
+{
+    // Creating a ofstream object that opens outfile with the given path
+    std::ofstream outfile(path);
 
+    // Check if path file extension matches expected file extension
+    if(path.substr(path.size()-4) != ".csv"){throw BadFileFormat(QString::fromUtf8("Wrong File type\n"), QString::fromStdString(path));}
+    // If file doesn't open throw BadFile error
+    if (!outfile.is_open()){throw BadFile(QFile(QString::fromStdString(path)));}
+    for(std::vector<std::string> columns: allRows)
+    {
+        /* Output first column before entering loop, first column doesn't need a comma preceding it, erase first column */
+        outfile << columns.front();
+        columns.erase(columns.begin());
+        for(const std::string& column: columns)
+        {
+            /* Output each column with a comma preceding it */
+            outfile << "," << column;
+        }
+        // Add a new line
+        outfile << std::endl;
+    }
+    // Close outfile
+    outfile.close();
+}

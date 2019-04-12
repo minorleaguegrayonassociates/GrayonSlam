@@ -35,7 +35,8 @@ SOURCES += \
     src/datastore/team.cpp \
     src/datastore/souvenir.cpp \
     src/widgets/souvenirlist.cpp \
-    src/widgets/souvenirlistitem.cpp
+    src/widgets/souvenirlistitem.cpp \
+    src/datastore/database.cpp
 
 HEADERS += \
     src/windows/mainwindow.hpp \
@@ -50,7 +51,8 @@ HEADERS += \
     src/views/view.hpp \
     src/widgets/souvenirlist.hpp \
     src/widgets/souvenirlistitem.hpp \
-    src/utils/map.hpp
+    src/utils/map.hpp \
+    src/datastore/database.hpp
 
 FORMS += \
     src/windows/mainwindow.ui \
