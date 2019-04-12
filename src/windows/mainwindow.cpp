@@ -2,12 +2,10 @@
 #include "ui_mainwindow.h"
 #include "src/windows/login.hpp"
 #include "src/datastore/database.hpp"
-#include "src/utils/parser.hpp"
+#include <QFontDatabase>
 #include <QMessageBox>
 #include <QDebug>
-#include <QFontDatabase>
-#include <iostream>
-#include <vector>
+
 /* Constructors */
 MainWindow::MainWindow()
     : QMainWindow(nullptr),m_ui(new Ui::MainWindow)

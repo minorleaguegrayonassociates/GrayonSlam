@@ -6,7 +6,7 @@ std::map<int,Team> Database::teams;
 std::map<int,Stadium> Database::stadiums;
 
 /* Instantiate a static database object */
-Database* Database::m_database = new Database();
+Database* Database::database = new Database();
 
 /* Constructor */
 Database::Database()
@@ -42,10 +42,10 @@ void Database::loadFromFile(const std::string& filepath)
     for (const std::vector<std::string>& team : teamData)
     {
         // Converting all string values from strings to their enum values
-        tempLeague = m_database->getEnumValue(Team::LEAGUE_STRING,team[8], Team::League::AMERICAN);
-        tempRoof = m_database->getEnumValue(Stadium::ROOF_STRING,team[12], Stadium::Roof::OPEN);
-        tempSurface = m_database->getEnumValue(Stadium::SURFACE_STRING,team[7], Stadium::Surface::GRASS);
-        tempTypology = m_database->getEnumValue(Stadium::TYPOLOGY_STRING,team[11], Stadium::Typology::MODERN);
+        tempLeague = database->getEnumValue(Team::LEAGUE_STRING,team[8], Team::League::AMERICAN);
+        tempRoof = database->getEnumValue(Stadium::ROOF_STRING,team[12], Stadium::Roof::OPEN);
+        tempSurface = database->getEnumValue(Stadium::SURFACE_STRING,team[7], Stadium::Surface::GRASS);
+        tempTypology = database->getEnumValue(Stadium::TYPOLOGY_STRING,team[11], Stadium::Typology::MODERN);
 
         // Initializing a new Team class
         Team tempTeam(std::stoi(team[0]), std::stoi(team[3]), team[1], tempLeague);
@@ -78,10 +78,9 @@ void Database::loadFromFile(const std::string& filepath)
 /**
  * @brief returns map of Teams
  *
- * This method returns all the stadiums that are
- * contianed within the database's map container.
+ * This method returns all the teams
  *
- * @return m_teams is returned
+ * @return teams is returned
  */
 std::map<int,Team> Database::getTeams()
 {
@@ -91,10 +90,9 @@ std::map<int,Team> Database::getTeams()
 /**
  * @brief returns map of Stadiums
  *
- * This method returns all the Stadiums that are
- * contianed within the database's map container.
+ * This method returns all the Stadiums
  *
- * @return m_stadiums is returned
+ * @return stadiums is returned
  */
 std::map<int,Stadium> Database::getStadiums()
 {
@@ -127,7 +125,7 @@ const Stadium& Database::findStadiumById(int id)
 /**
  * Returns a vector with all the Teams
  *
- * @return A vector with all the teams within m_teams
+ * @return A vector with all the teams
  */
 std::vector<Team> Database::getTeamsVector()
 {
@@ -142,7 +140,7 @@ std::vector<Team> Database::getTeamsVector()
 /**
  * Returns a vector with all the Stadiums
  *
- * @return A vector with all the teams within m_stadiums
+ * @return A vector with all the stadiums
  */
 std::vector<Stadium> Database::getStadiumsVector()
 {
