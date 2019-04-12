@@ -157,16 +157,9 @@ void Database::saveToFile(const std::string& path)
     /* Get all team and stadium data, create a temp vector that will be used to store souvenir data */
     std::vector<Team> teamVect(Database::getTeamsVector());
     std::vector<Stadium> stadiumVect(Database::getStadiumsVector());
-    std::vector<Souvenir> tempSouvenirVect;
 
     // Initializing - vector will hold all lines of data within the document
     std::vector<std::vector<std::string>> allRows;
-
-    // Temp Enum variables used to hold string of enum
-    std::string tempLeague;
-    std::string tempRoof;
-    std::string tempSurface;
-    std::string tempTypology;
 
     /* rowHeader hold the header of a save file */
     std::vector<std::string> rowHeader;
@@ -179,11 +172,11 @@ void Database::saveToFile(const std::string& path)
         // Will hold all the columns within a given row
         std::vector<std::string> columns;
 
-        /* Convert enum values to their string enum version */
-        tempLeague = Team::LEAGUE_STRING[teamVect[i].league];
-        tempRoof = Stadium::ROOF_STRING[stadiumVect[i].roof];
-        tempSurface = Stadium::SURFACE_STRING[stadiumVect[i].surface];
-        tempTypology = Stadium::TYPOLOGY_STRING[stadiumVect[i].typology];
+        /* Temp Enum variables used to hold string of enum - Convert enum values to their string enum version */
+        std::string tempLeague = Team::LEAGUE_STRING[teamVect[i].league];
+        std::string tempRoof = Stadium::ROOF_STRING[stadiumVect[i].roof];
+        std::string tempSurface = Stadium::SURFACE_STRING[stadiumVect[i].surface];
+        std::string tempTypology = Stadium::TYPOLOGY_STRING[stadiumVect[i].typology];
 
         /* Adds all the data that belongs to team and it's stadium to the columns vector */
         columns.push_back(std::to_string(teamVect[i].getId()));
@@ -192,7 +185,7 @@ void Database::saveToFile(const std::string& path)
         columns.push_back(std::to_string(teamVect[i].getStadiumId()));
         columns.push_back(stadiumVect[i].getName());
         columns.push_back(std::to_string(stadiumVect[i].getSeatCap()));
-        columns.push_back("\""+stadiumVect[i].getLocation()+"\"");
+        columns.push_back(stadiumVect[i].getLocation());
         columns.push_back(tempSurface);
         columns.push_back(tempLeague);
         columns.push_back(std::to_string(stadiumVect[i].getYearOpened()));
@@ -201,7 +194,7 @@ void Database::saveToFile(const std::string& path)
         columns.push_back(tempRoof);
 
         // Get's a vector of the teams souvenirs
-        tempSouvenirVect = stadiumVect[i].getSouvenirs();
+        std::vector<Souvenir> tempSouvenirVect = stadiumVect[i].getSouvenirs();
         // Number of souvenirs
         columns.push_back(std::to_string(tempSouvenirVect.size()));
 
@@ -212,8 +205,17 @@ void Database::saveToFile(const std::string& path)
             columns.push_back(item.getName());
             std::string strPrice(std::to_string(item.getPrice()));
             // Erasing trailing zeros
-            strPrice.erase(strPrice.find_last_not_of('0') + 1, std::string::npos);
+            strPrice.erase(strPrice.find_first_of("0"), std::string::npos);
             columns.push_back(strPrice);
+        }
+        /* Go though all the strings and check if it contains commas, add quotes if so */
+        for(std::string& column:columns)
+        {
+            std::size_t found = column.find(",");
+            if (found!=std::string::npos)
+            {
+                column = "\""+column+"\"";
+            }
         }
         // All the columns in a row are input, push back columns
         allRows.push_back(columns);

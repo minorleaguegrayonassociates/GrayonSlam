@@ -36,7 +36,7 @@ private:
 
     /* Private string to Enum method*/
     template<typename Container, typename Enum>
-    Enum getEnumValue(const Container& ,const std::string& , Enum);
+    Enum getEnumValue(const Container& ,const std::string& , Enum) const;
 
     /* Private static variables */
     static Database* database;
@@ -58,7 +58,7 @@ private:
  * @param enumVal base enum of the string that's being converted
  */
 template<typename Container, typename Enum>
-Enum Database::getEnumValue(const Container& container,const std::string& strEnum, Enum enumVal)
+Enum Database::getEnumValue(const Container& container,const std::string& strEnum, Enum enumVal) const
 {
     // Make sure enum is set to the base enum
     enumVal = static_cast<Enum>(0);
