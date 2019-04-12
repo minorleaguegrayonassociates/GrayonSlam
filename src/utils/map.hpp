@@ -19,6 +19,7 @@ class map;
 template <typename key, typename value, typename Hash>
 std::ostream& operator<<(std::ostream& out, const map<key, value, Hash>& d);
 
+unsigned int* SieveOfEratosthenes(int n);
 
 /**
      * @class nstd::map class
@@ -709,7 +710,7 @@ typename map<key,value,Hash>::iterator map<key,value,Hash>::begin() noexcept
         firstElem = m_array[0];
         int i = 0;
         position = 0;
-        while((firstElem == NULL || firstElem->available) && i < m_capacity)
+        while(firstElem != NULL && firstElem->available && i < m_capacity)
         {
             firstElem = m_array[0];
             int i = 0;
@@ -1032,5 +1033,50 @@ template <typename key, typename value, typename Hash>
 map<key,value,Hash>::node::node(key k, value v, bool avail, map* parent)
     : nodeKey{k},nodeValue{v},available{avail},parentMap{parent}{}
 
+/* PRIME LOOKUP TABLE - QUICK ACCESS*/
 
+/**
+     * @brief This function will take an integer and create an array of prime
+     * values up to the given integer
+     * @param n number of values, from 0 to n to select primes from
+     * @return A pointer to an array of primes
+     */
+unsigned int* SieveOfEratosthenes(int n)
+{
+    //inspired by geeksforgeeks.org
+    int *primes = new int[static_cast<unsigned int>(n)+1];
+    if(n >1) for(int i = 2; i <=n; ++i) primes[i] = true;
+    primes[0] = false;
+    primes[1] = false;
+    unsigned int numOfPrimes = 0;
+    for(int p=2; p*p<=n; ++p)
+    {
+        if(primes[p])
+        {
+            for(int i=p*p; i<=n; i += p)
+            {
+                primes[i] = false;
+            }
+        }
+    }
+    for(int i = 0; i < n+1; ++i)
+    {
+        if(primes[i])
+        {
+            ++numOfPrimes;
+        }
+    }
+    int index = 0;
+    unsigned int * actualPrimes = new unsigned int[numOfPrimes];
+    for(unsigned int i = 0; i < static_cast<unsigned int>(n)+1; ++i)
+    {
+        if(primes[i])
+        {
+            actualPrimes[index] = i;
+            ++index;
+        }
+    }
+    delete [] primes;
+    return actualPrimes;
+}
 };// End nstd namespace

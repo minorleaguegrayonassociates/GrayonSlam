@@ -22,9 +22,6 @@ Database::Database()
  */
 void Database::loadFromFile(const std::string& filepath)
 {
-    // Used to traverser through souvenirs
-    unsigned int j;
-
     /* all the variables that have "temp" temporarily hold data until the object is initialized and put into a container */
     // Temp Enum variables used to initialize class
     Team::League tempLeague;
@@ -55,7 +52,8 @@ void Database::loadFromFile(const std::string& filepath)
         Stadium tempStadium(std::stoi(team[3]), team[4], team[6], std::stoi(team[5]),std::stoi(team[9]),
                             std::stoi(team[10]), tempRoof, tempSurface, tempTypology);
         // Souvenir index starts at 14 for each team, reseting to 14 here
-        j = 14;
+        // Used to traverser through souvenirs
+        unsigned int j = 14;
 
         // Index 13 holds the number of souvenirs a stadium has
         souvenirCount = std::stoi(team[13]);
@@ -76,8 +74,6 @@ void Database::loadFromFile(const std::string& filepath)
 }
 
 /**
- * @brief returns map of Teams
- *
  * This method returns all the teams
  *
  * @return teams is returned
@@ -88,8 +84,6 @@ const nstd::map<int,Team> Database::getTeams()
 }
 
 /**
- * @brief returns map of Stadiums
- *
  * This method returns all the Stadiums
  *
  * @return stadiums is returned
@@ -224,7 +218,6 @@ void Database::saveToFile(const std::string& path)
         // All the columns in a row are input, push back columns
         allRows.push_back(columns);
     }
-
     // Call saveData to store data at the path provided
     saveData(path, allRows);
 }

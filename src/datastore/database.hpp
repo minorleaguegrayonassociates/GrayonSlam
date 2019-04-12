@@ -1,7 +1,6 @@
 #pragma once
 
 #include <vector>
-
 #include "src/datastore/souvenir.hpp"
 #include "src/datastore/stadium.hpp"
 #include "src/datastore/team.hpp"
@@ -44,8 +43,6 @@ private:
     static nstd::map<int,Team> teams;
     static nstd::map<int,Stadium> stadiums;
 };
-
-
 
 /**
  * @brief Converts a string to it's enum type
