@@ -7,6 +7,7 @@
 #include <QMessageBox>
 #include <QDebug>
 #include "src/views/stadiumview.hpp"
+#include <algorithm>
 
 /* Constructors */
 MainWindow::MainWindow()
@@ -74,4 +75,8 @@ void MainWindow::resetViews()
 {
     /* Reset views -- go here */
     Database::saveToFile("MLBInformation.csv");
+
+    //Reset each view
+    std::for_each(m_views.begin(), m_views.end(),
+                  [](View* view){view->resetView();});
 }
