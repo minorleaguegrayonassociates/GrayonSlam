@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AdminView</class>
+ <widget class="QWidget" name="AdminView">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>710</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QStackedWidget" name="stackedWidget">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>711</width>
+     <height>601</height>
+    </rect>
+   </property>
+   <property name="currentIndex">
+    <number>0</number>
+   </property>
+   <widget class="QWidget" name="page_stadiums">
+    <widget class="QWidget" name="widget_stadList" native="true">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>691</width>
+       <height>381</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QWidget { background-color: red; }</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_stadAddFromFile">
+     <property name="geometry">
+      <rect>
+       <x>290</x>
+       <y>400</y>
+       <width>131</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Add stadiums from file...</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_stadEditSouvenirs">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>430</y>
+       <width>111</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Edit souvenirs...</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_stadName">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>510</y>
+       <width>113</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="placeholderText">
+      <string>stadium name</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_stadLocation">
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>510</y>
+       <width>113</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="placeholderText">
+      <string>location</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_stadYearOpened">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>570</y>
+       <width>113</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="placeholderText">
+      <string>year opened</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_stadTeamName">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>540</y>
+       <width>113</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="placeholderText">
+      <string>team name</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_stadTeamLeague">
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>540</y>
+       <width>113</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="placeholderText">
+      <string>team league</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_stadConfirmEdit">
+     <property name="geometry">
+      <rect>
+       <x>560</x>
+       <y>570</y>
+       <width>91</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Confirm</string>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spinBox_stadSeatCap">
+     <property name="geometry">
+      <rect>
+       <x>630</x>
+       <y>510</y>
+       <width>61</width>
+       <height>22</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spinBox_stadCenterDist">
+     <property name="geometry">
+      <rect>
+       <x>630</x>
+       <y>540</y>
+       <width>61</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="suffix">
+      <string>ft</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_stadSeatCapInfo">
+     <property name="geometry">
+      <rect>
+       <x>510</x>
+       <y>510</y>
+       <width>111</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Seating capacity</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_stadCenterDistInfo">
+     <property name="geometry">
+      <rect>
+       <x>510</x>
+       <y>540</y>
+       <width>111</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Center field distance</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="comboBox_stadRoof">
+     <property name="geometry">
+      <rect>
+       <x>360</x>
+       <y>510</y>
+       <width>111</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string>Retractable</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Open</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Fixed</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QComboBox" name="comboBox_stadSurface">
+     <property name="geometry">
+      <rect>
+       <x>360</x>
+       <y>540</y>
+       <width>111</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string>Grass</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>AstroTurf GameDay Grass</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QComboBox" name="comboBox_stadTypology">
+     <property name="geometry">
+      <rect>
+       <x>360</x>
+       <y>570</y>
+       <width>111</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string>Retro Modern</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Retro Classic</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Jewel Box</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Modern</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Contemporary</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Multipurpose</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QLabel" name="label_stadEditInfo">
+     <property name="geometry">
+      <rect>
+       <x>260</x>
+       <y>480</y>
+       <width>191</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Select a stadium from the list to edit</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_stadRoofInfo">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>510</y>
+       <width>81</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Roof type</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_stadSurfaceInfo">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>540</y>
+       <width>81</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Surface type</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_stadTypologyInfo">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>570</y>
+       <width>81</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Typology type</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="page_souvenirs">
+    <widget class="QWidget" name="widget_souvAvailableList" native="true">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>60</y>
+       <width>220</width>
+       <height>321</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QWidget {background-color: red; }</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="widget_souvHiddenList" native="true">
+     <property name="geometry">
+      <rect>
+       <x>420</x>
+       <y>60</y>
+       <width>220</width>
+       <height>321</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QWidget { background-color: red; }</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_souvHide">
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>390</y>
+       <width>80</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Hide</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_souvRestore">
+     <property name="geometry">
+      <rect>
+       <x>490</x>
+       <y>390</y>
+       <width>80</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Restore</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>20</y>
+       <width>221</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLabel { font-size: 20px; }</string>
+     </property>
+     <property name="text">
+      <string>Available Souvenirs</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>420</x>
+       <y>20</y>
+       <width>221</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLabel { font-size: 20px; }</string>
+     </property>
+     <property name="text">
+      <string>Hidden Souvenirs</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_4">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>500</y>
+       <width>47</width>
+       <height>13</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>520</y>
+       <width>113</width>
+       <height>21</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
