@@ -11,7 +11,7 @@
  * A team with an ID of -1 means it's invalid.
  *
  * Note:
- * All stadium IDs are defaulted to -1. The only way for a
+ * All team IDs are defaulted to -1. The only way for a
  * team to have a valid ID is for it to be created by the
  * @a Database class. This is why @a Database is a friend class.
  */
