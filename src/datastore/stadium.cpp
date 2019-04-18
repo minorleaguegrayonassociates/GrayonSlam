@@ -2,7 +2,7 @@
 
 /* Enum to strings */
 const std::array<std::string,3> Stadium::ROOF_STRING = {"Retractable", "Open", "Fixed"};
-const std::array<std::string,2> Stadium::SURFACE_STRING = {"Grass", "AstroTurf GameDay Grass"};
+const std::array<std::string,2> Stadium::SURFACE_STRING = {"Grass", "AstroTurf"};
 const std::array<std::string,6> Stadium::TYPOLOGY_STRING = {"Retro Modern", "Retro Classic", "Jewel Box",
                                                             "Modern", "Contemporary", "Multipurpose"};
 
