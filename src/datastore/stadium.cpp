@@ -29,9 +29,33 @@ Stadium::Stadium(const std::string& name, const std::string& location)
     setLocation(location);
 }
 
+/**
+ * Constructs a stadium given a name, location, and team. ID and integer
+ * data will be defaulted to -1. Enum data is set to the first item
+ * in the enum.
+ *
+ * If @a name is an empty string, the name is set to "invalid".
+ * If @a location is an empty string, the location is set to "invalid".
+ * If @a team is an invalid team, the team ID of the stadium will be set to -1.
+ *
+ * @param name Stadium name
+ * @param location Stadium location
+ * @param team Team that is home to this stadium
+ */
+Stadium::Stadium(const std::string& name, const std::string& location, const Team& team)
+    : Stadium(name, location)
+{
+    setTeam(team);
+}
+
 int Stadium::getId() const
 {
     return m_id;
+}
+
+int Stadium::getTeamId() const
+{
+    return m_teamId;
 }
 
 std::string Stadium::getName() const
@@ -67,6 +91,16 @@ std::vector<Souvenir> Stadium::getSouvenirs() const
         vec.push_back(souvenir.second);
 
     return vec;
+}
+
+/**
+ * Sets the stadium's team ID reference to the argument's ID.
+ *
+ * @param team Team that resides in the stadium
+ */
+void Stadium::setTeam(const Team& team)
+{
+    m_teamId = team.getId();
 }
 
 /**
