@@ -12,42 +12,6 @@ const std::array<std::string,6> Stadium::TYPOLOGY_STRING = {"Retro Modern", "Ret
 Stadium::Stadium()
 {}
 
-/**
- * Constructs a stadium given a name and location. ID and integer
- * data will be defaulted to -1. Enum data is set to the first item
- * in the enum.
- *
- * If @a name is an empty string, the name is set to "invalid".
- * If @a location is an empty string, the location is set to "invalid".
- *
- * @param name Stadium name
- * @param location Stadium location
- */
-Stadium::Stadium(const std::string& name, const std::string& location)
-{
-    setName(name);
-    setLocation(location);
-}
-
-/**
- * Constructs a stadium given a name, location, and team. ID and integer
- * data will be defaulted to -1. Enum data is set to the first item
- * in the enum.
- *
- * If @a name is an empty string, the name is set to "invalid".
- * If @a location is an empty string, the location is set to "invalid".
- * If @a team is an invalid team, the team ID of the stadium will be set to -1.
- *
- * @param name Stadium name
- * @param location Stadium location
- * @param team Team that is home to this stadium
- */
-Stadium::Stadium(const std::string& name, const std::string& location, const Team& team)
-    : Stadium(name, location)
-{
-    setTeam(team);
-}
-
 int Stadium::getId() const
 {
     return m_id;
@@ -199,7 +163,8 @@ Souvenir& Stadium::findSouvenir(int id)
  * it to be set on a different line and not buried in a
  * constructor's arguments.
  *
- * @param id Stadium id
+ * @param id Stadium ID
+ * @param teamId ID of the team that resides in this stadium
  * @param name Stadium name
  * @param location Stadium location
  * @param seatCap Stadium's seat capacity
@@ -209,16 +174,15 @@ Souvenir& Stadium::findSouvenir(int id)
  * @param s Stadium's playing surface
  * @param t Stadium's typology
  */
-Stadium::Stadium(int id, const std::string& name, const std::string& location,
+Stadium::Stadium(int id, int teamId,
+                 const std::string& name, const std::string& location,
                  int seatCap, int yearOpened, int centerFieldDist,
                  Roof r, Surface s, Typology t)
-    : Stadium(name, location)
+    : roof(r), surface(s), typology(t), m_id(id), m_teamId(teamId)
 {
-    m_id = id;
-    m_seatCap = seatCap;
-    m_yearOpened = yearOpened;
-    m_centerFieldDist = centerFieldDist;
-    roof = r;
-    surface = s;
-    typology = t;
+    setName(name);
+    setLocation(location);
+    setSeatCap(seatCap);
+    setYearOpened(yearOpened);
+    setCenterFieldDist(centerFieldDist);
 }

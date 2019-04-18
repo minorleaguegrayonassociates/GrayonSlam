@@ -40,8 +40,6 @@ public:
 
     /* Constructors */
     Stadium();
-    Stadium(const std::string& name, const std::string& location);
-    Stadium(const std::string& name, const std::string& location, const Team&);
 
     /* Getters */
     int getId() const;
@@ -73,7 +71,7 @@ public:
 
 private:
     /* Constructors */
-    Stadium(int id, const std::string& name, const std::string& location,
+    Stadium(int id, int teamId, const std::string& name, const std::string& location,
             int seatCap, int yearOpened, int centerFieldDist,
             Roof, Surface, Typology);
 
