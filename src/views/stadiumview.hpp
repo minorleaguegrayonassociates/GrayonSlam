@@ -2,6 +2,7 @@
 
 #include <QWidget>
 #include "view.hpp"
+#include "src/widgets/stadiumlist.hpp"
 
 namespace Ui {
 class StadiumView;
@@ -19,4 +20,5 @@ public:
 
 private:
     Ui::StadiumView *ui;
+    StadiumList* m_stadiumList;
 };
