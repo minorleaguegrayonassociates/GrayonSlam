@@ -1,5 +1,6 @@
 #pragma once
-#include "stadium.hpp"
+#include <string>
+#include <array>
 
 /**
  * @class Team class
@@ -9,11 +10,8 @@
  *
  * A team with an ID of -1 means it's invalid.
  *
- * A team with a stadium ID of -1 means it doesn't reside
- * in a stadium.
- *
  * Note:
- * All teams have their IDs defaulted to -1. The only way for a
+ * All stadium IDs are defaulted to -1. The only way for a
  * team to have a valid ID is for it to be created by the
  * @a Database class. This is why @a Database is a friend class.
  */
@@ -30,27 +28,23 @@ public:
 
     /* Constructors */
     Team();
-    Team(const std::string& name, League);
 
     /* Getters */
     int getId() const;
-    int getStadiumId() const;
     std::string getName() const;
 
     /* Setters */
-    void setStadium(const Stadium&);
     void setName(const std::string&);
 
     /* Public data */
     bool hidden = true;
-    League league;
+    League league = NATIONAL;
 
 private:
     /* Constructors */
-    Team(int id, int stadiumId, const std::string& name, League);
+    Team(int id, const std::string& name, League);
 
     /* Data */
     int m_id = -1;
-    int m_stadiumId = -1;
     std::string m_name = "invalid";
 };
