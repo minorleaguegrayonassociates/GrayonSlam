@@ -55,7 +55,8 @@ HEADERS += \
     src/widgets/souvenirlistitem.hpp \
     src/utils/map.hpp \
     src/datastore/database.hpp \
-    src/views/stadiumview.hpp
+    src/views/stadiumview.hpp \
+    src/widgets/stadiumlist.hpp
 
 FORMS += \
     src/windows/mainwindow.ui \
