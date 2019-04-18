@@ -38,7 +38,7 @@ SOURCES += \
     src/widgets/souvenirlistitem.cpp \
     src/datastore/database.cpp \
     src/views/stadiumview.cpp \
-    src/datastore/stadiumlist.cpp
+    src/widgets/stadiumlist.cpp
 
 HEADERS += \
     src/windows/mainwindow.hpp \
@@ -55,8 +55,7 @@ HEADERS += \
     src/widgets/souvenirlistitem.hpp \
     src/utils/map.hpp \
     src/datastore/database.hpp \
-    src/views/stadiumview.hpp \
-    src/datastore/stadiumlist.hpp
+    src/views/stadiumview.hpp
 
 FORMS += \
     src/windows/mainwindow.ui \
