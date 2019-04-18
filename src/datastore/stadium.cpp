@@ -132,15 +132,8 @@ void Stadium::setCenterFieldDist(int dist)
  */
 void Stadium::addSouvenir(const std::string& name, double price)
 {
-    /*
-     * Since Souvenir makes Stadium a friend class,
-     * we can directly set the souvenir ID
-     */
-    Souvenir souvenir(name, price);
-    souvenir.m_id = m_nextSouvenirId;
-
+    Souvenir souvenir(m_nextSouvenirId, name, price);
     m_souvenirs[m_nextSouvenirId] = souvenir;
-
     m_nextSouvenirId++;
 }
 
