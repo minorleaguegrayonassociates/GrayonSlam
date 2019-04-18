@@ -1,32 +1,10 @@
 #include "souvenir.hpp"
 
 /**
- * Constructs a souvenir that is unattached from a stadium.
- * To add it to a stadium, use @a Stadium::addSouvenir.
- *
- * An object created by this should not be used in a stadium
- * unless the name and price has been changed; otherwise, both
- * will be initialized to "invalid" and -1 respectively.
+ * Constructs an invalid souvenir.
  */
 Souvenir::Souvenir()
 {}
-
-/**
- * Constructs a souvenir given a name and price. If @a name is
- * an empty string, the souvenir's name becomes "invalid". If
- * @a price is negative, the souvenir's price becomes -1.
- *
- * This souvenir is not attached to a stadium because its
- * ID is -1. To add it to a stadium, use @a Stadium::addSouvenir.
- *
- * @param name Souvenir name
- * @param price Souvenir price
- */
-Souvenir::Souvenir(const std::string& name, double price)
-{
-    setName(name);
-    setPrice(price);
-}
 
 int Souvenir::getId() const
 {
@@ -64,7 +42,7 @@ void Souvenir::setPrice(double price)
 }
 
 /**
- * Private constructor used by @a Database through friend class
+ * Private constructor used by @a Stadium through friend class
  * association. This sets the id, name, and price of the souvenir.
  *
  * @param id Souvenir ID
@@ -72,7 +50,8 @@ void Souvenir::setPrice(double price)
  * @param price Souvenir price
  */
 Souvenir::Souvenir(int id, const std::string& name, double price)
-    : Souvenir(name, price)
+    : m_id(id)
 {
-    m_id = id;
+    setName(name);
+    setPrice(price);
 }

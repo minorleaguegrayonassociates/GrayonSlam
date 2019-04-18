@@ -71,7 +71,8 @@ public:
 
 private:
     /* Constructors */
-    Stadium(int id, int teamId, const std::string& name, const std::string& location,
+    Stadium(int id, int teamId,
+            const std::string& name, const std::string& location,
             int seatCap, int yearOpened, int centerFieldDist,
             Roof, Surface, Typology);
 
