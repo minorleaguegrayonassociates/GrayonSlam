@@ -36,7 +36,9 @@ SOURCES += \
     src/datastore/souvenir.cpp \
     src/widgets/souvenirlist.cpp \
     src/widgets/souvenirlistitem.cpp \
-    src/datastore/database.cpp
+    src/datastore/database.cpp \
+    src/views/stadiumview.cpp \
+    src/datastore/stadiumlist.cpp
 
 HEADERS += \
     src/windows/mainwindow.hpp \
@@ -52,13 +54,16 @@ HEADERS += \
     src/widgets/souvenirlist.hpp \
     src/widgets/souvenirlistitem.hpp \
     src/utils/map.hpp \
-    src/datastore/database.hpp
+    src/datastore/database.hpp \
+    src/views/stadiumview.hpp \
+    src/datastore/stadiumlist.hpp
 
 FORMS += \
     src/windows/mainwindow.ui \
     src/windows/login.ui \
     src/widgets/navbaritem.ui \
-    src/widgets/souvenirlistitem.ui
+    src/widgets/souvenirlistitem.ui \
+    src/views/stadiumview.ui
 
 RESOURCES += \
     res.qrc
