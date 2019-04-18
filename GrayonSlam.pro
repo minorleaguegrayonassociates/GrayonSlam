@@ -58,7 +58,8 @@ HEADERS += \
     src/utils/enumtools.hpp \
     src/views/stadiumview.hpp \
     src/widgets/stadiumlist.hpp \
-    src/views/stadiumview.hpp
+    src/views/stadiumview.hpp \
+    src/widgets/stadiumlist.hpp
 
 FORMS += \
     src/windows/mainwindow.ui \
