@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="page_stadiums">
     <widget class="QWidget" name="widget_stadList" native="true">
@@ -545,7 +545,7 @@
       <string>$</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_souvRestore_2">
+    <widget class="QPushButton" name="pushButton_souvGoBack">
      <property name="geometry">
       <rect>
        <x>310</x>
