@@ -350,6 +350,22 @@
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
+    <widget class="QLabel" name="label_stadAddInfo">
+     <property name="geometry">
+      <rect>
+       <x>430</x>
+       <y>400</y>
+       <width>271</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="text">
+      <string>Requires 2 files: stadium info and  map coordinates</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="page_souvenirs">
     <widget class="QWidget" name="widget_souvAvailableList" native="true">
