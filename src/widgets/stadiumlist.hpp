@@ -11,17 +11,20 @@ class StadiumList : public QWidget
     Q_OBJECT
 public:
     explicit StadiumList(QWidget *parent = nullptr);
-    StadiumList(const std::vector<Stadium>&,QWidget *parent = nullptr);
-    StadiumList(const StadiumList&,QWidget *parent = nullptr);
-    std::vector<Stadium>& getStadiumList();
-    void setStadiumList(const std::vector<Stadium>&);
+    explicit StadiumList(const std::vector<int>&, const std::vector<int>&, QWidget *parent = nullptr);
+    StadiumList(const StadiumList&, QWidget *parent = nullptr);
+    std::vector<int>& getStadiumList();
+    std::vector<int>& getTeamList();
+    void setStadiumList(const std::vector<int>&);
+    void setTeamList(const std::vector<int>&);
     virtual ~StadiumList();
 
 signals:
 
 public slots:
 private:
-    std::vector<Stadium> m_stadiumList;
+    std::vector<int> m_stadiumList;
+    std::vector<int> m_teamList;
     QTableWidget* m_listDisplay;
 };
 
