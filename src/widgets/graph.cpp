@@ -2,11 +2,16 @@
 #include "ui_graph.h"
 #include <QPainter>
 #include <cmath>
+#include <QLabel>
+#include <QHBoxLayout>
 
 graph::graph(QWidget *parent)
     : QWidget(parent), m_ui(new Ui::graph)
 {
     m_ui->setupUi(this);
+    m_coordinates = new std::map<int,QPoint>{
+        { 51, QPoint(79,11)},
+    };
 }
 
 graph::~graph()
@@ -19,18 +24,15 @@ void graph::paintEvent(QPaintEvent*)
     QPainter painter;
     painter.begin(this);
 
-//    painter.drawEllipse(QRect(48, 163, 5, 5));
-//    painter.drawEllipse(QRect(56, 205, 5, 5));
-//    painter.drawEllipse(QRect(73, 220, 5, 5));
-//    painter.drawEllipse(QRect(84, 246, 5, 5));
-//    painter.drawEllipse(QRect(121, 201, 5, 5));
-//    painter.drawEllipse(QRect(150, 253, 5, 5));
-//    painter.drawEllipse(QRect(79, 11, 5, 5));
-//    painter.drawEllipse(QRect(254, 159, 5, 5));
+    paintText(painter, (*m_coordinates)[0], QString::fromUtf8("Safeco Park"));
+    paintText(painter, QPoint(42,146), QString::fromUtf8("AT&T Park"));
+    paintText(painter, QPoint(48,163), QString::fromUtf8("Oakland–Alameda County Coliseum"));
+    paintText(painter, QPoint(48,205), QString::fromUtf8("Dodger Stadium"));
+    paintText(painter, QPoint(61,220), QString::fromUtf8("Angel Stadium of Anaheim"));
+    paintText(painter, QPoint(88,246), QString::fromUtf8("Petco Park"));
+    paintText(painter, QPoint(121,205), QString::fromUtf8("Vegas Stadium"));
+    paintText(painter, QPoint(156,254), QString::fromUtf8("Coors Field"));
 
-    paintStadiums(painter, QPoint(79,11), QString::fromUtf8("Safeco Park"));
-    paintStadiums(painter, QPoint(35,146), QString::fromUtf8("AT&T Park"));
-    paintEdge(painter, QPoint(79,11), QPoint(35,146), QString::fromUtf8("680 mi"));
     painter.end();
 }
 
@@ -74,14 +76,16 @@ void graph::paintText(QPainter& painter, const QPoint& coords, const QString& st
     myPen.setCapStyle(Qt::PenCapStyle::FlatCap);
     myPen.setJoinStyle(Qt::PenJoinStyle::MPenJoinStyle);
 
-
     QFont font=painter.font() ;
-    font.setPointSize (10);
-    font.setWeight(QFont::Light);
-    font.setFamily(QString::fromUtf8("Monospace"));
+    font.setPointSize (7);
+    font.setWeight(QFont::Thin);
+    font.setFamily(QString::fromUtf8("Trebuchet MS"));
 
     painter.setPen(myPen);
     painter.setFont(font);
-
-    painter.drawText(coords, strToPrint);
+    QPoint textPoint = coords - QPoint(42,0);
+    QRect rect(textPoint,QSize(54,41));
+    QTextOption textOption;
+    textOption.setWrapMode(QTextOption::WordWrap);
+    painter.drawText(rect,strToPrint, textOption);
 }

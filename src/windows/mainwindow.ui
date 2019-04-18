@@ -37,7 +37,7 @@ background-color: white;
 }
 
 QWidget#map_widget{
-border-image: url(:/res/map_background.png) 0 0 0 0 stretch stretch;
+border-image: url(:/res/map_background.png);
 }
 
 /*QWidget#plane_widget{
@@ -75,7 +75,7 @@ background-repeat: none;
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="dashboardView">
      <property name="styleSheet">

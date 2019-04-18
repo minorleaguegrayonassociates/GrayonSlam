@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QWidget>
-
+#include <map>
 namespace Ui {
 class graph;
 }
@@ -23,6 +23,7 @@ void paintText(QPainter& painter, const QPoint& , const QString&);
 
 private:
 Ui::graph *m_ui;
+std::map<int,QPoint>* m_coordinates;
 };
 
 
