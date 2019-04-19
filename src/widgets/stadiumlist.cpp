@@ -5,7 +5,7 @@ StadiumList::StadiumList(QWidget *parent) :
 {
     m_listDisplay = new QTableWidget(this);
 }
-StadiumList::StadiumList(const std::vector<Stadium>& stadiumList, const std::vector<Team>& teamList, QWidget *parent) :
+StadiumList::StadiumList(const std::vector<Stadium>& stadiumList, QWidget *parent) :
     QWidget(parent)
 {
 
@@ -13,17 +13,13 @@ StadiumList::StadiumList(const std::vector<Stadium>& stadiumList, const std::vec
     {
         m_stadiumList.push_back(stadium.getId());
     }
-    for(Team team : teamList)
-    {
-        m_teamList.push_back(team.getId());
-    }
     m_listDisplay = new QTableWidget(this);
     m_listDisplay->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     //To Do Populate table
 }
 StadiumList::StadiumList(const StadiumList& src, QWidget *parent) :
-    QWidget(parent), m_stadiumList(src.m_stadiumList), m_teamList(src.m_teamList)
+    QWidget(parent), m_stadiumList(src.m_stadiumList)
 {
     m_listDisplay = new QTableWidget(this);
 
@@ -42,18 +38,6 @@ void StadiumList::setStadiumList(const std::vector<Stadium>& stadiumList)
     for(Stadium stadium : stadiumList)
     {
         m_stadiumList.push_back(stadium.getId());
-    }
-}
-std::vector<int>& StadiumList::getTeamList()
-{
-    return m_teamList;
-}
-void StadiumList::setTeamList(const std::vector<Team>& teamList)
-{
-    m_teamList.clear();
-    for(Team team : teamList)
-    {
-        m_teamList.push_back(team.getId());
     }
 }
 StadiumList::~StadiumList()
