@@ -26,8 +26,8 @@ StadiumList::StadiumList(const StadiumList& src, QWidget *parent) :
     QWidget(parent), m_stadiumList(src.m_stadiumList), m_teamList(src.m_teamList)
 {
     m_listDisplay = new QTableWidget(this);
-    //So the user can't edit the text within the table
-    //If they do, it doesn't actually change values so this
+
+    //Does not allow users to edit the cells directly
     m_listDisplay->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     //To Do Populate table
