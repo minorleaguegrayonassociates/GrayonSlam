@@ -39,10 +39,10 @@ void Database::loadFromFile(const std::string& filepath)
     for (const std::vector<std::string>& team : teamData)
     {
         // Converting all string values from strings to their enum values
-        tempLeague = database->getEnumValue(Team::LEAGUE_STRING,team[8], Team::League::AMERICAN);
-        tempRoof = database->getEnumValue(Stadium::ROOF_STRING,team[12], Stadium::Roof::OPEN);
-        tempSurface = database->getEnumValue(Stadium::SURFACE_STRING,team[7], Stadium::Surface::GRASS);
-        tempTypology = database->getEnumValue(Stadium::TYPOLOGY_STRING,team[11], Stadium::Typology::MODERN);
+        tempLeague = getEnumValue(Team::LEAGUE_STRING,team[8], Team::League::AMERICAN);
+        tempRoof = getEnumValue(Stadium::ROOF_STRING,team[12], Stadium::Roof::OPEN);
+        tempSurface = getEnumValue(Stadium::SURFACE_STRING,team[7], Stadium::Surface::GRASS);
+        tempTypology = getEnumValue(Stadium::TYPOLOGY_STRING,team[11], Stadium::Typology::MODERN);
 
         // Initializing a new Team class
         Team tempTeam(std::stoi(team[0]), std::stoi(team[3]), team[1], tempLeague);
