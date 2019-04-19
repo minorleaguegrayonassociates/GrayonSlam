@@ -7,16 +7,16 @@
  * @brief Converts a string representation to its enum type
  *
  * Takes in a string container and string and goes through the string
- * array until it finds a string that matches the input string.
+ * container until it finds a string that matches the input string.
  * The enum increments after each iteration and will return at the
- * same index as where the string was found within the string array.
+ * same index as where the string was found within the string container.
  *
  * This function assumes that @a Enum starts from 0 and the enum
  * values increment by one.
  *
  * @param container Container of string representations for @a Enum
  * @param strEnum String in @a container
- * @return @a Enum value that represents @a strEnum
+ * @return @a Enum value that @a strEnum represents
  */
 template<typename Enum, typename Container = std::array<std::string,0>>
 Enum getEnumValue(const Container& container, const std::string& strEnum)
