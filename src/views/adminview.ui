@@ -94,8 +94,8 @@
     <widget class="QLineEdit" name="lineEdit_stadYearOpened">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>570</y>
+       <x>140</x>
+       <y>540</y>
        <width>113</width>
        <height>21</height>
       </rect>
@@ -115,19 +115,6 @@
      </property>
      <property name="placeholderText">
       <string>team name</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="lineEdit_stadTeamLeague">
-     <property name="geometry">
-      <rect>
-       <x>140</x>
-       <y>540</y>
-       <width>113</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="placeholderText">
-      <string>team league</string>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton_stadConfirmEdit">
@@ -209,6 +196,11 @@
      </property>
      <item>
       <property name="text">
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text">
        <string>Retractable</string>
       </property>
      </item>
@@ -234,6 +226,11 @@
      </property>
      <item>
       <property name="text">
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text">
        <string>Grass</string>
       </property>
      </item>
@@ -252,6 +249,11 @@
        <height>22</height>
       </rect>
      </property>
+     <item>
+      <property name="text">
+       <string/>
+      </property>
+     </item>
      <item>
       <property name="text">
        <string>Retro Modern</string>
@@ -366,19 +368,61 @@
       <string>Requires 2 files: stadium info and  map coordinates</string>
      </property>
     </widget>
+    <widget class="QComboBox" name="comboBox_stadTeamLeague">
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>570</y>
+       <width>111</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>National</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>American</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QLabel" name="label_stadTeamLeagueInfo">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>570</y>
+       <width>81</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>League type</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="page_souvenirs">
     <widget class="QWidget" name="widget_souvAvailableList" native="true">
      <property name="geometry">
       <rect>
-       <x>90</x>
+       <x>69</x>
        <y>90</y>
-       <width>220</width>
+       <width>241</width>
        <height>361</height>
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">QWidget {background-color: red; }</string>
+      <string notr="true">QLabel { color: white; }
+QListWidget { background-color: #303030; }</string>
      </property>
     </widget>
     <widget class="QWidget" name="widget_souvHiddenList" native="true">
@@ -386,12 +430,13 @@
       <rect>
        <x>400</x>
        <y>90</y>
-       <width>220</width>
+       <width>241</width>
        <height>361</height>
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">QWidget { background-color: red; }</string>
+      <string notr="true">QLabel { color: white; }
+QListWidget { background-color: #303030; }</string>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton_souvRestore">
@@ -410,9 +455,9 @@
     <widget class="QLabel" name="label_souvAvailableListInfo">
      <property name="geometry">
       <rect>
-       <x>90</x>
+       <x>70</x>
        <y>50</y>
-       <width>221</width>
+       <width>241</width>
        <height>41</height>
       </rect>
      </property>
@@ -431,7 +476,7 @@
       <rect>
        <x>400</x>
        <y>50</y>
-       <width>221</width>
+       <width>241</width>
        <height>41</height>
       </rect>
      </property>
@@ -448,7 +493,7 @@
     <widget class="QLineEdit" name="lineEdit_souvAddName">
      <property name="geometry">
       <rect>
-       <x>100</x>
+       <x>110</x>
        <y>530</y>
        <width>161</width>
        <height>21</height>
@@ -461,7 +506,7 @@
     <widget class="QDoubleSpinBox" name="doubleSpinBox_souvAddPrice">
      <property name="geometry">
       <rect>
-       <x>100</x>
+       <x>110</x>
        <y>560</y>
        <width>71</width>
        <height>22</height>
@@ -474,7 +519,7 @@
     <widget class="QPushButton" name="pushButton_souvConfirmAdd">
      <property name="geometry">
       <rect>
-       <x>180</x>
+       <x>190</x>
        <y>560</y>
        <width>80</width>
        <height>21</height>
@@ -487,7 +532,7 @@
     <widget class="QLabel" name="label_souvAddInfo">
      <property name="geometry">
       <rect>
-       <x>100</x>
+       <x>110</x>
        <y>500</y>
        <width>161</width>
        <height>20</height>
@@ -506,8 +551,8 @@
     <widget class="QLabel" name="label_souvEditInfo">
      <property name="geometry">
       <rect>
-       <x>450</x>
-       <y>499</y>
+       <x>440</x>
+       <y>500</y>
        <width>161</width>
        <height>21</height>
       </rect>
@@ -525,7 +570,7 @@
     <widget class="QLineEdit" name="lineEdit_souvEditName">
      <property name="geometry">
       <rect>
-       <x>450</x>
+       <x>440</x>
        <y>530</y>
        <width>161</width>
        <height>21</height>
@@ -538,7 +583,7 @@
     <widget class="QPushButton" name="pushButton_souvConfirmEdit">
      <property name="geometry">
       <rect>
-       <x>530</x>
+       <x>520</x>
        <y>560</y>
        <width>80</width>
        <height>21</height>
@@ -551,7 +596,7 @@
     <widget class="QDoubleSpinBox" name="doubleSpinBox_souvEditPrice">
      <property name="geometry">
       <rect>
-       <x>450</x>
+       <x>440</x>
        <y>560</y>
        <width>71</width>
        <height>22</height>
