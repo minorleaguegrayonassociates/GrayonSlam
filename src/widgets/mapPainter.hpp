@@ -6,13 +6,13 @@ namespace Ui {
 class graph;
 }
 
-class graph : public QWidget
+class mapPainter : public QWidget
 {
 Q_OBJECT
 
 public:
-explicit graph(QWidget* parent = nullptr);
-~graph() override;
+explicit mapPainter(QWidget* parent = nullptr);
+~mapPainter() override;
 
 void paintEvent(QPaintEvent*) override;
 

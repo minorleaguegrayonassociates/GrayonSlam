@@ -1,16 +1,22 @@
-#include "graph.hpp"
+#include "map.hpp"
 #include "ui_graph.h"
 #include <QPainter>
 #include <cmath>
 #include <QLabel>
 #include <QHBoxLayout>
+#include "src/datastore/database.hpp"
 
 graph::graph(QWidget *parent)
     : QWidget(parent), m_ui(new Ui::graph)
 {
     m_ui->setupUi(this);
     m_coordinates = new std::map<int,QPoint>{
+        { 50, QPoint(42,146)},
         { 51, QPoint(79,11)},
+        { 52, QPoint(48,163)},
+        { 53, QPoint(61,220)},
+        { 54, QPoint(88,246)},
+        { 55, QPoint(48,205)},
     };
 }
 
@@ -24,14 +30,11 @@ void graph::paintEvent(QPaintEvent*)
     QPainter painter;
     painter.begin(this);
 
-    paintText(painter, (*m_coordinates)[0], QString::fromUtf8("Safeco Park"));
-    paintText(painter, QPoint(42,146), QString::fromUtf8("AT&T Park"));
-    paintText(painter, QPoint(48,163), QString::fromUtf8("Oakland–Alameda County Coliseum"));
-    paintText(painter, QPoint(48,205), QString::fromUtf8("Dodger Stadium"));
-    paintText(painter, QPoint(61,220), QString::fromUtf8("Angel Stadium of Anaheim"));
-    paintText(painter, QPoint(88,246), QString::fromUtf8("Petco Park"));
-    paintText(painter, QPoint(121,205), QString::fromUtf8("Vegas Stadium"));
-    paintText(painter, QPoint(156,254), QString::fromUtf8("Coors Field"));
+    for(auto pair : *m_coordinates)
+        paintStadiums(painter, pair.second, QString::fromStdString(Database::findStadiumById(pair.first).getName()));
+
+//    paintText(painter, QPoint(121,205), QString::fromUtf8("Vegas Stadium"));
+//    paintText(painter, QPoint(156,254), QString::fromUtf8("Coors Field"));
 
     painter.end();
 }
@@ -44,8 +47,7 @@ void graph::paintStadiums(QPainter& painter,const QPoint& stadiumPoint, const QS
     painter.setBrush(myBrush);
     painter.drawEllipse(stadiumPoint, 3, 3);
 
-    QPoint forText =  stadiumPoint+QPoint(5,0);
-    paintText(painter, forText, stadiumName);
+    paintText(painter, stadiumPoint, stadiumName);
 }
 
 void graph::paintEdge(QPainter& painter, const QPoint& stdmCoord1, const QPoint& stdmCoord2, const QString& distance)

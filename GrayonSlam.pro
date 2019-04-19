@@ -41,6 +41,8 @@ SOURCES += \
     src/widgets/stadiumlist.cpp \
     src/widgets/stadiumlistitem.cpp \
     src/views/adminview.cpp
+    src/views/mapview.cpp \
+    src/widgets/mapPainter.cpp
 
 HEADERS += \
     src/windows/mainwindow.hpp \
@@ -61,7 +63,12 @@ HEADERS += \
     src/views/stadiumview.hpp \
     src/widgets/stadiumlist.hpp \
     src/widgets/stadiumlistitem.hpp \
-    src/views/adminview.hpp
+    src/views/adminview.hpp \
+    src/utils/enumtools.hpp \
+    src/utils/map.hpp \
+    src/views/view.hpp \
+    src/views/mapview.hpp \
+    src/widgets/mapPainter.hpp
 
 FORMS += \
     src/windows/mainwindow.ui \
@@ -69,7 +76,9 @@ FORMS += \
     src/widgets/navbaritem.ui \
     src/widgets/souvenirlistitem.ui \
     src/views/stadiumview.ui \
-    src/views/adminview.ui
+    src/views/adminview.ui \
+    src/views/mapview.ui \
+    src/widgets/mapPainter.ui
 
 RESOURCES += \
     res.qrc

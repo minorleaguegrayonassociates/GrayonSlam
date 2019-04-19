@@ -34,6 +34,7 @@ MainWindow::MainWindow()
     /* Create views */
     m_views.push_back(new AdminView(m_ui->adminView));
     m_views.push_back(new StadiumView(m_ui->viewTeamView));
+    m_views.push_back(new MapView(m_ui->dashboardView));
 }
 
 MainWindow::~MainWindow()
@@ -85,10 +86,10 @@ void MainWindow::resetViews()
 
 void MainWindow::on_pushButton_clicked()
 {
-    QPropertyAnimation* animation  = new QPropertyAnimation(m_ui->plane, "geometry");
-    animation->setDuration(5500);
-    animation->setStartValue(QRect(0,0,170,80));
-    animation->setEndValue(QRect(709,389,170,80));
-    animation->start();
+//    QPropertyAnimation* animation  = new QPropertyAnimation(m_ui->plane, "geometry");
+//    animation->setDuration(5500);
+//    animation->setStartValue(QRect(0,0,170,80));
+//    animation->setEndValue(QRect(709,389,170,80));
+//    animation->start();
 }
 
