@@ -80,7 +80,11 @@ void AdminView::loadSouvenirLists(int stadiumId)
 /**
  * @brief Fill stadium edit fields
  *
+ * Fills all the stadium edit fields with information about a stadium
+ * that is represented by @a stadiumId.
  *
+ * If @a stadiumId doesn't represent an existing stadium, this
+ * function does nothing.
  *
  * @param stadiumId Stadium ID to fill the edit fields with
  */
@@ -88,14 +92,27 @@ void AdminView::fillStadiumEditFields(int stadiumId)
 {
     /* Extract stadium from database and check if valid */
     const Stadium& stadium = Database::findStadiumById(stadiumId);
-//    const Team& team = Database::findTeamById(stadiumId.getTeamId());
     if(stadium.getId() == -1)
         return;
 
+    //Extract the team that lives in the stadium
+    const Team& team = Database::findTeamById(stadium.getTeamId());
+
+    /* Fill line edits */
     m_ui->lineEdit_stadName->setText(QString::fromStdString(stadium.getName()));
     m_ui->lineEdit_stadLocation->setText(QString::fromStdString(stadium.getLocation()));
-    m_ui->lineEdit_stadTeamName->setText("wuhoh");
-    m_ui->comboBox_stadLeague->
+    m_ui->lineEdit_stadTeamName->setText(QString::fromStdString(team.getName()));
+
+    /* Fill combo boxes (1 is added since the initial is an empty string) */
+    m_ui->comboBox_stadTeamLeague->setCurrentIndex(team.league + 1);
+    m_ui->comboBox_stadRoof->setCurrentIndex(stadium.roof + 1);
+    m_ui->comboBox_stadSurface->setCurrentIndex(stadium.surface + 1);
+    m_ui->comboBox_stadTypology->setCurrentIndex(stadium.typology + 1);
+
+    /* Fill spin boxes */
+    m_ui->spinBox_stadYearOpened->setValue(stadium.getYearOpened());
+    m_ui->spinBox_stadSeatCap->setValue(stadium.getSeatCap());
+    m_ui->spinBox_stadCenterDist->setValue(stadium.getCenterFieldDist());
 }
 
 /**

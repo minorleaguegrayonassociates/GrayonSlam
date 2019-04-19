@@ -29,7 +29,7 @@ private slots:
     void fillStadiumEditFields(int stadiumId);
 
     /* Souvenir subview controls */
-    void fillSouvenirEditFields(int souvenirId);
+//    void fillSouvenirEditFields(int souvenirId);
     void on_pushButton_souvGoBack_clicked();
 
 private:

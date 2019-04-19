@@ -55,7 +55,7 @@
     <widget class="QPushButton" name="pushButton_stadEditSouvenirs">
      <property name="geometry">
       <rect>
-       <x>500</x>
+       <x>260</x>
        <y>570</y>
        <width>111</width>
        <height>21</height>
@@ -69,8 +69,8 @@
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>510</y>
-       <width>113</width>
+       <y>500</y>
+       <width>201</width>
        <height>21</height>
       </rect>
      </property>
@@ -81,9 +81,9 @@
     <widget class="QLineEdit" name="lineEdit_stadLocation">
      <property name="geometry">
       <rect>
-       <x>140</x>
-       <y>510</y>
-       <width>113</width>
+       <x>20</x>
+       <y>530</y>
+       <width>201</width>
        <height>21</height>
       </rect>
      </property>
@@ -91,25 +91,12 @@
       <string>location</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_stadYearOpened">
-     <property name="geometry">
-      <rect>
-       <x>140</x>
-       <y>540</y>
-       <width>113</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="placeholderText">
-      <string>year opened</string>
-     </property>
-    </widget>
     <widget class="QLineEdit" name="lineEdit_stadTeamName">
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>540</y>
-       <width>113</width>
+       <y>560</y>
+       <width>201</width>
        <height>21</height>
       </rect>
      </property>
@@ -120,7 +107,7 @@
     <widget class="QPushButton" name="pushButton_stadConfirmEdit">
      <property name="geometry">
       <rect>
-       <x>620</x>
+       <x>380</x>
        <y>570</y>
        <width>71</width>
        <height>21</height>
@@ -133,7 +120,7 @@
     <widget class="QSpinBox" name="spinBox_stadSeatCap">
      <property name="geometry">
       <rect>
-       <x>630</x>
+       <x>380</x>
        <y>510</y>
        <width>61</width>
        <height>22</height>
@@ -143,7 +130,7 @@
     <widget class="QSpinBox" name="spinBox_stadCenterDist">
      <property name="geometry">
       <rect>
-       <x>630</x>
+       <x>380</x>
        <y>540</y>
        <width>61</width>
        <height>22</height>
@@ -156,9 +143,9 @@
     <widget class="QLabel" name="label_stadSeatCapInfo">
      <property name="geometry">
       <rect>
-       <x>510</x>
+       <x>270</x>
        <y>510</y>
-       <width>111</width>
+       <width>101</width>
        <height>21</height>
       </rect>
      </property>
@@ -172,9 +159,9 @@
     <widget class="QLabel" name="label_stadCenterDistInfo">
      <property name="geometry">
       <rect>
-       <x>510</x>
+       <x>270</x>
        <y>540</y>
-       <width>111</width>
+       <width>101</width>
        <height>21</height>
       </rect>
      </property>
@@ -188,9 +175,9 @@
     <widget class="QComboBox" name="comboBox_stadRoof">
      <property name="geometry">
       <rect>
-       <x>360</x>
+       <x>550</x>
        <y>510</y>
-       <width>111</width>
+       <width>151</width>
        <height>22</height>
       </rect>
      </property>
@@ -218,9 +205,9 @@
     <widget class="QComboBox" name="comboBox_stadSurface">
      <property name="geometry">
       <rect>
-       <x>360</x>
+       <x>550</x>
        <y>540</y>
-       <width>111</width>
+       <width>151</width>
        <height>22</height>
       </rect>
      </property>
@@ -243,9 +230,9 @@
     <widget class="QComboBox" name="comboBox_stadTypology">
      <property name="geometry">
       <rect>
-       <x>360</x>
+       <x>550</x>
        <y>570</y>
-       <width>111</width>
+       <width>151</width>
        <height>22</height>
       </rect>
      </property>
@@ -289,7 +276,7 @@
      <property name="geometry">
       <rect>
        <x>230</x>
-       <y>469</y>
+       <y>450</y>
        <width>251</width>
        <height>31</height>
       </rect>
@@ -307,9 +294,9 @@
     <widget class="QLabel" name="label_stadRoofInfo">
      <property name="geometry">
       <rect>
-       <x>270</x>
+       <x>470</x>
        <y>510</y>
-       <width>81</width>
+       <width>71</width>
        <height>21</height>
       </rect>
      </property>
@@ -323,9 +310,9 @@
     <widget class="QLabel" name="label_stadSurfaceInfo">
      <property name="geometry">
       <rect>
-       <x>270</x>
+       <x>470</x>
        <y>540</y>
-       <width>81</width>
+       <width>71</width>
        <height>21</height>
       </rect>
      </property>
@@ -339,9 +326,9 @@
     <widget class="QLabel" name="label_stadTypologyInfo">
      <property name="geometry">
       <rect>
-       <x>270</x>
+       <x>470</x>
        <y>570</y>
-       <width>81</width>
+       <width>71</width>
        <height>21</height>
       </rect>
      </property>
@@ -371,9 +358,9 @@
     <widget class="QComboBox" name="comboBox_stadTeamLeague">
      <property name="geometry">
       <rect>
-       <x>140</x>
-       <y>570</y>
-       <width>111</width>
+       <x>550</x>
+       <y>480</y>
+       <width>151</width>
        <height>22</height>
       </rect>
      </property>
@@ -396,14 +383,46 @@
     <widget class="QLabel" name="label_stadTeamLeagueInfo">
      <property name="geometry">
       <rect>
-       <x>50</x>
-       <y>570</y>
-       <width>81</width>
+       <x>470</x>
+       <y>480</y>
+       <width>71</width>
        <height>21</height>
       </rect>
      </property>
      <property name="text">
       <string>League type</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spinBox_stadYearOpened">
+     <property name="geometry">
+      <rect>
+       <x>380</x>
+       <y>480</y>
+       <width>61</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <number>1839</number>
+     </property>
+     <property name="maximum">
+      <number>2100</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_stadCenterDistInfo_2">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>480</y>
+       <width>101</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Year opened</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
