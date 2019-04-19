@@ -27,8 +27,7 @@ public:
     const static nstd::map<int,Stadium> getStadiums();
     static Team& findTeamById(int);
     static Stadium& findStadiumById(int);
-    static std::vector<Team> getTeamsVector();
-    static std::vector<Stadium> getStadiumsVector();
+    static std::vector<std::pair<Team,Stadium>> getTeamsAndStadiums();
 
 private:
     /* Private Constructor */
