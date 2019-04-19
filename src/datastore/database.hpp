@@ -51,7 +51,7 @@ private:
  * where the string was found within the string array
  *
  * @param container array of strings. Enum version of the strings
- * @param strVal string version of the enum that will be converted
+ * @param strEnum string version of the enum that will be converted
  * @param enumVal base enum of the string that's being converted
  */
 template<typename Container, typename Enum>
