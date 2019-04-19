@@ -12,26 +12,14 @@ const std::array<std::string,6> Stadium::TYPOLOGY_STRING = {"Retro Modern", "Ret
 Stadium::Stadium()
 {}
 
-/**
- * Constructs a stadium given a name and location. ID and integer
- * data will be defaulted to -1. Enum data is set to the first item
- * in the enum.
- *
- * If @a name is an empty string, the name is set to "invalid".
- * If @a location is an empty string, the location is set to "invalid".
- *
- * @param name Stadium name
- * @param location Stadium location
- */
-Stadium::Stadium(const std::string& name, const std::string& location)
-{
-    setName(name);
-    setLocation(location);
-}
-
 int Stadium::getId() const
 {
     return m_id;
+}
+
+int Stadium::getTeamId() const
+{
+    return m_teamId;
 }
 
 std::string Stadium::getName() const
@@ -67,6 +55,16 @@ std::vector<Souvenir> Stadium::getSouvenirs() const
         vec.push_back(souvenir.second);
 
     return vec;
+}
+
+/**
+ * Sets the stadium's team ID reference to the argument's ID.
+ *
+ * @param team Team that resides in the stadium
+ */
+void Stadium::setTeam(const Team& team)
+{
+    m_teamId = team.getId();
 }
 
 /**
@@ -134,15 +132,8 @@ void Stadium::setCenterFieldDist(int dist)
  */
 void Stadium::addSouvenir(const std::string& name, double price)
 {
-    /*
-     * Since Souvenir makes Stadium a friend class,
-     * we can directly set the souvenir ID
-     */
-    Souvenir souvenir(name, price);
-    souvenir.m_id = m_nextSouvenirId;
-
+    Souvenir souvenir(m_nextSouvenirId, name, price);
     m_souvenirs[m_nextSouvenirId] = souvenir;
-
     m_nextSouvenirId++;
 }
 
@@ -165,7 +156,8 @@ Souvenir& Stadium::findSouvenir(int id)
  * it to be set on a different line and not buried in a
  * constructor's arguments.
  *
- * @param id Stadium id
+ * @param id Stadium ID
+ * @param teamId ID of the team that resides in this stadium
  * @param name Stadium name
  * @param location Stadium location
  * @param seatCap Stadium's seat capacity
@@ -175,16 +167,15 @@ Souvenir& Stadium::findSouvenir(int id)
  * @param s Stadium's playing surface
  * @param t Stadium's typology
  */
-Stadium::Stadium(int id, const std::string& name, const std::string& location,
+Stadium::Stadium(int id, int teamId,
+                 const std::string& name, const std::string& location,
                  int seatCap, int yearOpened, int centerFieldDist,
                  Roof r, Surface s, Typology t)
-    : Stadium(name, location)
+    : roof(r), surface(s), typology(t), m_id(id), m_teamId(teamId)
 {
-    m_id = id;
-    m_seatCap = seatCap;
-    m_yearOpened = yearOpened;
-    m_centerFieldDist = centerFieldDist;
-    roof = r;
-    surface = s;
-    typology = t;
+    setName(name);
+    setLocation(location);
+    setSeatCap(seatCap);
+    setYearOpened(yearOpened);
+    setCenterFieldDist(centerFieldDist);
 }

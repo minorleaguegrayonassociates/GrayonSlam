@@ -1,5 +1,6 @@
 #include "database.hpp"
 #include "src/utils/parser.hpp"
+#include "src/utils/enumtools.hpp"
 
 /* Instantiate static map containers of teams and stadiums */
 nstd::map<int,Team> Database::teams;
@@ -39,17 +40,17 @@ void Database::loadFromFile(const std::string& filepath)
     for (const std::vector<std::string>& team : teamData)
     {
         // Converting all string values from strings to their enum values
-        tempLeague = database->getEnumValue(Team::LEAGUE_STRING,team[8], Team::League::AMERICAN);
-        tempRoof = database->getEnumValue(Stadium::ROOF_STRING,team[12], Stadium::Roof::OPEN);
-        tempSurface = database->getEnumValue(Stadium::SURFACE_STRING,team[7], Stadium::Surface::GRASS);
-        tempTypology = database->getEnumValue(Stadium::TYPOLOGY_STRING,team[11], Stadium::Typology::MODERN);
+        tempLeague = getEnumValue<Team::League>(Team::LEAGUE_STRING,team[8]);
+        tempRoof = getEnumValue<Stadium::Roof>(Stadium::ROOF_STRING,team[12]);
+        tempSurface = getEnumValue<Stadium::Surface>(Stadium::SURFACE_STRING,team[7]);
+        tempTypology = getEnumValue<Stadium::Typology>(Stadium::TYPOLOGY_STRING,team[11]);
 
         // Initializing a new Team class
-        Team tempTeam(std::stoi(team[0]), std::stoi(team[3]), team[1], tempLeague);
+        Team tempTeam(std::stoi(team[0]), team[1], tempLeague);
         // Set's deleted bool
         tempTeam.hidden = std::stoi(team[2]);
         // Initializing a new Stadium class
-        Stadium tempStadium(std::stoi(team[3]), team[4], team[6], std::stoi(team[5]),std::stoi(team[9]),
+        Stadium tempStadium(std::stoi(team[3]), std::stoi(team[0]), team[4], team[6], std::stoi(team[5]),std::stoi(team[9]),
                             std::stoi(team[10]), tempRoof, tempSurface, tempTypology);
         // Souvenir index starts at 14 for each team, reseting to 14 here
         // Used to traverser through souvenirs
@@ -117,31 +118,16 @@ Stadium& Database::findStadiumById(int id)
 
 
 /**
- * Returns a vector with all the Teams
+ * Returns a vector with all the Teams and stadiums
  *
- * @return A vector with all the teams
+ * @return A vector with all the teams and stadiums as a pair of team and stadium
  */
-std::vector<Team> Database::getTeamsVector()
+std::vector<std::pair<Team,Stadium>> Database::getTeamsAndStadiums()
 {
-    std::vector<Team> vec;
+    std::vector<std::pair<Team,Stadium>> vec;
 
-    for(auto team : teams)
-        vec.push_back(team);
-
-    return vec;
-}
-
-/**
- * Returns a vector with all the Stadiums
- *
- * @return A vector with all the stadiums
- */
-std::vector<Stadium> Database::getStadiumsVector()
-{
-    std::vector<Stadium> vec;
-
-    for(auto team : teams)
-        vec.push_back(stadiums[team.getStadiumId()]);
+    for(auto stadium : stadiums)
+        vec.push_back(std::pair<Team,Stadium>(Database::findTeamById(stadium.getTeamId()),stadium));
 
     return vec;
 }
@@ -155,8 +141,8 @@ std::vector<Stadium> Database::getStadiumsVector()
 void Database::saveToFile(const std::string& path)
 {
     /* Get all team and stadium data, create a temp vector that will be used to store souvenir data */
-    std::vector<Team> teamVect(Database::getTeamsVector());
-    std::vector<Stadium> stadiumVect(Database::getStadiumsVector());
+    std::vector<std::pair<Team,Stadium>> teamStadiumData(Database::getTeamsAndStadiums());
+
 
     // Initializing - vector will hold all lines of data within the document
     std::vector<std::vector<std::string>> allRows;
@@ -173,34 +159,34 @@ void Database::saveToFile(const std::string& path)
     rowHeader.push_back(" league, date opened, distance to center field, ballpark typology, Rooftype");
     allRows.push_back(rowHeader);
 
-    for(unsigned int i = 0; i < teamVect.size(); ++i)
+    for(unsigned int i = 0; i < teamStadiumData.size(); ++i)
     {
         // Will hold all the columns within a given row
         std::vector<std::string> columns;
 
         /* Convert enum values to their string enum version */
-        tempLeague = Team::LEAGUE_STRING[teamVect[i].league];
-        tempRoof = Stadium::ROOF_STRING[stadiumVect[i].roof];
-        tempSurface = Stadium::SURFACE_STRING[stadiumVect[i].surface];
-        tempTypology = Stadium::TYPOLOGY_STRING[stadiumVect[i].typology];
+        tempLeague = Team::LEAGUE_STRING[teamStadiumData[i].first.league];
+        tempRoof = Stadium::ROOF_STRING[teamStadiumData[i].second.roof];
+        tempSurface = Stadium::SURFACE_STRING[teamStadiumData[i].second.surface];
+        tempTypology = Stadium::TYPOLOGY_STRING[teamStadiumData[i].second.typology];
 
         /* Adds all the data that belongs to team and it's stadium to the columns vector */
-        columns.push_back(std::to_string(teamVect[i].getId()));
-        columns.push_back(teamVect[i].getName());
-        columns.push_back(std::to_string(teamVect[i].hidden));
-        columns.push_back(std::to_string(teamVect[i].getStadiumId()));
-        columns.push_back(stadiumVect[i].getName());
-        columns.push_back(std::to_string(stadiumVect[i].getSeatCap()));
-        columns.push_back(stadiumVect[i].getLocation());
+        columns.push_back(std::to_string(teamStadiumData[i].first.getId()));
+        columns.push_back(teamStadiumData[i].first.getName());
+        columns.push_back(std::to_string(teamStadiumData[i].first.hidden));
+        columns.push_back(std::to_string(teamStadiumData[i].second.getId()));
+        columns.push_back(teamStadiumData[i].second.getName());
+        columns.push_back(std::to_string(teamStadiumData[i].second.getSeatCap()));
+        columns.push_back(teamStadiumData[i].second.getLocation());
         columns.push_back(tempSurface);
         columns.push_back(tempLeague);
-        columns.push_back(std::to_string(stadiumVect[i].getYearOpened()));
-        columns.push_back(std::to_string(stadiumVect[i].getCenterFieldDist()));
+        columns.push_back(std::to_string(teamStadiumData[i].second.getYearOpened()));
+        columns.push_back(std::to_string(teamStadiumData[i].second.getCenterFieldDist()));
         columns.push_back(tempTypology);
         columns.push_back(tempRoof);
 
         // Get's a vector of the teams souvenirs
-        std::vector<Souvenir> tempSouvenirVect = stadiumVect[i].getSouvenirs();
+        std::vector<Souvenir> tempSouvenirVect = teamStadiumData[i].second.getSouvenirs();
         // Number of souvenirs
         columns.push_back(std::to_string(tempSouvenirVect.size()));
 

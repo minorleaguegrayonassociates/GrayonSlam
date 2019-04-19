@@ -55,8 +55,10 @@ HEADERS += \
     src/widgets/souvenirlistitem.hpp \
     src/utils/map.hpp \
     src/datastore/database.hpp \
+    src/utils/enumtools.hpp \
     src/views/stadiumview.hpp \
-    src/widgets/stadiumlist.hpp
+    src/widgets/stadiumlist.hpp \
+    src/views/stadiumview.hpp
 
 FORMS += \
     src/windows/mainwindow.ui \
