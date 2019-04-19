@@ -32,11 +32,13 @@ StadiumList::StadiumList(const StadiumList& src, QWidget *parent) :
 
     m_listDisplay->insertRow(m_listDisplay->rowCount());
 
-    for(;;)
+    /**
+    for(int i = 0;;)
     {
         m_listDisplay->setItem((m_listDisplay->rowCount())-1,i,stringItem);
     }
 
+    **/
     //Does not allow users to edit the cells directly
     m_listDisplay->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
