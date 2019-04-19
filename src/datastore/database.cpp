@@ -6,6 +6,9 @@
 nstd::map<int,Team> Database::teams;
 nstd::map<int,Stadium> Database::stadiums;
 
+/* Instantiate static vector containers of a tuple of a complete edge (to,from,weight) */
+Database::completedEdge Database::distances;
+
 /* Instantiate a static database object */
 Database* Database::database = new Database();
 
@@ -74,63 +77,6 @@ void Database::loadFromFile(const std::string& filepath)
     }
 }
 
-/**
- * This method returns all the teams
- *
- * @return teams is returned
- */
-const nstd::map<int,Team> Database::getTeams()
-{
-    return teams;
-}
-
-/**
- * This method returns all the Stadiums
- *
- * @return stadiums is returned
- */
-const nstd::map<int,Stadium> Database::getStadiums()
-{
-    return stadiums;
-}
-
-/**
- * Finds team by it's id.
- *
- * @param id an int id used to find a Team
- * @return A const reference to a Team object
- */
-Team& Database::findTeamById(int id)
-{
-    return teams[id];
-}
-
-/**
- * Finds Stadium by it's id.
- *
- * @param id an int id used to find a Stadium
- * @return A const reference to a Stadium object
- */
-Stadium& Database::findStadiumById(int id)
-{
-    return stadiums[id];
-}
-
-
-/**
- * Returns a vector with all the Teams and stadiums
- *
- * @return A vector with all the teams and stadiums as a pair of team and stadium
- */
-std::vector<std::pair<Team,Stadium>> Database::getTeamsAndStadiums()
-{
-    std::vector<std::pair<Team,Stadium>> vec;
-
-    for(auto stadium : stadiums)
-        vec.push_back(std::pair<Team,Stadium>(Database::findTeamById(stadium.getTeamId()),stadium));
-
-    return vec;
-}
 
 /**
  * Uses the data within this class to write out the data
@@ -214,4 +160,83 @@ void Database::saveToFile(const std::string& path)
     }
     // Call saveData to store data at the path provided
     saveData(path, allRows);
+}
+
+/**
+ * @brief Loads distances as a tuple
+ *
+ * This functions takes a path, extracts all the data and instantiates
+ * tuples of distances std::tuple<int,int,int>(fromStadiumId,toStadiumId,Distance);
+ *
+ * @param filepath path to .csv data for teams,stadiums,and souvenirs
+ */
+void Database::loadDistancesFromFile(const std::string& filepath)
+{
+    /* Load distance data from file */
+    std::vector<std::vector<std::string>> distanceData = loadData(filepath);
+    /* ForEach row of data create a tuple std::tuple<int,int,int>(fromStadiumId,toStadiumId,Distance); */
+    for(const std::vector<std::string>& distance : distanceData)
+    {
+        distances.push_back(std::tuple<int,int,int>(std::stoi(distance[0]),
+                                                    std::stoi(distance[2]),
+                                                    std::stoi(distance[4])));
+    }
+}
+
+/**
+ * This method returns all the teams
+ *
+ * @return teams is returned
+ */
+const nstd::map<int,Team> Database::getTeams()
+{
+    return teams;
+}
+
+/**
+ * This method returns all the Stadiums
+ *
+ * @return stadiums is returned
+ */
+const nstd::map<int,Stadium> Database::getStadiums()
+{
+    return stadiums;
+}
+
+/**
+ * Finds team by it's id.
+ *
+ * @param id an int id used to find a Team
+ * @return A const reference to a Team object
+ */
+Team& Database::findTeamById(int id)
+{
+    return teams[id];
+}
+
+/**
+ * Finds Stadium by it's id.
+ *
+ * @param id an int id used to find a Stadium
+ * @return A const reference to a Stadium object
+ */
+Stadium& Database::findStadiumById(int id)
+{
+    return stadiums[id];
+}
+
+
+/**
+ * Returns a vector with all the Teams and stadiums
+ *
+ * @return A vector with all the teams and stadiums as a pair of team and stadium
+ */
+std::vector<std::pair<Team,Stadium>> Database::getTeamsAndStadiums()
+{
+    std::vector<std::pair<Team,Stadium>> vec;
+
+    for(auto stadium : stadiums)
+        vec.push_back(std::pair<Team,Stadium>(Database::findTeamById(stadium.getTeamId()),stadium));
+
+    return vec;
 }

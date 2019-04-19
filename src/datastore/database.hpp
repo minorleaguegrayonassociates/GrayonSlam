@@ -18,9 +18,13 @@
 class Database
 {
 public:
+    /* Aliases */
+    using completedEdge = std::vector<std::tuple<int,int,int>>;  //"from" <-> "to" and distance
+
     /* Static methods to Load and Save from/to file */
     static void loadFromFile(const std::string&);
     static void saveToFile(const std::string&);
+    static void loadDistancesFromFile(const std::string&);
 
     /* Getters */
     const static nstd::map<int,Team> getTeams();
@@ -28,7 +32,7 @@ public:
     static Team& findTeamById(int);
     static Stadium& findStadiumById(int);
     static std::vector<std::pair<Team,Stadium>> getTeamsAndStadiums();
-
+    static completedEdge getDistances();
 private:
     /* Private Constructor */
     Database();
@@ -37,4 +41,5 @@ private:
     static Database* database;
     static nstd::map<int,Team> teams;
     static nstd::map<int,Stadium> stadiums;
+    static completedEdge distances;
 };
