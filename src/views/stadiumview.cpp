@@ -8,6 +8,7 @@ StadiumView::StadiumView(QWidget *parent) :
     ui->setupUi(this);
 
     m_stadiumList = new StadiumList(ui->stadiumList);
+    m_stadiumList->setStadiumList(Database::getTeamsAndStadiums());
 
 }
 
@@ -22,7 +23,7 @@ void StadiumView::resetView()
     //clear all data, get it new from database, and populate table
 }
 
-void StadiumView::resetUI()
+void StadiumView::resetUi()
 {
     //clear table and repopulate it with list
 }

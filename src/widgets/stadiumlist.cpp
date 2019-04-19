@@ -3,64 +3,73 @@
 StadiumList::StadiumList(QWidget *parent) :
     QWidget(parent)
 {
-    m_listDisplay = new QTableWidget(this);
+    m_listDisplay = new QTreeWidget(this);
+    m_listDisplay->resize(parent->size());
+
 }
-StadiumList::StadiumList(const std::vector<Stadium>& stadiumList, QWidget *parent) :
+
+StadiumList::StadiumList(const std::vector<std::pair<Team,Stadium>>& stadiumList, QWidget *parent) :
     QWidget(parent)
 {
 
-    for(Stadium stadium : stadiumList)
+    for(std::pair<Team,Stadium> stadiumId : stadiumList)
     {
-        m_stadiumList.push_back(stadium.getId());
+        m_stadiumList.push_back(stadiumId.second.getId());
     }
-    m_listDisplay = new QTableWidget(this);
-    m_listDisplay->setEditTriggers(QAbstractItemView::NoEditTriggers);
-
-    //To Do Populate table
+    m_listDisplay = new QTreeWidget(this);
+    m_listDisplay->resize(parent->size());
+    populateWidget();
 }
+
 StadiumList::StadiumList(const StadiumList& src, QWidget *parent) :
     QWidget(parent), m_stadiumList(src.m_stadiumList)
 {
-    m_listDisplay = new QTableWidget(this);
-//    m_listDisplay->setRowCount();
-    m_listDisplay->setColumnCount(10);
-    QStringList headers;
-    headers << "Team Name" << "League" << "Stadium Name" << "Location" << "Date Opened"
-            << "Seating Capacity" << "Typology" << "Roof Type" << "Playing Surface"
-            << "Distance to Center Field";
-    m_listDisplay->setHorizontalHeaderLabels(headers);
-
-    m_listDisplay->insertRow(m_listDisplay->rowCount());
-
-    /**
-    for(int i = 0;;)
-    {
-        m_listDisplay->setItem((m_listDisplay->rowCount())-1,i,stringItem);
-    }
-
-    **/
-    //Does not allow users to edit the cells directly
-    m_listDisplay->setEditTriggers(QAbstractItemView::NoEditTriggers);
-
-    //To Do Populate table
+    m_listDisplay = new QTreeWidget(this);
+    m_listDisplay->resize(parent->size());
+    populateWidget();
 }
+
 std::vector<int>& StadiumList::getStadiumList()
 {
     return m_stadiumList;
 }
-void StadiumList::setStadiumList(const std::vector<Stadium>& stadiumList)
+
+void StadiumList::setStadiumList(const std::vector<std::pair<Team,Stadium>>& stadiumList)
 {
     m_stadiumList.clear();
-    for(Stadium stadium : stadiumList)
+    for(std::pair<Team,Stadium> stadium : stadiumList)
     {
-        m_stadiumList.push_back(stadium.getId());
+        m_stadiumList.push_back(stadium.second.getId());
     }
+    populateWidget();
 }
+
 StadiumList::~StadiumList()
 {
     delete m_listDisplay;
 }
 
+void StadiumList::populateWidget()
+{
+    m_listDisplay->clear();
+    m_listDisplay->setColumnCount(10);
+    QStringList headers = { "Team Name", "League", "Stadium Name", "Location", "Date Opened",
+            "Seating Capacity", "Typology", "Roof Type", "Playing Surface",
+             "Distance to Center Field"};
+    m_listDisplay->setHeaderLabels(headers);
+
+    for(int id:m_stadiumList)
+    {
+        Stadium tmp = Database::getStadiums()[id];
+        QStringList tmpList;
+        tmpList.push_back(QString::fromStdString(tmp.getName()));
+        new QTreeWidgetItem(m_listDisplay,tmpList);
+    }
+
+    //Does not allow users to edit the cells directly
+    m_listDisplay->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
+}
 
 
 

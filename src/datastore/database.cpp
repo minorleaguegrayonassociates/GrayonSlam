@@ -79,7 +79,7 @@ void Database::loadFromFile(const std::string& filepath)
  *
  * @return teams is returned
  */
-const nstd::map<int,Team> Database::getTeams()
+nstd::map<int,Team> Database::getTeams()
 {
     return teams;
 }
@@ -89,7 +89,7 @@ const nstd::map<int,Team> Database::getTeams()
  *
  * @return stadiums is returned
  */
-const nstd::map<int,Stadium> Database::getStadiums()
+nstd::map<int,Stadium> Database::getStadiums()
 {
     return stadiums;
 }
