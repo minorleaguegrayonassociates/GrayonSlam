@@ -6,6 +6,7 @@
 #include "src/datastore/stadium.hpp"
 #include "src/datastore/team.hpp"
 #include "src/datastore/database.hpp"
+#include "src/utils/enumtools.hpp"
 
 
 class StadiumList : public QWidget

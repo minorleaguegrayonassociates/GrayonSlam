@@ -60,8 +60,11 @@ void StadiumList::populateWidget()
 
     for(int id:m_stadiumList)
     {
-        Stadium tmp = Database::getStadiums()[id];
+        Stadium tmp = Database::findStadiumById(id);
+        Team tmpT = Database::findTeamById(tmp.getTeamId());
         QStringList tmpList;
+        tmpList.push_back(QString::fromStdString(tmpT.getName()));
+        tmpList.push_back(QString::fromStdString(tmpT.LEAGUE_STRING[tmpT.league]));
         tmpList.push_back(QString::fromStdString(tmp.getName()));
         new QTreeWidgetItem(m_listDisplay,tmpList);
     }
