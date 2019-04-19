@@ -1,5 +1,6 @@
 #include "database.hpp"
 #include "src/utils/parser.hpp"
+#include "src/utils/enumtools.hpp"
 
 /* Instantiate static map containers of teams and stadiums */
 nstd::map<int,Team> Database::teams;
@@ -39,10 +40,10 @@ void Database::loadFromFile(const std::string& filepath)
     for (const std::vector<std::string>& team : teamData)
     {
         // Converting all string values from strings to their enum values
-        tempLeague = database->getEnumValue(Team::LEAGUE_STRING,team[8], Team::League::AMERICAN);
-        tempRoof = database->getEnumValue(Stadium::ROOF_STRING,team[12], Stadium::Roof::OPEN);
-        tempSurface = database->getEnumValue(Stadium::SURFACE_STRING,team[7], Stadium::Surface::GRASS);
-        tempTypology = database->getEnumValue(Stadium::TYPOLOGY_STRING,team[11], Stadium::Typology::MODERN);
+        tempLeague = getEnumValue<Team::League>(Team::LEAGUE_STRING,team[8]);
+        tempRoof = getEnumValue<Stadium::Roof>(Stadium::ROOF_STRING,team[12]);
+        tempSurface = getEnumValue<Stadium::Surface>(Stadium::SURFACE_STRING,team[7]);
+        tempTypology = getEnumValue<Stadium::Typology>(Stadium::TYPOLOGY_STRING,team[11]);
 
         // Initializing a new Team class
         Team tempTeam(std::stoi(team[0]), team[1], tempLeague);

@@ -52,7 +52,8 @@ HEADERS += \
     src/widgets/souvenirlist.hpp \
     src/widgets/souvenirlistitem.hpp \
     src/utils/map.hpp \
-    src/datastore/database.hpp
+    src/datastore/database.hpp \
+    src/utils/enumtools.hpp
 
 FORMS += \
     src/windows/mainwindow.ui \
