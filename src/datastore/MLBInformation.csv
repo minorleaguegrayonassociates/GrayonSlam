@@ -1,4 +1,4 @@
-# id, team name, hidden bool, id, stadium name, capacity, location, playing surface, league, date opened, distance to center field, ballpark typology, Rooftype
+# id, team name, hidden bool, id, stadium name, capacity, location, x coord, y coord, playing surface, league, date opened, distance to center field, ballpark typology, Rooftype
 13,Los Angeles Angels,0,62,Angel Stadium,45477,"Anaheim, California",Grass,American,1966,396,Retro Modern,Open,5,0,Baseball Cap,22.99,0,Baseball bat,89.39,0,Team pennant,17.99,0,Autographed Baseball,25.99,0,Team Jersey,199.99
 14,Los Angeles Dodgers,0,63,Dodger Stadium,56000,"Los Angeles, California",Grass,National,1962,400,Modern,Open,5,0,Baseball Cap,22.99,0,Baseball bat,89.39,0,Team pennant,17.99,0,Autographed Baseball,25.99,0,Team Jersey,199.99
 15,Miami Marlins,0,64,Marlins Park,36742,"Miami, Florida",Grass,National,2012,407,Contemporary,Retractable,5,0,Baseball Cap,22.99,0,Baseball bat,89.39,0,Team pennant,17.99,0,Autographed Baseball,25.99,0,Team Jersey,199.99
