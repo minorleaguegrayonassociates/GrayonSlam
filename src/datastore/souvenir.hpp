@@ -7,8 +7,8 @@
  * This class holds information about a souvenir. It can be
  * hidden from public use by the @a hidden property.
  *
- * A souvenir with an ID value of -1 means that it hasn't
- * been attached to a stadium.
+ * A souvenir with an ID of -1 means it's invalid and it
+ * isn't attached to a stadium.
  */
 class Souvenir
 {
@@ -17,7 +17,6 @@ public:
 
     /* Constructors */
     Souvenir();
-    Souvenir(const std::string& name, double price);
 
     /* Getters */
     int getId() const;
@@ -33,7 +32,7 @@ public:
 
 private:
     /* Constructors */
-    Souvenir(int id, const std::string&name, double price);
+    Souvenir(int id, const std::string& name, double price);
 
     /* Data */
     int m_id = -1;

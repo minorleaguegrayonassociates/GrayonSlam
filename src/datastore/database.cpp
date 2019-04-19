@@ -45,11 +45,11 @@ void Database::loadFromFile(const std::string& filepath)
         tempTypology = database->getEnumValue(Stadium::TYPOLOGY_STRING,team[11], Stadium::Typology::MODERN);
 
         // Initializing a new Team class
-        Team tempTeam(std::stoi(team[0]), std::stoi(team[3]), team[1], tempLeague);
+        Team tempTeam(std::stoi(team[0]), team[1], tempLeague);
         // Set's deleted bool
         tempTeam.hidden = std::stoi(team[2]);
         // Initializing a new Stadium class
-        Stadium tempStadium(std::stoi(team[3]), team[4], team[6], std::stoi(team[5]),std::stoi(team[9]),
+        Stadium tempStadium(std::stoi(team[3]), std::stoi(team[0]), team[4], team[6], std::stoi(team[5]),std::stoi(team[9]),
                             std::stoi(team[10]), tempRoof, tempSurface, tempTypology);
         // Souvenir index starts at 14 for each team, reseting to 14 here
         // Used to traverser through souvenirs
@@ -140,8 +140,8 @@ std::vector<Stadium> Database::getStadiumsVector()
 {
     std::vector<Stadium> vec;
 
-    for(auto team : teams)
-        vec.push_back(stadiums[team.getStadiumId()]);
+    for(auto stadium : stadiums)
+        vec.push_back(stadium);
 
     return vec;
 }
@@ -188,7 +188,7 @@ void Database::saveToFile(const std::string& path)
         columns.push_back(std::to_string(teamVect[i].getId()));
         columns.push_back(teamVect[i].getName());
         columns.push_back(std::to_string(teamVect[i].hidden));
-        columns.push_back(std::to_string(teamVect[i].getStadiumId()));
+        columns.push_back(std::to_string(stadiumVect[i].getId()));
         columns.push_back(stadiumVect[i].getName());
         columns.push_back(std::to_string(stadiumVect[i].getSeatCap()));
         columns.push_back(stadiumVect[i].getLocation());
