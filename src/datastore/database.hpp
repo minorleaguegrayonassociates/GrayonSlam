@@ -50,7 +50,7 @@ private:
  * after each iteration and will return at the same index as
  * where the string was found within the string array
  *
- * @param Arr array of strings. Enum version of the strings
+ * @param container array of strings. Enum version of the strings
  * @param strVal string version of the enum that will be converted
  * @param enumVal base enum of the string that's being converted
  */
