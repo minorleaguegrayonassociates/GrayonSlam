@@ -5,16 +5,30 @@ StadiumList::StadiumList(QWidget *parent) :
 {
     m_listDisplay = new QTableWidget(this);
 }
-StadiumList::StadiumList(const std::vector<int>& teamList, const std::vector<int>& stadiumList, QWidget *parent) :
-    QWidget(parent),  m_stadiumList(stadiumList), m_teamList(teamList)
+StadiumList::StadiumList(const std::vector<Stadium>& stadiumList, const std::vector<Team>& teamList, QWidget *parent) :
+    QWidget(parent)
 {
+
+    for(Stadium stadium : stadiumList)
+    {
+        m_stadiumList.push_back(stadium.getId());
+    }
+    for(Team team : teamList)
+    {
+        m_teamList.push_back(team.getId());
+    }
     m_listDisplay = new QTableWidget(this);
+    m_listDisplay->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
     //To Do Populate table
 }
 StadiumList::StadiumList(const StadiumList& src, QWidget *parent) :
     QWidget(parent), m_stadiumList(src.m_stadiumList), m_teamList(src.m_teamList)
 {
     m_listDisplay = new QTableWidget(this);
+    //So the user can't edit the text within the table
+    //If they do, it doesn't actually change values so this
+    m_listDisplay->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     //To Do Populate table
 }
@@ -22,17 +36,25 @@ std::vector<int>& StadiumList::getStadiumList()
 {
     return m_stadiumList;
 }
-void StadiumList::setStadiumList(const std::vector<int>& stadiumList)
+void StadiumList::setStadiumList(const std::vector<Stadium>& stadiumList)
 {
-    m_stadiumList = stadiumList;
+    m_stadiumList.clear();
+    for(Stadium stadium : stadiumList)
+    {
+        m_stadiumList.push_back(stadium.getId());
+    }
 }
 std::vector<int>& StadiumList::getTeamList()
 {
     return m_teamList;
 }
-void StadiumList::setTeamList(const std::vector<int>& teamList)
+void StadiumList::setTeamList(const std::vector<Team>& teamList)
 {
-   m_teamList = teamList;
+    m_teamList.clear();
+    for(Team team : teamList)
+    {
+        m_teamList.push_back(team.getId());
+    }
 }
 StadiumList::~StadiumList()
 {
