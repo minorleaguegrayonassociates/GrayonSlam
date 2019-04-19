@@ -23,8 +23,8 @@ public:
     static void saveToFile(const std::string&);
 
     /* Getters */
-    const static nstd::map<int,Team> getTeams();
-    const static nstd::map<int,Stadium> getStadiums();
+    static nstd::map<int,Team> getTeams();
+    static nstd::map<int,Stadium> getStadiums();
     static Team& findTeamById(int);
     static Stadium& findStadiumById(int);
     static std::vector<std::pair<Team,Stadium>> getTeamsAndStadiums();
