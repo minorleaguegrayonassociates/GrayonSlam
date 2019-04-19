@@ -11,6 +11,8 @@ AdminView::AdminView(QWidget* parent)
     m_availableSouvenirList = new SouvenirList(m_ui->widget_souvAvailableList);
     m_hiddenSouvenirList = new SouvenirList(m_ui->widget_souvHiddenList);
     m_hiddenSouvenirList->allowHidden(true);
+
+    connect(m_ui->spinBox, qOverload<int>(&QSpinBox::valueChanged), this, &AdminView::fillStadiumEditFields);
 }
 
 /**
@@ -114,6 +116,20 @@ void AdminView::fillStadiumEditFields(int stadiumId)
     m_ui->spinBox_stadSeatCap->setValue(stadium.getSeatCap());
     m_ui->spinBox_stadCenterDist->setValue(stadium.getCenterFieldDist());
 }
+
+void AdminView::on_pushButton_stadEditSouvenirs_clicked()
+{
+    m_currentStadiumId = m_ui->spinBox->value(); //TODO replace with selected ID from stadium list
+
+    /* Extract stadium from database and check if valid */
+    const Stadium& stadium = Database::findStadiumById(m_currentStadiumId);
+    if(stadium.getId() == -1)
+        return;
+
+    resetUi();
+    m_ui->stackedWidget->setCurrentIndex(1);
+}
+
 
 /**
  * Goes back to stadium list page by calling @a resetView().

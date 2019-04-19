@@ -27,6 +27,7 @@ private slots:
 
     /* Stadium subview controls */
     void fillStadiumEditFields(int stadiumId);
+    void on_pushButton_stadEditSouvenirs_clicked();
 
     /* Souvenir subview controls */
 //    void fillSouvenirEditFields(int souvenirId);
