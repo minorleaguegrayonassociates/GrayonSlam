@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="page_stadiums">
     <widget class="QWidget" name="widget_stadList" native="true">
@@ -442,6 +442,9 @@
        <width>43</width>
        <height>22</height>
       </rect>
+     </property>
+     <property name="minimum">
+      <number>-99</number>
      </property>
     </widget>
    </widget>

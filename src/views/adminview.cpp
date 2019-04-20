@@ -12,25 +12,29 @@ AdminView::AdminView(QWidget* parent)
     m_hiddenSouvenirList = new SouvenirList(m_ui->widget_souvHiddenList);
     m_hiddenSouvenirList->allowHidden(true);
 
+    //TODO replace spinbox with stadium list
     connect(m_ui->spinBox, qOverload<int>(&QSpinBox::valueChanged), this, &AdminView::fillStadiumEditFields);
 
+    /*
+     * These connections will unselect items of the other list.
+     * This will be used for selecting what souvenir will be chosen
+     * when editing.
+     */
     connect(m_availableSouvenirList, &SouvenirList::currentSouvenirChanged,
             [&](IDs ids)
             {
-                //Deselect current selection on hidden souvenir list
                 m_hiddenSouvenirList->setCurrentRow(-1);
-
                 fillSouvenirEditFields(ids.second);
             });
 
     connect(m_hiddenSouvenirList, &SouvenirList::currentSouvenirChanged,
             [&](IDs ids)
             {
-                //Deselect current selection on hidden souvenir list
                 m_availableSouvenirList->setCurrentRow(-1);
-
                 fillSouvenirEditFields(ids.second);
             });
+
+    resetView();
 }
 
 /**
@@ -44,7 +48,7 @@ AdminView::~AdminView()
 }
 
 /**
- * Resets the stacked widget page and UI by calling @a resetUi().
+ * Resets the admin view as if it was just created.
  */
 void AdminView::resetView()
 {
@@ -62,6 +66,26 @@ void AdminView::resetView()
 void AdminView::resetUi()
 {
     loadSouvenirLists(m_currentStadiumId);
+
+    /* Line edits */
+    m_ui->lineEdit_stadName->clear();
+    m_ui->lineEdit_stadLocation->clear();
+    m_ui->lineEdit_stadTeamName->clear();
+    m_ui->lineEdit_souvAddName->clear();
+    m_ui->lineEdit_souvEditName->clear();
+
+    /* Combo boxes */
+    m_ui->comboBox_stadTeamLeague->setCurrentIndex(0);
+    m_ui->comboBox_stadRoof->setCurrentIndex(0);
+    m_ui->comboBox_stadSurface->setCurrentIndex(0);
+    m_ui->comboBox_stadTypology->setCurrentIndex(0);
+
+    /* Spin boxes */
+    m_ui->spinBox_stadYearOpened->clear();
+    m_ui->spinBox_stadSeatCap->clear();
+    m_ui->spinBox_stadCenterDist->clear();
+    m_ui->doubleSpinBox_souvAddPrice->clear();
+    m_ui->doubleSpinBox_souvEditPrice->clear();
 }
 
 /**
@@ -150,7 +174,14 @@ void AdminView::on_pushButton_stadEditSouvenirs_clicked()
 
 /**
  * @brief Fill souvenir edit fields
- * @param souvenirId
+ *
+ * Fills all the souvenir edit fields with information about a
+ * souvenir that is represented by @a souvenirId.
+ *
+ * The stadium used to determine which souvenirs to get is
+ * determined by @a m_currentStadiumId.
+ *
+ * @param souvenirId Souvenir ID of @a m_currentStadiumId to fill the edit fields with
  */
 void AdminView::fillSouvenirEditFields(int souvenirId)
 {
@@ -166,7 +197,9 @@ void AdminView::fillSouvenirEditFields(int souvenirId)
 }
 
 /**
- * @brief Hide or resture currently selected souvenir from the either list
+ * @brief Hide or restore currently selected souvenir from the souvenir lists
+ *
+ * Obtains
  */
 void AdminView::on_pushButton_souvHideRestore_clicked()
 {
@@ -183,6 +216,8 @@ void AdminView::on_pushButton_souvHideRestore_clicked()
 
     //Flip the hidden state
     souvenir.hidden = !souvenir.hidden;
+
+    resetUi();
 }
 
 /**

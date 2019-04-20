@@ -34,7 +34,6 @@ private slots:
     void on_pushButton_souvHideRestore_clicked();
     void on_pushButton_souvGoBack_clicked();
 
-
 private:
     Ui::AdminView* m_ui;
     int m_currentStadiumId = -1;
