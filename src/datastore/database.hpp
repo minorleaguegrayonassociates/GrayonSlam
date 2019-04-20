@@ -19,8 +19,8 @@ class Database
 {
 public:
     /* Aliases */
-    using completedEdge = std::vector<std::tuple<int,int,int>>;  //"from" <-> "to" and distance
-    using coords = std::map<int,std::pair<int,int>>; // stadium Id, std::pair<int,int>(x-Coordinate,y-Coordinate)
+    using completedEdge = std::tuple<int,int,int>;  //"from" <-> "to" and distance
+    using coords = std::pair<int,int>; // std::pair<int,int>(x-Coordinate,y-Coordinate)
 
     /* Static methods to Load and Save from/to file */
     static void loadFromFile(const std::string&);
@@ -33,13 +33,13 @@ public:
     static Team& findTeamById(int);
     static Stadium& findStadiumById(int);
     static std::vector<std::pair<Team,Stadium>> getTeamsAndStadiums();
-    const static completedEdge& getDistances();
-    const static coords& getCoordinates();
+    const static std::map<int,completedEdge>& getDistances();
+    const static std::map<int,coords>& getCoordinates();
 
 private:
     /* Private static variables */
     static nstd::map<int,Team> teams;
     static nstd::map<int,Stadium> stadiums;
-    static completedEdge distances;
-    static coords coordinates;
+    static std::map<int,completedEdge> distances;
+    static std::map<int,coords> coordinates;
 };
