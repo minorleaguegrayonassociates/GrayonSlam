@@ -7,17 +7,10 @@ nstd::map<int,Team> Database::teams;
 nstd::map<int,Stadium> Database::stadiums;
 
 /* Instantiate static vector containers of a tuple of a complete edge (to,from,weight) */
-std::map<int,Database::completedEdge> Database::distances;
+std::vector<Database::completedEdge> Database::distances;
 
 /* Instantiate static map containers of an id(int), and a pair of x, y coordinates std::pair<int,int>(xCoord,yCoord) */
 std::map<int,Database::coords> Database::coordinates;
-
-/* Instantiate a static database object */
-Database* Database::database = new Database();
-
-/* Constructor */
-Database::Database()
-{}
 
 /**
  * @brief Loads team, stadium, and souvenir data
@@ -81,7 +74,6 @@ void Database::loadFromFile(const std::string& filepath)
         stadiums[tempStadium.m_id] = tempStadium;
     }
 }
-
 
 /**
  * Uses the data within this class to write out the data
@@ -232,7 +224,6 @@ Stadium& Database::findStadiumById(int id)
     return stadiums[id];
 }
 
-
 /**
  * Returns a vector with all the Teams and stadiums
  *
@@ -253,7 +244,7 @@ std::vector<std::pair<Team,Stadium>> Database::getTeamsAndStadiums()
  *
  * @return Returns all the distances as as a vector of std::tuple<int,int,int>(stadium_a_Id,Stadium_b_Id,distance)
  */
-const Database::completedEdge& Database::getDistances()
+const std::vector<Database::completedEdge>& Database::getDistances()
 {
     return distances;
 }
@@ -263,7 +254,7 @@ const Database::completedEdge& Database::getDistances()
  *
  * @return A std::map with stadium id as the key and a pair of x and y coordinates
  */
-const Database::coords& Database::getCoordinates()
+const std::map<int,Database::coords>& Database::getCoordinates()
 {
     return coordinates;
 }

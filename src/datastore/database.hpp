@@ -33,13 +33,13 @@ public:
     static Team& findTeamById(int);
     static Stadium& findStadiumById(int);
     static std::vector<std::pair<Team,Stadium>> getTeamsAndStadiums();
-    const static std::map<int,completedEdge>& getDistances();
+    const static std::vector<completedEdge>& getDistances();
     const static std::map<int,coords>& getCoordinates();
 
 private:
     /* Private static variables */
     static nstd::map<int,Team> teams;
     static nstd::map<int,Stadium> stadiums;
-    static std::map<int,completedEdge> distances;
+    static std::vector<completedEdge> distances;
     static std::map<int,coords> coordinates;
 };
