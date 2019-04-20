@@ -5,44 +5,20 @@ StadiumList::StadiumList(QWidget *parent) :
 {
     m_listDisplay = new QTreeWidget(this);
     m_listDisplay->resize(parent->size());
-    populateWidget();
-
+    populateWidget(Database::getTeamsAndStadiums());
 }
 
 StadiumList::StadiumList(const std::vector<std::pair<Team,Stadium>>& stadiumList, QWidget *parent) :
     QWidget(parent)
 {
-
-    for(std::pair<Team,Stadium> stadiumId : stadiumList)
-    {
-        m_stadiumList.push_back(stadiumId.second.getId());
-    }
     m_listDisplay = new QTreeWidget(this);
     m_listDisplay->resize(parent->size());
-    populateWidget();
+    populateWidget(stadiumList);
 }
 
-StadiumList::StadiumList(const StadiumList& src, QWidget *parent) :
-    QWidget(parent), m_stadiumList(src.m_stadiumList)
+void StadiumList::setStadiumTeamList(const std::vector<std::pair<Team,Stadium>>& stadiumList)
 {
-    m_listDisplay = new QTreeWidget(this);
-    m_listDisplay->resize(parent->size());
-    populateWidget();
-}
-
-std::vector<int>& StadiumList::getStadiumList()
-{
-    return m_stadiumList;
-}
-
-void StadiumList::setStadiumList(const std::vector<std::pair<Team,Stadium>>& stadiumList)
-{
-    m_stadiumList.clear();
-    for(std::pair<Team,Stadium> stadium : stadiumList)
-    {
-        m_stadiumList.push_back(stadium.second.getId());
-    }
-    populateWidget();
+    populateWidget(stadiumList);
 }
 
 StadiumList::~StadiumList()
@@ -50,38 +26,59 @@ StadiumList::~StadiumList()
     delete m_listDisplay;
 }
 
-void StadiumList::populateWidget()
+void StadiumList::populateWidget(const std::vector<std::pair<Team,Stadium>>& stadiumsAndTeams)
 {
+    //clears old display
     m_listDisplay->clear();
     m_listDisplay->setColumnCount(10);
     QStringList headers = { "Team Name", "League", "Stadium Name", "Location", "Date Opened",
             "Seating Capacity", "Typology", "Roof Type", "Playing Surface",
              "Distance to Center Field"};
     m_listDisplay->setHeaderLabels(headers);
-    for(int id:m_stadiumList)
+    for(std::pair<Team,Stadium> stadiumAndTeam : stadiumsAndTeams)
     {
-        Stadium tmp = Database::findStadiumById(id);
-        Team tmpT = Database::findTeamById(tmp.getTeamId());
-        if(tmp.getId() != -1 && tmpT.getId() != -1)
+
+        if(stadiumAndTeam.first.getId() != -1 && stadiumAndTeam.second.getId() != -1)
         {
+
+            //Adds Qstrings for the stadium list item
             QStringList tmpList;
-            tmpList.push_back(QString::fromStdString(tmpT.getName()));
-            tmpList.push_back(QString::fromStdString(tmpT.LEAGUE_STRING[tmpT.league]));
-            tmpList.push_back(QString::fromStdString(tmp.getName()));
-            tmpList.push_back(QString::fromStdString(tmp.getLocation()));
-            tmpList.push_back(QString::fromStdString(std::to_string(tmp.getYearOpened())));
-            tmpList.push_back(QString::fromStdString(std::to_string(tmp.getSeatCap())));
-            tmpList.push_back(QString::fromStdString(tmp.TYPOLOGY_STRING[tmp.typology]));
-            tmpList.push_back(QString::fromStdString(tmp.ROOF_STRING[tmp.roof]));
-            tmpList.push_back(QString::fromStdString(tmp.SURFACE_STRING[tmp.surface]));
-            tmpList.push_back(QString::fromStdString(std::to_string(tmp.getCenterFieldDist())));
-            new QTreeWidgetItem(m_listDisplay,tmpList);
+            tmpList.push_back(QString::fromStdString(stadiumAndTeam.first.getName()));
+            tmpList.push_back(QString::fromStdString(stadiumAndTeam.first.LEAGUE_STRING[stadiumAndTeam.first.league]));
+            tmpList.push_back(QString::fromStdString(stadiumAndTeam.second.getName()));
+            tmpList.push_back(QString::fromStdString(stadiumAndTeam.second.getLocation()));
+            tmpList.push_back(QString::fromStdString(std::to_string(stadiumAndTeam.second.getYearOpened())));
+            tmpList.push_back(QString::fromStdString(commaSeparate(std::to_string(stadiumAndTeam.second.getSeatCap()))));
+            tmpList.push_back(QString::fromStdString(stadiumAndTeam.second.TYPOLOGY_STRING[stadiumAndTeam.second.typology]));
+            tmpList.push_back(QString::fromStdString(stadiumAndTeam.second.ROOF_STRING[stadiumAndTeam.second.roof]));
+            tmpList.push_back(QString::fromStdString(stadiumAndTeam.second.SURFACE_STRING[stadiumAndTeam.second.surface]));
+            tmpList.push_back(QString::fromStdString(commaSeparate(std::to_string(stadiumAndTeam.second.getCenterFieldDist()))));
+            new StadiumListItem(m_listDisplay,stadiumAndTeam.second,tmpList);
         }
     }
 
     //Does not allow users to edit the cells directly
     m_listDisplay->setSortingEnabled(true);
     m_listDisplay->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
+}
+
+std::string StadiumList::commaSeparate(const std::string & strCpy)
+{
+    std::string commaSeparated = strCpy;
+
+    unsigned int commaCount = 0;
+    for(unsigned int index = commaSeparated.length(); index != 0; --index)
+    {
+        //checks to see if group of 3
+        if((commaSeparated.length() - index - commaCount)%3 == 0 && index != commaSeparated.length())
+        {
+            commaSeparated.insert(index, 1, ',');
+            ++commaCount;
+        }
+    }
+
+    return commaSeparated;
 
 }
 

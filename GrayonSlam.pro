@@ -38,7 +38,8 @@ SOURCES += \
     src/widgets/souvenirlistitem.cpp \
     src/datastore/database.cpp \
     src/views/stadiumview.cpp \
-    src/widgets/stadiumlist.cpp
+    src/widgets/stadiumlist.cpp \
+    src/widgets/stadiumlistitem.cpp
 
 HEADERS += \
     src/windows/mainwindow.hpp \
@@ -58,7 +59,8 @@ HEADERS += \
     src/utils/enumtools.hpp \
     src/views/stadiumview.hpp \
     src/widgets/stadiumlist.hpp \
-    src/views/stadiumview.hpp
+    src/views/stadiumview.hpp \
+    src/widgets/stadiumlistitem.hpp
 
 FORMS += \
     src/windows/mainwindow.ui \
