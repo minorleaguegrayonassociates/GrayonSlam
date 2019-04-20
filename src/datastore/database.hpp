@@ -30,11 +30,7 @@ public:
     static std::vector<std::pair<Team,Stadium>> getTeamsAndStadiums();
 
 private:
-    /* Private Constructor */
-    Database();
-
     /* Private static variables */
-    static Database* database;
     static nstd::map<int,Team> teams;
     static nstd::map<int,Stadium> stadiums;
 };

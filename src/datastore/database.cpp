@@ -6,13 +6,6 @@
 nstd::map<int,Team> Database::teams;
 nstd::map<int,Stadium> Database::stadiums;
 
-/* Instantiate a static database object */
-Database* Database::database = new Database();
-
-/* Constructor */
-Database::Database()
-{}
-
 /**
  * @brief Loads team, stadium, and souvenir data
  *
@@ -102,7 +95,14 @@ nstd::map<int,Stadium> Database::getStadiums()
  */
 Team& Database::findTeamById(int id)
 {
-    return teams[id];
+    /* Static team that will only be returned if there's an error */
+    static Team error;
+    error = Team();
+
+    // search for id
+    auto it = teams.find(id);
+    // Check if id was found, if not return error
+    return (it != teams.end()) ? *it : error;
 }
 
 /**
@@ -113,7 +113,14 @@ Team& Database::findTeamById(int id)
  */
 Stadium& Database::findStadiumById(int id)
 {
-    return stadiums[id];
+    /* Static stadium that will only be returned if there's an error */
+    static Stadium error;
+    error = Stadium();
+
+    // search for id
+    auto it = stadiums.find(id);
+    // Check if id was found, if not return error
+    return (it != stadiums.end()) ? *it : error;
 }
 
 
