@@ -62,21 +62,25 @@ void StadiumList::populateWidget()
     {
         Stadium tmp = Database::findStadiumById(id);
         Team tmpT = Database::findTeamById(tmp.getTeamId());
-        QStringList tmpList;
-        tmpList.push_back(QString::fromStdString(tmpT.getName()));
-        tmpList.push_back(QString::fromStdString(tmpT.LEAGUE_STRING[tmpT.league]));
-        tmpList.push_back(QString::fromStdString(tmp.getName()));
-        tmpList.push_back(QString::fromStdString(tmp.getLocation()));
-        tmpList.push_back(QString::fromStdString(std::to_string(tmp.getYearOpened())));
-        tmpList.push_back(QString::fromStdString(std::to_string(tmp.getSeatCap())));
-        tmpList.push_back(QString::fromStdString(tmp.TYPOLOGY_STRING[tmp.typology]));
-        tmpList.push_back(QString::fromStdString(tmp.ROOF_STRING[tmp.roof]));
-        tmpList.push_back(QString::fromStdString(tmp.SURFACE_STRING[tmp.surface]));
-        tmpList.push_back(QString::fromStdString(std::to_string(tmp.getCenterFieldDist())));
-        new QTreeWidgetItem(m_listDisplay,tmpList);
+        if(tmp.getId() != -1 && tmpT.getId() != -1)
+        {
+            QStringList tmpList;
+            tmpList.push_back(QString::fromStdString(tmpT.getName()));
+            tmpList.push_back(QString::fromStdString(tmpT.LEAGUE_STRING[tmpT.league]));
+            tmpList.push_back(QString::fromStdString(tmp.getName()));
+            tmpList.push_back(QString::fromStdString(tmp.getLocation()));
+            tmpList.push_back(QString::fromStdString(std::to_string(tmp.getYearOpened())));
+            tmpList.push_back(QString::fromStdString(std::to_string(tmp.getSeatCap())));
+            tmpList.push_back(QString::fromStdString(tmp.TYPOLOGY_STRING[tmp.typology]));
+            tmpList.push_back(QString::fromStdString(tmp.ROOF_STRING[tmp.roof]));
+            tmpList.push_back(QString::fromStdString(tmp.SURFACE_STRING[tmp.surface]));
+            tmpList.push_back(QString::fromStdString(std::to_string(tmp.getCenterFieldDist())));
+            new QTreeWidgetItem(m_listDisplay,tmpList);
+        }
     }
 
     //Does not allow users to edit the cells directly
+    m_listDisplay->setSortingEnabled(true);
     m_listDisplay->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
 }
