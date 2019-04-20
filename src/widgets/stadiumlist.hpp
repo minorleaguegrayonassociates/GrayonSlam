@@ -25,8 +25,11 @@ public:
     virtual ~StadiumList();
 
 signals:
-
+    void StadiumClicked(int stadiumId);
 public slots:
+
+private slots:
+    void connectWidgetItemToStadium(QTreeWidgetItem*);
 private:
     /* Helper Functions*/
     void populateWidget(const std::vector<std::pair<Team,Stadium>>&);

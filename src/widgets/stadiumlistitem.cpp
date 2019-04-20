@@ -5,6 +5,7 @@ StadiumListItem::StadiumListItem(QTreeWidget* parent, const Stadium& stadium, co
     m_seatCap = stadium.getSeatCap();
     m_yearOpened = stadium.getYearOpened();
     m_centerFieldDist = stadium.getCenterFieldDist();
+    m_stadiumId = stadium.getId();
 
 }
 bool StadiumListItem::operator<(const StadiumListItem& otherItem)
@@ -31,4 +32,8 @@ bool StadiumListItem::operator<(const StadiumListItem& otherItem)
         lessThan = QTreeWidgetItem::operator<(otherItem);
     }
     return lessThan;
+}
+int StadiumListItem::getStadiumId()
+{
+    return m_stadiumId;
 }

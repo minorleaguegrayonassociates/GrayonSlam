@@ -6,6 +6,7 @@ StadiumList::StadiumList(QWidget *parent) :
     m_listDisplay = new QTreeWidget(this);
     m_listDisplay->resize(parent->size());
     populateWidget(Database::getTeamsAndStadiums());
+    QObject::connect(m_listDisplay, SIGNAL(itemClicked(QTreeWidgetItem*, int)),this, SLOT(connectWidgetItemToStadium(QTreeWidgetItem*)));
 }
 
 StadiumList::StadiumList(const std::vector<std::pair<Team,Stadium>>& stadiumList, QWidget *parent) :
@@ -14,6 +15,7 @@ StadiumList::StadiumList(const std::vector<std::pair<Team,Stadium>>& stadiumList
     m_listDisplay = new QTreeWidget(this);
     m_listDisplay->resize(parent->size());
     populateWidget(stadiumList);
+     QObject::connect(m_listDisplay, SIGNAL(itemClicked(QTreeWidgetItem*, int)),this, SLOT(connectWidgetItemToStadium(QTreeWidgetItem*)));
 }
 
 void StadiumList::setStadiumTeamList(const std::vector<std::pair<Team,Stadium>>& stadiumList)
@@ -26,6 +28,11 @@ StadiumList::~StadiumList()
     delete m_listDisplay;
 }
 
+ void StadiumList::connectWidgetItemToStadium(QTreeWidgetItem* item)
+ {
+     StadiumListItem* itemS = dynamic_cast<StadiumListItem*>(item);
+    emit StadiumClicked(itemS->getStadiumId());
+ }
 void StadiumList::populateWidget(const std::vector<std::pair<Team,Stadium>>& stadiumsAndTeams)
 {
     //clears old display
