@@ -95,7 +95,7 @@ nstd::map<int,Stadium> Database::getStadiums()
  */
 Team& Database::findTeamById(int id)
 {
-    return *teams.find(id);
+    return teams[id];
 }
 
 /**
@@ -106,7 +106,7 @@ Team& Database::findTeamById(int id)
  */
 Stadium& Database::findStadiumById(int id)
 {
-    return *stadiums.find(id);
+    return stadiums[id];
 }
 
 
