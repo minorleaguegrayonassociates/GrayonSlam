@@ -7,10 +7,10 @@ nstd::map<int,Team> Database::teams;
 nstd::map<int,Stadium> Database::stadiums;
 
 /* Instantiate static vector containers of a tuple of a complete edge (to,from,weight) */
-Database::completedEdge Database::distances;
+std::map<int,Database::completedEdge> Database::distances;
 
 /* Instantiate static map containers of an id(int), and a pair of x, y coordinates std::pair<int,int>(xCoord,yCoord) */
-Database::coords Database::coordinates;
+std::map<int,Database::coords> Database::coordinates;
 
 /* Instantiate a static database object */
 Database* Database::database = new Database();
