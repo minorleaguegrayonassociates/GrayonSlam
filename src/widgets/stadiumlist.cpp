@@ -31,7 +31,10 @@ StadiumList::~StadiumList()
  void StadiumList::connectWidgetItemToStadium(QTreeWidgetItem* item)
  {
      StadiumListItem* itemS = dynamic_cast<StadiumListItem*>(item);
-    emit StadiumClicked(itemS->getStadiumId());
+     if(itemS != nullptr)
+     {
+        emit StadiumClicked(itemS->getStadiumId());
+     }
  }
 void StadiumList::populateWidget(const std::vector<std::pair<Team,Stadium>>& stadiumsAndTeams)
 {
