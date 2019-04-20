@@ -1,6 +1,7 @@
 #include "stadiumview.hpp"
 #include "ui_stadiumview.h"
 
+
 StadiumView::StadiumView(QWidget *parent) :
     View(parent),
     ui(new Ui::StadiumView)
@@ -21,9 +22,11 @@ StadiumView::~StadiumView()
 void StadiumView::resetView()
 {
     //clear all data, get it new from database, and populate table
+    m_stadiumList->setStadiumList(Database::getTeamsAndStadiums());
 }
 
 void StadiumView::resetUi()
 {
     //clear table and repopulate it with list
+    m_stadiumList->setStadiumList(Database::getTeamsAndStadiums());
 }

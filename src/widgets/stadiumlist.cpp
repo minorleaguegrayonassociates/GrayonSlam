@@ -5,6 +5,7 @@ StadiumList::StadiumList(QWidget *parent) :
 {
     m_listDisplay = new QTreeWidget(this);
     m_listDisplay->resize(parent->size());
+    populateWidget();
 
 }
 
@@ -57,7 +58,6 @@ void StadiumList::populateWidget()
             "Seating Capacity", "Typology", "Roof Type", "Playing Surface",
              "Distance to Center Field"};
     m_listDisplay->setHeaderLabels(headers);
-
     for(int id:m_stadiumList)
     {
         Stadium tmp = Database::findStadiumById(id);
