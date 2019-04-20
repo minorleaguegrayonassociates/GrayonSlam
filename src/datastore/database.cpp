@@ -12,13 +12,6 @@ std::map<int,Database::completedEdge> Database::distances;
 /* Instantiate static map containers of an id(int), and a pair of x, y coordinates std::pair<int,int>(xCoord,yCoord) */
 std::map<int,Database::coords> Database::coordinates;
 
-/* Instantiate a static database object */
-Database* Database::database = new Database();
-
-/* Constructor */
-Database::Database()
-{}
-
 /**
  * @brief Loads team, stadium, and souvenir data
  *
@@ -81,7 +74,6 @@ void Database::loadFromFile(const std::string& filepath)
         stadiums[tempStadium.m_id] = tempStadium;
     }
 }
-
 
 /**
  * Uses the data within this class to write out the data

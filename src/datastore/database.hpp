@@ -37,11 +37,7 @@ public:
     const static std::map<int,coords>& getCoordinates();
 
 private:
-    /* Private Constructor */
-    Database();
-
     /* Private static variables */
-    static Database* database;
     static nstd::map<int,Team> teams;
     static nstd::map<int,Stadium> stadiums;
     static std::map<int,completedEdge> distances;
