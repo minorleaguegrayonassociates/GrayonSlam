@@ -116,6 +116,7 @@ Stadium& Database::findStadiumById(int id)
     /* Static stadium that will only be returned if there's an error */
     static Stadium error;
     error = Stadium();
+
     // search for id
     auto it = stadiums.find(id);
     // Check if id was found, if not return error
