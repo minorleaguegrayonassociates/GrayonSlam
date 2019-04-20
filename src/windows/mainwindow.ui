@@ -91,19 +91,6 @@ background-color: white;
        <string>Dashboard View</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton">
-      <property name="geometry">
-       <rect>
-        <x>300</x>
-        <y>40</y>
-        <width>114</width>
-        <height>32</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>example</string>
-      </property>
-     </widget>
     </widget>
     <widget class="QWidget" name="planVacationView">
      <property name="styleSheet">

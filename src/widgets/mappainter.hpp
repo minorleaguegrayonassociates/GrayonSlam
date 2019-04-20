@@ -1,29 +1,31 @@
 #pragma once
 
+#include "src/datastore/database.hpp"
 #include <QWidget>
 #include <map>
+
 namespace Ui {
-class graph;
+class MapPainter;
 }
 
-class mapPainter : public QWidget
+class MapPainter : public QWidget
 {
 Q_OBJECT
 
 public:
-explicit mapPainter(QWidget* parent = nullptr);
-~mapPainter() override;
+explicit MapPainter(QWidget* parent = nullptr);
+~MapPainter() override;
 
 void paintEvent(QPaintEvent*) override;
 
 /* setters */
-void paintStadiums(QPainter& painter, const QPoint& stadiumPoint, const QString& StadiumName);
+void paintStadiums(QPainter& painter, int id, const QPoint& stadiumPoint, const QString& StadiumName);
 void paintEdge(QPainter& painter, const QPoint& stdmCoord1, const QPoint& stdmCoord2, const QString& distance);
 void paintText(QPainter& painter, const QPoint& , const QString&);
 
 private:
-Ui::graph *m_ui;
-std::map<int,QPoint>* m_coordinates;
+Ui::MapPainter *m_ui;
+Database::coords m_coords;
 };
 
 

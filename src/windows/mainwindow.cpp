@@ -3,6 +3,7 @@
 #include "src/windows/login.hpp"
 #include "src/datastore/database.hpp"
 #include "src/views/adminview.hpp"
+#include "src/views/mapview.hpp"
 #include <QFontDatabase>
 #include <QMessageBox>
 #include <QDebug>
@@ -82,14 +83,5 @@ void MainWindow::resetViews()
     //Reset each view
     std::for_each(m_views.begin(), m_views.end(),
                   [](View* view){view->resetView();});
-}
-
-void MainWindow::on_pushButton_clicked()
-{
-//    QPropertyAnimation* animation  = new QPropertyAnimation(m_ui->plane, "geometry");
-//    animation->setDuration(5500);
-//    animation->setStartValue(QRect(0,0,170,80));
-//    animation->setEndValue(QRect(709,389,170,80));
-//    animation->start();
 }
 

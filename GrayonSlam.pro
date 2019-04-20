@@ -42,7 +42,7 @@ SOURCES += \
     src/widgets/stadiumlistitem.cpp \
     src/views/adminview.cpp
     src/views/mapview.cpp \
-    src/widgets/mapPainter.cpp
+    src/widgets/mappainter.cpp
 
 HEADERS += \
     src/windows/mainwindow.hpp \
@@ -68,7 +68,8 @@ HEADERS += \
     src/utils/map.hpp \
     src/views/view.hpp \
     src/views/mapview.hpp \
-    src/widgets/mapPainter.hpp
+    src/widgets/mappainter.hpp
+
 
 FORMS += \
     src/windows/mainwindow.ui \
@@ -78,7 +79,7 @@ FORMS += \
     src/views/stadiumview.ui \
     src/views/adminview.ui \
     src/views/mapview.ui \
-    src/widgets/mapPainter.ui
+    src/widgets/mappainter.ui
 
 RESOURCES += \
     res.qrc

@@ -3,6 +3,7 @@
 #include <vector>
 #include "src/widgets/navbar.hpp"
 #include "src/views/view.hpp"
+#include "src/widgets/navbar.hpp"
 
 namespace Ui
 {
@@ -27,10 +28,7 @@ private slots:
     void changeView(int);
     void resetViews();
 
-    void on_pushButton_clicked();
-
 private:
-    graph* m_graph;
     Ui::MainWindow* m_ui;
     NavBar* m_navbar;
     std::vector<View*> m_views;

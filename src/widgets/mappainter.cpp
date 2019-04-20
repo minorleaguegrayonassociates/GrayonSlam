@@ -1,56 +1,59 @@
-#include "map.hpp"
-#include "ui_graph.h"
+#include "mappainter.hpp"
+#include "ui_mappainter.h"
 #include <QPainter>
-#include <cmath>
 #include <QLabel>
 #include <QHBoxLayout>
-#include "src/datastore/database.hpp"
+#include <QDebug>
 
-graph::graph(QWidget *parent)
-    : QWidget(parent), m_ui(new Ui::graph)
+MapPainter::MapPainter(QWidget *parent)
+    : QWidget(parent), m_ui(new Ui::MapPainter)
 {
     m_ui->setupUi(this);
-    m_coordinates = new std::map<int,QPoint>{
-        { 50, QPoint(42,146)},
-        { 51, QPoint(79,11)},
-        { 52, QPoint(48,163)},
-        { 53, QPoint(61,220)},
-        { 54, QPoint(88,246)},
-        { 55, QPoint(48,205)},
-    };
+    m_coords = Database::getCoordinates();
 }
 
-graph::~graph()
+MapPainter::~MapPainter()
 {
     delete m_ui;
 }
 
-void graph::paintEvent(QPaintEvent*)
+void MapPainter::paintEvent(QPaintEvent*)
 {
     QPainter painter;
     painter.begin(this);
 
-    for(auto pair : *m_coordinates)
-        paintStadiums(painter, pair.second, QString::fromStdString(Database::findStadiumById(pair.first).getName()));
-
-//    paintText(painter, QPoint(121,205), QString::fromUtf8("Vegas Stadium"));
-//    paintText(painter, QPoint(156,254), QString::fromUtf8("Coors Field"));
+    for(auto pair : Database::getCoordinates())
+        paintStadiums(painter, pair.first,QPoint(pair.second.first,pair.second.second), QString::fromStdString(Database::findStadiumById(pair.first).getName()));
 
     painter.end();
 }
 
-void graph::paintStadiums(QPainter& painter,const QPoint& stadiumPoint, const QString& stadiumName)
+void MapPainter::paintStadiums(QPainter& painter,int id, const QPoint& stadiumPoint, const QString& stadiumName)
 {
     QBrush myBrush;
-    myBrush.setColor(Qt::GlobalColor::blue);
+     QPen myPen;
+     if(Database::findTeamById(id).league == Team::League::NATIONAL)
+    {
+        myBrush.setColor(Qt::GlobalColor::blue);
+        myPen.setColor(Qt::GlobalColor::blue);
+    }
+    else
+    {
+        myBrush.setColor(Qt::GlobalColor::red);
+        myPen.setColor(Qt::GlobalColor::red);
+    }
+    myPen.setWidth(1);
+    myPen.setCapStyle(Qt::PenCapStyle::FlatCap);
+    myPen.setJoinStyle(Qt::PenJoinStyle::MPenJoinStyle);
+    myPen.setStyle(Qt::PenStyle::SolidLine);
+    painter.setPen(myPen);
     myBrush.setStyle(Qt::BrushStyle::SolidPattern);
     painter.setBrush(myBrush);
-    painter.drawEllipse(stadiumPoint, 3, 3);
-
+    painter.drawEllipse(stadiumPoint, 2, 2);
     paintText(painter, stadiumPoint, stadiumName);
 }
 
-void graph::paintEdge(QPainter& painter, const QPoint& stdmCoord1, const QPoint& stdmCoord2, const QString& distance)
+void MapPainter::paintEdge(QPainter& painter, const QPoint& stdmCoord1, const QPoint& stdmCoord2, const QString& distance)
 {
     QPen myPen;
     myPen.setColor(Qt::GlobalColor::red);
@@ -68,7 +71,7 @@ void graph::paintEdge(QPainter& painter, const QPoint& stdmCoord1, const QPoint&
     paintText(painter, midPoint, distance);
 }
 
-void graph::paintText(QPainter& painter, const QPoint& coords, const QString& strToPrint)
+void MapPainter::paintText(QPainter& painter, const QPoint& coords, const QString& strToPrint)
 {
     QPen myPen;
 
@@ -85,7 +88,7 @@ void graph::paintText(QPainter& painter, const QPoint& coords, const QString& st
 
     painter.setPen(myPen);
     painter.setFont(font);
-    QPoint textPoint = coords - QPoint(42,0);
+    QPoint textPoint = coords - QPoint(30,0);
     QRect rect(textPoint,QSize(54,41));
     QTextOption textOption;
     textOption.setWrapMode(QTextOption::WordWrap);

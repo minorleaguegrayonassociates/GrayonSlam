@@ -2,7 +2,7 @@
 
 #include <QWidget>
 #include "view.hpp"
-#include "src/widgets/map.hpp"
+#include "src/widgets/mappainter.hpp"
 
 namespace Ui {
 class MapView;
@@ -23,8 +23,12 @@ explicit MapView(QWidget *parent = nullptr);
  /* The resetUi function resets the Ui that corresponds with the given view */
  void resetUi() override;
 
-private:
-Ui::MapView *m_ui;
+ private slots:
+     void on_pushButton_clicked();
+
+ private:
+    Ui::MapView* m_ui;
+    MapPainter* m_map;
 };
 
 
