@@ -33,7 +33,7 @@ public:
     static Team& findTeamById(int);
     static Stadium& findStadiumById(int);
     static std::vector<std::pair<Team,Stadium>> getTeamsAndStadiums();
-    static completedEdge getDistances();
+    const static completedEdge& getDistances();
     const static coords& getCoordinates();
 
 private:
