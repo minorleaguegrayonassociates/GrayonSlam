@@ -9,6 +9,9 @@ nstd::map<int,Stadium> Database::stadiums;
 /* Instantiate static vector containers of a tuple of a complete edge (to,from,weight) */
 Database::completedEdge Database::distances;
 
+/* Instantiate static map containers of an id(int), and a pair of x, y coordinates std::pair<int,int>(xCoord,yCoord) */
+Database::coords Database::coordinates;
+
 /* Instantiate a static database object */
 Database* Database::database = new Database();
 
@@ -43,24 +46,26 @@ void Database::loadFromFile(const std::string& filepath)
     for (const std::vector<std::string>& team : teamData)
     {
         // Converting all string values from strings to their enum values
-        tempLeague = getEnumValue<Team::League>(Team::LEAGUE_STRING,team[8]);
-        tempRoof = getEnumValue<Stadium::Roof>(Stadium::ROOF_STRING,team[12]);
-        tempSurface = getEnumValue<Stadium::Surface>(Stadium::SURFACE_STRING,team[7]);
-        tempTypology = getEnumValue<Stadium::Typology>(Stadium::TYPOLOGY_STRING,team[11]);
+        tempLeague = getEnumValue<Team::League>(Team::LEAGUE_STRING,team[10]);
+        tempRoof = getEnumValue<Stadium::Roof>(Stadium::ROOF_STRING,team[14]);
+        tempSurface = getEnumValue<Stadium::Surface>(Stadium::SURFACE_STRING,team[9]);
+        tempTypology = getEnumValue<Stadium::Typology>(Stadium::TYPOLOGY_STRING,team[13]);
 
         // Initializing a new Team class
         Team tempTeam(std::stoi(team[0]), team[1], tempLeague);
         // Set's deleted bool
         tempTeam.hidden = std::stoi(team[2]);
         // Initializing a new Stadium class
-        Stadium tempStadium(std::stoi(team[3]), std::stoi(team[0]), team[4], team[6], std::stoi(team[5]),std::stoi(team[9]),
-                            std::stoi(team[10]), tempRoof, tempSurface, tempTypology);
-        // Souvenir index starts at 14 for each team, reseting to 14 here
+        Stadium tempStadium(std::stoi(team[3]), std::stoi(team[0]), team[4], team[6], std::stoi(team[5]),std::stoi(team[11]),
+                            std::stoi(team[12]), tempRoof, tempSurface, tempTypology);
+        // Adding coordinates to the coordinates map as a pair of x, y, id is stadium id
+        coordinates[std::stoi(team[3])] = std::pair<int,int>(std::stoi(team[7]),std::stoi(team[8]));
+        // Souvenir index starts at 16 for each team, reseting to 16 here
         // Used to traverser through souvenirs
-        unsigned int j = 14;
+        unsigned int j = 16;
 
         // Index 13 holds the number of souvenirs a stadium has
-        souvenirCount = std::stoi(team[13]);
+        souvenirCount = std::stoi(team[15]);
         for(int i = 0; i < souvenirCount; ++i)
         {
             tempHidden = std::stoi(team[j++]); // Is hidden? - bool
@@ -101,7 +106,7 @@ void Database::saveToFile(const std::string& path)
 
     /* rowHeader hold the header of a save file */
     std::vector<std::string> rowHeader;
-    rowHeader.push_back("# id, team name, hidden bool, id, stadium name, capacity, location, playing surface");
+    rowHeader.push_back("# id, team name, hidden bool, id, stadium name, capacity, location, x coord, y coord, playing surface");
     rowHeader.push_back(" league, date opened, distance to center field, ballpark typology, Rooftype");
     allRows.push_back(rowHeader);
 
@@ -124,6 +129,8 @@ void Database::saveToFile(const std::string& path)
         columns.push_back(teamStadiumData[i].second.getName());
         columns.push_back(std::to_string(teamStadiumData[i].second.getSeatCap()));
         columns.push_back(teamStadiumData[i].second.getLocation());
+        columns.push_back(std::to_string(coordinates[teamStadiumData[i].second.getId()].first));
+        columns.push_back(std::to_string(coordinates[teamStadiumData[i].second.getId()].second));
         columns.push_back(tempSurface);
         columns.push_back(tempLeague);
         columns.push_back(std::to_string(teamStadiumData[i].second.getYearOpened()));
@@ -239,4 +246,14 @@ std::vector<std::pair<Team,Stadium>> Database::getTeamsAndStadiums()
         vec.push_back(std::pair<Team,Stadium>(Database::findTeamById(stadium.getTeamId()),stadium));
 
     return vec;
+}
+
+/**
+ * Returns a std::map with x and y coordinates
+ *
+ * @return A std::map with stadium id as the key and a pair of x and y coordinates
+ */
+const Database::coords& Database::getCoordinates()
+{
+    return coordinates;
 }
