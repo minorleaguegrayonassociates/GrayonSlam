@@ -249,6 +249,16 @@ std::vector<std::pair<Team,Stadium>> Database::getTeamsAndStadiums()
 }
 
 /**
+ * Returns all the distances
+ *
+ * @return Returns all the distances as as a vector of std::tuple<int,int,int>(stadium_a_Id,Stadium_b_Id,distance)
+ */
+const Database::completedEdge& Database::getDistances()
+{
+    return distances;
+}
+
+/**
  * Returns a std::map with x and y coordinates
  *
  * @return A std::map with stadium id as the key and a pair of x and y coordinates
