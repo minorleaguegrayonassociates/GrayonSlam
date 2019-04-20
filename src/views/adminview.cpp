@@ -16,9 +16,8 @@ AdminView::AdminView(QWidget* parent)
     connect(m_ui->spinBox, qOverload<int>(&QSpinBox::valueChanged), this, &AdminView::fillStadiumEditFields);
 
     /*
-     * These connections will unselect items of the other list.
-     * This will be used for selecting what souvenir will be chosen
-     * when editing.
+     * These connections will unselect items of the other list and
+     * fill the souvenir edit fields with the selected item.
      */
     connect(m_availableSouvenirList, &SouvenirList::currentSouvenirChanged,
             [&](IDs ids)
@@ -65,7 +64,7 @@ void AdminView::resetView()
  */
 void AdminView::resetUi()
 {
-    loadSouvenirLists(m_currentStadiumId);
+    fillSouvenirLists(m_currentStadiumId);
 
     /* Line edits */
     m_ui->lineEdit_stadName->clear();
@@ -94,13 +93,13 @@ void AdminView::resetUi()
  * A stadium object is extracted from the database using @a stadiumId.
  * The souvenirs of the extracted stadium is used to fill the
  * available and hidden souvenir lists. As a precaution, the lists
- * are cleared to remove any leftover items in the lists.
+ * are cleared to remove any leftover items in the lists before fill.
  *
  * If the passed ID results in an invalid stadium, this function does nothing.
  *
  * @param stadiumId Stadium ID with souvenirs to use in the lists
  */
-void AdminView::loadSouvenirLists(int stadiumId)
+void AdminView::fillSouvenirLists(int stadiumId)
 {
     /* Extract stadium from database and check if valid */
     const Stadium& stadium = Database::findStadiumById(stadiumId);
