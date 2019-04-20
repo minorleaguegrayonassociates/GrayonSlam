@@ -6,13 +6,6 @@
 nstd::map<int,Team> Database::teams;
 nstd::map<int,Stadium> Database::stadiums;
 
-/* Instantiate a static database object */
-Database* Database::database = new Database();
-
-/* Constructor */
-Database::Database()
-{}
-
 /**
  * @brief Loads team, stadium, and souvenir data
  *
