@@ -13,6 +13,24 @@ AdminView::AdminView(QWidget* parent)
     m_hiddenSouvenirList->allowHidden(true);
 
     connect(m_ui->spinBox, qOverload<int>(&QSpinBox::valueChanged), this, &AdminView::fillStadiumEditFields);
+
+    connect(m_availableSouvenirList, &SouvenirList::currentSouvenirChanged,
+            [&](IDs ids)
+            {
+                //Deselect current selection on hidden souvenir list
+                m_hiddenSouvenirList->setCurrentRow(-1);
+
+                fillSouvenirEditFields(ids.second);
+            });
+
+    connect(m_hiddenSouvenirList, &SouvenirList::currentSouvenirChanged,
+            [&](IDs ids)
+            {
+                //Deselect current selection on hidden souvenir list
+                m_availableSouvenirList->setCurrentRow(-1);
+
+                fillSouvenirEditFields(ids.second);
+            });
 }
 
 /**
@@ -130,6 +148,42 @@ void AdminView::on_pushButton_stadEditSouvenirs_clicked()
     m_ui->stackedWidget->setCurrentIndex(1);
 }
 
+/**
+ * @brief Fill souvenir edit fields
+ * @param souvenirId
+ */
+void AdminView::fillSouvenirEditFields(int souvenirId)
+{
+    /* Extract stadium from database and check if valid */
+    Stadium stadium = Database::findStadiumById(m_currentStadiumId);
+    if(stadium.getId() == -1)
+        return;
+
+    /* Extract souvenir and fill edit fields */
+    const Souvenir& souvenir = stadium.findSouvenir(souvenirId);
+    m_ui->lineEdit_souvEditName->setText(QString::fromStdString(souvenir.getName()));
+    m_ui->doubleSpinBox_souvEditPrice->setValue(souvenir.getPrice());
+}
+
+/**
+ * @brief Hide or resture currently selected souvenir from the either list
+ */
+void AdminView::on_pushButton_souvHideRestore_clicked()
+{
+    SouvenirId id = m_availableSouvenirList->getSelected().second;
+
+    if(id == -1)
+        id = m_hiddenSouvenirList->getSelected().second;
+
+    if(id == -1)
+        return;
+
+    Stadium& stadium = Database::findStadiumById(m_currentStadiumId);
+    Souvenir& souvenir = stadium.findSouvenir(id);
+
+    //Flip the hidden state
+    souvenir.hidden = !souvenir.hidden;
+}
 
 /**
  * Goes back to stadium list page by calling @a resetView().

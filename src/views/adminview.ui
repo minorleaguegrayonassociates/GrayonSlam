@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="page_stadiums">
     <widget class="QWidget" name="widget_stadList" native="true">
@@ -474,7 +474,7 @@ QListWidget { background-color: #303030; }</string>
 QListWidget { background-color: #303030; }</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_souvRestore">
+    <widget class="QPushButton" name="pushButton_souvHideRestore">
      <property name="geometry">
       <rect>
        <x>310</x>

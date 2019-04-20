@@ -30,8 +30,10 @@ private slots:
     void on_pushButton_stadEditSouvenirs_clicked();
 
     /* Souvenir subview controls */
-//    void fillSouvenirEditFields(int souvenirId);
+    void fillSouvenirEditFields(int souvenirId);
+    void on_pushButton_souvHideRestore_clicked();
     void on_pushButton_souvGoBack_clicked();
+
 
 private:
     Ui::AdminView* m_ui;
