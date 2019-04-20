@@ -413,9 +413,9 @@ namespace nstd
         for(int i = 0; i < otherMap.m_capacity; ++i)
         {
 
-            if(otherMap.m_array[i] != NULL && otherMap.m_array[i]->available == false)
+            if(otherMap.m_array[i] != NULL)
             {
-                m_array[i] = new node(otherMap.m_array[i]->nodeKey,otherMap.m_array[i]->nodeValue,false, this);
+                m_array[i] = new node(otherMap.m_array[i]->nodeKey,otherMap.m_array[i]->nodeValue,otherMap.m_array[i]->available, this);
             }
             else
             {
@@ -500,25 +500,24 @@ namespace nstd
     {
         int position = -1;
         node* val = NULL;
-        for(int i = 0; i < m_capacity; ++i)
+        int j = 0; //collision j
+        unsigned int hashCode = hash(k, j, m_capacity);
+        while(j<m_capacity && m_array[hashCode] != NULL )
         {
-            if(m_array[i] != NULL)
+            if(m_array[hashCode]->available) {++j; continue;}
+            if(m_array[hashCode]->nodeKey == k){break;}
+            ++j;
+            hashCode = hash(k, j, m_capacity);
+        }
+        if(j < m_capacity && (m_array[hashCode] != 0 && !m_array[hashCode]->available) )
+        {
+            if(m_array[hashCode]->nodeKey == k)
             {
-                int j = 1; //collision j
-                unsigned int hashCode = hash(k, 0, m_capacity);
-                while(m_array[hashCode] != NULL && !m_array[hashCode]->available && j<=m_capacity)
-                {
-                    if(m_array[hashCode]->nodeKey == k){break;}
-                    hashCode = hash(k, j, m_capacity);
-                    ++j;
-                }
-                if(m_array[hashCode] != 0 && !m_array[hashCode]->available)
-                {
-                    val = m_array[hashCode];
-                    position = static_cast<int>(hashCode);
-                }
+                val = m_array[hashCode];
+                position = static_cast<int>(hashCode);
             }
         }
+
         return iterator(position, this, val);
     }
 
@@ -771,19 +770,28 @@ namespace nstd
     typename map<key,value,Hash>::iterator& map<key,value,Hash>::iterator::operator++()
     {
         /* starts at current spot in map then goes to non null node*/
-        if(m_position != -1 ||m_end == true)
+        if(m_position != -1 && m_end != true)
         {
-            ++m_position, m_data = m_parent->m_array[m_position];
-            if(m_position == m_parent->m_capacity ||(m_data != NULL && m_data->available)) m_data = NULL;
-            while (m_position < m_parent->m_capacity && (m_data == NULL ||(m_data != NULL && m_data->available)))
+            ++m_position;
+            if(m_position < m_parent->m_capacity)
             {
-                ++m_position;
-                if(m_position < m_parent->m_capacity)m_data = m_parent->m_array[m_position];
-                else{m_data = NULL;}
-                if(m_data != NULL && m_data->available) m_data = NULL;
+                m_data = m_parent->m_array[m_position];
+                while(m_position < m_parent->m_capacity && (m_data == NULL || m_data->available))
+                {
+                    ++m_position;
+                    if(m_position < m_parent->m_capacity)m_data = m_parent->m_array[m_position];
+                    if(m_data != NULL && m_data->available) m_data = NULL;
+                }
+
+                //invalidate pointer if at end
+                if(m_position >= m_parent->m_capacity || m_data == NULL|| m_data->available)
+                {
+                    m_position = -1;
+                    m_data = NULL;
+                    m_end = true;
+                }
             }
-            //invalidate pointer if at end
-            if(m_position >= m_parent->m_capacity || m_data == NULL|| m_data->available)
+            else
             {
                 m_position = -1;
                 m_data = NULL;
