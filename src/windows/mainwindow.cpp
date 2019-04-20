@@ -5,6 +5,7 @@
 #include <QFontDatabase>
 #include <QMessageBox>
 #include <QDebug>
+#include "src/views/stadiumview.hpp"
 
 /* Constructors */
 MainWindow::MainWindow()
@@ -28,7 +29,9 @@ MainWindow::MainWindow()
         m_navbar->addItem("\uf085", "Inventory\nManagement");
     m_navbar->addItem("\uf2f5", "Logout");
 
-    Database::loadFromFile("./../../../src/datastore/MLBInformation.csv");
+    Database::loadFromFile("C:\\Users\\AJVer\\QT\\MinorLeagueGrayons\\src\\datastore\\MLBInformation.csv");
+    //m_views.push_back(new AdminView(m_ui->adminView));
+    m_views.push_back(new StadiumView(m_ui->viewTeamView));
 }
 
 MainWindow::~MainWindow()
@@ -66,5 +69,5 @@ void MainWindow::changeView(int view)
 void MainWindow::resetViews()
 {
     /* Reset views -- go here */
-    Database::saveToFile("./../../../src/datastore/MLBInformation.csv");
+    Database::saveToFile("C:\\Users\\AJVer\\QT\\MinorLeagueGrayons\\src\\datastore\\MLBInformation.csv");
 }
