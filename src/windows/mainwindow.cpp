@@ -29,6 +29,7 @@ MainWindow::MainWindow()
     m_navbar->addItem("\uf2f5", "Logout");
 
     Database::loadFromFile("./../../../src/datastore/MLBInformation.csv");
+    Database::loadDistancesFromFile("./../../../src/datastore/DistanceBetweenStadiums.csv");
 }
 
 MainWindow::~MainWindow()
