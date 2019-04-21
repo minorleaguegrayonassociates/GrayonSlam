@@ -12,12 +12,21 @@ AdminView::AdminView(QWidget* parent)
     m_hiddenSouvenirList = new SouvenirList(m_ui->widget_souvHiddenList);
     m_hiddenSouvenirList->allowHidden(true);
 
-    //TODO replace spinbox with stadium list
-    connect(m_ui->spinBox, qOverload<int>(&QSpinBox::valueChanged), this, &AdminView::fillStadiumEditFields);
+    /*
+     * This connection will change the current stadium ID to the
+     * new stadium ID that is emitted by the stadium list and
+     * the stadium edit fields are filled
+     */
+    connect(m_ui->spinBox, qOverload<int>(&QSpinBox::valueChanged), //TODO replace spinbox with stadium list
+            [&](int id)
+            {
+                m_currentStadiumId = id;
+                fillStadiumEditFields(id);
+            });
 
     /*
      * These connections will unselect items of the other list and
-     * fill the souvenir edit fields with the selected item.
+     * fill the souvenir edit fields with the selected item
      */
     connect(m_availableSouvenirList, &SouvenirList::currentSouvenirChanged,
             [&](IDs ids)
@@ -100,7 +109,8 @@ void AdminView::resetUi()
  */
 void AdminView::fillStadiumList()
 {
-    //TODO waiting for stadium list
+    m_currentStadiumId = -1;
+    m_ui->spinBox->setValue(m_currentStadiumId);
 }
 
 /**
@@ -193,6 +203,77 @@ SouvenirId AdminView::getCurrentSouvenirId() const
 }
 
 /**
+ * @brief Edit currently selected stadium
+ *
+ * Obtain input from UI and edit the currently selected stadium
+ * with the input. Resets the UI to reload the stadium list.
+ *
+ * If the input is invalid (empty strings, invalid ID, or $0.0 for price),
+ * then this function does nothing.
+ */
+void AdminView::on_pushButton_stadConfirmEdit_clicked()
+{
+    /* Extract stadium from database and check if valid */
+    Stadium& stadium = Database::findStadiumById(m_currentStadiumId);
+    if(stadium.getId() == -1)
+        return;
+
+    //Extract team from database
+    Team& team = Database::findTeamById(stadium.getTeamId());
+
+    /* Line edits */
+    const QString& stadName = m_ui->lineEdit_stadName->text();
+    const QString& loc = m_ui->lineEdit_stadLocation->text();
+    const QString& teamName = m_ui->lineEdit_stadTeamName->text();
+
+    /* Spin boxes */
+    int year = m_ui->spinBox_stadYearOpened->value();
+    int cap = m_ui->spinBox_stadSeatCap->value();
+    int dist = m_ui->spinBox_stadCenterDist->value();
+
+    /*
+     * Combo boxes
+     *
+     * NOTE:
+     * Since each combo box has an empty string for the initial
+     * value, we must subtract one from the value of the combo box
+     * to get the expected value.
+     */
+    int leagueIndex = m_ui->comboBox_stadTeamLeague->currentIndex() - 1;
+    int roofIndex = m_ui->comboBox_stadRoof->currentIndex() - 1;
+    int surfaceIndex = m_ui->comboBox_stadSurface->currentIndex() - 1;
+    int typologyIndex = m_ui->comboBox_stadTypology->currentIndex() - 1;
+
+    /* Error check input */
+    if(stadName.isEmpty() || loc.isEmpty() || teamName.isEmpty() ||
+       leagueIndex < 0    || roofIndex < 0 ||
+       surfaceIndex < 0   || typologyIndex < 0)
+        return;
+
+    /* Enum conversions */
+    Team::League league = static_cast<Team::League>(leagueIndex);
+    Stadium::Roof roof = static_cast<Stadium::Roof>(roofIndex);
+    Stadium::Surface surface = static_cast<Stadium::Surface>(surfaceIndex);
+    Stadium::Typology typology = static_cast<Stadium::Typology>(typologyIndex);
+
+    /* Edit stadium */
+    stadium.setName(stadName.toStdString());
+    stadium.setLocation(loc.toStdString());
+    stadium.setYearOpened(year);
+    stadium.setSeatCap(cap);
+    stadium.setCenterFieldDist(dist);
+    stadium.roof = roof;
+    stadium.surface = surface;
+    stadium.typology = typology;
+
+    /* Edit team */
+    team.setName(teamName.toStdString());
+    team.league = league;
+
+    resetUi();
+}
+
+/**
  * @brief Change to souvenir page
  *
  * Obtains the currently selected stadium from the stadium list.
@@ -204,9 +285,6 @@ SouvenirId AdminView::getCurrentSouvenirId() const
  */
 void AdminView::on_pushButton_stadEditSouvenirs_clicked()
 {
-    //TODO replace with selected ID from stadium list
-    m_currentStadiumId = m_ui->spinBox->value();
-
     /* Extract stadium from database and check if valid */
     const Stadium& stadium = Database::findStadiumById(m_currentStadiumId);
     if(stadium.getId() == -1)
