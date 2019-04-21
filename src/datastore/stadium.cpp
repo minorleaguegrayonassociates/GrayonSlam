@@ -157,23 +157,28 @@ int Stadium::addSouvenir(const std::string& name, double price, bool hidden)
 }
 
 /**
- * Finds a souvenir given a souvenir ID.
+ * Finds and returns a reference to a souvenir with the
+ * ID of @a id.
  *
  * @param id ID of souvenir to find
  * @return If found, returns the souvenir.
  *         If not found, returns an invalid souvenir.
+ *         Returns a reference of the souvenir.
  */
 Souvenir& Stadium::findSouvenir(int id)
 {
-    return m_souvenirs[id];
+    /* Default souvenir to return if exception caught */
+    static Souvenir error;
+    error = Souvenir();
+
+    auto it = m_souvenirs.find(id);
+    return it == m_souvenirs.end() ? it->second
+                                   : error;
 }
 
 /**
- * Finds a souvenir given a souvenir ID. Since @a std::map::operator[]
- * doesn't return a const-reference, we must use @a std::map::at instead.
- * We wrap the call in a try-catch since @a std::map::at throws an
- * exception if the item wasn't found. If the item was found, we return it.
- * If the item wasn't found, we return a static default item.
+ * Finds and returns a const-reference to a souvenir with the
+ * ID of @a id.
  *
  * @param id ID of souvenir to find
  * @return If found, returns the souvenir.
@@ -186,14 +191,9 @@ const Souvenir& Stadium::findSouvenir(int id) const
     static Souvenir error;
     error = Souvenir();
 
-    try
-    {
-        return m_souvenirs.at(id);
-    }
-    catch(const std::out_of_range&)
-    {
-        return error;
-    }
+    auto it = m_souvenirs.find(id);
+    return it == m_souvenirs.end() ? it->second
+                                   : error;
 }
 
 /**
