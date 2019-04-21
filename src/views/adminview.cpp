@@ -110,7 +110,15 @@ void AdminView::resetUi()
  */
 void AdminView::fillStadiumList()
 {
-    m_currentStadiumId = -1;
+    /*
+     * BUG
+     * If this line exists, the souvenir lists won't load because
+     * fillStadiumList() is called before fillSouvenirLists()
+     * and it requires m_currentStadiumId.
+     * Hopefully, when StadiumList arrives, we don't need to
+     * have this line at all.
+     */
+//    m_currentStadiumId = -1;
     m_ui->spinBox->setValue(m_currentStadiumId);
 }
 
@@ -401,9 +409,8 @@ void AdminView::on_pushButton_souvConfirmAdd_clicked()
     double price = m_ui->doubleSpinBox_souvAddPrice->value();
     bool hidden = m_ui->checkBox_souvAddHidden->checkState() == Qt::CheckState::Checked;
 
-    /* Error check currently selected souvenir and input */
-    SouvenirId id = getCurrentSouvenirId();
-    if(id == -1 || name.isEmpty() || price == 0.0)
+    /* Error check input */
+    if(name.isEmpty() || price == 0.0)
         return;
 
     /* Extract stadium and souvenir from database */
