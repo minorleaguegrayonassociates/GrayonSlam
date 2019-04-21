@@ -139,10 +139,8 @@ void AdminView::fillSouvenirLists(StadiumId stadiumId)
     /* Get the stadium and add each souvenir into the lists */
     for(const Souvenir& souvenir : stadium.getSouvenirs())
     {
-        if(souvenir.hidden)
-            m_hiddenSouvenirList->addItem(stadium.getId(), souvenir);
-        else
-            m_availableSouvenirList->addItem(stadium.getId(), souvenir);
+        (souvenir.hidden ? m_hiddenSouvenirList
+                         : m_availableSouvenirList)->addItem(stadium.getId(), souvenir);
     }
 }
 
