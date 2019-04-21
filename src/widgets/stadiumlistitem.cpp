@@ -1,5 +1,11 @@
 #include "stadiumlistitem.hpp"
 
+/**
+ * This constructor constructs a StadiumListItem and puts it into the parent Tree Widget
+ * @param parent Parent tree widget of the StadiumListItem
+ * @param stadium Stadium that corresponds the the row
+ * @param strings A QStringList used to populate the QTreeWidget
+ */
 StadiumListItem::StadiumListItem(QTreeWidget* parent, const Stadium& stadium, const QStringList& strings): QTreeWidgetItem (parent, strings), parent(parent)
 {
     m_seatCap = stadium.getSeatCap();
@@ -8,6 +14,13 @@ StadiumListItem::StadiumListItem(QTreeWidget* parent, const Stadium& stadium, co
     m_stadiumId = stadium.getId();
 
 }
+
+/**
+ * operator< is overloaded to compare the numerical values, and if it is not numerical, does
+ * a lexigraphical comparison instead
+ * @param otherItem The StadiumListItem being compare with
+ * @return A boolean that specifies a ordering relation between the items
+ */
 bool StadiumListItem::operator<(const StadiumListItem& otherItem)
 {
     bool lessThan;
@@ -33,6 +46,11 @@ bool StadiumListItem::operator<(const StadiumListItem& otherItem)
     }
     return lessThan;
 }
+
+/**
+ * A getter that returns the stadium Id of the StadiumListItem
+ * @return
+ */
 int StadiumListItem::getStadiumId()
 {
     return m_stadiumId;
