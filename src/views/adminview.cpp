@@ -129,7 +129,7 @@ void AdminView::fillSouvenirLists(int stadiumId)
  * If @a stadiumId doesn't represent an existing stadium, this
  * function does nothing.
  *
- * @param stadiumId Stadium ID to fill the edit fields with
+ * @param stadiumId ID of Stadium to fill the edit fields with
  */
 void AdminView::fillStadiumEditFields(int stadiumId)
 {
@@ -158,6 +158,16 @@ void AdminView::fillStadiumEditFields(int stadiumId)
     m_ui->spinBox_stadCenterDist->setValue(stadium.getCenterFieldDist());
 }
 
+/**
+ * @brief Change to souvenir page
+ *
+ * Obtains the currently selected stadium from the stadium list.
+ * The UI is reset and the stacked widget page is changed to
+ * the souvenir page.
+ *
+ * If the ID of the currently selected stadium is an invalid
+ * ID (-1), this function does nothing besides store the ID.
+ */
 void AdminView::on_pushButton_stadEditSouvenirs_clicked()
 {
     m_currentStadiumId = m_ui->spinBox->value(); //TODO replace with selected ID from stadium list
@@ -168,6 +178,8 @@ void AdminView::on_pushButton_stadEditSouvenirs_clicked()
         return;
 
     resetUi();
+
+    //Change to souvenir page
     m_ui->stackedWidget->setCurrentIndex(1);
 }
 
@@ -180,7 +192,7 @@ void AdminView::on_pushButton_stadEditSouvenirs_clicked()
  * The stadium used to determine which souvenirs to get is
  * determined by @a m_currentStadiumId.
  *
- * @param souvenirId Souvenir ID of @a m_currentStadiumId to fill the edit fields with
+ * @param souvenirId ID of Souvenir of @a m_currentStadiumId to fill the edit fields with
  */
 void AdminView::fillSouvenirEditFields(int souvenirId)
 {
@@ -196,9 +208,16 @@ void AdminView::fillSouvenirEditFields(int souvenirId)
 }
 
 /**
- * @brief Hide or restore currently selected souvenir from the souvenir lists
+ * @brief Hide or restore currently selected souvenir
  *
- * Obtains
+ * Obtain a valid ID from either souvenir list (available and hidden).
+ * Extract the souvenir using the current stadium ID @a m_currentStadiumId
+ * and the obtained valid souvenir ID from the lists. The souvenir's
+ * hidden state is flipped. Finally, the UI is reset so the souvenir
+ * lists reload.
+ *
+ * If neither list returns a currently selected souvenir
+ * ID, then this function does nothing.
  */
 void AdminView::on_pushButton_souvHideRestore_clicked()
 {
