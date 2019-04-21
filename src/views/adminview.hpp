@@ -24,20 +24,21 @@ public:
 
 private slots:
     void fillStadiumList();
-    void fillSouvenirLists(int stadiumId);
+    void fillSouvenirLists(StadiumId);
+    SouvenirId getCurrentSouvenirId() const;
 
     /* Stadium subview controls */
-    void fillStadiumEditFields(int stadiumId);
+    void fillStadiumEditFields(StadiumId);
     void on_pushButton_stadEditSouvenirs_clicked();
 
     /* Souvenir subview controls */
-    void fillSouvenirEditFields(int souvenirId);
-    void on_pushButton_souvHideRestore_clicked();
-    void on_pushButton_souvGoBack_clicked();
+    void fillSouvenirEditFields(SouvenirId);
+    void on_pushButton_souvConfirmEdit_clicked();
+    void on_pushButton_souvReturn_clicked();
 
 private:
     Ui::AdminView* m_ui;
-    int m_currentStadiumId = -1;
+    StadiumId m_currentStadiumId = -1;
 
     /* Widgets */
     SouvenirList* m_availableSouvenirList;

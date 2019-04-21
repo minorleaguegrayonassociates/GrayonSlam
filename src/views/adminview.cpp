@@ -86,6 +86,10 @@ void AdminView::resetUi()
     m_ui->spinBox_stadCenterDist->clear();
     m_ui->doubleSpinBox_souvAddPrice->clear();
     m_ui->doubleSpinBox_souvEditPrice->clear();
+
+    /* Check boxes */
+    m_ui->checkBox_souvAddHidden->setCheckState(Qt::CheckState::Unchecked);
+    m_ui->checkBox_souvEditHidden->setCheckState(Qt::CheckState::Unchecked);
 }
 
 /**
@@ -111,7 +115,7 @@ void AdminView::fillStadiumList()
  *
  * @param stadiumId Stadium ID with souvenirs to use in the lists
  */
-void AdminView::fillSouvenirLists(int stadiumId)
+void AdminView::fillSouvenirLists(StadiumId stadiumId)
 {
     /* Extract stadium from database and check if valid */
     const Stadium& stadium = Database::findStadiumById(stadiumId);
@@ -143,7 +147,7 @@ void AdminView::fillSouvenirLists(int stadiumId)
  *
  * @param stadiumId ID of Stadium to fill the edit fields with
  */
-void AdminView::fillStadiumEditFields(int stadiumId)
+void AdminView::fillStadiumEditFields(StadiumId stadiumId)
 {
     /* Extract stadium from database and check if valid */
     const Stadium& stadium = Database::findStadiumById(stadiumId);
@@ -168,6 +172,24 @@ void AdminView::fillStadiumEditFields(int stadiumId)
     m_ui->spinBox_stadYearOpened->setValue(stadium.getYearOpened());
     m_ui->spinBox_stadSeatCap->setValue(stadium.getSeatCap());
     m_ui->spinBox_stadCenterDist->setValue(stadium.getCenterFieldDist());
+}
+
+/**
+ * @brief Get currently selected souvenir ID
+ *
+ * Returns the currently selected souvenir ID by checking
+ * both available and hidden souvenir lists.
+ *
+ * @return Currently selected souvenir ID
+ */
+SouvenirId AdminView::getCurrentSouvenirId() const
+{
+    SouvenirId id = m_availableSouvenirList->getSelected().second;
+
+    if(id == -1)
+        id = m_hiddenSouvenirList->getSelected().second;
+
+    return id;
 }
 
 /**
@@ -207,7 +229,7 @@ void AdminView::on_pushButton_stadEditSouvenirs_clicked()
  *
  * @param souvenirId ID of Souvenir of @a m_currentStadiumId to fill the edit fields with
  */
-void AdminView::fillSouvenirEditFields(int souvenirId)
+void AdminView::fillSouvenirEditFields(SouvenirId souvenirId)
 {
     /* Extract stadium from database and check if valid */
     Stadium stadium = Database::findStadiumById(m_currentStadiumId);
@@ -218,35 +240,39 @@ void AdminView::fillSouvenirEditFields(int souvenirId)
     const Souvenir& souvenir = stadium.findSouvenir(souvenirId);
     m_ui->lineEdit_souvEditName->setText(QString::fromStdString(souvenir.getName()));
     m_ui->doubleSpinBox_souvEditPrice->setValue(souvenir.getPrice());
+    m_ui->checkBox_souvEditHidden->setCheckState(souvenir.hidden ? Qt::CheckState::Checked
+                                                                 : Qt::CheckState::Unchecked);
 }
 
 /**
- * @brief Hide or restore currently selected souvenir
+ * @brief Edit currently selected souvenir
  *
- * Obtain a valid ID from either souvenir list (available and hidden).
- * Extract the souvenir using the current stadium ID @a m_currentStadiumId
- * and the obtained valid souvenir ID from the lists. The souvenir's
- * hidden state is flipped. Finally, the UI is reset so the souvenir
- * lists reload.
+ * Obtain input from UI and edit the currently selected souvenir
+ * with the input. Resets the UI to reload the souvenir lists.
  *
- * If neither list returns a currently selected souvenir
- * ID, then this function does nothing.
+ * If the input is invalid (empty strings, invalid ID, or $0.0 for price),
+ * then this function does nothing.
  */
-void AdminView::on_pushButton_souvHideRestore_clicked()
+void AdminView::on_pushButton_souvConfirmEdit_clicked()
 {
-    SouvenirId id = m_availableSouvenirList->getSelected().second;
+    /* Extract input from UI */
+    const QString& name = m_ui->lineEdit_souvEditName->text();
+    double price = m_ui->doubleSpinBox_souvEditPrice->value();
+    bool hidden = m_ui->checkBox_souvEditHidden->checkState() == Qt::CheckState::Checked;
 
-    if(id == -1)
-        id = m_hiddenSouvenirList->getSelected().second;
-
-    if(id == -1)
+    /* Error check currently selected souvenir and input */
+    SouvenirId id = getCurrentSouvenirId();
+    if(id == -1 || name.isEmpty() || price == 0.0)
         return;
 
+    /* Extract stadium and souvenir from database */
     Stadium& stadium = Database::findStadiumById(m_currentStadiumId);
     Souvenir& souvenir = stadium.findSouvenir(id);
 
-    //Flip the hidden state
-    souvenir.hidden = !souvenir.hidden;
+    /* Change souvenir data */
+    souvenir.setName(name.toStdString());
+    souvenir.setPrice(price);
+    souvenir.hidden = hidden;
 
     resetUi();
 }
@@ -254,7 +280,7 @@ void AdminView::on_pushButton_souvHideRestore_clicked()
 /**
  * Goes back to stadium list page by calling @a resetView().
  */
-void AdminView::on_pushButton_souvGoBack_clicked()
+void AdminView::on_pushButton_souvReturn_clicked()
 {
     resetView();
 }
