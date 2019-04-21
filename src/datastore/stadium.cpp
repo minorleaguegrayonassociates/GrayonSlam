@@ -123,16 +123,33 @@ void Stadium::setCenterFieldDist(int dist)
 /**
  * @brief Add a new souvenir
  *
- * Creates a new souvenir with the given name and price. The
- * souvenir's ID is set by keeping track of how many the
- * stadium currently has. It is then added to map.
+ * Overloaded version of @a addSouvenir(const std::string&, double, bool)
+ * that calls it with @a true as the @a bool.
  *
  * @param name Souvenir name to add
  * @param price Souvenir price to add
  */
 void Stadium::addSouvenir(const std::string& name, double price)
 {
+    addSouvenir(name, price, true);
+}
+
+/**
+ * @brief Add a new souvenir with hidden state
+ *
+ * Creates a new souvenir with the given name, price, and
+ * hidden state. The souvenir's ID is set by keeping of
+ * how many souvenirs the stadium currently has. It is then
+ * added to the stadium's souvenir map.
+ *
+ * @param name Souvenir name to add
+ * @param price Souvenir price to add
+ * @param hidden Souvenir's hidden state
+ */
+void Stadium::addSouvenir(const std::string& name, double price, bool hidden)
+{
     Souvenir souvenir(m_nextSouvenirId, name, price);
+    souvenir.hidden = hidden;
     m_souvenirs[m_nextSouvenirId] = souvenir;
     m_nextSouvenirId++;
 }
@@ -147,6 +164,34 @@ void Stadium::addSouvenir(const std::string& name, double price)
 Souvenir& Stadium::findSouvenir(int id)
 {
     return m_souvenirs[id];
+}
+
+/**
+ * Finds a souvenir given a souvenir ID. Since @a std::map::operator[]
+ * doesn't return a const-reference, we must use @a std::map::at instead.
+ * We wrap the call in a try-catch since @a std::map::at throws an
+ * exception if the item wasn't found. If the item was found, we return it.
+ * If the item wasn't found, we return a static default item.
+ *
+ * @param id ID of souvenir to find
+ * @return If found, returns the souvenir.
+ *         If not found, returns an invalid souvenir.
+ *         Returns a const-reference of the souvenir.
+ */
+const Souvenir& Stadium::findSouvenir(int id) const
+{
+    /* Default souvenir to return if exception caught */
+    static Souvenir error;
+    error = Souvenir();
+
+    try
+    {
+        return m_souvenirs.at(id);
+    }
+    catch(const std::out_of_range&)
+    {
+        return error;
+    }
 }
 
 /**
