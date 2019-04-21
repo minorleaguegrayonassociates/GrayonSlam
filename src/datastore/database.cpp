@@ -183,6 +183,30 @@ void Database::loadDistancesFromFile(const std::string& filepath)
 }
 
 /**
+ * Uses the data within this class to write out the data
+ * to a csv file.
+ *
+ * @param path Where the program will write the csv file.
+ */
+void Database::saveDistancesToFile(const std::string& path)
+{
+    // Making a vector that will hold all the rows
+    std::vector<std::vector<std::string>> allRows;
+    for(auto distance : getDistances())
+    {
+        /* Instantiate vector that hold all columns of a row, populate it then push it onto allRows*/
+        std::vector<std::string> columns;
+        columns.push_back(std::to_string(std::get<0>(distance)));
+        columns.push_back(std::to_string(std::get<1>(distance)));
+        columns.push_back(std::to_string(std::get<2>(distance)));
+        allRows.push_back(columns);
+    }
+    // Call saveData to store data at the path provided
+    saveData(path, allRows);
+}
+
+
+/**
  * This method returns all the teams
  *
  * @return teams is returned
