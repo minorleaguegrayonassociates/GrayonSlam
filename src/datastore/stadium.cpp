@@ -128,10 +128,11 @@ void Stadium::setCenterFieldDist(int dist)
  *
  * @param name Souvenir name to add
  * @param price Souvenir price to add
+ * @return ID of the new souvenir
  */
-void Stadium::addSouvenir(const std::string& name, double price)
+int Stadium::addSouvenir(const std::string& name, double price)
 {
-    addSouvenir(name, price, true);
+    return addSouvenir(name, price, true);
 }
 
 /**
@@ -145,13 +146,14 @@ void Stadium::addSouvenir(const std::string& name, double price)
  * @param name Souvenir name to add
  * @param price Souvenir price to add
  * @param hidden Souvenir's hidden state
+ * @param ID of the new souvenir
  */
-void Stadium::addSouvenir(const std::string& name, double price, bool hidden)
+int Stadium::addSouvenir(const std::string& name, double price, bool hidden)
 {
     Souvenir souvenir(m_nextSouvenirId, name, price);
     souvenir.hidden = hidden;
     m_souvenirs[m_nextSouvenirId] = souvenir;
-    m_nextSouvenirId++;
+    return m_nextSouvenirId++;
 }
 
 /**

@@ -60,8 +60,8 @@ public:
     void setCenterFieldDist(int);
 
     /* Souvenirs */
-    void addSouvenir(const std::string& name, double price);
-    void addSouvenir(const std::string& name, double price, bool hidden);
+    int addSouvenir(const std::string& name, double price);
+    int addSouvenir(const std::string& name, double price, bool hidden);
     Souvenir& findSouvenir(int id);
     const Souvenir& findSouvenir(int id) const;
 
