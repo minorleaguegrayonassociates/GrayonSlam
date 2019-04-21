@@ -340,7 +340,7 @@ void AdminView::on_pushButton_stadEditSouvenirs_clicked()
 void AdminView::fillSouvenirEditFields(SouvenirId souvenirId)
 {
     /* Extract stadium from database and check if valid */
-    Stadium stadium = Database::findStadiumById(m_currentStadiumId);
+    const Stadium& stadium = Database::findStadiumById(m_currentStadiumId);
     if(stadium.getId() == -1)
         return;
 
@@ -408,8 +408,7 @@ void AdminView::on_pushButton_souvConfirmAdd_clicked()
 
     /* Extract stadium and souvenir from database */
     Stadium& stadium = Database::findStadiumById(m_currentStadiumId);
-    stadium.addSouvenir(name.toStdString(), price);
-    //TODO set the hidden state
+    stadium.addSouvenir(name.toStdString(), price, hidden);
 
     resetUi();
 }
