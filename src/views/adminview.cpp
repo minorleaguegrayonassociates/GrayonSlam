@@ -110,16 +110,7 @@ void AdminView::resetUi()
  */
 void AdminView::fillStadiumList()
 {
-    /*
-     * BUG
-     * If this line exists, the souvenir lists won't load because
-     * fillStadiumList() is called before fillSouvenirLists()
-     * and it requires m_currentStadiumId.
-     * Hopefully, when StadiumList arrives, we don't need to
-     * have this line at all.
-     */
-//    m_currentStadiumId = -1;
-    m_ui->spinBox->setValue(m_currentStadiumId);
+    //TODO waiting for stadium list
 }
 
 /**
