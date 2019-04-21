@@ -172,7 +172,7 @@ Souvenir& Stadium::findSouvenir(int id)
     error = Souvenir();
 
     auto it = m_souvenirs.find(id);
-    return it == m_souvenirs.end() ? it->second
+    return it != m_souvenirs.end() ? it->second
                                    : error;
 }
 
@@ -192,7 +192,7 @@ const Souvenir& Stadium::findSouvenir(int id) const
     error = Souvenir();
 
     auto it = m_souvenirs.find(id);
-    return it == m_souvenirs.end() ? it->second
+    return it != m_souvenirs.end() ? it->second
                                    : error;
 }
 
