@@ -64,6 +64,7 @@ void AdminView::resetView()
  */
 void AdminView::resetUi()
 {
+    fillStadiumList();
     fillSouvenirLists(m_currentStadiumId);
 
     /* Line edits */
@@ -85,6 +86,17 @@ void AdminView::resetUi()
     m_ui->spinBox_stadCenterDist->clear();
     m_ui->doubleSpinBox_souvAddPrice->clear();
     m_ui->doubleSpinBox_souvEditPrice->clear();
+}
+
+/**
+ * @brief Clear and load stadium list
+ *
+ * Obtains all the team and stadium information from the database.
+ * All non-hidden stadiums are loaded into the stadium list.
+ */
+void AdminView::fillStadiumList()
+{
+    //TODO waiting for stadium list
 }
 
 /**
@@ -170,7 +182,8 @@ void AdminView::fillStadiumEditFields(int stadiumId)
  */
 void AdminView::on_pushButton_stadEditSouvenirs_clicked()
 {
-    m_currentStadiumId = m_ui->spinBox->value(); //TODO replace with selected ID from stadium list
+    //TODO replace with selected ID from stadium list
+    m_currentStadiumId = m_ui->spinBox->value();
 
     /* Extract stadium from database and check if valid */
     const Stadium& stadium = Database::findStadiumById(m_currentStadiumId);

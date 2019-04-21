@@ -23,6 +23,7 @@ public:
     void resetUi() override;
 
 private slots:
+    void fillStadiumList();
     void fillSouvenirLists(int stadiumId);
 
     /* Stadium subview controls */
