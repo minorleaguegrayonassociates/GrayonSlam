@@ -278,6 +278,35 @@ void AdminView::on_pushButton_souvConfirmEdit_clicked()
 }
 
 /**
+ * @brief Add new souvenir to the stadium
+ *
+ * Obtain input from UI and add a new souvenir to the stadium.
+ * Resets the UI to reload the souvenir lists.
+ *
+ * If the input is invalid (empty strings, invalid ID, or $0.0 for price),
+ * then this function does nothing.
+ */
+void AdminView::on_pushButton_souvConfirmAdd_clicked()
+{
+    /* Extract input from UI */
+    const QString& name = m_ui->lineEdit_souvAddName->text();
+    double price = m_ui->doubleSpinBox_souvAddPrice->value();
+    bool hidden = m_ui->checkBox_souvAddHidden->checkState() == Qt::CheckState::Checked;
+
+    /* Error check currently selected souvenir and input */
+    SouvenirId id = getCurrentSouvenirId();
+    if(id == -1 || name.isEmpty() || price == 0.0)
+        return;
+
+    /* Extract stadium and souvenir from database */
+    Stadium& stadium = Database::findStadiumById(m_currentStadiumId);
+    stadium.addSouvenir(name.toStdString(), price);
+    //TODO set the hidden state
+
+    resetUi();
+}
+
+/**
  * Goes back to stadium list page by calling @a resetView().
  */
 void AdminView::on_pushButton_souvReturn_clicked()

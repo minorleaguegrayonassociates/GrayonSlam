@@ -34,6 +34,7 @@ private slots:
     /* Souvenir subview controls */
     void fillSouvenirEditFields(SouvenirId);
     void on_pushButton_souvConfirmEdit_clicked();
+    void on_pushButton_souvConfirmAdd_clicked();
     void on_pushButton_souvReturn_clicked();
 
 private:
