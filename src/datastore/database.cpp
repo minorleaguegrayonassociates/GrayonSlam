@@ -176,8 +176,6 @@ void Database::loadDistancesFromFile(const std::string& filepath)
     /* ForEach row of data create a tuple std::tuple<int,int,int>(fromStadiumId,toStadiumId,Distance); */
     for(const std::vector<std::string>& distance : distanceData)
     {
-        std::cout << distance[0] << " " << distance[1] << " " << distance[2] << std::endl;
-
         distances.push_back(std::tuple<int,int,int>(std::stoi(distance[0]),
                                                     std::stoi(distance[1]),
                                                     std::stoi(distance[2])));
@@ -196,7 +194,7 @@ void Database::saveDistancesToFile(const std::string& path)
     std::vector<std::vector<std::string>> allRows;
     /* rowHeader hold the header of a save file */
     std::vector<std::string> rowHeader;
-    rowHeader.push_back("# stadiumFromId, stadiumToId, Distance");
+    rowHeader.push_back("# stadiumFromId, stadiumToId, distance");
     allRows.push_back(rowHeader);
     for(auto distance : getDistances())
     {
