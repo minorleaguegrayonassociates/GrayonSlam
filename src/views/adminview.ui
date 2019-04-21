@@ -418,7 +418,7 @@
       <number>2100</number>
      </property>
     </widget>
-    <widget class="QLabel" name="label_stadCenterDistInfo_2">
+    <widget class="QLabel" name="label_stadYearOpenedInfo">
      <property name="geometry">
       <rect>
        <x>270</x>
