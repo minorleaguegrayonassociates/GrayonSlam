@@ -208,8 +208,8 @@ SouvenirId AdminView::getCurrentSouvenirId() const
  * Obtain input from UI and edit the currently selected stadium
  * with the input. Resets the UI to reload the stadium list.
  *
- * If the input is invalid (empty strings, invalid ID, or $0.0 for price),
- * then this function does nothing.
+ * If the input is invalid (empty strings, invalid stadium ID,
+ * or invalid enum indices), then this function does nothing.
  */
 void AdminView::on_pushButton_stadConfirmEdit_clicked()
 {
@@ -328,8 +328,8 @@ void AdminView::fillSouvenirEditFields(SouvenirId souvenirId)
  * Obtain input from UI and edit the currently selected souvenir
  * with the input. Resets the UI to reload the souvenir lists.
  *
- * If the input is invalid (empty strings, invalid ID, or $0.0 for price),
- * then this function does nothing.
+ * If the input is invalid (empty strings, invalid souvenir ID,
+ * or 0 for price), then this function does nothing.
  */
 void AdminView::on_pushButton_souvConfirmEdit_clicked()
 {
