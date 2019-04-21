@@ -1,6 +1,7 @@
 #include "adminview.hpp"
 #include "ui_adminview.h"
 #include "src/datastore/database.hpp"
+#include <QFileDialog>
 
 AdminView::AdminView(QWidget* parent)
     : View(parent), m_ui(new Ui::AdminView)
@@ -274,6 +275,35 @@ void AdminView::on_pushButton_stadConfirmEdit_clicked()
 }
 
 /**
+ * @brief Add stadiums and their distances from a file into the database
+ *
+ * Prompt for a stadium information file that holds information about the
+ * new stadiums. Once that is completed, prompt for a stadium distances
+ * information file that holds information about the distances of the
+ * new stadiums. Tell the database to load these new files into itself.
+ *
+ * The required file extensions is @a .csv.
+ *
+ * If either prompts are cancelled, this function does nothing.
+ */
+void AdminView::on_pushButton_stadAddFromFile_clicked()
+{
+    /* Prompt for stadium info file and check if request was cancelled */
+    QString stadFile = QFileDialog::getOpenFileName(this, "Add stadiums", QDir::homePath(), "Stadium information file (*.csv)");
+    if(stadFile.isEmpty())
+        return;
+
+    /* Prompt for stadium distances info file and check if request was cancelled */
+    QString distFile = QFileDialog::getOpenFileName(this, "Add distances", QDir::homePath(), "Distances information file (*.csv)");
+    if(distFile.isEmpty())
+        return;
+
+    /* Use the files to load data into the database */
+    Database::loadFromFile(stadFile.toStdString());
+    Database::loadDistancesFromFile(distFile.toStdString());
+}
+
+/**
  * @brief Change to souvenir page
  *
  * Obtains the currently selected stadium from the stadium list.
@@ -361,8 +391,8 @@ void AdminView::on_pushButton_souvConfirmEdit_clicked()
  * Obtain input from UI and add a new souvenir to the stadium.
  * Resets the UI to reload the souvenir lists.
  *
- * If the input is invalid (empty strings, invalid ID, or $0.0 for price),
- * then this function does nothing.
+ * If the input is invalid (empty strings, invalid souvenir ID,
+ * or 0 for price), then this function does nothing.
  */
 void AdminView::on_pushButton_souvConfirmAdd_clicked()
 {

@@ -358,7 +358,7 @@
       <string notr="true"/>
      </property>
      <property name="text">
-      <string>Requires 2 files: stadium info and  map coordinates</string>
+      <string>Requires 2 files: stadium info and distance info</string>
      </property>
     </widget>
     <widget class="QComboBox" name="comboBox_stadTeamLeague">
