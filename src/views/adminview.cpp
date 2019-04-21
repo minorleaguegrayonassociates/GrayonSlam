@@ -243,9 +243,9 @@ void AdminView::on_pushButton_stadConfirmEdit_clicked()
     int typologyIndex = m_ui->comboBox_stadTypology->currentIndex() - 1;
 
     /* Error check input */
-    if(stadName.isEmpty() || loc.isEmpty() || teamName.isEmpty() ||
-       leagueIndex < 0    || roofIndex < 0 ||
-       surfaceIndex < 0   || typologyIndex < 0)
+    if(stadName.isEmpty() || loc.isEmpty()   || teamName.isEmpty() ||
+       leagueIndex == -1  || roofIndex == -1 ||
+       surfaceIndex == -1 || typologyIndex == -1)
         return;
 
     /* Enum conversions */
