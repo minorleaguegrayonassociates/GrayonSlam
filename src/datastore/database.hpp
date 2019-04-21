@@ -26,6 +26,7 @@ public:
     static void loadFromFile(const std::string&);
     static void saveToFile(const std::string&);
     static void loadDistancesFromFile(const std::string&);
+    static void saveDistancesToFile(const std::string&);
 
     /* Getters */
     static nstd::map<int,Team> getTeams();

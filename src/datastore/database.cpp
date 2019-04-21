@@ -177,9 +177,36 @@ void Database::loadDistancesFromFile(const std::string& filepath)
     for(const std::vector<std::string>& distance : distanceData)
     {
         distances.push_back(std::tuple<int,int,int>(std::stoi(distance[0]),
-                                                    std::stoi(distance[2]),
-                                                    std::stoi(distance[4])));
+                                                    std::stoi(distance[1]),
+                                                    std::stoi(distance[2])));
     }
+}
+
+/**
+ * Uses the data within this class to write out the data
+ * to a csv file.
+ *
+ * @param path Where the program will write the csv file.
+ */
+void Database::saveDistancesToFile(const std::string& path)
+{
+    // Making a vector that will hold all the rows
+    std::vector<std::vector<std::string>> allRows;
+    /* rowHeader hold the header of a save file */
+    std::vector<std::string> rowHeader;
+    rowHeader.push_back("# stadiumFromId, stadiumToId, distance");
+    allRows.push_back(rowHeader);
+    for(auto distance : getDistances())
+    {
+        /* Instantiate vector that hold all columns of a row, populate it then push it onto allRows*/
+        std::vector<std::string> columns;
+        columns.push_back(std::to_string(std::get<0>(distance)));
+        columns.push_back(std::to_string(std::get<1>(distance)));
+        columns.push_back(std::to_string(std::get<2>(distance)));
+        allRows.push_back(columns);
+    }
+    // Call saveData to store data at the path provided
+    saveData(path, allRows);
 }
 
 /**

@@ -1,4 +1,4 @@
-# id, stadium name, id, stadium name, distance
-80,Las Vegas Stadium,69,Oakland-Alameda County Coliseum,325
-80,Las Vegas Stadium,63,Dodger Stadium,300
-80,Las Vegas Stadium,50,Chase Field,250
+# stadiumFromId, stadiumToId, distance
+80,69,325
+80,63,300
+80,50,250
