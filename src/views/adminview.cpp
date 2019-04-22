@@ -79,6 +79,8 @@ void AdminView::resetView()
  */
 void AdminView::resetUi()
 {
+    Database::saveToFile("MLBInformation.csv");
+
     fillStadiumList();
     fillSouvenirLists(m_currentStadiumId);
 
