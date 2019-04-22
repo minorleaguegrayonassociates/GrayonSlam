@@ -30,7 +30,7 @@ public:
     explicit StadiumList(const std::vector<std::pair<Team,Stadium>>&, QWidget* parent = nullptr);
 
     /* Resets */
-    void setStadiumTeamList(const std::vector<std::pair<Team,Stadium>>&);
+    void populateWidget(const std::vector<std::pair<Team,Stadium>>&);
 
     /* Destructor*/
     virtual ~StadiumList();
@@ -45,7 +45,6 @@ private slots:
 
 private:
     /* Helper Functions*/
-    void populateWidget(const std::vector<std::pair<Team,Stadium>>&);
     std::string commaSeparate(const std::string&);
 
     /* Member variables*/

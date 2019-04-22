@@ -36,15 +36,6 @@ StadiumList::StadiumList(const std::vector<std::pair<Team,Stadium>>& stadiumList
 }
 
 /**
- * setStadiumTeamList resets the tree widget and populates it with the information from the vector passed in
- * @param stadiumList information to repopulate the tree widget with
- */
-void StadiumList::setStadiumTeamList(const std::vector<std::pair<Team,Stadium>>& stadiumList)
-{
-    populateWidget(stadiumList);
-}
-
-/**
  * The destructor deletes the tree widget
  */
 StadiumList::~StadiumList()

@@ -15,7 +15,7 @@ StadiumView::StadiumView(QWidget* parent) :
 
     //Instantiate and populate tree widget
     m_stadiumList = new StadiumList(ui->stadiumList);
-    m_stadiumList->setStadiumTeamList(Database::getTeamsAndStadiums());
+    m_stadiumList->populateWidget(Database::getTeamsAndStadiums());
 }
 
 /**
@@ -34,7 +34,7 @@ StadiumView::~StadiumView()
 void StadiumView::resetView()
 {
     //clear all data, get it new from database, and populate table
-    m_stadiumList->setStadiumTeamList(Database::getTeamsAndStadiums());
+    m_stadiumList->populateWidget(Database::getTeamsAndStadiums());
 }
 
 /**
@@ -43,5 +43,5 @@ void StadiumView::resetView()
 void StadiumView::resetUi()
 {
     //clear table and repopulate it with list
-    m_stadiumList->setStadiumTeamList(Database::getTeamsAndStadiums());
+    m_stadiumList->populateWidget(Database::getTeamsAndStadiums());
 }
