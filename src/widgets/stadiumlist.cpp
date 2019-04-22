@@ -5,7 +5,7 @@
  * the information from the database
  * @param parent pointer to parent widget
  */
-StadiumList::StadiumList(QWidget *parent) :
+StadiumList::StadiumList(QWidget* parent) :
     QWidget(parent)
 {
     //creates new tree widget
