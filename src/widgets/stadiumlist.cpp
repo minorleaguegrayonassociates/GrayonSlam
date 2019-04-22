@@ -23,7 +23,7 @@ StadiumList::StadiumList(QWidget* parent) :
  * @param stadiumList vector containing information to populate Stadium List with
  * @param parent pointer to the parent widet
  */
-StadiumList::StadiumList(const std::vector<std::pair<Team,Stadium>>& stadiumList, QWidget *parent) :
+StadiumList::StadiumList(const std::vector<std::pair<Team,Stadium>>& stadiumList, QWidget* parent) :
     QWidget(parent)
 {
     //creates new tree widget
