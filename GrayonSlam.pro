@@ -36,7 +36,10 @@ SOURCES += \
     src/datastore/souvenir.cpp \
     src/widgets/souvenirlist.cpp \
     src/widgets/souvenirlistitem.cpp \
-    src/datastore/database.cpp
+    src/datastore/database.cpp \
+    src/views/stadiumview.cpp \
+    src/widgets/stadiumlist.cpp \
+    src/widgets/stadiumlistitem.cpp
 
 HEADERS += \
     src/windows/mainwindow.hpp \
@@ -53,13 +56,17 @@ HEADERS += \
     src/widgets/souvenirlistitem.hpp \
     src/utils/map.hpp \
     src/datastore/database.hpp \
-    src/utils/enumtools.hpp
+    src/utils/enumtools.hpp \
+    src/views/stadiumview.hpp \
+    src/widgets/stadiumlist.hpp \
+    src/widgets/stadiumlistitem.hpp
 
 FORMS += \
     src/windows/mainwindow.ui \
     src/windows/login.ui \
     src/widgets/navbaritem.ui \
-    src/widgets/souvenirlistitem.ui
+    src/widgets/souvenirlistitem.ui \
+    src/views/stadiumview.ui
 
 RESOURCES += \
     res.qrc

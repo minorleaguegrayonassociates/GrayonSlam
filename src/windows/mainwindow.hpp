@@ -2,6 +2,7 @@
 
 #include <QMainWindow>
 #include "src/widgets/navbar.hpp"
+#include "src/views/view.hpp"
 
 namespace Ui
 {
@@ -29,5 +30,6 @@ private slots:
 private:
     Ui::MainWindow* m_ui;
     NavBar* m_navbar;
+    std::vector<View*> m_views;
 };
 
