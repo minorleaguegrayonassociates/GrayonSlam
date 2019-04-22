@@ -6,7 +6,7 @@
  *
  * @param parent pointer to widget it will reside in
  */
-StadiumView::StadiumView(QWidget *parent) :
+StadiumView::StadiumView(QWidget* parent) :
     View(parent),
     ui(new Ui::StadiumView)
 {
