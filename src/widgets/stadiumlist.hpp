@@ -26,8 +26,8 @@ class StadiumList : public QWidget
     Q_OBJECT
 public:
     /* Constructors*/
-    explicit StadiumList(QWidget *parent = nullptr);
-    explicit StadiumList(const std::vector<std::pair<Team,Stadium>>&, QWidget *parent = nullptr);
+    explicit StadiumList(QWidget* parent = nullptr);
+    explicit StadiumList(const std::vector<std::pair<Team,Stadium>>&, QWidget* parent = nullptr);
 
     /* Resets */
     void setStadiumTeamList(const std::vector<std::pair<Team,Stadium>>&);
