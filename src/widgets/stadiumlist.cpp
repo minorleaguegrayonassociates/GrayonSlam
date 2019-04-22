@@ -5,17 +5,9 @@
  * the information from the database
  * @param parent pointer to parent widget
  */
-StadiumList::StadiumList(QWidget* parent) :
-    QWidget(parent), m_showHidden(true)
-{
-    //creates new tree widget
-    m_listDisplay = new QTreeWidget(this);
-    m_listDisplay->resize(parent->size());
-    //populates the tree widget from the database
-    populateWidget(Database::getTeamsAndStadiums());
-    //sets up the stadium clicked signal
-    connect(m_listDisplay, &QTreeWidget::itemClicked, this, &StadiumList::connectWidgetItemToStadium);
-}
+StadiumList::StadiumList(QWidget* parent)
+    : StadiumList(Database::getTeamsAndStadiums(), parent)
+{}
 
 /**
  * This constructor constructs a new Stadium List inside of the parent widget and populates it
@@ -24,7 +16,7 @@ StadiumList::StadiumList(QWidget* parent) :
  * @param parent pointer to the parent widet
  */
 StadiumList::StadiumList(const std::vector<std::pair<Team,Stadium>>& stadiumList, QWidget* parent) :
-    QWidget(parent), m_showHidden(true)
+    QWidget(parent), m_showHidden(false)
 {
     //creates new tree widget
     m_listDisplay = new QTreeWidget(this);
@@ -72,25 +64,22 @@ void StadiumList::populateWidget(const std::vector<std::pair<Team,Stadium>>& sta
     m_listDisplay->setSortingEnabled(false);
     for(std::pair<Team,Stadium> stadiumAndTeam : stadiumsAndTeams)
     {
-        if(m_showHidden || (!m_showHidden && !stadiumAndTeam.second.hidden))
-        {
-            //Adds all fields from stadium and team to the tree widget by converting them Qstrings
-            QStringList tmpList;
-            tmpList.push_back(QString::fromStdString(stadiumAndTeam.first.getName()));
-            tmpList.push_back(QString::fromStdString(stadiumAndTeam.first.LEAGUE_STRING[stadiumAndTeam.first.league]));
-            tmpList.push_back(QString::fromStdString(stadiumAndTeam.second.getName()));
-            tmpList.push_back(QString::fromStdString(stadiumAndTeam.second.getLocation()));
-            tmpList.push_back(QString::fromStdString(std::to_string(stadiumAndTeam.second.getYearOpened())));
-            tmpList.push_back(QString::fromStdString(commaSeparate(std::to_string(stadiumAndTeam.second.getSeatCap()))));
-            tmpList.push_back(QString::fromStdString(stadiumAndTeam.second.TYPOLOGY_STRING[stadiumAndTeam.second.typology]));
-            tmpList.push_back(QString::fromStdString(stadiumAndTeam.second.ROOF_STRING[stadiumAndTeam.second.roof]));
-            tmpList.push_back(QString::fromStdString(stadiumAndTeam.second.SURFACE_STRING[stadiumAndTeam.second.surface]));
-            tmpList.push_back(QString::fromStdString(commaSeparate(std::to_string(stadiumAndTeam.second.getCenterFieldDist()))));
+        if(m_showHidden && stadiumAndTeam.second.hidden){continue;}
+        //Adds all fields from stadium and team to the tree widget by converting them Qstrings
+        QStringList tmpList;
+        tmpList.push_back(QString::fromStdString(stadiumAndTeam.first.getName()));
+        tmpList.push_back(QString::fromStdString(stadiumAndTeam.first.LEAGUE_STRING[stadiumAndTeam.first.league]));
+        tmpList.push_back(QString::fromStdString(stadiumAndTeam.second.getName()));
+        tmpList.push_back(QString::fromStdString(stadiumAndTeam.second.getLocation()));
+        tmpList.push_back(QString::fromStdString(std::to_string(stadiumAndTeam.second.getYearOpened())));
+        tmpList.push_back(QString::fromStdString(commaSeparate(std::to_string(stadiumAndTeam.second.getSeatCap()))));
+        tmpList.push_back(QString::fromStdString(stadiumAndTeam.second.TYPOLOGY_STRING[stadiumAndTeam.second.typology]));
+        tmpList.push_back(QString::fromStdString(stadiumAndTeam.second.ROOF_STRING[stadiumAndTeam.second.roof]));
+        tmpList.push_back(QString::fromStdString(stadiumAndTeam.second.SURFACE_STRING[stadiumAndTeam.second.surface]));
+        tmpList.push_back(QString::fromStdString(commaSeparate(std::to_string(stadiumAndTeam.second.getCenterFieldDist()))));
 
-
-            //Constructs a new stadium list item and adds it to the tree widget
-             new StadiumListItem(m_listDisplay,stadiumAndTeam.second,tmpList);
-        }
+        //Constructs a new stadium list item and adds it to the tree widget
+        new StadiumListItem(m_listDisplay,stadiumAndTeam.second,tmpList);
     }
     //Does not allow users to edit the cells directly
     m_listDisplay->setSortingEnabled(true);
