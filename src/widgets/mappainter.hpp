@@ -20,12 +20,11 @@ void paintEvent(QPaintEvent*) override;
 
 /* setters */
 void paintStadiums(QPainter& painter, int id, const QPoint& stadiumPoint, const QString& StadiumName);
-void paintEdge(QPainter& painter, const QPoint& stdmCoord1, const QPoint& stdmCoord2, const QString& distance);
+void paintEdge(QPainter& painter, const QPoint& stdmCoord1, const QPoint& stdmCoord2);
 void paintText(QPainter& painter, const QPoint& , const QString&);
 
 private:
 Ui::MapPainter *m_ui;
-Database::coords m_coords;
 };
 
 

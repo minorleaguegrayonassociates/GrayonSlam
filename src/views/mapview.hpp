@@ -23,6 +23,9 @@ explicit MapView(QWidget *parent = nullptr);
  /* The resetUi function resets the Ui that corresponds with the given view */
  void resetUi() override;
 
+ /* setter */
+ void setPlane(int,int);
+
  private slots:
      void on_pushButton_clicked();
 

@@ -10,7 +10,8 @@
         <file>res/DistanceBetweenStadiums.csv</file>
         <file>res/MLBInformation.csv</file>
         <file>res/MLBInformationExpansion.csv</file>
-        <file>res/airplane.png</file>
+        <file>res/airplane_right.png</file>
+        <file>res/airplane_left.png</file>
         <file>res/map_background.png</file>
     </qresource>
 </RCC>
