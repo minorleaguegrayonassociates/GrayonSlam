@@ -14,7 +14,7 @@ StadiumList::StadiumList(QWidget* parent) :
     //populates the tree widget from the database
     populateWidget(Database::getTeamsAndStadiums());
     //sets up the stadium clicked signal
-    QObject::connect(m_listDisplay, SIGNAL(itemClicked(QTreeWidgetItem*, int)),this, SLOT(connectWidgetItemToStadium(QTreeWidgetItem*)));
+    connect(m_listDisplay, &QTreeWidget::itemClicked, this, &StadiumList::connectWidgetItemToStadium);
 }
 
 /**
@@ -32,7 +32,7 @@ StadiumList::StadiumList(const std::vector<std::pair<Team,Stadium>>& stadiumList
     //populates the widget from the vector of teams and stadiums
     populateWidget(stadiumList);
     //sets up the stadium clicked signal
-    QObject::connect(m_listDisplay, SIGNAL(itemClicked(QTreeWidgetItem*, int)),this, SLOT(connectWidgetItemToStadium(QTreeWidgetItem*)));
+    connect(m_listDisplay, &QTreeWidget::itemClicked, this, &StadiumList::connectWidgetItemToStadium);
 }
 
 /**
