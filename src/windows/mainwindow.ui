@@ -130,21 +130,7 @@ background-color: white;
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="adminView">
-     <widget class="QLabel" name="label_4">
-      <property name="geometry">
-       <rect>
-        <x>90</x>
-        <y>50</y>
-        <width>101</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>admin view</string>
-      </property>
-     </widget>
-    </widget>
+    <widget class="QWidget" name="adminView"/>
    </widget>
   </widget>
  </widget>

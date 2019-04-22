@@ -2,10 +2,12 @@
 #include "ui_mainwindow.h"
 #include "src/windows/login.hpp"
 #include "src/datastore/database.hpp"
+#include "src/views/adminview.hpp"
 #include <QFontDatabase>
 #include <QMessageBox>
 #include <QDebug>
 #include "src/views/stadiumview.hpp"
+#include <algorithm>
 
 /* Constructors */
 MainWindow::MainWindow()
@@ -29,9 +31,11 @@ MainWindow::MainWindow()
         m_navbar->addItem("\uf085", "Inventory\nManagement");
     m_navbar->addItem("\uf2f5", "Logout");
 
-    Database::loadFromFile("./../../../src/datastore/MLBInformation.csv");
+    Database::loadDistancesFromFile("DistanceBetweenStadiums.csv");
+    Database::loadFromFile("MLBInformation.csv");
 
-    //m_views.push_back(new AdminView(m_ui->adminView));
+    /* Create views */
+    m_views.push_back(new AdminView(m_ui->adminView));
     m_views.push_back(new StadiumView(m_ui->viewTeamView));
 }
 
@@ -70,5 +74,9 @@ void MainWindow::changeView(int view)
 void MainWindow::resetViews()
 {
     /* Reset views -- go here */
-    Database::saveToFile("./../../../src/datastore/MLBInformation.csv");
+    Database::saveToFile("MLBInformation.csv");
+
+    //Reset each view
+    std::for_each(m_views.begin(), m_views.end(),
+                  [](View* view){view->resetView();});
 }
