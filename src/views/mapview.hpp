@@ -13,8 +13,9 @@ class MapView : public View
 Q_OBJECT
 
 public:
+ /* Constructor */
 explicit MapView(QWidget *parent = nullptr);
-
+ /* Destructor */
 ~MapView() override;
 
  /* The resetView function resets the Ui that corresponds with the given view */
@@ -26,8 +27,11 @@ explicit MapView(QWidget *parent = nullptr);
  /* setter */
  void setPlane(int,int);
 
+ void animateTrip(int, int);
+
  private slots:
      void on_pushButton_clicked();
+     void on_pushButton_2_clicked();
 
  private:
     Ui::MapView* m_ui;

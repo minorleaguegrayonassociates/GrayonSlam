@@ -79,7 +79,7 @@ border-image: url(:/res/map_background.png) 0 0 0 0 strech stretch;
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="../../res.qrc">:/res/airplane.png</pixmap>
+          <pixmap>:/res/airplane.png</pixmap>
          </property>
         </widget>
        </item>
@@ -91,19 +91,76 @@ border-image: url(:/res/map_background.png) 0 0 0 0 strech stretch;
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>280</x>
-     <y>30</y>
+     <x>220</x>
+     <y>10</y>
      <width>114</width>
      <height>32</height>
     </rect>
    </property>
    <property name="text">
-    <string>PushButton</string>
+    <string>Travel</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="spinBox">
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>10</y>
+     <width>42</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="spinBox_2">
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>50</y>
+     <width>40</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>75</x>
+     <y>13</y>
+     <width>71</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Stadium 1</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>75</x>
+     <y>51</y>
+     <width>70</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Stadium 2</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_2">
+   <property name="geometry">
+    <rect>
+     <x>380</x>
+     <y>10</y>
+     <width>141</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Load New Stadium</string>
    </property>
   </widget>
  </widget>
- <resources>
-  <include location="../../res.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
