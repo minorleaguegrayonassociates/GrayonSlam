@@ -2,6 +2,7 @@
 #include "ui_adminview.h"
 #include "src/datastore/database.hpp"
 #include <QFileDialog>
+#include <QTimer>
 
 AdminView::AdminView(QWidget* parent)
     : View(parent), m_ui(new Ui::AdminView)
@@ -218,7 +219,10 @@ void AdminView::on_pushButton_stadConfirmEdit_clicked()
     /* Extract stadium from database and check if valid */
     Stadium& stadium = Database::findStadiumById(m_currentStadiumId);
     if(stadium.getId() == -1)
+    {
+        markButtonAsError(m_ui->pushButton_stadConfirmEdit);
         return;
+    }
 
     //Extract team from database
     Team& team = Database::findTeamById(stadium.getTeamId());
@@ -250,7 +254,10 @@ void AdminView::on_pushButton_stadConfirmEdit_clicked()
     if(stadName.isEmpty() || loc.isEmpty()   || teamName.isEmpty() ||
        leagueIndex == -1  || roofIndex == -1 ||
        surfaceIndex == -1 || typologyIndex == -1)
+    {
+        markButtonAsError(m_ui->pushButton_stadConfirmEdit);
         return;
+    }
 
     /* Enum conversions */
     Team::League league = static_cast<Team::League>(leagueIndex);
@@ -292,12 +299,19 @@ void AdminView::on_pushButton_stadAddFromFile_clicked()
     /* Prompt for stadium info file and check if request was cancelled */
     QString stadFile = QFileDialog::getOpenFileName(this, "Add stadiums", QDir::homePath(), "Stadium information file (*.csv)");
     if(stadFile.isEmpty())
+    {
+        markButtonAsError(m_ui->pushButton_stadAddFromFile);
         return;
+    }
 
     /* Prompt for stadium distances info file and check if request was cancelled */
     QString distFile = QFileDialog::getOpenFileName(this, "Add distances", QDir::homePath(), "Distances information file (*.csv)");
     if(distFile.isEmpty())
+    {
+        markButtonAsError(m_ui->pushButton_stadAddFromFile);
         return;
+    }
+
 
     /* Use the files to load data into the database */
     Database::loadFromFile(stadFile.toStdString());
@@ -319,7 +333,11 @@ void AdminView::on_pushButton_stadEditSouvenirs_clicked()
     /* Extract stadium from database and check if valid */
     const Stadium& stadium = Database::findStadiumById(m_currentStadiumId);
     if(stadium.getId() == -1)
+    {
+        markButtonAsError(m_ui->pushButton_stadEditSouvenirs);
         return;
+    }
+
 
     resetUi();
 
@@ -372,7 +390,10 @@ void AdminView::on_pushButton_souvConfirmEdit_clicked()
     /* Error check currently selected souvenir and input */
     SouvenirId id = getCurrentSouvenirId();
     if(id == -1 || name.isEmpty() || price == 0.0)
+    {
+        markButtonAsError(m_ui->pushButton_souvConfirmEdit);
         return;
+    }
 
     /* Extract stadium and souvenir from database */
     Stadium& stadium = Database::findStadiumById(m_currentStadiumId);
@@ -404,7 +425,10 @@ void AdminView::on_pushButton_souvConfirmAdd_clicked()
 
     /* Error check input */
     if(name.isEmpty() || price == 0.0)
+    {
+        markButtonAsError(m_ui->pushButton_souvConfirmAdd);
         return;
+    }
 
     /* Extract stadium and souvenir from database */
     Stadium& stadium = Database::findStadiumById(m_currentStadiumId);
@@ -419,4 +443,20 @@ void AdminView::on_pushButton_souvConfirmAdd_clicked()
 void AdminView::on_pushButton_souvReturn_clicked()
 {
     resetView();
+}
+
+/**
+ * @brief Mark a button with an error
+ *
+ * Takes a button and changes the text color to red to signify
+ * and error has happened. After 2000 milliseconds, the stylesheet
+ * is returned to its original setting.
+ *
+ * @param button Button to mark with error
+ */
+void AdminView::markButtonAsError(QPushButton* button)
+{
+    QString style = button->styleSheet();
+    button->setStyleSheet("QPushButton { color: red; }");
+    QTimer::singleShot(2000, [=]{ button->setStyleSheet(style); });
 }

@@ -2,6 +2,7 @@
 #include "view.hpp"
 #include "src/widgets/souvenirlist.hpp"
 #include "src/widgets/stadiumlist.hpp"
+#include <QPushButton>
 
 namespace Ui
 {
@@ -39,6 +40,9 @@ private slots:
     void on_pushButton_souvConfirmEdit_clicked();
     void on_pushButton_souvConfirmAdd_clicked();
     void on_pushButton_souvReturn_clicked();
+
+    /* Helpers */
+    void markButtonAsError(QPushButton*);
 
 private:
     Ui::AdminView* m_ui;
