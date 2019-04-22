@@ -2,7 +2,6 @@
 
 #include <QTreeWidgetItem>
 #include "src/datastore/stadium.hpp"
-#include "src/datastore/team.hpp"
 
 class StadiumListItem : public QTreeWidgetItem
 {
