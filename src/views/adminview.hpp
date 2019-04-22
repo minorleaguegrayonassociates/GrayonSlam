@@ -1,6 +1,7 @@
 #pragma once
 #include "view.hpp"
 #include "src/widgets/souvenirlist.hpp"
+#include "src/widgets/stadiumlist.hpp"
 
 namespace Ui
 {
@@ -44,6 +45,7 @@ private:
     StadiumId m_currentStadiumId = -1;
 
     /* Widgets */
+    StadiumList* m_stadiumList;
     SouvenirList* m_availableSouvenirList;
     SouvenirList* m_hiddenSouvenirList;
 };

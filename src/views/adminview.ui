@@ -36,7 +36,11 @@
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">QWidget { background-color: red; }</string>
+      <string notr="true">QTreeWidget
+{
+	color: white;
+	background-color: #303030;
+}</string>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton_stadAddFromFile">
@@ -432,19 +436,6 @@
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-    <widget class="QSpinBox" name="spinBox">
-     <property name="geometry">
-      <rect>
-       <x>60</x>
-       <y>420</y>
-       <width>43</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="minimum">
-      <number>-99</number>
      </property>
     </widget>
    </widget>

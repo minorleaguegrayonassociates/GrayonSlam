@@ -8,6 +8,9 @@ AdminView::AdminView(QWidget* parent)
 {
     m_ui->setupUi(this);
 
+    /* Initialize stadium list */
+    m_stadiumList = new StadiumList(m_ui->widget_stadList);
+
     /* Initialize souvenir lists */
     m_availableSouvenirList = new SouvenirList(m_ui->widget_souvAvailableList);
     m_hiddenSouvenirList = new SouvenirList(m_ui->widget_souvHiddenList);
@@ -18,7 +21,7 @@ AdminView::AdminView(QWidget* parent)
      * new stadium ID that is emitted by the stadium list and
      * the stadium edit fields are filled
      */
-    connect(m_ui->spinBox, qOverload<int>(&QSpinBox::valueChanged), //TODO replace spinbox with stadium list
+    connect(m_stadiumList, &StadiumList::stadiumClicked,
             [&](int id)
             {
                 m_currentStadiumId = id;
@@ -110,7 +113,7 @@ void AdminView::resetUi()
  */
 void AdminView::fillStadiumList()
 {
-    //TODO waiting for stadium list
+    m_stadiumList->populateWidget(Database::getTeamsAndStadiums());
 }
 
 /**
