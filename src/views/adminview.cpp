@@ -314,7 +314,6 @@ void AdminView::on_pushButton_stadAddFromFile_clicked()
         return;
     }
 
-
     /* Use the files to load data into the database */
     Database::loadFromFile(stadFile.toStdString());
     Database::loadDistancesFromFile(distFile.toStdString());
@@ -339,7 +338,6 @@ void AdminView::on_pushButton_stadEditSouvenirs_clicked()
         markButtonAsError(m_ui->pushButton_stadEditSouvenirs);
         return;
     }
-
 
     resetUi();
 
