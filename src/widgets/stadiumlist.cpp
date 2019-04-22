@@ -69,6 +69,7 @@ void StadiumList::populateWidget(const std::vector<std::pair<Team,Stadium>>& sta
     QStringList headers = { "Team Name", "League", "Stadium Name", "Location", "Date Opened",
     "Seating Capacity", "Typology", "Roof Type", "Playing Surface", "Distance to Center Field"};
     m_listDisplay->setHeaderLabels(headers);
+    m_listDisplay->setSortingEnabled(false);
     for(std::pair<Team,Stadium> stadiumAndTeam : stadiumsAndTeams)
     {
         if(stadiumAndTeam.first.getId() != -1 && stadiumAndTeam.second.getId() != -1)
