@@ -1,9 +1,6 @@
 #pragma once
 #include <QTreeWidget>
-#include "src/datastore/stadium.hpp"
-#include "src/datastore/team.hpp"
 #include "src/datastore/database.hpp"
-#include "src/utils/enumtools.hpp"
 #include "stadiumlistitem.hpp"
 
 /**
@@ -31,13 +28,14 @@ public:
 
     /* Resets */
     void populateWidget(const std::vector<std::pair<Team,Stadium>>&);
+    void allowHidden(bool);
 
     /* Destructor*/
-    virtual ~StadiumList();
+    ~StadiumList() override;
 
 signals:
     /* Clicked Signal*/
-    void StadiumClicked(int stadiumId);
+    void stadiumClicked(int stadiumId);
 
 private slots:
     /* Internal slots*/
@@ -49,4 +47,5 @@ private:
 
     /* Member variables*/
     QTreeWidget* m_listDisplay;
+    bool m_showHidden;
 };
