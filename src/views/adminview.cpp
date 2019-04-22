@@ -55,6 +55,7 @@ AdminView::AdminView(QWidget* parent)
 AdminView::~AdminView()
 {
     delete m_ui;
+    delete m_stadiumList;
     delete m_availableSouvenirList;
     delete m_hiddenSouvenirList;
 }
