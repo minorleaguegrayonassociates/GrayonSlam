@@ -1,107 +1,54 @@
-# id, stadium name, id, stadium name, distance
-50,AT&T Park,51,Safeco Field,680
-50,AT&T Park,52,Oakland-Alameda County Coliseum,50
-53,Angel Stadium,54,Petco Park,110
-53,Angel Stadium,55,Dodger Stadium,50
-76,Busch Stadium,57,Minute Maid Park,680
-76,Busch Stadium,58,Great American Ball Park,310
-76,Busch Stadium,59,Target Field,465
-76,Busch Stadium,60,Kauffman Stadium,235
-61,Chase Field,62,Coors Field,580
-61,Chase Field,63,Globe Life Park in Arlington,870
-61,Chase Field,57,Minute Maid Park,1115
-61,Chase Field,52,Oakland-Alameda County Coliseum,650
-61,Chase Field,54,Petco Park,300
-64,Citi Field,65,Fenway Park,195
-64,Citi Field,66,Yankee Stadium,50
-67,Citizens Bank Park,66,Yankee Stadium,80
-67,Citizens Bank Park,68,Oriole Park at Camden Yards,90
-69,Comerica Park,70,Guaranteed Rate Field,240
-69,Comerica Park,71,Rogers Centre,210
-69,Comerica Park,72,Progressive Field,90
-62,Coors Field,60,Kauffman Stadium,560
-62,Coors Field,63,Globe Life Park in Arlington,650
-62,Coors Field,61,Chase Field,580
-62,Coors Field,54,Petco Park,830
-55,Dodger Stadium,53,Angel Stadium,50
-55,Dodger Stadium,59,Target Field,1500
-55,Dodger Stadium,52,Oakland-Alameda County Coliseum,340
-65,Fenway Park,64,Citi Field,195
-65,Fenway Park,73,Marlins Park,1255
-65,Fenway Park,71,Rogers Centre,430
-63,Globe Life Park in Arlington,61,Chase Field,870
-63,Globe Life Park in Arlington,60,Kauffman Stadium,460
-63,Globe Life Park in Arlington,74,Sun Trust Park,740
-63,Globe Life Park in Arlington,57,Minute Maid Park,230
-63,Globe Life Park in Arlington,62,Coors Field,650
-58,Great American Ball Park,78,PNC Park,260
-58,Great American Ball Park,72,Progressive Field,225
-58,Great American Ball Park,70,Guaranteed Rate Field,250
-58,Great American Ball Park,75,Tropicana Field,790
-58,Great American Ball Park,74,Sun Trust Park,375
-58,Great American Ball Park,76,Busch Stadium,310
-70,Guaranteed Rate Field,69,Comerica Park,240
-70,Guaranteed Rate Field,58,Great American Ball Park,250
-70,Guaranteed Rate Field,56,Wrigley Field,50
-60,Kauffman Stadium,76,Busch Stadium,235
-60,Kauffman Stadium,63,Globe Life Park in Arlington,460
-60,Kauffman Stadium,56,Wrigley Field,415
-60,Kauffman Stadium,62,Coors Field,560
-73,Marlins Park,74,Sun Trust Park,600
-73,Marlins Park,75,Tropicana Field,210
-73,Marlins Park,77,Nationals Park,930
-73,Marlins Park,65,Fenway Park,1255
-73,Marlins Park,57,Minute Maid Park,965
-79,Miller Park,71,Rogers Centre,430
-79,Miller Park,56,Wrigley Field,80
-79,Miller Park,59,Target Field,300
-57,Minute Maid Park,63,Globe Life Park in Arlington,230
-57,Minute Maid Park,75,Tropicana Field,790
-57,Minute Maid Park,73,Marlins Park,965
-57,Minute Maid Park,76,Busch Stadium,680
-57,Minute Maid Park,61,Chase Field,1115
-77,Nationals Park,68,Oriole Park at Camden Yards,50
-77,Nationals Park,78,PNC Park,195
-77,Nationals Park,74,Sun Trust Park,560
-77,Nationals Park,73,Marlins Park,930
-52,Oakland-Alameda County Coliseum,50,AT&T Park,50
-52,Oakland-Alameda County Coliseum,55,Dodger Stadium,340
-52,Oakland-Alameda County Coliseum,61,Chase Field,650
-68,Oriole Park at Camden Yards,77,Nationals Park,50
-68,Oriole Park at Camden Yards,67,Citizens Bank Park,90
-78,PNC Park,77,Nationals Park,195
-78,PNC Park,71,Rogers Centre,225
-78,PNC Park,72,Progressive Field,115
-78,PNC Park,58,Great American Ball Park,260
-78,PNC Park,66,Yankee Stadium,315
-54,Petco Park,62,Coors Field,830
-54,Petco Park,61,Chase Field,300
-54,Petco Park,53,Angel Stadium,110
-72,Progressive Field,78,PNC Park,115
-72,Progressive Field,69,Comerica Park,90
-72,Progressive Field,58,Great American Ball Park,225
-71,Rogers Centre,78,PNC Park,225
-71,Rogers Centre,79,Miller Park,430
-71,Rogers Centre,69,Comerica Park,210
-71,Rogers Centre,65,Fenway Park,430
-71,Rogers Centre,51,Safeco Field,2070
-51,Safeco Field,71,Rogers Centre,2070
-51,Safeco Field,59,Target Field,1390
-51,Safeco Field,50,AT&T Park,680
-74,Sun Trust Park,58,Great American Ball Park,375
-74,Sun Trust Park,77,Nationals Park,560
-74,Sun Trust Park,73,Marlins Park,600
-74,Sun Trust Park,63,Globe Life Park in Arlington,740
-59,Target Field,55,Dodger Stadium,1500
-59,Target Field,76,Busch Stadium,465
-59,Target Field,79,Miller Park,300
-59,Target Field,51,SafeCo Field,1390
-75,Tropicana Field,58,Great American Ball Park,790
-75,Tropicana Field,73,Marlins Park,210
-75,Tropicana Field,57,Minute Maid Park,790
-56,Wrigley Field,70,Guaranteed Rate Field,50
-56,Wrigley Field,79,Miller Park,80
-56,Wrigley Field,60,Kauffman Stadium,415
-66,Yankee Stadium,78,PNC Park,315
-66,Yankee Stadium,67,Citizens Bank Park,80
-66,Yankee Stadium,64,Citi Field,50
+# stadiumFromId, stadiumToId, distance
+73,74,680
+73,69,50
+62,72,110
+62,63,50
+75,60,680
+75,56,310
+75,66,465
+75,61,235
+50,58,580
+50,77,870
+50,60,1115
+50,69,650
+50,72,300
+67,53,195
+67,68,50
+70,68,80
+70,52,90
+59,55,240
+59,78,210
+59,57,90
+58,61,560
+58,77,650
+58,72,830
+63,66,1500
+63,69,340
+53,64,1255
+53,78,430
+77,61,460
+77,51,740
+77,60,230
+56,71,260
+56,57,225
+56,55,250
+56,76,790
+56,51,375
+55,54,50
+61,54,415
+64,51,600
+64,76,210
+64,79,930
+64,60,965
+65,78,430
+65,54,80
+65,66,300
+60,76,790
+79,52,50
+79,71,195
+79,51,560
+71,78,225
+71,57,115
+71,68,315
+78,74,2070
+74,66,1390

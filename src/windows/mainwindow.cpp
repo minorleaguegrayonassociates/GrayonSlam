@@ -30,6 +30,7 @@ MainWindow::MainWindow()
     m_navbar->addItem("\uf2f5", "Logout");
 
     Database::loadFromFile("./../../../src/datastore/MLBInformation.csv");
+
     //m_views.push_back(new AdminView(m_ui->adminView));
     m_views.push_back(new StadiumView(m_ui->viewTeamView));
 }

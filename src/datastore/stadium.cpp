@@ -123,30 +123,77 @@ void Stadium::setCenterFieldDist(int dist)
 /**
  * @brief Add a new souvenir
  *
- * Creates a new souvenir with the given name and price. The
- * souvenir's ID is set by keeping track of how many the
- * stadium currently has. It is then added to map.
+ * Overloaded version of @a addSouvenir(const std::string&, double, bool)
+ * that calls it with @a true as the @a bool.
  *
  * @param name Souvenir name to add
  * @param price Souvenir price to add
+ * @return ID of the new souvenir
  */
-void Stadium::addSouvenir(const std::string& name, double price)
+int Stadium::addSouvenir(const std::string& name, double price)
 {
-    Souvenir souvenir(m_nextSouvenirId, name, price);
-    m_souvenirs[m_nextSouvenirId] = souvenir;
-    m_nextSouvenirId++;
+    return addSouvenir(name, price, true);
 }
 
 /**
- * Finds a souvenir given a souvenir ID.
+ * @brief Add a new souvenir with hidden state
+ *
+ * Creates a new souvenir with the given name, price, and
+ * hidden state. The souvenir's ID is set by keeping of
+ * how many souvenirs the stadium currently has. It is then
+ * added to the stadium's souvenir map.
+ *
+ * @param name Souvenir name to add
+ * @param price Souvenir price to add
+ * @param hidden Souvenir's hidden state
+ * @param ID of the new souvenir
+ */
+int Stadium::addSouvenir(const std::string& name, double price, bool hidden)
+{
+    Souvenir souvenir(m_nextSouvenirId, name, price);
+    souvenir.hidden = hidden;
+    m_souvenirs[m_nextSouvenirId] = souvenir;
+    return m_nextSouvenirId++;
+}
+
+/**
+ * Finds and returns a reference to a souvenir with the
+ * ID of @a id.
  *
  * @param id ID of souvenir to find
  * @return If found, returns the souvenir.
  *         If not found, returns an invalid souvenir.
+ *         Returns a reference of the souvenir.
  */
 Souvenir& Stadium::findSouvenir(int id)
 {
-    return m_souvenirs[id];
+    /* Default souvenir to return if exception caught */
+    static Souvenir error;
+    error = Souvenir();
+
+    auto it = m_souvenirs.find(id);
+    return it != m_souvenirs.end() ? it->second
+                                   : error;
+}
+
+/**
+ * Finds and returns a const-reference to a souvenir with the
+ * ID of @a id.
+ *
+ * @param id ID of souvenir to find
+ * @return If found, returns the souvenir.
+ *         If not found, returns an invalid souvenir.
+ *         Returns a const-reference of the souvenir.
+ */
+const Souvenir& Stadium::findSouvenir(int id) const
+{
+    /* Default souvenir to return if exception caught */
+    static Souvenir error;
+    error = Souvenir();
+
+    auto it = m_souvenirs.find(id);
+    return it != m_souvenirs.end() ? it->second
+                                   : error;
 }
 
 /**
