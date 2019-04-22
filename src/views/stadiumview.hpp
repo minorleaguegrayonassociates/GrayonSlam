@@ -15,12 +15,12 @@ class StadiumView : public View
     Q_OBJECT
 
 public:
-    explicit StadiumView(QWidget *parent = nullptr);
+    explicit StadiumView(QWidget* parent = nullptr);
     ~StadiumView() override;
     void resetView() override;
     void resetUi() override;
 
 private:
-    Ui::StadiumView *ui;
+    Ui::StadiumView* ui;
     StadiumList* m_stadiumList;
 };
