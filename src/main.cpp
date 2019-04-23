@@ -3,7 +3,6 @@
 #include "src/datastore/database.hpp"
 #include <QApplication>
 #include <QFile>
-#include <QDebug>
 
 int main(int argc, char *argv[])
 {
@@ -18,6 +17,10 @@ int main(int argc, char *argv[])
     /* Copy the resource files into the filesystem */
     QFile::copy(":/res/MLBInformation.csv", "MLBInformation.csv");
     QFile::copy(":/res/DistanceBetweenStadiums.csv", "DistanceBetweenStadiums.csv");
+
+    /* Load data into database */
+    Database::loadFromFile("MLBInformation.csv");
+    Database::loadDistancesFromFile("DistanceBetweenStadiums.csv");
 
     /*
      * Connect the login object's accepted signal.

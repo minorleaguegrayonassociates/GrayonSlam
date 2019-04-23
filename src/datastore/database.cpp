@@ -1,7 +1,6 @@
 #include "database.hpp"
 #include "src/utils/parser.hpp"
 #include "src/utils/enumtools.hpp"
-#include <QDebug>
 
 /* Instantiate static map containers of teams and stadiums */
 nstd::map<int,Team> Database::teams;
@@ -23,7 +22,6 @@ std::map<int,Database::coords> Database::coordinates;
  */
 void Database::loadFromFile(const std::string& filepath)
 {
-qDebug() << QString::fromStdString(filepath);
     /* all the variables that have "temp" temporarily hold data until the object is initialized and put into a container */
     // Temp Enum variables used to initialize class
     Team::League tempLeague;

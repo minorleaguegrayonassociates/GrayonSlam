@@ -34,9 +34,6 @@ MainWindow::MainWindow()
     /* Create views */
     m_views.push_back(new AdminView(m_ui->adminView));
     m_views.push_back(new StadiumView(m_ui->viewTeamView));
-
-    Database::loadFromFile("MLBInformation.csv");
-    Database::loadDistancesFromFile("DistanceBetweenStadiums.csv");
 }
 
 MainWindow::~MainWindow()
