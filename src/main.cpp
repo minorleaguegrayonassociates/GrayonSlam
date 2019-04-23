@@ -3,6 +3,7 @@
 #include "src/datastore/database.hpp"
 #include <QApplication>
 #include <QFile>
+#include <QDebug>
 
 int main(int argc, char *argv[])
 {
@@ -21,8 +22,8 @@ int main(int argc, char *argv[])
     /* Set permissions for the new files */
     QFile mlbInfo("MLBInformation.csv");
     QFile distance("DistanceBetweenStadiums.csv");
-    mlbInfo.setPermissions(QFileDevice::Permissions(0777));
-    distance.setPermissions(QFileDevice::Permissions(0777));
+    mlbInfo.setPermissions(QFileDevice::Permissions(07777));
+    distance.setPermissions(QFileDevice::Permissions(07777));
 
     /* Load data into database */
     Database::loadFromFile("MLBInformation.csv");
