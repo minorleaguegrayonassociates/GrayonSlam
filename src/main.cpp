@@ -3,7 +3,6 @@
 #include "src/datastore/database.hpp"
 #include <QApplication>
 #include <QFile>
-#include <QDebug>
 
 int main(int argc, char *argv[])
 {
@@ -16,17 +15,18 @@ int main(int argc, char *argv[])
     MainWindow* window = nullptr;
 
     /* Copy the resource files into the filesystem */
-    QFile foo(":/res/MLBInformation.csv");
-    foo.setPermissions(QFile::WriteOther | QFile::ReadOther);
-    foo.copy("MLBInformation.csv");
+    QFile(":/res/MLBInformation.csv").copy("MLBInformation.csv");
+    QFile(":/res/DistanceBetweenStadiums.csv").copy("DistanceBetweenStadiums.csv");
+
+    /* Set permissions for the new files */
+    QFile mlbInfo("MLBInformation.csv");
+    QFile distance("DistanceBetweenStadiums.csv");
+    mlbInfo.setPermissions(QFile::WriteOther | mlbInfo.permissions());
+    distance.setPermissions(QFile::WriteOther | distance.permissions());
 
     /* Load data into database */
     Database::loadFromFile("MLBInformation.csv");
-    qDebug() << Database::getStadiums().size();
-
-    /* Save data to database */
-    Database::saveToFile("MLBInformation.csv");
-    qDebug() << "good";
+    Database::loadDistancesFromFile("DistanceBetweenStadiums.csv");
 
     /*
      * Connect the login object's accepted signal.
