@@ -1,5 +1,6 @@
 #include "stadiumview.hpp"
 #include "ui_stadiumview.h"
+#include <QMessageBox>
 
 /**
  * Constructs a Stadium View with a pointer to the parent widget which it will reside in
@@ -117,7 +118,25 @@ void StadiumView::resetUi()
 void StadiumView::onStadiumClicked(int stadiumId)
 {
     Stadium stadium = Database::findStadiumById(stadiumId);
+    Team team = Database::findTeamById(stadium.getTeamId());
 
+    //Don't question the spaces, it is to deal with message box not treating spaces the same width as a character
+    std::string msg;
+    msg = std::string("\tTeam Information\n")
+         +std::string("Team Name:            ") + team.getName() + '\n'
+         +std::string("League:                     ") + team.LEAGUE_STRING[team.league] + '\n'
+         +std::string("Stadium Name:       ") + stadium.getName() + '\n'
+         +std::string("Location:                  ") + stadium.getLocation() + '\n'
+         +std::string("Year Opened:           ") + std::to_string(stadium.getYearOpened()) + '\n'
+         +std::string("Seating Capacity:    ") + StadiumList::commaSeparate(std::to_string(stadium.getSeatCap())) + '\n'
+         +std::string("Typology:                 ") + stadium.TYPOLOGY_STRING[stadium.typology] + '\n'
+         +std::string("Roof Type:                ") + stadium.ROOF_STRING[stadium.roof] + '\n'
+         +std::string("Playing Surface:       ") + stadium.SURFACE_STRING[stadium.surface] + '\n'
+         +std::string("Dist To Cntr Field:    ") + StadiumList::commaSeparate(std::to_string(stadium.getCenterFieldDist())) + '\n';
+    QMessageBox box;
+    box.setText(QString::fromStdString(msg));
+    box.setStandardButtons(QMessageBox::Close);
+    box.exec();
 }
 
 void StadiumView::on_AllStadiumsAndTeamsButton_clicked()

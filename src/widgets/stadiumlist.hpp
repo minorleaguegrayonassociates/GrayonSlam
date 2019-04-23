@@ -34,6 +34,9 @@ public:
     /* Destructor*/
     ~StadiumList() override;
 
+    /* Helper Functions*/
+  static  std::string commaSeparate(const std::string&);
+
 signals:
     /* Clicked Signal*/
     void stadiumClicked(int stadiumId);
@@ -43,9 +46,6 @@ private slots:
     void connectWidgetItemToStadium(QTreeWidgetItem*);
 
 private:
-    /* Helper Functions*/
-    std::string commaSeparate(const std::string&);
-
     /* Member variables*/
     QTreeWidget* m_listDisplay;
     bool m_showHidden;
