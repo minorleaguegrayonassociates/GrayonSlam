@@ -84,4 +84,3 @@ void MainWindow::resetViews()
     std::for_each(m_views.begin(), m_views.end(),
                   [](View* view){view->resetView();});
 }
-

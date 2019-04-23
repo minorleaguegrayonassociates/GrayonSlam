@@ -1,15 +1,16 @@
 #include "mappainter.hpp"
 #include "ui_mappainter.h"
 #include <QPainter>
-#include <QLabel>
-#include <QHBoxLayout>
 #include <QDebug>
+#include <QHBoxLayout>
+#include <QPropertyAnimation>
 
 /* Constuctor */
 MapPainter::MapPainter(QWidget *parent)
     : QWidget(parent), m_ui(new Ui::MapPainter)
 {
     m_ui->setupUi(this);
+    m_airplane = new AirplanePainter(this);
 }
 
 /* Destuctor */
@@ -40,6 +41,7 @@ void MapPainter::paintEvent(QPaintEvent*)
         paintStadiums(painter, pair.first,QPoint(pair.second.first,pair.second.second),
                       QString::fromStdString(Database::findStadiumById(pair.first).getName()));
     }
+
     painter.end();
 }
 
@@ -83,7 +85,7 @@ void MapPainter::paintStadiums(QPainter& painter,int id, const QPoint& stadiumCo
 }
 
 /**
- * Draws draws line between the coordinates provided
+ * Draws dotted line between the coordinates provided
  *
  * @param painter QPainter
  * @param stadiumCoord1 QPoint - x, y coordinates where the line where start
@@ -94,6 +96,32 @@ void MapPainter::paintEdge(QPainter& painter, const QPoint& stadiumCoord1, const
     QPen myPen;
     /* set myPen info */
     myPen.setColor(Qt::GlobalColor::black);
+    myPen.setWidth(1);
+    myPen.setCapStyle(Qt::PenCapStyle::FlatCap);
+    myPen.setJoinStyle(Qt::PenJoinStyle::MPenJoinStyle);
+    myPen.setStyle(Qt::PenStyle::DotLine);
+    // set pen myPen
+    painter.setPen(myPen);
+    /* adjust line so it sits a bit closer to the center of the stadium circle */
+    QPoint one = stadiumCoord1 + QPoint(1,1);
+    QPoint two = stadiumCoord2 - QPoint(1,1);
+    // Draw Line
+    painter.drawLine(one, two);
+}
+
+/**
+ * highlights lines between the the coordinates provided
+ * intended for the discovery edges
+ *
+ * @param painter QPainter
+ * @param stadiumCoord1 QPoint - x, y coordinates where the line where start
+ * @param stadiumCoord2 QPoint - x, y coordinates where the line will end
+ */
+void MapPainter::highlightEdge(QPainter& painter, const QPoint& stadiumCoord1, const QPoint& stadiumCoord2)
+{
+    QPen myPen;
+    /* set myPen info */
+    myPen.setColor(Qt::GlobalColor::yellow);
     myPen.setWidth(1);
     myPen.setCapStyle(Qt::PenCapStyle::FlatCap);
     myPen.setJoinStyle(Qt::PenJoinStyle::MPenJoinStyle);
@@ -138,4 +166,25 @@ void MapPainter::paintText(QPainter& painter, const QPoint& coordinate, const QS
     textOption.setWrapMode(QTextOption::WordWrap);
     // Draw Text
     painter.drawText(rect,strToPrint, textOption);
+}
+
+/*
+ * Takes From and To stadium id's animates a plane starting at
+ * froms coordinates and ending at to coordinates
+ *
+ * @param stadiumOneId From: id
+ * @param stadiumTwoId To: id
+*/
+void MapPainter::animateTrip(int stadiumOneId, int stadiumTwoId)
+{
+    std::map<int,Database::coords> tempCoords(Database::getCoordinates());
+
+    m_airplane->setRotation(tempCoords[stadiumOneId].first,tempCoords[stadiumOneId].second,
+                            tempCoords[stadiumTwoId].first,tempCoords[stadiumTwoId].second);
+
+    QPropertyAnimation* animation = new QPropertyAnimation(m_airplane, "geometry");
+    animation->setDuration(600);
+    animation->setStartValue(QRect(QPoint(tempCoords[stadiumOneId].first,tempCoords[stadiumOneId].second-12),size()));
+    animation->setEndValue(QRect(QPoint(tempCoords[stadiumTwoId].first,tempCoords[stadiumTwoId].second-12),size()));
+    animation->start(QAbstractAnimation::DeleteWhenStopped);
 }
