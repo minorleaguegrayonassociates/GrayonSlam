@@ -11,15 +11,8 @@ const QPoint translateCenter(planeSize.width()/2,planeSize.height()/2);
 const QPoint translateReset(planeSize.width()/2-planeSize.width(),planeSize.height()/2-planeSize.height());
 
 AirplanePainter::AirplanePainter(QWidget *parent)
-    : QWidget(parent), m_ui(new Ui::AirplanePainter), m_plane(":/res/airplane.png")
-{
-    m_ui->setupUi(this);
-}
-
-AirplanePainter::~AirplanePainter()
-{
-    delete m_ui;
-}
+    : QWidget(parent), m_plane(":/res/airplane.png")
+{}
 
 /**
  * Draws all stadiums and all the edges between the stadiums

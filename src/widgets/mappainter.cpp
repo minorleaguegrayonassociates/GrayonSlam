@@ -17,6 +17,7 @@ MapPainter::MapPainter(QWidget *parent)
 MapPainter::~MapPainter()
 {
     delete m_ui;
+    delete m_airplane;
 }
 
 /**
