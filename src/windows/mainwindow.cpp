@@ -43,6 +43,10 @@ MainWindow::~MainWindow()
 {
     delete m_ui;
     delete m_navbar;
+
+    //Delete each view
+    std::for_each(m_views.begin(), m_views.end(),
+                  [](View* view){delete view;});
 }
 
 /* Private slots */
