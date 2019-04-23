@@ -3,7 +3,6 @@
 #include "src/datastore/database.hpp"
 #include <QApplication>
 #include <QFile>
-#include <QDebug>
 
 int main(int argc, char *argv[])
 {
