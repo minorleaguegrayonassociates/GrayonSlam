@@ -50,6 +50,8 @@ void StadiumView::resetUi()
     std::vector<std::pair<Team,Stadium>> list;
     std::vector<std::pair<Team,Stadium>> listT = Database::getTeamsAndStadiums();
     int totalSeatingCapacity = 0;
+
+    //Check to see what needs to be displayed in the list
     switch(m_displayStatus)
     {
         case ROOF_TYPE:
@@ -110,11 +112,21 @@ void StadiumView::resetUi()
             break;
     }
 
+    //populate the widget from the list that corresponds to the button clicked
     m_stadiumList->populateWidget(list);
+
+    //Set labels to reflect what is in list
     ui->TotalStadiumsLabel->setText(QString("Total Amount Of Teams/Stadiums: ") + QString::fromStdString(std::to_string(list.size())));
     ui->TotalSeatingCapacityLabel->setText(QString("Total Seating Capacity: ") + QString::fromStdString(std::to_string(totalSeatingCapacity)));
 }
 
+/**
+ * onStadiumClicked is a slot that displays the given stadium and
+ * corresponding team information inside a QMessageBox when a signal
+ * that emits stadiums id's is connected to it.
+ *
+ * @param stadiumId Id of stadium to display.
+ */
 void StadiumView::onStadiumClicked(int stadiumId)
 {
     Stadium stadium = Database::findStadiumById(stadiumId);
@@ -139,36 +151,66 @@ void StadiumView::onStadiumClicked(int stadiumId)
     box.exec();
 }
 
+/**
+ * When on_AllStadiumsAndTeamsButton_clicked is called, the stadium list is cleared
+ * and repopulated with all stadiums and teams from the database and the labels below
+ * are updated to match it.
+ */
 void StadiumView::on_AllStadiumsAndTeamsButton_clicked()
 {
     m_displayStatus = ALL_STADIUMS;
     resetUi();
 }
 
+/**
+ * When on_AmericanLeagueButton_clicked is called, the stadium list is cleared
+ * and repopulated with only American League teams and the labels below
+ * are updated to match it.
+ */
 void StadiumView::on_AmericanLeagueButton_clicked()
 {
     m_displayStatus =AMERICAN_LEAGUE;
     resetUi();
 }
 
+/**
+ * When on_NationalLeagueButton_clicked is called, the stadium list is cleared
+ * and repopulated with only National League teams and the labels below
+ * are updated to match it.
+ */
 void StadiumView::on_NationalLeagueButton_clicked()
 {
     m_displayStatus = NATIONAL_LEAGUE;
     resetUi();
 }
 
+/**
+ * When on_OpenRoofsButton_clicked is called, the stadium list is cleared
+ * and repopulated with only stadiums with open roofs and the labels below
+ * are updated to match it.
+ */
 void StadiumView::on_OpenRoofsButton_clicked()
 {
     m_displayStatus = ROOF_TYPE;
     resetUi();
 }
 
+/**
+ * When on_GreatestDistButton_clicked is called, the stadium list is cleared
+ * and repopulated with only the teams that have the greatest distance to center field
+ * and the labels below are updated to match it.
+ */
 void StadiumView::on_GreatestDistButton_clicked()
 {
     m_displayStatus = GREATEST_DISTANCE;
     resetUi();
 }
 
+/**
+ * When on_ShortesttDistButton_clicked is called, the stadium list is cleared
+ * and repopulated with only the teams that have the shortest distance to center field
+ * and the labels below are updated to match it.
+ */
 void StadiumView::on_ShortestDistButton_clicked()
 {
     m_displayStatus = SHORTEST_DISTANCE;
