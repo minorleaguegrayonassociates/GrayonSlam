@@ -79,7 +79,7 @@ void AdminView::resetView()
  */
 void AdminView::resetUi()
 {
-    Database::saveToFile("./../../../src/datastore/MLBInformation.csv");
+    Database::saveToFile("MLBInformation.csv");
 
     fillStadiumList();
     fillSouvenirLists(m_currentStadiumId);
