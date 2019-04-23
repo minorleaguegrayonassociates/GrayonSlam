@@ -3,6 +3,7 @@
 #include <QPropertyAnimation>
 #include <QSpinBox>
 
+/* Constructor */
 MapView::MapView(QWidget *parent) :
 View(parent),
 m_ui(new Ui::MapView)
@@ -13,6 +14,7 @@ m_ui(new Ui::MapView)
     m_ui->spinBox_2->setRange(50,80);
 }
 
+/* Destructor */
 MapView::~MapView()
 {
     delete m_ui;
@@ -30,11 +32,6 @@ void MapView::resetUi()
 
 }
 
-void MapView::on_pushButton_clicked()
-{
-    animateTrip(m_ui->spinBox->value(),m_ui->spinBox_2->value());
-}
-
 /*
  * Takes From and To coordinates and depending on the direction it set's
  * the plane used for animation to either face right or left
@@ -49,8 +46,17 @@ void MapView::setPlane(int x1, int x2)
         m_ui->plane_widget->setPixmap(QPixmap(":/res/airplane_right.png"));
     else
         m_ui->plane_widget->setPixmap(QPixmap(":/res/airplane_left.png"));
+    // Raise plane pixmap to be above drawing
+    m_ui->plane_widget->raise();
 }
 
+/*
+ * Takes From and To stadium id's animates a plane starting at
+ * froms coordinates and ending at to coordinates
+ *
+ * @param stadiumOneId From: id
+ * @param stadiumTwoId To: id
+*/
 void MapView::animateTrip(int stadiumOneId, int stadiumTwoId)
 {
     std::map<int,Database::coords> tempCoords(Database::getCoordinates());
@@ -62,6 +68,13 @@ void MapView::animateTrip(int stadiumOneId, int stadiumTwoId)
     animation->start(QAbstractAnimation::DeleteWhenStopped);
 }
 
+// Only using it to debug/ demo
+void MapView::on_pushButton_clicked()
+{
+    animateTrip(m_ui->spinBox->value(),m_ui->spinBox_2->value());
+}
+
+// Only using it to debug/ demo
 void MapView::on_pushButton_2_clicked()
 {
     Database::loadFromFile("./../../../src/datastore/MLBInformationExpansion.csv");
