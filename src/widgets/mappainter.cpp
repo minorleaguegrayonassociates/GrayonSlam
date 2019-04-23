@@ -1,22 +1,19 @@
 #include "mappainter.hpp"
-#include "ui_mappainter.h"
+#include "src/datastore/database.hpp"
 #include <QPainter>
-#include <QDebug>
-#include <QHBoxLayout>
 #include <QPropertyAnimation>
 
 /* Constuctor */
 MapPainter::MapPainter(QWidget *parent)
-    : QWidget(parent), m_ui(new Ui::MapPainter)
+    : QWidget(parent)
 {
-    m_ui->setupUi(this);
+    this->resize(parent->width(),parent->height());
     m_airplane = new AirplanePainter(this);
 }
 
 /* Destuctor */
 MapPainter::~MapPainter()
 {
-    delete m_ui;
     delete m_airplane;
 }
 

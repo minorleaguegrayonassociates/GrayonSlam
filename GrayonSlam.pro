@@ -81,7 +81,6 @@ FORMS += \
     src/views/stadiumview.ui \
     src/views/adminview.ui \
     src/views/mapview.ui \
-    src/widgets/mappainter.ui
 
 RESOURCES += \
     res.qrc

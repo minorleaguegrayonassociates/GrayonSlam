@@ -1,13 +1,7 @@
 #pragma once
 
-#include "src/datastore/database.hpp"
 #include "airplanepainter.hpp"
 #include <QWidget>
-#include <map>
-
-namespace Ui {
-class MapPainter;
-}
 
 class MapPainter : public QWidget
 {
@@ -27,7 +21,6 @@ void paintText(QPainter& painter, const QPoint& , const QString&);
 void animateTrip(int stadiumOneId, int stadiumTwoId);
 
 private:
-Ui::MapPainter* m_ui;
 AirplanePainter* m_airplane;
 };
 

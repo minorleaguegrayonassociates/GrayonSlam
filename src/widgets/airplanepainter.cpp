@@ -1,5 +1,4 @@
 #include "airplanepainter.hpp"
-#include "ui_airplanepainter.h"
 #include <QPainter>
 #include <cmath>
 
