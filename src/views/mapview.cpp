@@ -2,6 +2,7 @@
 #include "ui_mapview.h"
 #include <QPropertyAnimation>
 #include <QSpinBox>
+#include <cmath>
 
 /* Constructor */
 MapView::MapView(QWidget *parent) :
@@ -41,11 +42,11 @@ void MapView::resetUi()
 */
 void MapView::setPlane(int x1, int x2)
 {
-    bool isPositive = x1 - x2 < 0;
-    if(isPositive)
+//    bool isPositive = x1 - x2 < 0;
+//    if(isPositive)
         m_ui->plane_widget->setPixmap(QPixmap(":/res/airplane_right.png"));
-    else
-        m_ui->plane_widget->setPixmap(QPixmap(":/res/airplane_left.png"));
+//    else
+//        m_ui->plane_widget->setPixmap(QPixmap(":/res/airplane_left.png"));
     // Raise plane pixmap to be above drawing
     m_ui->plane_widget->raise();
 }
@@ -61,6 +62,8 @@ void MapView::animateTrip(int stadiumOneId, int stadiumTwoId)
 {
     std::map<int,Database::coords> tempCoords(Database::getCoordinates());
     setPlane(tempCoords[stadiumOneId].first,tempCoords[stadiumTwoId].first);
+    double tempDub = directionAngle(tempCoords[stadiumOneId].first,tempCoords[stadiumOneId].first,tempCoords[stadiumTwoId].first,tempCoords[stadiumTwoId].second);
+
     QPropertyAnimation* animation = new QPropertyAnimation(m_ui->plane, "geometry");
     animation->setDuration(600);
     animation->setStartValue(QRect(QPoint(tempCoords[stadiumOneId].first,tempCoords[stadiumOneId].second-25),size()));
@@ -80,4 +83,25 @@ void MapView::on_pushButton_2_clicked()
     Database::loadFromFile("./../../../src/datastore/MLBInformationExpansion.csv");
     Database::loadDistancesFromFile("./../../../src/datastore/DistanceBetweenExpansionStadium.csv");
     resetView();
+}
+
+/**
+ * Given the starting and ending coordinates, calculate the direction
+ * angle of the vector pointing from start to finish
+ *
+ * @param startingX the starting x coordinate
+ * @param startingY the starting y coordinate
+ * @param endingX the ending x coordinate
+ * @param endingY the ending y coordinate
+ * @return a direction angle of the vector pointing from start to finish
+ */
+double MapView::directionAngle(int startingX, int startingY, int endingX, int endingY)
+{
+    int xComponent = endingX - startingX;
+    int yComponent = endingY - startingY;
+    double PI = 3.141592653589793238462643383279503;
+    double angle = atan((1.0*yComponent)/xComponent) * (180.0 / PI);
+    if(xComponent < 0) { angle += 180.0; };
+
+    return angle;
 }

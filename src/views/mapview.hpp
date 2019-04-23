@@ -28,7 +28,7 @@ explicit MapView(QWidget *parent = nullptr);
  void setPlane(int,int);
 
  void animateTrip(int, int);
-
+ double directionAngle(int, int, int, int);
  private slots:
      void on_pushButton_clicked();
      void on_pushButton_2_clicked();
