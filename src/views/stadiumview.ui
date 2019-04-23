@@ -26,8 +26,8 @@
   <widget class="QPushButton" name="NationalLeagueButton">
    <property name="geometry">
     <rect>
-     <x>490</x>
-     <y>340</y>
+     <x>500</x>
+     <y>390</y>
      <width>141</width>
      <height>23</height>
     </rect>
@@ -43,7 +43,7 @@
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>340</y>
+     <y>390</y>
      <width>151</width>
      <height>23</height>
     </rect>
@@ -59,7 +59,7 @@
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>440</y>
+     <y>460</y>
      <width>191</width>
      <height>23</height>
     </rect>
@@ -74,8 +74,8 @@
   <widget class="QPushButton" name="ShortestDistButton">
    <property name="geometry">
     <rect>
-     <x>440</x>
-     <y>440</y>
+     <x>450</x>
+     <y>460</y>
      <width>191</width>
      <height>23</height>
     </rect>
@@ -90,8 +90,8 @@
   <widget class="QPushButton" name="OpenRoofsButton">
    <property name="geometry">
     <rect>
-     <x>220</x>
-     <y>390</y>
+     <x>240</x>
+     <y>520</y>
      <width>221</width>
      <height>23</height>
     </rect>
@@ -100,7 +100,46 @@
     <cursorShape>PointingHandCursor</cursorShape>
    </property>
    <property name="text">
-    <string>Show Teams with Open Roofs League Only</string>
+    <string>Show Teams with Open Roofs Only</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="AllStadiumsAndTeamsButton">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>350</y>
+     <width>181</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Show All Stadiums and Teams</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="TotalSeatingCapacityLabel">
+   <property name="geometry">
+    <rect>
+     <x>220</x>
+     <y>420</y>
+     <width>221</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Total Seating Capacity:   </string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="TotalStadiumsLabel">
+   <property name="geometry">
+    <rect>
+     <x>220</x>
+     <y>390</y>
+     <width>211</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Total Amount of Teams/Stadiums: </string>
    </property>
   </widget>
  </widget>
