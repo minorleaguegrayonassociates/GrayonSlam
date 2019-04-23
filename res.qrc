@@ -6,5 +6,9 @@
         <file>res/background_icons_purple.png</file>
         <file>res/background_icons_blue.png</file>
         <file>res/background_icons_orange.png</file>
+        <file>res/DistanceBetweenExpansionStadium.csv</file>
+        <file>res/DistanceBetweenStadiums.csv</file>
+        <file>res/MLBInformation.csv</file>
+        <file>res/MLBInformationExpansion.csv</file>
     </qresource>
 </RCC>

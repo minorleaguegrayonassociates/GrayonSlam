@@ -31,12 +31,12 @@ MainWindow::MainWindow()
         m_navbar->addItem("\uf085", "Inventory\nManagement");
     m_navbar->addItem("\uf2f5", "Logout");
 
-    Database::loadDistancesFromFile("DistanceBetweenStadiums.csv");
-    Database::loadFromFile("MLBInformation.csv");
-
     /* Create views */
     m_views.push_back(new AdminView(m_ui->adminView));
     m_views.push_back(new StadiumView(m_ui->viewTeamView));
+
+    Database::loadFromFile("MLBInformation.csv");
+    Database::loadDistancesFromFile("DistanceBetweenStadiums.csv");
 }
 
 MainWindow::~MainWindow()
@@ -73,8 +73,9 @@ void MainWindow::changeView(int view)
 
 void MainWindow::resetViews()
 {
-    /* Reset views -- go here */
+    /* Save database to files */
     Database::saveToFile("MLBInformation.csv");
+    Database::saveDistancesToFile("DistanceBetweenStadiums.csv");
 
     //Reset each view
     std::for_each(m_views.begin(), m_views.end(),

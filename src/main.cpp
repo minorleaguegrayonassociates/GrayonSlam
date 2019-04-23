@@ -1,6 +1,9 @@
 #include "src/windows/mainwindow.hpp"
 #include "src/windows/login.hpp"
+#include "src/datastore/database.hpp"
 #include <QApplication>
+#include <QFile>
+#include <QDebug>
 
 int main(int argc, char *argv[])
 {
@@ -11,6 +14,10 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     MainWindow* window = nullptr;
+
+    /* Copy the resource files into the filesystem */
+    QFile::copy(":/res/MLBInformation.csv", "MLBInformation.csv");
+    QFile::copy(":/res/DistanceBetweenStadiums.csv", "DistanceBetweenStadiums.csv");
 
     /*
      * Connect the login object's accepted signal.
