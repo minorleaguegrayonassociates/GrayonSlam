@@ -21,8 +21,8 @@ int main(int argc, char *argv[])
     /* Set permissions for the new files */
     QFile mlbInfo("MLBInformation.csv");
     QFile distance("DistanceBetweenStadiums.csv");
-    mlbInfo.setPermissions(QFile::WriteOther | mlbInfo.permissions());
-    distance.setPermissions(QFile::WriteOther | distance.permissions());
+    mlbInfo.setPermissions(QFileDevice::Permissions(0777));
+    distance.setPermissions(QFileDevice::Permissions(0777));
 
     /* Load data into database */
     Database::loadFromFile("MLBInformation.csv");
