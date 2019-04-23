@@ -39,7 +39,8 @@ SOURCES += \
     src/datastore/database.cpp \
     src/views/stadiumview.cpp \
     src/widgets/stadiumlist.cpp \
-    src/widgets/stadiumlistitem.cpp
+    src/widgets/stadiumlistitem.cpp \
+    src/views/adminview.cpp
 
 HEADERS += \
     src/windows/mainwindow.hpp \
@@ -59,14 +60,16 @@ HEADERS += \
     src/utils/enumtools.hpp \
     src/views/stadiumview.hpp \
     src/widgets/stadiumlist.hpp \
-    src/widgets/stadiumlistitem.hpp
+    src/widgets/stadiumlistitem.hpp \
+    src/views/adminview.hpp
 
 FORMS += \
     src/windows/mainwindow.ui \
     src/windows/login.ui \
     src/widgets/navbaritem.ui \
     src/widgets/souvenirlistitem.ui \
-    src/views/stadiumview.ui
+    src/views/stadiumview.ui \
+    src/views/adminview.ui
 
 RESOURCES += \
     res.qrc

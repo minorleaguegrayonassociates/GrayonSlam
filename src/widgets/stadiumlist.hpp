@@ -36,7 +36,7 @@ public:
 
     /* Helper Functions*/
   static  std::string commaSeparate(const std::string&);
-
+  
 signals:
     /* Clicked Signal*/
     void stadiumClicked(int stadiumId);

@@ -1,6 +1,8 @@
 #include "src/windows/mainwindow.hpp"
 #include "src/windows/login.hpp"
+#include "src/datastore/database.hpp"
 #include <QApplication>
+#include <QFile>
 
 int main(int argc, char *argv[])
 {
@@ -11,6 +13,20 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     MainWindow* window = nullptr;
+
+    /* Copy the resource files into the filesystem */
+    QFile(":/res/MLBInformation.csv").copy("MLBInformation.csv");
+    QFile(":/res/DistanceBetweenStadiums.csv").copy("DistanceBetweenStadiums.csv");
+
+    /* Set permissions for the new files */
+    QFile mlbInfo("MLBInformation.csv");
+    QFile distance("DistanceBetweenStadiums.csv");
+    mlbInfo.setPermissions(QFileDevice::Permissions(07700));
+    distance.setPermissions(QFileDevice::Permissions(07700));
+
+    /* Load data into database */
+    Database::loadFromFile("MLBInformation.csv");
+    Database::loadDistancesFromFile("DistanceBetweenStadiums.csv");
 
     /*
      * Connect the login object's accepted signal.

@@ -26,6 +26,7 @@
   <widget class="QPushButton" name="NationalLeagueButton">
    <property name="geometry">
     <rect>
+
      <x>400</x>
      <y>440</y>
      <width>261</width>
