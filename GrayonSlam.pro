@@ -40,7 +40,7 @@ SOURCES += \
     src/views/stadiumview.cpp \
     src/widgets/stadiumlist.cpp \
     src/widgets/stadiumlistitem.cpp \
-    src/views/adminview.cpp
+    src/views/adminview.cpp \
     src/views/mapview.cpp \
     src/widgets/mappainter.cpp
 
