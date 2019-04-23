@@ -17,6 +17,12 @@ StadiumView::StadiumView(QWidget* parent) :
 
     //Instantiate and populate tree widget
     m_stadiumList = new StadiumList(ui->stadiumList);
+    m_stadiumList->setStyleSheet("QTreeWidget"
+    "{"
+        "font-size: 15px;"
+        "color: white;"
+        "background-color: #303030;"
+    "}");
     resetUi();
     connect(m_stadiumList, &StadiumList::stadiumClicked, this, &StadiumView::onStadiumClicked);
 }
@@ -146,6 +152,16 @@ void StadiumView::onStadiumClicked(int stadiumId)
          +std::string("Playing Surface:       ") + stadium.SURFACE_STRING[stadium.surface] + '\n'
          +std::string("Dist To Cntr Field:    ") + StadiumList::commaSeparate(std::to_string(stadium.getCenterFieldDist())) + '\n';
     QMessageBox box;
+    box.setStyleSheet("QMessageBox"
+                      "{"
+                          "font-size: 15px;"
+                          "color: white;"
+                          "background-color: #303030;"
+                      "}"
+                      "QMessageBox QLabel"
+                      "{"
+                      "    color: white;"
+                      "}");
     box.setText(QString::fromStdString(msg));
     box.setStandardButtons(QMessageBox::Close);
     box.exec();

@@ -26,14 +26,23 @@
   <widget class="QPushButton" name="NationalLeagueButton">
    <property name="geometry">
     <rect>
-     <x>420</x>
+     <x>400</x>
      <y>440</y>
-     <width>221</width>
+     <width>261</width>
      <height>23</height>
     </rect>
    </property>
    <property name="cursor">
     <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton
+{
+        font-size: 15px;
+        color: white;
+		border: 2px solid white;
+        background-color: #303030;
+ }</string>
    </property>
    <property name="text">
     <string>Show National League Only</string>
@@ -44,12 +53,21 @@
     <rect>
      <x>20</x>
      <y>440</y>
-     <width>191</width>
+     <width>291</width>
      <height>23</height>
     </rect>
    </property>
    <property name="cursor">
     <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton
+{
+        font-size: 15px;
+        color: white;
+		border: 2px solid white;
+        background-color: #303030;
+ }</string>
    </property>
    <property name="text">
     <string>Show American League Only</string>
@@ -60,12 +78,21 @@
     <rect>
      <x>20</x>
      <y>500</y>
-     <width>191</width>
+     <width>291</width>
      <height>23</height>
     </rect>
    </property>
    <property name="cursor">
     <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton
+{
+        font-size: 15px;
+        color: white;
+		border: 2px solid white;
+        background-color: #303030;
+ }</string>
    </property>
    <property name="text">
     <string>Show Team(s) Greatest to center field</string>
@@ -74,14 +101,23 @@
   <widget class="QPushButton" name="ShortestDistButton">
    <property name="geometry">
     <rect>
-     <x>420</x>
+     <x>400</x>
      <y>500</y>
-     <width>221</width>
+     <width>261</width>
      <height>23</height>
     </rect>
    </property>
    <property name="cursor">
     <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton
+{
+        font-size: 15px;
+        color: white;
+		border: 2px solid white;
+        background-color: #303030;
+ }</string>
    </property>
    <property name="text">
     <string>Show Team(s) Shortest to center field</string>
@@ -90,14 +126,23 @@
   <widget class="QPushButton" name="OpenRoofsButton">
    <property name="geometry">
     <rect>
-     <x>420</x>
+     <x>400</x>
      <y>380</y>
-     <width>221</width>
+     <width>261</width>
      <height>23</height>
     </rect>
    </property>
    <property name="cursor">
     <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton
+{
+        font-size: 15px;
+        color: white;
+		border: 2px solid white;
+        background-color: #303030;
+ }</string>
    </property>
    <property name="text">
     <string>Show Teams with Open Roofs Only</string>
@@ -108,9 +153,18 @@
     <rect>
      <x>20</x>
      <y>380</y>
-     <width>191</width>
+     <width>291</width>
      <height>23</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton
+{
+        font-size: 15px;
+        color: white;
+		border: 2px solid white;
+        background-color: #303030;
+ }</string>
    </property>
    <property name="text">
     <string>Show All Stadiums and Teams</string>
@@ -119,11 +173,20 @@
   <widget class="QLabel" name="TotalSeatingCapacityLabel">
    <property name="geometry">
     <rect>
-     <x>420</x>
+     <x>400</x>
      <y>340</y>
-     <width>221</width>
+     <width>261</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel
+{
+        font-size: 15px;
+        color: white;
+		border: 2px solid white;
+        background-color: #303030;
+ }</string>
    </property>
    <property name="text">
     <string>Total Seating Capacity:   </string>
@@ -132,11 +195,20 @@
   <widget class="QLabel" name="TotalStadiumsLabel">
    <property name="geometry">
     <rect>
-     <x>30</x>
+     <x>20</x>
      <y>340</y>
-     <width>211</width>
-     <height>16</height>
+     <width>301</width>
+     <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel
+{
+        font-size: 15px;
+        color: white;
+		border: 2px solid white;
+        background-color: #303030;
+ }</string>
    </property>
    <property name="text">
     <string>Total Amount of Teams/Stadiums: </string>
