@@ -10,7 +10,7 @@ public:
     /* Constructors */
     explicit ImageSlideshow(QWidget* parent, int msecInterval);
 
-    void addImage(const QPixmap&);
+    void addImage(const QPixmap&, Qt::AspectRatioMode = Qt::KeepAspectRatioByExpanding);
     void setInterval(int);
 
 public slots:

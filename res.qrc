@@ -12,5 +12,6 @@
         <file>res/MLBInformationExpansion.csv</file>
         <file>res/airplane.png</file>
         <file>res/map_background.png</file>
+        <file>res/slideshow/BigLeagueChew.png</file>
     </qresource>
 </RCC>

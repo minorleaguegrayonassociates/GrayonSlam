@@ -15,13 +15,18 @@ ImageSlideshow::ImageSlideshow(QWidget* parent, int msecInterval)
 }
 
 /**
- * Adds an image to the slideshow.
+ * Adds an image to the slideshow. If the image is null,
+ * this function does nothing.
  *
  * @param image Image to add to the slideshow
  */
-void ImageSlideshow::addImage(const QPixmap& image)
+void ImageSlideshow::addImage(const QPixmap& image, Qt::AspectRatioMode mode)
 {
-    m_images.push_back(image);
+    if(image.isNull())
+        return;
+
+    QPixmap copy = image.scaled(size(), mode);
+    m_images.push_back(copy);
 }
 
 /**
