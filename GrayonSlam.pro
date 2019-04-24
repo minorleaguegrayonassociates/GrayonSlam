@@ -66,9 +66,6 @@ HEADERS += \
     src/widgets/stadiumlist.hpp \
     src/widgets/stadiumlistitem.hpp \
     src/views/adminview.hpp \
-    src/utils/enumtools.hpp \
-    src/utils/map.hpp \
-    src/views/view.hpp \
     src/views/mapview.hpp \
     src/widgets/mappainter.hpp \
     src/widgets/airplanepainter.hpp \
