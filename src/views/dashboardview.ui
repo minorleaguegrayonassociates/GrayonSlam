@@ -33,9 +33,33 @@
   <widget class="QLabel" name="label_splash">
    <property name="geometry">
     <rect>
-     <x>150</x>
+     <x>130</x>
+     <y>50</y>
+     <width>451</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel
+{
+	background-color: #303030;
+	color: white;
+	font-size: 15px;
+}</string>
+   </property>
+   <property name="text">
+    <string>splash</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_welcome">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
      <y>10</y>
-     <width>411</width>
+     <width>451</width>
      <height>41</height>
     </rect>
    </property>
@@ -48,7 +72,7 @@
 }</string>
    </property>
    <property name="text">
-    <string>splash</string>
+    <string>Welcome to GrayonSlam</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
