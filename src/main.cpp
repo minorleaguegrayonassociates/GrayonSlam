@@ -17,6 +17,7 @@ int main(int argc, char *argv[])
     /* Copy the resource files into the filesystem */
     QFile(":/res/MLBInformation.csv").copy("MLBInformation.csv");
     QFile(":/res/DistanceBetweenStadiums.csv").copy("DistanceBetweenStadiums.csv");
+    QFile(":/res/splash.csv").copy("splash.csv");
 
     /* Set permissions for the new files */
     QFile mlbInfo("MLBInformation.csv");

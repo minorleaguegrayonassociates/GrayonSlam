@@ -14,5 +14,10 @@
         <file>res/map_background.png</file>
         <file>res/slideshow/BigLeagueChew.png</file>
         <file>res/slideshow/engineer.jpg</file>
+        <file>res/slideshow/angels.jpg</file>
+        <file>res/slideshow/angelsfront.jpg</file>
+        <file>res/slideshow/wrigleyfront.jpg</file>
+        <file>res/slideshow/bitgo.png</file>
+        <file>res/splash.csv</file>
     </qresource>
 </RCC>

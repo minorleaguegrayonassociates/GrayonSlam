@@ -13,17 +13,45 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QWidget" name="widget" native="true">
+  <widget class="QWidget" name="widget_slideshow" native="true">
    <property name="geometry">
     <rect>
      <x>150</x>
      <y>100</y>
-     <width>400</width>
+     <width>410</width>
      <height>400</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">QWidget { border: 5px solid black; }</string>
+    <string notr="true">QWidget
+{
+	border: 5px solid black;
+	background-color: #303030;
+}</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_splash">
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>10</y>
+     <width>411</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel
+{
+	background-color: #303030;
+	color: white;
+	font-size: 20px;
+}</string>
+   </property>
+   <property name="text">
+    <string>splash</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
   </widget>
  </widget>
