@@ -7,7 +7,7 @@ class Beacon : public QWidget
     Q_OBJECT
 public:
     /* Constructor */
-    explicit Beacon(QWidget *parent = nullptr);
+    explicit Beacon(QWidget* parent);
 
     /* Events */
     void paintEvent(QPaintEvent*) override;

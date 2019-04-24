@@ -14,8 +14,8 @@ const QPoint translateCenter(planeSize.width()/2,planeSize.height()/2);
 const QPoint translateReset(planeSize.width()/2-planeSize.width(),planeSize.height()/2-planeSize.height());
 
 /* Constructor */
-AirplanePainter::AirplanePainter(QWidget *parent)
-   : QWidget(parent), m_plane(":/res/airplane.png")
+AirplanePainter::AirplanePainter(QWidget* parent)
+    : QWidget(parent), m_plane(":/res/airplane.png")
 {}
 
 /**
@@ -23,8 +23,7 @@ AirplanePainter::AirplanePainter(QWidget *parent)
  */
 void AirplanePainter::paintEvent(QPaintEvent*)
 {
-    QPainter painter;
-    painter.begin(this);
+    QPainter painter(this);
 
     /* Rotate plane at the center of the widget */
     painter.translate(translateCenter);
@@ -33,8 +32,6 @@ void AirplanePainter::paintEvent(QPaintEvent*)
 
     // Paint m_plane at `origin` (x:0,y:0), size `planeSize` (26 x 26)
     painter.drawPixmap(QRect(origin,planeSize), m_plane);
-
-    painter.end();
 }
 
 /**

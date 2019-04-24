@@ -11,7 +11,7 @@ class MapPainter : public QWidget
 
 public:
     /* Constructor */
-    explicit MapPainter(QWidget* parent = nullptr);
+    explicit MapPainter(QWidget* parent);
 
     /* Destructor */
     ~MapPainter() override;

@@ -3,11 +3,11 @@
 #include <QTimer>
 
 /* Constructor */
-Beacon::Beacon(QWidget *parent)
+Beacon::Beacon(QWidget* parent)
     : QWidget(parent), m_coords(-10,-10)
 {
     // Resize widget to parents width and height
-    this->resize(parent->width(),parent->height());
+    this->resize(parent->size());
 }
 
 /**
@@ -15,13 +15,10 @@ Beacon::Beacon(QWidget *parent)
  */
 void Beacon::paintEvent(QPaintEvent*)
 {
-    QPainter painter;
-    painter.begin(this);
+    QPainter painter(this);
 
     // Draw beacon at m_coords
     drawBeacon(painter,m_coords);
-
-    painter.end();
 }
 
 /*

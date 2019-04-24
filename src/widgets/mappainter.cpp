@@ -3,10 +3,10 @@
 #include <QPropertyAnimation>
 
 /* Constuctor */
-MapPainter::MapPainter(QWidget *parent)
+MapPainter::MapPainter(QWidget* parent)
     : QWidget(parent)
 {
-    resize(parent->width(),parent->height());
+    resize(parent->size());
 
     /* Make an instance of an AirplanePainter with MapPainter as it's parent and set it's size */
     m_airplane = new AirplanePainter(this);
@@ -28,8 +28,8 @@ MapPainter::~MapPainter()
  */
 void MapPainter::paintEvent(QPaintEvent*)
 {
-    QPainter painter;
-    painter.begin(this);
+    QPainter painter(this);
+
     std::map<int,Database::coords> tempCoords(Database::getCoordinates());
 
     /* If m_discoverEdges is populated with edges, highlight discovered edges */
@@ -51,8 +51,6 @@ void MapPainter::paintEvent(QPaintEvent*)
         paintStadiums(painter, pair.first,QPoint(pair.second.first,pair.second.second),
                       QString::fromStdString(Database::findStadiumById(pair.first).getName()));
     }
-
-    painter.end();
 }
 
 /**
