@@ -1,7 +1,6 @@
 #include "mapview.hpp"
 #include "ui_mapview.h"
 #include "src/datastore/database.hpp"
-#include <QSpinBox>
 
 /* Constructor */
 MapView::MapView(QWidget *parent)
