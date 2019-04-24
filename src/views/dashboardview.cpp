@@ -10,7 +10,7 @@ DashboardView::DashboardView(QWidget *parent)
     m_slideshow = new ImageSlideshow(m_ui->widget, 2000);
     m_slideshow->addImage(QPixmap(":/res/background_icons_blue.png"));
     m_slideshow->addImage(QPixmap(":/res/background_icons_orange.png"));
-    m_slideshow->play();
+    m_slideshow->start();
 }
 
 DashboardView::~DashboardView()

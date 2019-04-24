@@ -8,14 +8,14 @@ class ImageSlideshow : public QLabel
 
 public:
     /* Constructors */
-    ImageSlideshow(QWidget* parent, int msecInterval);
+    explicit ImageSlideshow(QWidget* parent, int msecInterval);
 
     void addImage(const QPixmap&);
     void setInterval(int);
 
 public slots:
-    void play();
-    void stop();
+    void start();
+    void pause();
 
 private slots:
     void loop();
