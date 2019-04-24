@@ -49,13 +49,17 @@ void Beacon::drawBeacon(QPainter& painter, const QPoint& stadiumCoord)
     painter.drawEllipse(stadiumCoord,16,16);
 }
 
-/* Event triggers when item is hidden and singleShot is called to set Beacon to show */
+/**
+ * Event triggers when item is hidden and singleShot is called to set Beacon to show
+ */
 void Beacon::hideEvent(QHideEvent*)
 {
     QTimer::singleShot(300, this, [this](){return this->setHidden(false);});
 }
 
-/* Event triggers when item is showing and singleShot is called to set Beacon to hidden */
+/**
+ * Event triggers when item is showing and singleShot is called to set Beacon to hidden
+ */
 void Beacon::showEvent(QShowEvent*)
 {
     QTimer::singleShot(300, this->parent(), [this](){return this->setHidden(true);});
@@ -72,4 +76,3 @@ void Beacon::setCoords(const QPoint& stadiumCoord)
     m_coords = stadiumCoord;
     repaint();
 }
-

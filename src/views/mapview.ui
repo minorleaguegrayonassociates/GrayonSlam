@@ -16,6 +16,20 @@
   <property name="styleSheet">
    <string notr="true">QWidget#map_widget{
 border-image: url(:/res/map_background.png) 0 0 0 0 strech stretch;
+}
+
+QPushButton
+{
+  font-size: 13px;
+  color: white;
+  border: 1px solid #666666;
+  background-color: #303030;
+ }
+
+QPushButton:hover
+{
+  background-color: #343A43;
+  border: 1px solid #609aff;
 }</string>
   </property>
   <widget class="QWidget" name="map_widget" native="true">
@@ -97,7 +111,7 @@ border-image: url(:/res/map_background.png) 0 0 0 0 strech stretch;
     </rect>
    </property>
    <property name="text">
-    <string>Load New Stadium</string>
+    <string>Thic Highlight</string>
    </property>
   </widget>
  </widget>

@@ -1,5 +1,4 @@
 #include "mappainter.hpp"
-#include "src/datastore/database.hpp"
 #include <QPainter>
 #include <QPropertyAnimation>
 
@@ -15,6 +14,8 @@ MapPainter::MapPainter(QWidget *parent)
 
     /* Making an instance of Beacon - signals `To` location when animating */
     m_beacon = new Beacon(this);
+
+    m_discoveredEdges = nullptr;
 }
 
 /* Destuctor */
@@ -25,7 +26,7 @@ MapPainter::~MapPainter()
 }
 
 /**
- * Draws all stadiums and all the edges between the stadiums
+ * @brief Draws all stadiums and all the edges between the stadiums
  */
 void MapPainter::paintEvent(QPaintEvent*)
 {
@@ -33,11 +34,16 @@ void MapPainter::paintEvent(QPaintEvent*)
     painter.begin(this);
     std::map<int,Database::coords> tempCoords(Database::getCoordinates());
 
+    if(m_discoveredEdges != nullptr && !m_discoveredEdges->empty())
+    {
+        highlightDiscoveredEdges(painter, *m_discoveredEdges);
+    }
+
     /* Paint edge between stadiums */
     for(auto edge : Database::getDistances())
     {
         paintEdge(painter,QPoint(tempCoords.find(std::get<0>(edge))->second.first,tempCoords.find(std::get<0>(edge))->second.second),
-                          QPoint(tempCoords.find(std::get<1>(edge))->second.first,tempCoords.find(std::get<1>(edge))->second.second));
+                  QPoint(tempCoords.find(std::get<1>(edge))->second.first,tempCoords.find(std::get<1>(edge))->second.second));
     }
 
     /* Paint stadium (red or blue based on league) and print the name of the stadium */
@@ -123,8 +129,7 @@ void MapPainter::paintEdge(QPainter& painter, const QPoint& stadiumCoord1, const
 }
 
 /**
- * highlights lines between the the coordinates provided
- * intended for the discovery edges
+ * highlights lines between the edge provided
  *
  * @param painter QPainter
  * @param stadiumCoord1 QPoint - x, y coordinates where the line where start
@@ -135,10 +140,10 @@ void MapPainter::highlightEdge(QPainter& painter, const QPoint& stadiumCoord1, c
     QPen myPen;
     /* set myPen info */
     myPen.setColor(Qt::GlobalColor::yellow);
-    myPen.setWidth(1);
-    myPen.setCapStyle(Qt::PenCapStyle::FlatCap);
-    myPen.setJoinStyle(Qt::PenJoinStyle::MPenJoinStyle);
-    myPen.setStyle(Qt::PenStyle::DotLine);
+    myPen.setWidth(6);
+    myPen.setCapStyle(Qt::PenCapStyle::RoundCap);
+    myPen.setJoinStyle(Qt::PenJoinStyle::RoundJoin);
+    myPen.setStyle(Qt::PenStyle::SolidLine);
 
     // set pen myPen
     painter.setPen(myPen);
@@ -149,6 +154,23 @@ void MapPainter::highlightEdge(QPainter& painter, const QPoint& stadiumCoord1, c
 
     // Draw Line
     painter.drawLine(one, two);
+}
+
+/**
+ * highlights lines between the container of edges provided
+ * made to highlight a trips discovered edges
+ *
+ * @param painter QPainter
+ * @param discoveredEdges vector of completedEdges [tuple(stadiumId,stadiumId,weight)]
+ */
+void MapPainter::highlightDiscoveredEdges(QPainter& painter, std::vector<Database::completedEdge>& discoveredEdges)
+{
+     std::map<int,Database::coords> coords(Database::getCoordinates());
+    for(auto edge: discoveredEdges)
+    {
+        highlightEdge(painter, QPoint(coords.find(std::get<0>(edge))->second.first,coords.find(std::get<0>(edge))->second.second),
+                      QPoint(coords.find(std::get<1>(edge))->second.first,coords.find(std::get<1>(edge))->second.second));
+    }
 }
 
 /**
@@ -198,6 +220,9 @@ void MapPainter::paintText(QPainter& painter, const QPoint& coordinate, const QS
 */
 void MapPainter::animateTrip(int stadiumOneId, int stadiumTwoId)
 {
+    // Always set airplane visable before use
+    m_airplane->setHidden(false);
+
     // Getting the coordinates of all the stadiums
     std::map<int,Database::coords> tempCoords(Database::getCoordinates());
 
@@ -215,4 +240,26 @@ void MapPainter::animateTrip(int stadiumOneId, int stadiumTwoId)
     animation->setEndValue(QRect(QPoint(tempCoords[stadiumTwoId].first-m_airplane->size().width()/2,
                                         tempCoords[stadiumTwoId].second-m_airplane->size().height()/2),m_airplane->size()));
     animation->start(QAbstractAnimation::DeleteWhenStopped);
+}
+
+/**
+ * @brief set's airplane and beacon so that they're out of site of the MapView when a user enter's the view
+ */
+void MapPainter::resetUi()
+{
+    // Set to hidden
+    m_airplane->setHidden(true);
+    // Set coordinates outside of widget coordinates
+    m_beacon->setCoords(QPoint(-10,-10));
+
+    if(m_discoveredEdges != nullptr)
+    {
+        delete m_discoveredEdges;
+        m_discoveredEdges = nullptr;
+    }
+}
+
+void MapPainter::setDiscoveredVector(std::vector<Database::completedEdge>& discoveredEdges)
+{
+    m_discoveredEdges = new std::vector<Database::completedEdge>(discoveredEdges);
 }

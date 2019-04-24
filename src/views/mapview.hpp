@@ -10,27 +10,29 @@ class MapView;
 
 class MapView : public View
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
- /* Constructor */
-explicit MapView(QWidget *parent = nullptr);
- /* Destructor */
-~MapView() override;
+    /* Constructor */
+    explicit MapView(QWidget *parent = nullptr);
 
- /* The resetView function resets the Ui that corresponds with the given view */
- void resetView() override;
+    /* Destructor */
+    ~MapView() override;
 
- /* The resetUi function resets the Ui that corresponds with the given view */
- void resetUi() override;
+    /* The resetView function resets the Ui that corresponds with the given view */
+    void resetView() override;
 
- private slots:
-     void on_pushButton_clicked();
-     void on_pushButton_2_clicked();
+    /* The resetUi function resets the Ui that corresponds with the given view */
+    void resetUi() override;
 
- private:
+private slots:
+    void on_pushButton_clicked();
+    void on_pushButton_2_clicked();
+
+private:
     Ui::MapView* m_ui;
-    MapPainter* m_map;
+    MapPainter* m_mapPainter;
+    std::vector<Database::completedEdge>* testVector;
 };
 
 
