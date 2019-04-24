@@ -259,6 +259,12 @@ void MapPainter::resetUi()
     }
 }
 
+/**
+ * Set's distcoveredEdges vector so that the
+ * painter can highlight the discovered path
+ *
+ * @param discoveredEdges vector of completed edges
+ */
 void MapPainter::setDiscoveredVector(std::vector<Database::completedEdge>& discoveredEdges)
 {
     m_discoveredEdges = new std::vector<Database::completedEdge>(discoveredEdges);

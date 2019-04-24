@@ -25,14 +25,9 @@ public:
     /* The resetUi function resets the Ui that corresponds with the given view */
     void resetUi() override;
 
-private slots:
-    void on_pushButton_clicked();
-    void on_pushButton_2_clicked();
-
 private:
     Ui::MapView* m_ui;
     MapPainter* m_mapPainter;
-    std::vector<Database::completedEdge>* testVector;
 };
 
 

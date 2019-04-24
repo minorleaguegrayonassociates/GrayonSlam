@@ -29,7 +29,9 @@ void AirplanePainter::paintEvent(QPaintEvent*)
     painter.rotate(angleValue);
     painter.translate(translateReset);
 
+    // Paint m_plane at `origin` (x:0,y:0), size `planeSize` (26 x 26)
     painter.drawPixmap(QRect(origin,planeSize), m_plane);
+
     painter.end();
 }
 

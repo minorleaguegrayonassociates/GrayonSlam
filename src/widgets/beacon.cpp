@@ -1,24 +1,26 @@
 #include "beacon.hpp"
 #include <QPainter>
 #include <QTimer>
-#include <QDebug>
 
 /* Constructor */
 Beacon::Beacon(QWidget *parent)
-    : QWidget(parent), m_coords(0,0)
+    : QWidget(parent), m_coords(-10,-10)
 {
+    // Resize widget to parents width and height
     this->resize(parent->width(),parent->height());
 }
 
 /**
- * Draws all stadiums and all the edges between the stadiums
+ * Draws a beacon signal at the given
  */
 void Beacon::paintEvent(QPaintEvent*)
 {
     QPainter painter;
     painter.begin(this);
 
+    // Draw beacon at m_coords
     drawBeacon(painter,m_coords);
+
     painter.end();
 }
 
@@ -30,7 +32,6 @@ void Beacon::paintEvent(QPaintEvent*)
 */
 void Beacon::drawBeacon(QPainter& painter, const QPoint& stadiumCoord)
 {
-
     QPen myPen;
 
     /* set myPen info */
@@ -43,6 +44,7 @@ void Beacon::drawBeacon(QPainter& painter, const QPoint& stadiumCoord)
     // set painters pen to myPen
     painter.setPen(myPen);
 
+    /* Draw's 4 different size circles */
     painter.drawEllipse(stadiumCoord,4,4);
     painter.drawEllipse(stadiumCoord,8,8);
     painter.drawEllipse(stadiumCoord,12,12);
