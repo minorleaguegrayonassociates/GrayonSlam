@@ -2,13 +2,13 @@
 #include <QPainter>
 #include <cmath>
 
-/* paint origin */
+// paint origin
 const QPoint origin(0,0);
-/* size of plane */
+// size of plane
 const QSize planeSize(26,26);
-/* Used to center painter while rotating painter mid-point of plane widget */
+// Used to center painter while rotating painter mid-point of plane widget
 const QPoint translateCenter(planeSize.width()/2,planeSize.height()/2);
-/* set's value back to original point if translateCenter was used to translate painter for painting plane widget */
+// set's value back to original point if translateCenter was used to translate painter for painting plane widget
 const QPoint translateReset(planeSize.width()/2-planeSize.width(),planeSize.height()/2-planeSize.height());
 
 /* Constructor */
@@ -23,9 +23,12 @@ void AirplanePainter::paintEvent(QPaintEvent*)
 {
     QPainter painter;
     painter.begin(this);
+
+    /* Rotate plane at the center of the widget */
     painter.translate(translateCenter);
     painter.rotate(angleValue);
     painter.translate(translateReset);
+
     painter.drawPixmap(QRect(origin,planeSize), m_plane);
     painter.end();
 }

@@ -21,6 +21,7 @@ MapPainter::MapPainter(QWidget *parent)
 MapPainter::~MapPainter()
 {
     delete m_airplane;
+    delete m_beacon;
 }
 
 /**
@@ -197,17 +198,18 @@ void MapPainter::paintText(QPainter& painter, const QPoint& coordinate, const QS
 */
 void MapPainter::animateTrip(int stadiumOneId, int stadiumTwoId)
 {
+    // Getting the coordinates of all the stadiums
     std::map<int,Database::coords> tempCoords(Database::getCoordinates());
 
+    // Insert coordinates to calculate the planes angle
     m_airplane->setRotation(tempCoords[stadiumOneId].first,tempCoords[stadiumOneId].second,
                             tempCoords[stadiumTwoId].first,tempCoords[stadiumTwoId].second);
-
-
+    // Set beacon at `to` location, stadiumTwo
     m_beacon->setCoords(QPoint(tempCoords[stadiumTwoId].first,tempCoords[stadiumTwoId].second));
 
+    /* setting up m_airplane to animate between two stadium coordinates */
     QPropertyAnimation* animation = new QPropertyAnimation(m_airplane, "geometry");
     animation->setDuration(600);
-
     animation->setStartValue(QRect(QPoint(tempCoords[stadiumOneId].first-m_airplane->size().width()/2,
                                           tempCoords[stadiumOneId].second-m_airplane->size().height()/2),m_airplane->size()));
     animation->setEndValue(QRect(QPoint(tempCoords[stadiumTwoId].first-m_airplane->size().width()/2,

@@ -43,7 +43,8 @@ SOURCES += \
     src/views/adminview.cpp \
     src/views/mapview.cpp \
     src/widgets/mappainter.cpp \
-    src/widgets/airplanepainter.cpp
+    src/widgets/airplanepainter.cpp \
+    src/widgets/beacon.cpp
 
 HEADERS += \
     src/windows/mainwindow.hpp \
@@ -70,8 +71,8 @@ HEADERS += \
     src/views/view.hpp \
     src/views/mapview.hpp \
     src/widgets/mappainter.hpp \
-    src/widgets/airplanepainter.hpp
-
+    src/widgets/airplanepainter.hpp \
+    src/widgets/beacon.hpp
 
 FORMS += \
     src/windows/mainwindow.ui \
@@ -80,7 +81,7 @@ FORMS += \
     src/widgets/souvenirlistitem.ui \
     src/views/stadiumview.ui \
     src/views/adminview.ui \
-    src/views/mapview.ui \
+    src/views/mapview.ui
 
 RESOURCES += \
     res.qrc
