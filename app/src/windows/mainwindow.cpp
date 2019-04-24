@@ -20,8 +20,9 @@ MainWindow::MainWindow()
     //Doesn't allow window resizing
     setWindowFlags(Qt::MSWindowsFixedSizeDialogHint);
 
-    /* Loading in font - "Font Awesome 5 Free" */
+    /* Loading in font - "Font Awesome 5 Free" and "IBMPlexMono-Regular" */
     if(QFontDatabase::addApplicationFont(":/res/fontawesome-webfont.ttf") == -1){qWarning() << "FontAwesome cannot be loaded !";}
+    if(QFontDatabase::addApplicationFont(":/res/IBMPlexMono-Regular.ttf") == -1){qWarning() << "IBMPlexMono-Regular cannot be loaded !";}
 
     /* Initialize navigation bar and items */
     m_navbar = new NavBar(m_ui->NavBarWidget, 90, 220);
