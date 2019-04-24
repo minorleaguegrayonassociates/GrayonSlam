@@ -3,7 +3,6 @@
 #include "src/windows/login.hpp"
 #include "src/datastore/database.hpp"
 #include "src/views/adminview.hpp"
-#include "src/views/mapview.hpp"
 #include <QFontDatabase>
 #include <QMessageBox>
 #include <QDebug>
