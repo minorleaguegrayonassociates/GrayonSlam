@@ -41,7 +41,6 @@ SOURCES += \
     src/widgets/stadiumlist.cpp \
     src/widgets/stadiumlistitem.cpp \
     src/views/adminview.cpp \
-    src/views/mapview.cpp \
     src/widgets/mappainter.cpp \
     src/widgets/airplanepainter.cpp \
     src/widgets/beacon.cpp
@@ -66,7 +65,6 @@ HEADERS += \
     src/widgets/stadiumlist.hpp \
     src/widgets/stadiumlistitem.hpp \
     src/views/adminview.hpp \
-    src/views/mapview.hpp \
     src/widgets/mappainter.hpp \
     src/widgets/airplanepainter.hpp \
     src/widgets/beacon.hpp
@@ -77,8 +75,7 @@ FORMS += \
     src/widgets/navbaritem.ui \
     src/widgets/souvenirlistitem.ui \
     src/views/stadiumview.ui \
-    src/views/adminview.ui \
-    src/views/mapview.ui
+    src/views/adminview.ui
 
 RESOURCES += \
     res.qrc

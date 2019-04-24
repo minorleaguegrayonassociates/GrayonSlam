@@ -14,8 +14,6 @@ MapPainter::MapPainter(QWidget *parent)
 
     /* Making an instance of Beacon - signals `To` location when animating */
     m_beacon = new Beacon(this);
-
-    m_discoveredEdges = nullptr;
 }
 
 /* Destuctor */
@@ -34,9 +32,10 @@ void MapPainter::paintEvent(QPaintEvent*)
     painter.begin(this);
     std::map<int,Database::coords> tempCoords(Database::getCoordinates());
 
-    if(m_discoveredEdges != nullptr && !m_discoveredEdges->empty())
+    /* If m_discoverEdges is populated with edges, highlight discovered edges */
+    if(!m_discoveredEdges.empty())
     {
-        highlightDiscoveredEdges(painter, *m_discoveredEdges);
+        highlightDiscoveredEdges(painter, m_discoveredEdges);
     }
 
     /* Paint edge between stadiums */
@@ -68,6 +67,7 @@ void MapPainter::paintStadiums(QPainter& painter,int id, const QPoint& stadiumCo
 {
     QBrush myBrush;
     QPen myPen;
+
     /* If the leage is National set pen and brush blue, else set them red */
     if(Database::findTeamById(Database::findStadiumById(id).getTeamId()).league == Team::League::NATIONAL)
     {
@@ -252,11 +252,8 @@ void MapPainter::resetUi()
     // Set coordinates outside of widget coordinates
     m_beacon->setCoords(QPoint(-10,-10));
 
-    if(m_discoveredEdges != nullptr)
-    {
-        delete m_discoveredEdges;
-        m_discoveredEdges = nullptr;
-    }
+    if(!m_discoveredEdges.empty())
+        m_discoveredEdges.clear();
 }
 
 /**
@@ -265,7 +262,7 @@ void MapPainter::resetUi()
  *
  * @param discoveredEdges vector of completed edges
  */
-void MapPainter::setDiscoveredVector(std::vector<Database::completedEdge>& discoveredEdges)
+void MapPainter::setDiscoveredVector(const std::vector<Database::completedEdge>& discoveredEdges)
 {
-    m_discoveredEdges = new std::vector<Database::completedEdge>(discoveredEdges);
+    m_discoveredEdges = discoveredEdges;
 }

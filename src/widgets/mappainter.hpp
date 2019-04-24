@@ -26,14 +26,14 @@ public:
     void highlightDiscoveredEdges(QPainter& painter, std::vector<Database::completedEdge>& discoveredEdges);
     void paintText(QPainter& painter, const QPoint& , const QString&);
     void animateTrip(int stadiumOneId, int stadiumTwoId);
-    void setDiscoveredVector(std::vector<Database::completedEdge>&);
+    void setDiscoveredVector(const std::vector<Database::completedEdge>&);
 
     /* reset */
     void resetUi();
 private:
     AirplanePainter* m_airplane;
     Beacon* m_beacon;
-    std::vector<Database::completedEdge>* m_discoveredEdges;
+    std::vector<Database::completedEdge> m_discoveredEdges;
 };
 
 

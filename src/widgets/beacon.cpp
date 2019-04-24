@@ -11,7 +11,7 @@ Beacon::Beacon(QWidget *parent)
 }
 
 /**
- * Draws a beacon signal at the given
+ * Draws a beacon signal at the given coordinates
  */
 void Beacon::paintEvent(QPaintEvent*)
 {
