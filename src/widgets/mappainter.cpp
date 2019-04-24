@@ -7,8 +7,14 @@
 MapPainter::MapPainter(QWidget *parent)
     : QWidget(parent)
 {
-    this->resize(parent->width(),parent->height());
+    resize(parent->width(),parent->height());
+
+    /* Make an instance of an AirplanePainter with MapPainter as it's parent and set it's size */
     m_airplane = new AirplanePainter(this);
+    m_airplane->resize(26,26);
+
+    /* Making an instance of Beacon - signals `To` location when animating */
+    m_beacon = new Beacon(this);
 }
 
 /* Destuctor */
@@ -71,13 +77,17 @@ void MapPainter::paintStadiums(QPainter& painter,int id, const QPoint& stadiumCo
     myPen.setCapStyle(Qt::PenCapStyle::FlatCap);
     myPen.setJoinStyle(Qt::PenJoinStyle::MPenJoinStyle);
     myPen.setStyle(Qt::PenStyle::SolidLine);
+
     //set brush style
     myBrush.setStyle(Qt::BrushStyle::SolidPattern);
+
     /* set painters pen and brush to myPen and myBrush */
     painter.setBrush(myBrush);
     painter.setPen(myPen);
+
     // Draw stadium
     painter.drawEllipse(stadiumCoordinate, 1, 1);
+
     // Draw stadium name
     paintText(painter, stadiumCoordinate, stadiumName);
 }
@@ -92,17 +102,21 @@ void MapPainter::paintStadiums(QPainter& painter,int id, const QPoint& stadiumCo
 void MapPainter::paintEdge(QPainter& painter, const QPoint& stadiumCoord1, const QPoint& stadiumCoord2)
 {
     QPen myPen;
+
     /* set myPen info */
     myPen.setColor(Qt::GlobalColor::black);
     myPen.setWidth(1);
     myPen.setCapStyle(Qt::PenCapStyle::FlatCap);
     myPen.setJoinStyle(Qt::PenJoinStyle::MPenJoinStyle);
     myPen.setStyle(Qt::PenStyle::DotLine);
+
     // set pen myPen
     painter.setPen(myPen);
+
     /* adjust line so it sits a bit closer to the center of the stadium circle */
     QPoint one = stadiumCoord1 + QPoint(1,1);
     QPoint two = stadiumCoord2 - QPoint(1,1);
+
     // Draw Line
     painter.drawLine(one, two);
 }
@@ -124,11 +138,14 @@ void MapPainter::highlightEdge(QPainter& painter, const QPoint& stadiumCoord1, c
     myPen.setCapStyle(Qt::PenCapStyle::FlatCap);
     myPen.setJoinStyle(Qt::PenJoinStyle::MPenJoinStyle);
     myPen.setStyle(Qt::PenStyle::DotLine);
+
     // set pen myPen
     painter.setPen(myPen);
+
     /* adjust line so it sits a bit closer to the center of the stadium circle */
     QPoint one = stadiumCoord1 + QPoint(1,1);
     QPoint two = stadiumCoord2 - QPoint(1,1);
+
     // Draw Line
     painter.drawLine(one, two);
 }
@@ -143,25 +160,30 @@ void MapPainter::highlightEdge(QPainter& painter, const QPoint& stadiumCoord1, c
 void MapPainter::paintText(QPainter& painter, const QPoint& coordinate, const QString& strToPrint)
 {
     QPen myPen;
+
     /* set pen info */
     myPen.setWidth(1);
     myPen.setColor(Qt::GlobalColor::black);
     myPen.setStyle(Qt::PenStyle::SolidLine);
     myPen.setCapStyle(Qt::PenCapStyle::FlatCap);
     myPen.setJoinStyle(Qt::PenJoinStyle::MPenJoinStyle);
+
     /* set font info */
     QFont myFont=painter.font() ;
     myFont.setPointSize (7);
     myFont.setWeight(QFont::Thin);
     myFont.setFamily(QString::fromUtf8("Trebuchet MS"));
+
     /* set pen and font to myPen and myFont */
     painter.setPen(myPen);
     painter.setFont(myFont);
+
     /* Adjust coordinates for text, set to wrap and set rect area */
     QPoint textPoint = coordinate - QPoint(25,-2);
     QRect rect(textPoint,QSize(50,40));
     QTextOption textOption;
     textOption.setWrapMode(QTextOption::WordWrap);
+
     // Draw Text
     painter.drawText(rect,strToPrint, textOption);
 }
@@ -180,9 +202,15 @@ void MapPainter::animateTrip(int stadiumOneId, int stadiumTwoId)
     m_airplane->setRotation(tempCoords[stadiumOneId].first,tempCoords[stadiumOneId].second,
                             tempCoords[stadiumTwoId].first,tempCoords[stadiumTwoId].second);
 
+
+    m_beacon->setCoords(QPoint(tempCoords[stadiumTwoId].first,tempCoords[stadiumTwoId].second));
+
     QPropertyAnimation* animation = new QPropertyAnimation(m_airplane, "geometry");
     animation->setDuration(600);
-    animation->setStartValue(QRect(QPoint(tempCoords[stadiumOneId].first,tempCoords[stadiumOneId].second-12),size()));
-    animation->setEndValue(QRect(QPoint(tempCoords[stadiumTwoId].first,tempCoords[stadiumTwoId].second-12),size()));
+
+    animation->setStartValue(QRect(QPoint(tempCoords[stadiumOneId].first-m_airplane->size().width()/2,
+                                          tempCoords[stadiumOneId].second-m_airplane->size().height()/2),m_airplane->size()));
+    animation->setEndValue(QRect(QPoint(tempCoords[stadiumTwoId].first-m_airplane->size().width()/2,
+                                        tempCoords[stadiumTwoId].second-m_airplane->size().height()/2),m_airplane->size()));
     animation->start(QAbstractAnimation::DeleteWhenStopped);
 }

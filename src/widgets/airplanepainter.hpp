@@ -12,7 +12,7 @@ public:
     void paintEvent(QPaintEvent*) override;
     void setRotation(int startingX, int startingY, int endingX, int endingY);
 private:
-    double rotate;
+    double angleValue;
     QPixmap m_plane;
 };
 
