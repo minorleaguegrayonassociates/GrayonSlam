@@ -8,6 +8,7 @@
 #include <QDebug>
 #include "src/views/stadiumview.hpp"
 #include <algorithm>
+#include "src/views/dashboardview.hpp"
 
 /* Constructors */
 MainWindow::MainWindow()
@@ -34,6 +35,7 @@ MainWindow::MainWindow()
     /* Create views */
     m_views.push_back(new AdminView(m_ui->adminView));
     m_views.push_back(new StadiumView(m_ui->viewTeamView));
+    m_views.push_back(new DashboardView(m_ui->dashboardView));
 }
 
 MainWindow::~MainWindow()
