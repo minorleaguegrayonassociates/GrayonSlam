@@ -7,7 +7,7 @@ class AirplanePainter : public QWidget
     Q_OBJECT
 public:
     /* Constructor */
-    explicit AirplanePainter(QWidget* parent = nullptr);
+    explicit AirplanePainter(QWidget* parent);
 
     /* events */
     void paintEvent(QPaintEvent*) override;
