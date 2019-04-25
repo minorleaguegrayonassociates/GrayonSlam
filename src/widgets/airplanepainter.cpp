@@ -1,11 +1,10 @@
 #include "airplanepainter.hpp"
 #include <QPainter>
 #include <cmath>
-#include <QtMath>
 
 // paint origin
 const QPoint origin(0,0);
-// size of plane
+// Public static const that holds a QSize of the planes size
 const QSize planeSize(26,26);
 // Used to center painter while rotating painter mid-point of plane widget
 const QPoint translateCenter(planeSize.width()/2,planeSize.height()/2);
@@ -16,6 +15,25 @@ const QPoint translateReset(planeSize.width()/2-planeSize.width(),planeSize.heig
 AirplanePainter::AirplanePainter(QWidget* parent)
     : QWidget(parent), m_plane(":/res/airplane.png")
 {}
+
+/**
+ * Given the starting and ending coordinates, calculate the direction
+ * angle of the vector pointing from start to finish, set `rotate` and repaint
+ *
+ * @param startingX the starting x coordinate
+ * @param startingY the starting y coordinate
+ * @param endingX the ending x coordinate
+ * @param endingY the ending y coordinate
+ */
+void AirplanePainter::setRotation(int startingX, int startingY, int endingX, int endingY)
+{
+    int xComponent = endingX - startingX;
+    int yComponent = endingY - startingY;
+    double angle = atan2(yComponent,xComponent) * (180.0 / M_PI);
+    if(xComponent < 0) { angle += 180.0; };
+    angleValue = angle;
+    repaint();
+}
 
 /**
  * Draws plane at the angle within angleValue
@@ -31,23 +49,4 @@ void AirplanePainter::paintEvent(QPaintEvent*)
 
     // Paint m_plane at `origin` (x:0,y:0), size `planeSize` (26 x 26)
     painter.drawPixmap(QRect(origin,planeSize), m_plane);
-}
-
-/**
- * Given the starting and ending coordinates, calculate the direction
- * angle of the vector pointing from start to finish, set `rotate` and repaint
- *
- * @param startingX the starting x coordinate
- * @param startingY the starting y coordinate
- * @param endingX the ending x coordinate
- * @param endingY the ending y coordinate
- */
-void AirplanePainter::setRotation(int startingX, int startingY, int endingX, int endingY)
-{
-    int xComponent = endingX - startingX;
-    int yComponent = endingY - startingY;
-    double angle = atan((1.0*yComponent)/xComponent) * (180.0 / M_PI);
-    if(xComponent < 0) { angle += 180.0; };
-    angleValue = angle;
-    repaint();
 }

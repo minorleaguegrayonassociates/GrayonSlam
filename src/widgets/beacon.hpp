@@ -8,15 +8,18 @@ public:
     /* Constructor */
     explicit Beacon(QWidget* parent);
 
+    /* setters */
+    void drawBeacon(QPainter& painter, const QPoint& stadiumCoord);
+    void setCoords(const QPoint& stadiumCoord);
+
+    /* Static Variable */
+    static const QPoint outerBound;
+
+private:
     /* Events */
     void paintEvent(QPaintEvent*) override;
     void hideEvent(QHideEvent*) override;
     void showEvent(QShowEvent*) override;
 
-    /* setters */
-    void drawBeacon(QPainter& painter, const QPoint& stadiumCoord);
-    void setCoords(const QPoint& stadiumCoord);
-
-private:
     QPoint m_coords;
 };

@@ -2,6 +2,11 @@
 #include <QPainter>
 #include <QPropertyAnimation>
 
+// Adjust given coordinates by these coordinates before printing stadium names
+const QPoint textAdjustment(25,-2);
+// Size of rectangle that hold text
+const QSize textRect(50,40);
+
 /* Constuctor */
 MapPainter::MapPainter(QWidget* parent)
     : QWidget(parent)
@@ -10,7 +15,7 @@ MapPainter::MapPainter(QWidget* parent)
 
     /* Make an instance of an AirplanePainter with MapPainter as it's parent and set it's size */
     m_airplane = new AirplanePainter(this);
-    m_airplane->resize(26,26);
+    m_airplane->resize(AirplanePainter::planeSize);
 
     /* Making an instance of Beacon - signals `To` location when animating */
     m_beacon = new Beacon(this);
@@ -21,36 +26,6 @@ MapPainter::~MapPainter()
 {
     delete m_airplane;
     delete m_beacon;
-}
-
-/**
- * @brief Draws all stadiums and all the edges between the stadiums
- */
-void MapPainter::paintEvent(QPaintEvent*)
-{
-    QPainter painter(this);
-
-    std::map<int,Database::coords> tempCoords(Database::getCoordinates());
-
-    /* If m_discoverEdges is populated with edges, highlight discovered edges */
-    if(!m_discoveredEdges.empty())
-    {
-        highlightDiscoveredEdges(painter, m_discoveredEdges);
-    }
-
-    /* Paint edge between stadiums */
-    for(auto edge : Database::getDistances())
-    {
-        paintEdge(painter,QPoint(tempCoords.find(std::get<0>(edge))->second.first,tempCoords.find(std::get<0>(edge))->second.second),
-                  QPoint(tempCoords.find(std::get<1>(edge))->second.first,tempCoords.find(std::get<1>(edge))->second.second));
-    }
-
-    /* Paint stadium (red or blue based on league) and print the name of the stadium */
-    for(auto pair : tempCoords)
-    {
-        paintStadiums(painter, pair.first,QPoint(pair.second.first,pair.second.second),
-                      QString::fromStdString(Database::findStadiumById(pair.first).getName()));
-    }
 }
 
 /**
@@ -200,8 +175,8 @@ void MapPainter::paintText(QPainter& painter, const QPoint& coordinate, const QS
     painter.setFont(myFont);
 
     /* Adjust coordinates for text, set to wrap and set rect area */
-    QPoint textPoint = coordinate - QPoint(25,-2);
-    QRect rect(textPoint,QSize(50,40));
+    QPoint textPoint = coordinate - textAdjustment;
+    QRect rect(textPoint,textRect);
     QTextOption textOption;
     textOption.setWrapMode(QTextOption::WordWrap);
 
@@ -241,20 +216,6 @@ void MapPainter::animateTrip(int stadiumOneId, int stadiumTwoId)
 }
 
 /**
- * @brief set's airplane and beacon so that they're out of site of the MapView when a user enter's the view
- */
-void MapPainter::resetUi()
-{
-    // Set to hidden
-    m_airplane->setHidden(true);
-    // Set coordinates outside of widget coordinates
-    m_beacon->setCoords(QPoint(-10,-10));
-
-    if(!m_discoveredEdges.empty())
-        m_discoveredEdges.clear();
-}
-
-/**
  * Set's distcoveredEdges vector so that the
  * painter can highlight the discovered path
  *
@@ -263,4 +224,48 @@ void MapPainter::resetUi()
 void MapPainter::setDiscoveredVector(const std::vector<Database::completedEdge>& discoveredEdges)
 {
     m_discoveredEdges = discoveredEdges;
+}
+
+/**
+ * @brief set's airplane and beacon so that they're out of site of the MapView when a user enter's the view
+ */
+void MapPainter::resetUi()
+{
+    // Set to hidden
+    m_airplane->setHidden(true);
+    // Set coordinates outside of widget coordinates
+    m_beacon->setCoords(QPoint(Beacon::outerBound));
+
+    if(!m_discoveredEdges.empty())
+        m_discoveredEdges.clear();
+}
+
+/**
+ * @brief Draws all stadiums and all the edges between the stadiums
+ */
+void MapPainter::paintEvent(QPaintEvent*)
+{
+    QPainter painter(this);
+
+    std::map<int,Database::coords> tempCoords(Database::getCoordinates());
+
+    /* If m_discoverEdges is populated with edges, highlight discovered edges */
+    if(!m_discoveredEdges.empty())
+    {
+        highlightDiscoveredEdges(painter, m_discoveredEdges);
+    }
+
+    /* Paint edge between stadiums */
+    for(auto edge : Database::getDistances())
+    {
+        paintEdge(painter,QPoint(tempCoords.find(std::get<0>(edge))->second.first,tempCoords.find(std::get<0>(edge))->second.second),
+                  QPoint(tempCoords.find(std::get<1>(edge))->second.first,tempCoords.find(std::get<1>(edge))->second.second));
+    }
+
+    /* Paint stadium (red or blue based on league) and print the name of the stadium */
+    for(auto pair : tempCoords)
+    {
+        paintStadiums(painter, pair.first,QPoint(pair.second.first,pair.second.second),
+                      QString::fromStdString(Database::findStadiumById(pair.first).getName()));
+    }
 }

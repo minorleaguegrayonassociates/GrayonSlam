@@ -15,9 +15,6 @@ public:
     /* Destructor */
     ~MapPainter() override;
 
-    /*  Events */
-    void paintEvent(QPaintEvent*) override;
-
     /* setters */
     void paintStadiums(QPainter& painter, int id, const QPoint& stadiumPoint, const QString& StadiumName);
     void paintEdge(QPainter& painter, const QPoint& stdmCoord1, const QPoint& stdmCoord2);
@@ -29,7 +26,11 @@ public:
 
     /* reset */
     void resetUi();
+
 private:
+    /*  Events */
+    void paintEvent(QPaintEvent*) override;
+
     AirplanePainter* m_airplane;
     Beacon* m_beacon;
     std::vector<Database::completedEdge> m_discoveredEdges;
