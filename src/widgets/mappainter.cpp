@@ -141,8 +141,10 @@ void MapPainter::highlightDiscoveredEdges(QPainter& painter, std::vector<Databas
      std::map<int,Database::coords> coords(Database::getCoordinates());
     for(auto edge: discoveredEdges)
     {
-        highlightEdge(painter, QPoint(coords.find(std::get<0>(edge))->second.first,coords.find(std::get<0>(edge))->second.second),
-                      QPoint(coords.find(std::get<1>(edge))->second.first,coords.find(std::get<1>(edge))->second.second));
+        highlightEdge(painter, QPoint(coords.find(std::get<0>(edge))->second.first,
+                                      coords.find(std::get<0>(edge))->second.second),
+                               QPoint(coords.find(std::get<1>(edge))->second.first,
+                                      coords.find(std::get<1>(edge))->second.second));
     }
 }
 
@@ -210,9 +212,11 @@ void MapPainter::animateTrip(int stadiumOneId, int stadiumTwoId)
     QPropertyAnimation* animation = new QPropertyAnimation(m_airplane, "geometry");
     animation->setDuration(600);
     animation->setStartValue(QRect(QPoint(tempCoords[stadiumOneId].first-m_airplane->size().width()/2,
-                                          tempCoords[stadiumOneId].second-m_airplane->size().height()/2),m_airplane->size()));
+                                          tempCoords[stadiumOneId].second-m_airplane->size().height()/2),
+                                          m_airplane->size()));
     animation->setEndValue(QRect(QPoint(tempCoords[stadiumTwoId].first-m_airplane->size().width()/2,
-                                        tempCoords[stadiumTwoId].second-m_airplane->size().height()/2),m_airplane->size()));
+                                        tempCoords[stadiumTwoId].second-m_airplane->size().height()/2),
+                                        m_airplane->size()));
     animation->start(QAbstractAnimation::DeleteWhenStopped);
 }
 
@@ -268,7 +272,9 @@ void MapPainter::paintEvent(QPaintEvent*)
     /* Paint stadium (red or blue based on league) and print the name of the stadium */
     for(auto pair : tempCoords)
     {
-        paintStadiums(painter, pair.first, QPoint(pair.second.first,pair.second.second),
-                      QString::fromStdString(Database::findStadiumById(pair.first).getName()));
+        // Find stadium by id, get it's name and convert it to Qstring
+        QString stadiumName(QString::fromStdString(Database::findStadiumById(pair.first).getName()));
+        // For each coordinate paint the stadium
+        paintStadiums(painter, pair.first,QPoint(pair.second.first,pair.second.second), stadiumName);
     }
 }
