@@ -1,12 +1,14 @@
 #include "receiptlist.hpp"
+#include "src/datastore/database.hpp"
+#include "src/widgets/receiptitem.hpp"
 #include <QFont>
 
 /* Static variables */
 const QSize ReceiptList::receiptSizeHint(390, 50);
-const double SALES_TAX = .0775;
 
+/* Constructor */
 ReceiptList::ReceiptList(QWidget* parent)
-    : QListWidget(parent), m_store(data)
+    : QListWidget(parent)
 {
     /* List widget settings */
     QListWidget::setStyleSheet("QListWidget { background-color: #303030; color: white; }");
@@ -20,58 +22,60 @@ ReceiptList::ReceiptList(QWidget* parent)
 
 }
 
-double ReceiptList::makeReciept(const IDs& souvenirData, bool grandTotal)
+double ReceiptList::makeReciept(Qtys& souvenirData, bool grandTotal)
 {
     double totalCost(0);
     double itemTotal(0);
-    // All items are from the same restaurant, uses the first one to find the restaurant
-    Restaurant currentRest = Database::findStadiumById(souvenirData.);
-    Receipt* headerItem;
+
+    // All items are from the same stadium, uses the first one to find the stadium
+    Stadium currentStadium = Database::findStadiumById(souvenirData.begin()->first.first);
+
+    ReceiptItem* headerItem;
     QListWidgetItem* listItem;
 
     if(!grandTotal)
     {
-        /* Making the QListWidgetItem that will a holdReceipt */
+        /* Making the QListWidgetItem that will a holdReceiptItem */
         listItem = new QListWidgetItem(this);
         listItem->setSizeHint(receiptSizeHint);
         listItem->setFlags(listItem->flags() & ~Qt::ItemIsSelectable);
         QListWidget::addItem(listItem);
 
-        /* Set the QListWidgetItem to hold a Receipt */
-        headerItem = new Receipt(this, QString::fromStdString(""), Receipt::ReceiptStates::Top);
+        /* Set the QListWidgetItem to hold a ReceiptItem */
+        headerItem = new ReceiptItem(this, QString::fromStdString(""), ReceiptItem::ReceiptItemStates::Top);
         setItemWidget(listItem, headerItem);
     }
-    /* Making the QListWidgetItem that will a holdReceipt */
+    /* Making the QListWidgetItem that will a holdReceiptItem */
     listItem = new QListWidgetItem(this);
     listItem->setSizeHint(receiptSizeHint);
     listItem->setFlags(listItem->flags() & ~Qt::ItemIsSelectable);
     QListWidget::addItem(listItem);
 
-    /* Set the QListWidgetItem to hold a Receipt */
-    headerItem = new Receipt(this, QString::fromStdString(currentRest.GetName()), Receipt::ReceiptStates::HeaderTitle);
+    /* Set the QListWidgetItem to hold a ReceiptItem */
+    headerItem = new ReceiptItem(this, QString::fromStdString(currentStadium.getName()), ReceiptItem::ReceiptItemStates::HeaderTitle);
     setItemWidget(listItem, headerItem);
 
-    /* Making the QListWidgetItem that will a holdReceipt */
+    /* Making the QListWidgetItem that will a holdReceiptItem */
     listItem = new QListWidgetItem(this);
     listItem->setSizeHint(receiptSizeHint);
     QListWidget::addItem(listItem);
 
-    headerItem = new Receipt(this, QString::fromUtf8(""), Receipt::ReceiptStates::HeaderDateTime);
+    headerItem = new ReceiptItem(this, QString::fromUtf8(""), ReceiptItem::ReceiptItemStates::HeaderDateTime);
     setItemWidget(listItem, headerItem);
 
-    /* Making the QListWidgetItem that will a holdReceipt */
+    /* Making the QListWidgetItem that will a holdReceiptItem */
     listItem = new QListWidgetItem(this);
     listItem->setSizeHint(receiptSizeHint);
     QListWidget::addItem(listItem);
 
-    headerItem = new Receipt(this, QString::fromUtf8(""), Receipt::ReceiptStates::BodyHeader);
+    headerItem = new ReceiptItem(this, QString::fromUtf8(""), ReceiptItem::ReceiptItemStates::BodyHeader);
     setItemWidget(listItem, headerItem);
 
-    /* iterating through each item in the menu cart and making a ReceiptBody */
-    for(IDQtys::const_iterator it = menuData.begin(); it != menuData.end(); ++it)
+    /* iterating through each item in the Souvenir cart and making a ReceiptBody */
+    for(Qtys::const_iterator it = souvenirData.begin(); it != souvenirData.end(); ++it)
     {
-        // Get's the curren Menu item
-        MenuItem currentMenuItem = currentRest.FindMenuItembyNumber(it->first.second);
+        // Get's the curren Souvenir item
+        Souvenir currentSouvenirItem = currentStadium.findSouvenir(it->first.second);
 
         /* Making the QListWidgetItem that will hold a ReceiptBody */
         listItem = new QListWidgetItem(this);
@@ -79,11 +83,11 @@ double ReceiptList::makeReciept(const IDs& souvenirData, bool grandTotal)
         QListWidget::addItem(listItem);
 
         /* calculating item total qty(it->second) * price and adding it to the total bill */
-        itemTotal = currentMenuItem.GetPrice()*it->second;
+        itemTotal = currentSouvenirItem.getPrice()*it->second;
         totalCost += itemTotal;
 
-        /* Set the QListWidgetItem to hold a Receipt */
-        Receipt* bodyItem = new Receipt(this, it->second, currentMenuItem.GetName(), itemTotal);
+        /* Set the QListWidgetItem to hold a ReceiptItem */
+        ReceiptItem* bodyItem = new ReceiptItem(this, it->second, currentSouvenirItem.getName(), itemTotal);
         setItemWidget(listItem, bodyItem);
     }
 
@@ -94,35 +98,35 @@ double ReceiptList::makeReciept(const IDs& souvenirData, bool grandTotal)
     QListWidget::addItem(listItem);
 
     /* calculating item tax and adding it to the total cost */
-    itemTotal = totalCost*SALES_TAX;
+    itemTotal = totalCost;
     totalCost += itemTotal;
 
-    /* Set the QListWidgetItem to hold a Receipt */
-    Receipt* bodyItem = new Receipt(this, 0, "Sales Tax", itemTotal);
+    /* Set the QListWidgetItem to hold a ReceiptItem */
+    ReceiptItem* bodyItem = new ReceiptItem(this, 0, "Sales Tax", itemTotal);
     setItemWidget(listItem, bodyItem);
 
     listItem = new QListWidgetItem(this);
     listItem->setSizeHint(receiptSizeHint);
     QListWidget::addItem(listItem);
 
-    /* Set the QListWidgetItem to hold a Receipt */
-    Receipt* footerItem = new Receipt(this, QString::number(totalCost,'f',2),Receipt::ReceiptStates::FooterTotal);
+    /* Set the QListWidgetItem to hold a ReceiptItem */
+    ReceiptItem* footerItem = new ReceiptItem(this, QString::number(totalCost,'f',2),ReceiptItem::ReceiptItemStates::FooterTotal);
     setItemWidget(listItem, footerItem);
 
     listItem = new QListWidgetItem(this);
     listItem->setSizeHint(receiptSizeHint);
     QListWidget::addItem(listItem);
 
-    /* Set the QListWidgetItem to hold a Receipt */
-    footerItem = new Receipt(this, QString::number(totalCost,'f',2),Receipt::ReceiptStates::FooterCustomerService);
+    /* Set the QListWidgetItem to hold a ReceiptItem */
+    footerItem = new ReceiptItem(this, QString::number(totalCost,'f',2),ReceiptItem::ReceiptItemStates::FooterCustomerService);
     setItemWidget(listItem, footerItem);
 
     listItem = new QListWidgetItem(this);
     listItem->setSizeHint(receiptSizeHint);
     QListWidget::addItem(listItem);
 
-    /* Set the QListWidgetItem to hold a Receipt */
-    footerItem = new Receipt(this, QString::fromStdString(""),Receipt::ReceiptStates::FooterPhone);
+    /* Set the QListWidgetItem to hold a ReceiptItem */
+    footerItem = new ReceiptItem(this, QString::fromStdString(""),ReceiptItem::ReceiptItemStates::FooterPhone);
     setItemWidget(listItem, footerItem);
 
 
@@ -133,17 +137,17 @@ double ReceiptList::makeReciept(const IDs& souvenirData, bool grandTotal)
         listItem->setSizeHint(receiptSizeHint);
         QListWidget::addItem(listItem);
 
-        /* Set the QListWidgetItem to hold a Receipt */
-        headerItem = new Receipt(this, QString::fromStdString(""), Receipt::ReceiptStates::Bottom);
+        /* Set the QListWidgetItem to hold a ReceiptItem */
+        headerItem = new ReceiptItem(this, QString::fromStdString(""), ReceiptItem::ReceiptItemStates::Bottom);
         setItemWidget(listItem, headerItem);
     }
     return totalCost;
 }
 
-void ReceiptList::grandTotal(vector<IDQtys> &receipts, double distance)
+void ReceiptList::grandTotal(std::vector<Qtys>& receipts, double& distance)
 {
     double grandTotal(0);
-    Receipt* headerItem;
+    ReceiptItem* headerItem;
     QListWidgetItem* listItem;
 
     /* Making the QListWidgetItem that will a holdReceipt */
@@ -152,8 +156,8 @@ void ReceiptList::grandTotal(vector<IDQtys> &receipts, double distance)
     listItem->setFlags(listItem->flags() & ~Qt::ItemIsSelectable);
     QListWidget::addItem(listItem);
 
-    /* Set the QListWidgetItem to hold a Receipt */
-    headerItem = new Receipt(this, QString::fromStdString(""), Receipt::ReceiptStates::Top);
+    /* Set the QListWidgetItem to hold a ReceiptItem */
+    headerItem = new ReceiptItem(this, QString::fromStdString(""), ReceiptItem::ReceiptItemStates::Top);
     setItemWidget(listItem, headerItem);
 
     /* Making the QListWidgetItem that will a holdReceipt */
@@ -161,22 +165,20 @@ void ReceiptList::grandTotal(vector<IDQtys> &receipts, double distance)
     listItem->setSizeHint(receiptSizeHint);
     QListWidget::addItem(listItem);
 
-    /* Set the QListWidgetItem to hold a Receipt */
-    headerItem = new Receipt(this, QString::fromStdString(""), Receipt::ReceiptStates::GrandTotalHeader);
+    /* Set the QListWidgetItem to hold a ReceiptItem */
+    headerItem = new ReceiptItem(this, QString::fromStdString(""), ReceiptItem::ReceiptItemStates::GrandTotalHeader);
     setItemWidget(listItem, headerItem);
 
-    foreach(IDQtys reciept, receipts)
-    {
+    for(Qtys& reciept: receipts)
         grandTotal += makeReciept(reciept,true);
-    }
 
     /* Making the QListWidgetItem that will a holdReceipt */
     listItem = new QListWidgetItem(this);
     listItem->setSizeHint(receiptSizeHint);
     QListWidget::addItem(listItem);
 
-    /* Set the QListWidgetItem to hold a Receipt */
-    headerItem = new Receipt(this, QString::number(grandTotal,'f',2), Receipt::ReceiptStates::GrandTotalFooter);
+    /* Set the QListWidgetItem to hold a ReceiptItem */
+    headerItem = new ReceiptItem(this, QString::number(grandTotal,'f',2), ReceiptItem::ReceiptItemStates::GrandTotalFooter);
     setItemWidget(listItem, headerItem);
 
     /* Making the QListWidgetItem that will a holdReceipt */
@@ -184,8 +186,8 @@ void ReceiptList::grandTotal(vector<IDQtys> &receipts, double distance)
     listItem->setSizeHint(receiptSizeHint);
     QListWidget::addItem(listItem);
 
-    /* Set the QListWidgetItem to hold a Receipt */
-    headerItem = new Receipt(this, QString::number(distance,'f',1), Receipt::ReceiptStates::GrandTotalDistance);
+    /* Set the QListWidgetItem to hold a ReceiptItem */
+    headerItem = new ReceiptItem(this, QString::number(distance,'f',1), ReceiptItem::ReceiptItemStates::GrandTotalDistance);
     setItemWidget(listItem, headerItem);
 
     /* Making the QListWidgetItem that will a holdReceipt */
@@ -193,8 +195,8 @@ void ReceiptList::grandTotal(vector<IDQtys> &receipts, double distance)
     listItem->setSizeHint(receiptSizeHint);
     QListWidget::addItem(listItem);
 
-    /* Set the QListWidgetItem to hold a Receipt */
-    headerItem = new Receipt(this, QString::fromStdString(""), Receipt::ReceiptStates::GrandTotalThanks);
+    /* Set the QListWidgetItem to hold a ReceiptItem */
+    headerItem = new ReceiptItem(this, QString::fromStdString(""), ReceiptItem::ReceiptItemStates::GrandTotalThanks);
     setItemWidget(listItem, headerItem);
 
     /* Making the QListWidgetItem that will a holdReceipt */
@@ -202,7 +204,7 @@ void ReceiptList::grandTotal(vector<IDQtys> &receipts, double distance)
     listItem->setSizeHint(receiptSizeHint);
     QListWidget::addItem(listItem);
 
-    /* Set the QListWidgetItem to hold a Receipt */
-    headerItem = new Receipt(this, QString::fromStdString(""), Receipt::ReceiptStates::Bottom);
+    /* Set the QListWidgetItem to hold a ReceiptItem */
+    headerItem = new ReceiptItem(this, QString::fromStdString(""), ReceiptItem::ReceiptItemStates::Bottom);
     setItemWidget(listItem, headerItem);
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Receipt</class>
- <widget class="QWidget" name="Receipt">
+ <class>ReceiptItem</class>
+ <widget class="QWidget" name="ReceiptItem">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -152,7 +152,7 @@ background-color: white;
     <string notr="true"/>
    </property>
    <property name="currentIndex">
-    <number>8</number>
+    <number>10</number>
    </property>
    <widget class="QWidget" name="grandTotalHeader">
     <widget class="QWidget" name="horizontalLayoutWidget_5">
@@ -547,7 +547,7 @@ background-color: white;
       <item>
        <widget class="QLabel" name="customerServiceLabel_2">
         <property name="text">
-         <string>Call us at  1-FASTFOOOOD</string>
+         <string>Call us at  1-Stadium-bros</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
