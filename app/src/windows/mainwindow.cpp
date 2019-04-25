@@ -3,6 +3,7 @@
 #include "src/windows/login.hpp"
 #include "src/datastore/database.hpp"
 #include "src/views/adminview.hpp"
+#include "src/views/planvacationview.hpp"
 #include <QFontDatabase>
 #include <QMessageBox>
 #include <QDebug>
@@ -37,6 +38,7 @@ MainWindow::MainWindow()
 
     /* Create views */
     m_views.push_back(new AdminView(m_ui->adminView));
+    m_views.push_back(new PlanVacationView(m_ui->planVacationView, m_navbar));
     m_views.push_back(new StadiumView(m_ui->viewTeamView));
     m_views.push_back(new DashboardView(m_ui->dashboardView));
     m_views.push_back(new GraphView(m_ui->graphView));

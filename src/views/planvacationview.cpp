@@ -1,11 +1,14 @@
 #include "planvacationview.hpp"
 #include "ui_planvacationview.h"
+#include "src/views/souvenirshop.hpp"
 
 /* Constructor */
 PlanVacationView::PlanVacationView(QWidget *parent, NavBar* bar)
     : View(parent), m_ui(new Ui::PlanVacationView), m_navbar(bar)
 {
     m_ui->setupUi(this);
+
+    m_vacationViews.push_back(new SouvenirShop(m_ui->activeVacation));
 }
 
 /* Destructor */
