@@ -202,6 +202,7 @@ void MapPainter::animateTrip(int stadiumOneId, int stadiumTwoId)
     // Insert coordinates to calculate the planes angle
     m_airplane->setRotation(tempCoords[stadiumOneId].first,tempCoords[stadiumOneId].second,
                             tempCoords[stadiumTwoId].first,tempCoords[stadiumTwoId].second);
+
     // Set beacon at `to` location, stadiumTwo
     m_beacon->setCoords(QPoint(tempCoords[stadiumTwoId].first,tempCoords[stadiumTwoId].second));
 
@@ -258,14 +259,16 @@ void MapPainter::paintEvent(QPaintEvent*)
     /* Paint edge between stadiums */
     for(auto edge : Database::getDistances())
     {
-        paintEdge(painter,QPoint(tempCoords.find(std::get<0>(edge))->second.first,tempCoords.find(std::get<0>(edge))->second.second),
-                  QPoint(tempCoords.find(std::get<1>(edge))->second.first,tempCoords.find(std::get<1>(edge))->second.second));
+        paintEdge(painter,QPoint(tempCoords.find(std::get<0>(edge))->second.first,
+                                 tempCoords.find(std::get<0>(edge))->second.second),
+                          QPoint(tempCoords.find(std::get<1>(edge))->second.first,
+                                 tempCoords.find(std::get<1>(edge))->second.second));
     }
 
     /* Paint stadium (red or blue based on league) and print the name of the stadium */
     for(auto pair : tempCoords)
     {
-        paintStadiums(painter, pair.first,QPoint(pair.second.first,pair.second.second),
+        paintStadiums(painter, pair.first, QPoint(pair.second.first,pair.second.second),
                       QString::fromStdString(Database::findStadiumById(pair.first).getName()));
     }
 }
