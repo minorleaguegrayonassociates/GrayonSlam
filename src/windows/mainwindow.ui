@@ -47,6 +47,7 @@ QPushButton:hover
   background-color: #343A43;
   border: 1px solid #609aff;
 }
+      
 QTreeWidget
 {
     font-size: 13px;
@@ -83,31 +84,12 @@ QTreeWidget
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="dashboardView">
      <property name="styleSheet">
       <string notr="true"/>
      </property>
-     <widget class="QLabel" name="label_3">
-      <property name="geometry">
-       <rect>
-        <x>130</x>
-        <y>50</y>
-        <width>100</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Dashboard View</string>
-      </property>
-     </widget>
     </widget>
     <widget class="QWidget" name="planVacationView">
      <property name="styleSheet">
