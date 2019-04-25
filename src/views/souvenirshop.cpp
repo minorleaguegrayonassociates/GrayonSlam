@@ -19,7 +19,7 @@ SouvenirShop::SouvenirShop(QWidget* parent)
     m_vacationSouvenirCart->setFlow(QListView::TopToBottom);
     m_vacationSouvenirCart->showQty(true);
 
-    // Demo - Delete after
+    // Test/ Demo - Delete after
     setCurrentStadiumId(50);
 }
 
@@ -62,7 +62,7 @@ void SouvenirShop::resetUi()
  */
 void SouvenirShop::updateCurrentTrip()
 {
-    /* Set the TeamId to the team the user is visiting on the vacation */
+    // Set the TeamId to the team the user is visiting on the vacation
     m_currentTeamId = Database::findStadiumById(m_currentStadiumId).getTeamId();
 
     // Populate shop list with the stadiums souvenirs
@@ -75,21 +75,21 @@ void SouvenirShop::updateCurrentTrip()
 
 /**
  * Add item from the souvenir shop to the souvenir cart
- * if the item already exists on the cart it just increments the item
+ * if the item already exists on the cart it just increments the qty
  * by 1
  */
 void SouvenirShop::on_addToCart_clicked()
 {
-    // will get restaurant id and menu id from currently selected menu list item
+    // Will get restaurant id and menu id from currently selected menu list item
     IDs item = m_vacationSouvenirList->getSelected();
 
-    // get's map of items in the cart list
+    // Get's map of items in the cart list
     Qtys cartIds(m_vacationSouvenirCart->getIDQty());
 
-    // will indicate if the item is in the list
+    // Will indicate if the item is in the list
     bool found = false;
 
-    //Looks to see if the current item is already in the list - sets found to true if so
+    // Looks to see if the current item is already in the list - sets found to true if so
     for (Qtys::const_iterator it= cartIds.begin(); it != cartIds.end(); ++it)
     {
         if(it->first.second == item.second)
@@ -100,12 +100,13 @@ void SouvenirShop::on_addToCart_clicked()
         }
     }
 
-    // if no item is found this will add the item to the list and sit the initial qty to 1
+    /* If no item is found this will add the item to the list and sit the initial qty to 1 */
     if (!found)
     {
         // as long as the choice isn't -1 add item to the cart
         if(item.second != -1)
-            m_vacationSouvenirCart->addItem(m_currentStadiumId, Database::findStadiumById(m_currentStadiumId).findSouvenir(item.second));
+            m_vacationSouvenirCart->addItem(m_currentStadiumId,
+                                            Database::findStadiumById(m_currentStadiumId).findSouvenir(item.second));
         // Set Default Qty to 1
         m_vacationSouvenirCart->setQty(item,1);
     }
@@ -118,7 +119,7 @@ void SouvenirShop::on_addToCart_clicked()
  */
 void SouvenirShop::on_removeItem_clicked()
 {
-    // will get stadium id and souvenir id from currently selected souvenirListItem
+    // Will get stadium id and souvenir id from currently selected souvenirListItem
     IDs item = m_vacationSouvenirCart->getSelected();
 
     // Removes selected item from cart
