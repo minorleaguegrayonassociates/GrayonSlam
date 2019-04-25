@@ -5,11 +5,12 @@
 // paint origin
 const QPoint origin(0,0);
 // Public static const that holds a QSize of the planes size
-const QSize planeSize(26,26);
+const QSize AirplanePainter::planeSize(26,26);
 // Used to center painter while rotating painter mid-point of plane widget
-const QPoint translateCenter(planeSize.width()/2,planeSize.height()/2);
+const QPoint translateCenter(AirplanePainter::planeSize.width()/2,AirplanePainter::planeSize.height()/2);
 // set's value back to original point if translateCenter was used to translate painter for painting plane widget
-const QPoint translateReset(planeSize.width()/2-planeSize.width(),planeSize.height()/2-planeSize.height());
+const QPoint translateReset(AirplanePainter::planeSize.width()/2-AirplanePainter::planeSize.width(),
+                            AirplanePainter::planeSize.height()/2-AirplanePainter::planeSize.height());
 
 /* Constructor */
 AirplanePainter::AirplanePainter(QWidget* parent)

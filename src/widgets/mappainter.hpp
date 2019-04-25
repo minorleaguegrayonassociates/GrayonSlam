@@ -25,7 +25,7 @@ public:
     void setDiscoveredVector(const std::vector<Database::completedEdge>&);
 
     /* reset */
-    void resetUi();
+    void resetMap();
 
 private:
     /*  Events */

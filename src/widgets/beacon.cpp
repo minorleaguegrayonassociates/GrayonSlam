@@ -3,11 +3,11 @@
 #include <QTimer>
 
 // Value used to set Beacon outside of the map widget's view, Default point
-const QPoint outerBound(-10,-10);
+const QPoint Beacon::outerBound(-10,-10);
 
 /* Constructor */
 Beacon::Beacon(QWidget* parent)
-    : QWidget(parent), m_coords(outerBound)
+    : QWidget(parent), m_coords(Beacon::outerBound)
 {
     // Resize widget to parents width and height
     this->resize(parent->size());

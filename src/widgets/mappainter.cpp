@@ -234,7 +234,7 @@ void MapPainter::setDiscoveredVector(const std::vector<Database::completedEdge>&
 /**
  * @brief set's airplane and beacon so that they're out of site of the MapView when a user enter's the view
  */
-void MapPainter::resetUi()
+void MapPainter::resetMap()
 {
     // Set to hidden
     m_airplane->setHidden(true);
