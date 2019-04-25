@@ -93,6 +93,7 @@ ReceiptItem::ReceiptItem(QWidget* parent, const int& qty, const std::string& ite
     m_ui->item->setText(QString::fromStdString(itemName));
     m_ui->price->setText("$"+QString::number(price,'f',2));
 
+    /* Set font */
     m_ui->qty_2->setFont(m_defaultFontSyle);
     m_ui->item_2->setFont(m_defaultFontSyle);
     m_ui->price_2->setFont(m_defaultFontSyle);
