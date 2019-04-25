@@ -2,6 +2,7 @@
 #include <QTreeWidget>
 #include "src/datastore/database.hpp"
 #include "stadiumlistitem.hpp"
+#include "src/utils/stringfunctions.hpp"
 
 /**
  * @brief StadiumList class
@@ -42,9 +43,6 @@ private slots:
     void connectWidgetItemToStadium(QTreeWidgetItem*);
 
 private:
-    /* Helper Functions*/
-    std::string commaSeparate(const std::string&);
-
     /* Member variables*/
     QTreeWidget* m_listDisplay;
     bool m_showHidden;

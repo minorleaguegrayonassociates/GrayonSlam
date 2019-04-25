@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>GrayonSlam</string>
   </property>
+  <property name="windowIcon">
+   <iconset theme=":/res/Minor_League_Grayons_With_Arms.png"/>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <property name="styleSheet">
     <string notr="true">
@@ -35,7 +38,25 @@ QWidget#adminView {
 background-image: url(:/res/background_icons_orange.png);
 background-color: white;
 }
-</string>
+QPushButton
+{
+  color: white;
+  border: 1px solid #666666;
+  background-color: #303030;
+ }
+
+QPushButton:hover
+{
+  background-color: #343A43;
+  border: 1px solid #609aff;
+}
+      
+QTreeWidget
+{
+    font-size: 13px;
+	color: white;
+	background-color: #303030;
+}</string>
    </property>
    <widget class="QWidget" name="NavBarWidget" native="true">
     <property name="geometry">

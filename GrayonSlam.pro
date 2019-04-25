@@ -46,6 +46,7 @@ SOURCES += \
     src/widgets/beacon.cpp
 
 HEADERS += \
+    src/utils/stringfunctions.hpp \
     src/windows/mainwindow.hpp \
     src/windows/login.hpp \
     src/utils/exceptions.hpp \
