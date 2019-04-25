@@ -235,7 +235,7 @@ void MapPainter::resetUi()
     // Set to hidden
     m_airplane->setHidden(true);
     // Set coordinates outside of widget coordinates
-    m_beacon->setCoords(QPoint(Beacon::outerBound));
+    m_beacon->setCoords(Beacon::outerBound);
 
     if(!m_discoveredEdges.empty())
         m_discoveredEdges.clear();
