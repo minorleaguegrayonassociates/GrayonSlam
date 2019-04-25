@@ -29,6 +29,31 @@ MapPainter::~MapPainter()
 }
 
 /**
+ * Set's distcoveredEdges vector so that the
+ * painter can highlight the discovered path
+ *
+ * @param discoveredEdges vector of completed edges
+ */
+void MapPainter::setDiscoveredVector(const std::vector<Database::completedEdge>& discoveredEdges)
+{
+    m_discoveredEdges = discoveredEdges;
+}
+
+/**
+ * @brief set's airplane and beacon so that they're out of site of the MapView when a user enter's the view
+ */
+void MapPainter::resetMap()
+{
+    // Set to hidden
+    m_airplane->setHidden(true);
+    // Set coordinates outside of widget coordinates
+    m_beacon->setCoords(Beacon::outerBound);
+
+    if(!m_discoveredEdges.empty())
+        m_discoveredEdges.clear();
+}
+
+/**
  * Draws stadium and it's name at the given coordinate
  *
  * @param painter QPainter
@@ -218,31 +243,6 @@ void MapPainter::animateTrip(int stadiumOneId, int stadiumTwoId)
                                         tempCoords[stadiumTwoId].second-m_airplane->size().height()/2),
                                         m_airplane->size()));
     animation->start(QAbstractAnimation::DeleteWhenStopped);
-}
-
-/**
- * Set's distcoveredEdges vector so that the
- * painter can highlight the discovered path
- *
- * @param discoveredEdges vector of completed edges
- */
-void MapPainter::setDiscoveredVector(const std::vector<Database::completedEdge>& discoveredEdges)
-{
-    m_discoveredEdges = discoveredEdges;
-}
-
-/**
- * @brief set's airplane and beacon so that they're out of site of the MapView when a user enter's the view
- */
-void MapPainter::resetMap()
-{
-    // Set to hidden
-    m_airplane->setHidden(true);
-    // Set coordinates outside of widget coordinates
-    m_beacon->setCoords(Beacon::outerBound);
-
-    if(!m_discoveredEdges.empty())
-        m_discoveredEdges.clear();
 }
 
 /**

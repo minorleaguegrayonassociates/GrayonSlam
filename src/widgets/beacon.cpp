@@ -14,6 +14,18 @@ Beacon::Beacon(QWidget* parent)
 }
 
 /*
+ * Takes To: stadium coordinate a QPoint(x,y)
+ *  and animates a beacon eminating from the coordinates provided
+ *
+ * @param stadiumTwo To: QPoint(x,y)
+*/
+void Beacon::setCoords(const QPoint& stadiumCoord)
+{
+    m_coords = stadiumCoord;
+    repaint();
+}
+
+/*
  * Draw's Beacon at the coordinates provided
  *
  * @param painter QPainter
@@ -36,18 +48,6 @@ void Beacon::drawBeacon(QPainter& painter, const QPoint& stadiumCoord)
     /* Draw's 4 different size circles */
     for(int i  = 1; i < 5; ++i)
         painter.drawEllipse(stadiumCoord,4*i,4*i);
-}
-
-/*
- * Takes To: stadium coordinate a QPoint(x,y)
- *  and animates a beacon eminating from the coordinates provided
- *
- * @param stadiumTwo To: QPoint(x,y)
-*/
-void Beacon::setCoords(const QPoint& stadiumCoord)
-{
-    m_coords = stadiumCoord;
-    repaint();
 }
 
 /**

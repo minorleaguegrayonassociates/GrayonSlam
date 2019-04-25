@@ -3,7 +3,6 @@
 #include <vector>
 #include "src/widgets/navbar.hpp"
 #include "src/views/view.hpp"
-#include "src/widgets/navbar.hpp"
 
 namespace Ui
 {
