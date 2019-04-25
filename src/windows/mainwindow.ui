@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>GrayonSlam</string>
   </property>
+  <property name="windowIcon">
+   <iconset theme=":/res/Minor_League_Grayons_With_Arms.png"/>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <property name="styleSheet">
     <string notr="true">

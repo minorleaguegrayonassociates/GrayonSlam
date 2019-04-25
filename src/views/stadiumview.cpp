@@ -159,6 +159,7 @@ void StadiumView::displayStadiumAndTeam(int stadiumId)
                       "}");
     box.setText(QString::fromStdString(msg));
     box.setStandardButtons(QMessageBox::Close);
+    box.setWindowIcon(QIcon(QString(":/res/Minor_League_Grayons_With_Arms.png")));
     box.exec();
 }
 
