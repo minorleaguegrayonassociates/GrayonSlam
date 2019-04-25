@@ -136,16 +136,16 @@ void StadiumView::displayStadiumAndTeam(int stadiumId)
     //Don't question the spaces, it is to deal with message box not treating spaces the same width as a character
     std::string msg;
     msg = std::string("\tTeam Information\n")
-         +std::string("Team Name:            ") + team.getName() + '\n'
-         +std::string("League:                    ") + team.LEAGUE_STRING[team.league] + '\n'
-         +std::string("Stadium Name:       ") + stadium.getName() + '\n'
-         +std::string("Location:                  ") + stadium.getLocation() + '\n'
-         +std::string("Year Opened:           ") + std::to_string(stadium.getYearOpened()) + '\n'
-         +std::string("Seating Capacity:    ") + commaSeparate(std::to_string(stadium.getSeatCap())) + '\n'
-         +std::string("Typology:                 ") + stadium.TYPOLOGY_STRING[stadium.typology] + '\n'
-         +std::string("Roof Type:                ") + stadium.ROOF_STRING[stadium.roof] + '\n'
-         +std::string("Playing Surface:       ") + stadium.SURFACE_STRING[stadium.surface] + '\n'
-         +std::string("Dist To Cntr Field:    ") + commaSeparate(std::to_string(stadium.getCenterFieldDist())) + '\n';
+         +std::string("Team Name:                ") + team.getName() + '\n'
+         +std::string("League:                        ") + team.LEAGUE_STRING[team.league] + '\n'
+         +std::string("Stadium Name:           ") + stadium.getName() + '\n'
+         +std::string("Location:                      ") + stadium.getLocation() + '\n'
+         +std::string("Year Opened:               ") + std::to_string(stadium.getYearOpened()) + '\n'
+         +std::string("Seating Capacity:        ") + commaSeparate(std::to_string(stadium.getSeatCap())) + '\n'
+         +std::string("Typology:                     ") + stadium.TYPOLOGY_STRING[stadium.typology] + '\n'
+         +std::string("Roof Type:                    ") + stadium.ROOF_STRING[stadium.roof] + '\n'
+         +std::string("Playing Surface:           ") + stadium.SURFACE_STRING[stadium.surface] + '\n'
+         +std::string("Center field Distance:  ") + commaSeparate(std::to_string(stadium.getCenterFieldDist())) + '\n';
     QMessageBox box;
     box.setStyleSheet("QMessageBox"
                       "{"
