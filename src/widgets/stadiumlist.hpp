@@ -2,7 +2,6 @@
 #include <QTreeWidget>
 #include "src/datastore/database.hpp"
 #include "stadiumlistitem.hpp"
-#include <limits>
 #include "src/utils/stringfunctions.hpp"
 
 /**

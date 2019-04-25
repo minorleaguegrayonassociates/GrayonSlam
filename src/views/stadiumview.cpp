@@ -117,8 +117,8 @@ void StadiumView::resetUi()
     m_stadiumList->populateWidget(list);
 
     //Set labels to reflect what is in list
-    ui->TotalStadiumsLabel->setText(QString("Total Amount Of Teams/Stadiums: ") + QString::fromStdString(std::to_string(list.size())));
-    ui->TotalSeatingCapacityLabel->setText(QString("Total Seating Capacity: ") + QString::fromStdString(std::to_string(totalSeatingCapacity)));
+    ui->TotalStadiumsLabel->setText(QString("Total Amount Of Teams/Stadiums: ") + QString::fromStdString(commaSeparate(std::to_string(list.size()))));
+    ui->TotalSeatingCapacityLabel->setText(QString("Total Seating Capacity: ") + QString::fromStdString(commaSeparate(std::to_string(totalSeatingCapacity))));
 }
 
 /**
