@@ -137,7 +137,7 @@ void StadiumView::displayStadiumAndTeam(int stadiumId)
     std::string msg;
     msg = std::string("\tTeam Information\n")
          +std::string("Team Name:            ") + team.getName() + '\n'
-         +std::string("League:                     ") + team.LEAGUE_STRING[team.league] + '\n'
+         +std::string("League:                    ") + team.LEAGUE_STRING[team.league] + '\n'
          +std::string("Stadium Name:       ") + stadium.getName() + '\n'
          +std::string("Location:                  ") + stadium.getLocation() + '\n'
          +std::string("Year Opened:           ") + std::to_string(stadium.getYearOpened()) + '\n'
