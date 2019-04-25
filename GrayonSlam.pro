@@ -40,7 +40,10 @@ SOURCES += \
     src/views/stadiumview.cpp \
     src/widgets/stadiumlist.cpp \
     src/widgets/stadiumlistitem.cpp \
-    src/views/adminview.cpp
+    src/views/adminview.cpp \
+    src/widgets/mappainter.cpp \
+    src/widgets/airplanepainter.cpp \
+    src/widgets/beacon.cpp
 
 HEADERS += \
     src/utils/stringfunctions.hpp \
@@ -62,7 +65,10 @@ HEADERS += \
     src/views/stadiumview.hpp \
     src/widgets/stadiumlist.hpp \
     src/widgets/stadiumlistitem.hpp \
-    src/views/adminview.hpp
+    src/views/adminview.hpp \
+    src/widgets/mappainter.hpp \
+    src/widgets/airplanepainter.hpp \
+    src/widgets/beacon.hpp
 
 FORMS += \
     src/windows/mainwindow.ui \
