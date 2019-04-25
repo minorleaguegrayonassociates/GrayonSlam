@@ -1,5 +1,4 @@
 #pragma once
-
 #include "src/datastore/database.hpp"
 #include "airplanepainter.hpp"
 #include "beacon.hpp"

@@ -1,9 +1,8 @@
 #include "airplanepainter.hpp"
 #include <QPainter>
 #include <cmath>
+#include <QtMath>
 
-// Storing a static const value of pi
-const static double PI = 3.141592653589793238462643383279503;
 // paint origin
 const QPoint origin(0,0);
 // size of plane
@@ -47,7 +46,7 @@ void AirplanePainter::setRotation(int startingX, int startingY, int endingX, int
 {
     int xComponent = endingX - startingX;
     int yComponent = endingY - startingY;
-    double angle = atan((1.0*yComponent)/xComponent) * (180.0 / PI);
+    double angle = atan((1.0*yComponent)/xComponent) * (180.0 / M_PI);
     if(xComponent < 0) { angle += 180.0; };
     angleValue = angle;
     repaint();

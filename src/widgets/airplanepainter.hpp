@@ -1,5 +1,4 @@
 #pragma once
-
 #include <QWidget>
 
 class AirplanePainter : public QWidget
