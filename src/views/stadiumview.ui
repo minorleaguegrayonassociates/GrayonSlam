@@ -23,12 +23,7 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">QTreeWidget
-{
-        font-size: 15px;
-        color: white;
-        background-color: #303030;
-}</string>
+    <string notr="true"/>
    </property>
   </widget>
   <widget class="QLabel" name="TotalSeatingCapacityLabel">

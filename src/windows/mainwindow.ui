@@ -46,6 +46,12 @@ QPushButton:hover
 {
   background-color: #343A43;
   border: 1px solid #609aff;
+}
+QTreeWidget
+{
+    font-size: 13px;
+	color: white;
+	background-color: #303030;
 }</string>
    </property>
    <widget class="QWidget" name="NavBarWidget" native="true">
