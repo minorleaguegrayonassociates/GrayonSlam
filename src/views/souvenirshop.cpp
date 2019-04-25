@@ -19,7 +19,7 @@ SouvenirShop::SouvenirShop(QWidget* parent)
     m_vacationSouvenirCart->setFlow(QListView::TopToBottom);
     m_vacationSouvenirCart->showQty(true);
 
-    // Test/ Demo - Delete after
+    // Demo - Delete after
     setCurrentStadiumId(50);
 }
 
@@ -103,7 +103,7 @@ void SouvenirShop::on_addToCart_clicked()
     /* If no item is found this will add the item to the list and sit the initial qty to 1 */
     if (!found)
     {
-        // as long as the choice isn't -1 add item to the cart
+        /* as long as the choice isn't -1 add item to the cart */
         if(item.second != -1)
             m_vacationSouvenirCart->addItem(m_currentStadiumId,
                                             Database::findStadiumById(m_currentStadiumId).findSouvenir(item.second));
