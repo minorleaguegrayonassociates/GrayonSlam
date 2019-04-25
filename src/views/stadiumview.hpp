@@ -40,33 +40,27 @@ public:
     void resetUi() override;
 
     /* Find Max/Min Distance Teams */
-    std::vector<std::pair<Team,Stadium>> maxDistanceTeams(std::vector<std::pair<Team,Stadium>>);
-    std::vector<std::pair<Team,Stadium>> minDistanceTeams(std::vector<std::pair<Team,Stadium>>);
+    std::vector<std::pair<Team,Stadium>> maxDistanceTeams(const std::vector<std::pair<Team,Stadium>>&);
+    std::vector<std::pair<Team,Stadium>> minDistanceTeams(const std::vector<std::pair<Team,Stadium>>&);
 
 private slots:
-    void onStadiumClicked(int);
-
+    void displayStadiumAndTeam(int);
     void on_AllStadiumsAndTeamsButton_clicked();
-
     void on_AmericanLeagueButton_clicked();
-
     void on_NationalLeagueButton_clicked();
-
     void on_OpenRoofsButton_clicked();
-
     void on_GreatestDistButton_clicked();
-
     void on_ShortestDistButton_clicked();
 
 private:
     /**
-     * @enum DisplayType
+     * @enum class DisplayType
      *
      * This enum store the information of what is being
      * displayed inside the Stadium List. i.e. The last clicked button inside
      * the view's action is stored as an enum of this type.
      */
-    enum DisplayType
+    enum class DisplayType
     {
       ALL_STADIUMS,
       ROOF_TYPE,

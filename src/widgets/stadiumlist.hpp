@@ -3,6 +3,7 @@
 #include "src/datastore/database.hpp"
 #include "stadiumlistitem.hpp"
 #include <limits>
+#include "src/utils/stringfunctions.hpp"
 
 /**
  * @brief StadiumList class
@@ -34,9 +35,6 @@ public:
     /* Destructor*/
     ~StadiumList() override;
 
-    /* Helper Functions*/
-  static  std::string commaSeparate(const std::string&);
-  
 signals:
     /* Clicked Signal*/
     void stadiumClicked(int stadiumId);

@@ -26,6 +26,7 @@ CONFIG += c++14
 
 SOURCES += \
     src/main.cpp \
+    src/utils/stringfunctions.cpp \
     src/windows/mainwindow.cpp \
     src/windows/login.cpp \
     src/utils/parser.cpp \
@@ -43,6 +44,7 @@ SOURCES += \
     src/views/adminview.cpp
 
 HEADERS += \
+    src/utils/stringfunctions.hpp \
     src/windows/mainwindow.hpp \
     src/windows/login.hpp \
     src/utils/exceptions.hpp \

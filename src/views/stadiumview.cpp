@@ -1,6 +1,7 @@
 #include "stadiumview.hpp"
 #include "ui_stadiumview.h"
 #include <QMessageBox>
+#include "src/utils/stringfunctions.hpp"
 
 /**
  * Constructs a Stadium View with a pointer to the parent widget which it will reside in
@@ -10,21 +11,15 @@
 StadiumView::StadiumView(QWidget* parent) :
     View(parent),
     ui(new Ui::StadiumView),
-     m_displayStatus(ALL_STADIUMS)
+     m_displayStatus(DisplayType::ALL_STADIUMS)
 {
     //Initialize Ui
     ui->setupUi(this);
 
     //Instantiate and populate tree widget
     m_stadiumList = new StadiumList(ui->stadiumList);
-    m_stadiumList->setStyleSheet("QTreeWidget"
-    "{"
-        "font-size: 15px;"
-        "color: white;"
-        "background-color: #303030;"
-    "}");
     resetUi();
-    connect(m_stadiumList, &StadiumList::stadiumClicked, this, &StadiumView::onStadiumClicked);
+    connect(m_stadiumList, &StadiumList::stadiumClicked, this, &StadiumView::displayStadiumAndTeam);
 }
 
 /**
@@ -43,7 +38,7 @@ StadiumView::~StadiumView()
 void StadiumView::resetView()
 {
     //clear all data, get it new from database, and populate table
-    m_displayStatus = ALL_STADIUMS;
+    m_displayStatus = DisplayType::ALL_STADIUMS;
     resetUi();
 }
 
@@ -60,7 +55,7 @@ void StadiumView::resetUi()
     //Check to see what needs to be displayed in the list
     switch(m_displayStatus)
     {
-        case ROOF_TYPE:
+        case DisplayType::ROOF_TYPE:
             for(unsigned int index = 0; index < listT.size(); ++index)
             {
                 if(listT[index].second.roof == Stadium::OPEN)
@@ -71,7 +66,7 @@ void StadiumView::resetUi()
              }
              break;
 
-        case AMERICAN_LEAGUE:
+        case DisplayType::AMERICAN_LEAGUE:
             for(unsigned int index = 0; index < listT.size(); ++index)
             {
                 if(listT[index].first.league == Team::AMERICAN)
@@ -82,7 +77,7 @@ void StadiumView::resetUi()
              }
             break;
 
-        case NATIONAL_LEAGUE:
+        case DisplayType::NATIONAL_LEAGUE:
             for(unsigned int index = 0; index < listT.size(); ++index)
             {
                 if(listT[index].first.league == Team::NATIONAL)
@@ -93,7 +88,7 @@ void StadiumView::resetUi()
              }
             break;
 
-        case GREATEST_DISTANCE:
+        case DisplayType::GREATEST_DISTANCE:
             list = maxDistanceTeams(Database::getTeamsAndStadiums());
             for(unsigned int index = 0; index < list.size(); ++index)
             {
@@ -101,7 +96,7 @@ void StadiumView::resetUi()
             }
             break;
 
-        case SHORTEST_DISTANCE:
+        case DisplayType::SHORTEST_DISTANCE:
             list = minDistanceTeams(Database::getTeamsAndStadiums());
             for(unsigned int index = 0; index < list.size(); ++index)
             {
@@ -109,7 +104,7 @@ void StadiumView::resetUi()
             }
             break;
 
-        case ALL_STADIUMS:
+        case DisplayType::ALL_STADIUMS:
             list = listT;
             for(unsigned int index = 0; index < list.size(); ++index)
             {
@@ -133,7 +128,7 @@ void StadiumView::resetUi()
  *
  * @param stadiumId Id of stadium to display.
  */
-void StadiumView::onStadiumClicked(int stadiumId)
+void StadiumView::displayStadiumAndTeam(int stadiumId)
 {
     Stadium stadium = Database::findStadiumById(stadiumId);
     Team team = Database::findTeamById(stadium.getTeamId());
@@ -146,11 +141,11 @@ void StadiumView::onStadiumClicked(int stadiumId)
          +std::string("Stadium Name:       ") + stadium.getName() + '\n'
          +std::string("Location:                  ") + stadium.getLocation() + '\n'
          +std::string("Year Opened:           ") + std::to_string(stadium.getYearOpened()) + '\n'
-         +std::string("Seating Capacity:    ") + StadiumList::commaSeparate(std::to_string(stadium.getSeatCap())) + '\n'
+         +std::string("Seating Capacity:    ") + commaSeparate(std::to_string(stadium.getSeatCap())) + '\n'
          +std::string("Typology:                 ") + stadium.TYPOLOGY_STRING[stadium.typology] + '\n'
          +std::string("Roof Type:                ") + stadium.ROOF_STRING[stadium.roof] + '\n'
          +std::string("Playing Surface:       ") + stadium.SURFACE_STRING[stadium.surface] + '\n'
-         +std::string("Dist To Cntr Field:    ") + StadiumList::commaSeparate(std::to_string(stadium.getCenterFieldDist())) + '\n';
+         +std::string("Dist To Cntr Field:    ") + commaSeparate(std::to_string(stadium.getCenterFieldDist())) + '\n';
     QMessageBox box;
     box.setStyleSheet("QMessageBox"
                       "{"
@@ -174,7 +169,7 @@ void StadiumView::onStadiumClicked(int stadiumId)
  */
 void StadiumView::on_AllStadiumsAndTeamsButton_clicked()
 {
-    m_displayStatus = ALL_STADIUMS;
+    m_displayStatus = DisplayType::ALL_STADIUMS;
     resetUi();
 }
 
@@ -185,7 +180,7 @@ void StadiumView::on_AllStadiumsAndTeamsButton_clicked()
  */
 void StadiumView::on_AmericanLeagueButton_clicked()
 {
-    m_displayStatus =AMERICAN_LEAGUE;
+    m_displayStatus = DisplayType::AMERICAN_LEAGUE;
     resetUi();
 }
 
@@ -196,7 +191,7 @@ void StadiumView::on_AmericanLeagueButton_clicked()
  */
 void StadiumView::on_NationalLeagueButton_clicked()
 {
-    m_displayStatus = NATIONAL_LEAGUE;
+    m_displayStatus = DisplayType::NATIONAL_LEAGUE;
     resetUi();
 }
 
@@ -207,7 +202,7 @@ void StadiumView::on_NationalLeagueButton_clicked()
  */
 void StadiumView::on_OpenRoofsButton_clicked()
 {
-    m_displayStatus = ROOF_TYPE;
+    m_displayStatus = DisplayType::ROOF_TYPE;
     resetUi();
 }
 
@@ -218,7 +213,7 @@ void StadiumView::on_OpenRoofsButton_clicked()
  */
 void StadiumView::on_GreatestDistButton_clicked()
 {
-    m_displayStatus = GREATEST_DISTANCE;
+    m_displayStatus = DisplayType::GREATEST_DISTANCE;
     resetUi();
 }
 
@@ -229,7 +224,7 @@ void StadiumView::on_GreatestDistButton_clicked()
  */
 void StadiumView::on_ShortestDistButton_clicked()
 {
-    m_displayStatus = SHORTEST_DISTANCE;
+    m_displayStatus = DisplayType::SHORTEST_DISTANCE;
     resetUi();
 }
 
@@ -241,18 +236,15 @@ void StadiumView::on_ShortestDistButton_clicked()
  * @param list a vector of team and stadium pairs
  * @return A vector containing a set of pairs containing max dist to center field
  */
-std::vector<std::pair<Team,Stadium>> StadiumView::maxDistanceTeams(std::vector<std::pair<Team,Stadium>> list)
+std::vector<std::pair<Team,Stadium>> StadiumView::maxDistanceTeams(const std::vector<std::pair<Team,Stadium>>& list)
 {
     std::vector<std::pair<Team,Stadium>> stadiumsWithMaxDistance;
-    int maxDistance = -1;
-    for(std::pair<Team,Stadium> teamAndStadium: list)
-    {
-        int dist = teamAndStadium.second.getCenterFieldDist();
-        if(dist > maxDistance)
+    auto maxIt = std::max_element(list.begin(), list.end(),
+        [](const std::pair<Team,Stadium>& a, const std::pair<Team,Stadium> & b)
         {
-            maxDistance = dist;
-        }
-    }
+            return a.second.getCenterFieldDist() < b.second.getCenterFieldDist();
+        });
+    int maxDistance = (*maxIt).second.getCenterFieldDist();
     for(std::pair<Team,Stadium> teamAndStadium: list)
     {
         int dist = teamAndStadium.second.getCenterFieldDist();
@@ -272,18 +264,15 @@ std::vector<std::pair<Team,Stadium>> StadiumView::maxDistanceTeams(std::vector<s
  * @param list a vector of team and stadium pairs
  * @return A vector containing a set of pairs containing min dist to center field
  */
-std::vector<std::pair<Team,Stadium>> StadiumView::minDistanceTeams(std::vector<std::pair<Team,Stadium>> list)
+std::vector<std::pair<Team,Stadium>> StadiumView::minDistanceTeams(const std::vector<std::pair<Team,Stadium>>& list)
 {
     std::vector<std::pair<Team,Stadium>> stadiumsWithMinDistance;
-    int minDistance = std::numeric_limits<int>::max();
-    for(std::pair<Team,Stadium> teamAndStadium: list)
-    {
-        int dist = teamAndStadium.second.getCenterFieldDist();
-        if(dist < minDistance)
+    auto minIt = std::min_element(list.begin(), list.end(),
+        [](auto a, auto b)
         {
-            minDistance = dist;
-        }
-    }
+            return a.second.getCenterFieldDist() < b.second.getCenterFieldDist();
+        });
+    int minDistance = (*minIt).second.getCenterFieldDist();
     for(std::pair<Team,Stadium> teamAndStadium: list)
     {
         int dist = teamAndStadium.second.getCenterFieldDist();
