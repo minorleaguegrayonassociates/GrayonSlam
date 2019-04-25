@@ -91,7 +91,7 @@ ReceiptItem::ReceiptItem(QWidget* parent, const QString& total_restName, const R
  * @param parent - parent widget
  * @param qty - purchased item qty
  * @param itemName - item name
- * @param price - total price  of item (price * qty)
+ * @param price - total price of item (price * qty)
  */
 ReceiptItem::ReceiptItem(QWidget* parent, const int& qty, const std::string& itemName, const double& price) :
     QWidget(parent),

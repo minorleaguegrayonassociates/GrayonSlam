@@ -152,7 +152,7 @@ background-color: white;
     <string notr="true"/>
    </property>
    <property name="currentIndex">
-    <number>10</number>
+    <number>12</number>
    </property>
    <widget class="QWidget" name="grandTotalHeader">
     <widget class="QWidget" name="horizontalLayoutWidget_5">
@@ -547,7 +547,7 @@ background-color: white;
       <item>
        <widget class="QLabel" name="customerServiceLabel_2">
         <property name="text">
-         <string>Call us at  1-Stadium-bros</string>
+         <string>Call us at  1-Grayon-bros</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>

@@ -141,7 +141,7 @@ void ReceiptList::grandTotal(std::vector<Qtys>& receipts, double& distance)
 
 /**
  * Takes pointer to a ReceiptList adds a QListWidgetItem
- * to the list, makes it so that the user can't select the items
+ * to the list, makes it so that the user can't select the item
  * and returns a pointer to the QListWidgetItem
  *
  * @param parent - pointer to a ReceiptList
