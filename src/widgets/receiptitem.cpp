@@ -4,6 +4,14 @@
 #include "src/widgets/receiptitem.hpp"
 #include <QDateTime>
 
+/**
+ * This functions makes a receiptItem set to a template based off the
+ * the receiptItemState enum passed in for all type except
+ *
+ * @param parent - parent widget
+ * @param total_restName - Depending on the template this value is either distance or a total
+ * @param thisTemplate - Receipt State indicates which template is used ReceiptItemStates::body
+ */
 ReceiptItem::ReceiptItem(QWidget* parent, const QString& total_restName, const ReceiptItemStates& thisTemplate)
     : QWidget(parent), m_ui(new Ui::ReceiptItem)
 {
@@ -76,6 +84,15 @@ ReceiptItem::ReceiptItem(QWidget* parent, const QString& total_restName, const R
     }
 }
 
+/**
+ * This functions makes a receiptItem. It's used to print all the items purchased.
+ * Qty, Name , price
+ *
+ * @param parent - parent widget
+ * @param qty - purchased item qty
+ * @param itemName - item name
+ * @param price - total price  of item (price * qty)
+ */
 ReceiptItem::ReceiptItem(QWidget* parent, const int& qty, const std::string& itemName, const double& price) :
     QWidget(parent),
     m_ui(new Ui::ReceiptItem)
@@ -106,6 +123,7 @@ ReceiptItem::ReceiptItem(QWidget* parent, const int& qty, const std::string& ite
     }
 }
 
+/* Destructor */
 ReceiptItem::~ReceiptItem()
 {
     delete m_ui;
