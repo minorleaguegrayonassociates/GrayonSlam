@@ -46,17 +46,8 @@
    <property name="styleSheet">
     <string notr="true">QPushButton
 {
-  font-size: 13px;
-  color: white;
-  border: 1px solid #666666;
-  background-color: #303030;
- }
-
-QPushButton:hover
-{
-  background-color: #343A43;
-  border: 1px solid #609aff;
-}</string>
+     font-size: 13px;
+ }</string>
    </property>
    <property name="text">
     <string>Show National League Only</string>
@@ -77,17 +68,8 @@ QPushButton:hover
    <property name="styleSheet">
     <string notr="true">QPushButton
 {
-  font-size: 13px;
-  color: white;
-  border: 1px solid #666666;
-  background-color: #303030;
- }
-
-QPushButton:hover
-{
-  background-color: #343A43;
-  border: 1px solid #609aff;
-}</string>
+     font-size: 13px;
+ }</string>
    </property>
    <property name="text">
     <string>Show American League Only</string>
@@ -108,17 +90,8 @@ QPushButton:hover
    <property name="styleSheet">
     <string notr="true">QPushButton
 {
-  font-size: 13px;
-  color: white;
-  border: 1px solid #666666;
-  background-color: #303030;
- }
-
-QPushButton:hover
-{
-  background-color: #343A43;
-  border: 1px solid #609aff;
-}</string>
+     font-size: 13px;
+ }</string>
    </property>
    <property name="text">
     <string>Show Team(s) Greatest to center field</string>
@@ -139,17 +112,8 @@ QPushButton:hover
    <property name="styleSheet">
     <string notr="true">QPushButton
 {
-  font-size: 13px;
-  color: white;
-  border: 1px solid #666666;
-  background-color: #303030;
- }
-
-QPushButton:hover
-{
-  background-color: #343A43;
-  border: 1px solid #609aff;
-}</string>
+     font-size: 13px;
+ }</string>
    </property>
    <property name="text">
     <string>Show Team(s) Shortest to center field</string>
@@ -170,17 +134,8 @@ QPushButton:hover
    <property name="styleSheet">
     <string notr="true">QPushButton
 {
-  font-size: 13px;
-  color: white;
-  border: 1px solid #666666;
-  background-color: #303030;
- }
-
-QPushButton:hover
-{
-  background-color: #343A43;
-  border: 1px solid #609aff;
-}</string>
+     font-size: 13px;
+ }</string>
    </property>
    <property name="text">
     <string>Show Teams with Open Roofs Only</string>
@@ -198,17 +153,8 @@ QPushButton:hover
    <property name="styleSheet">
     <string notr="true">QPushButton
 {
-  font-size: 13px;
-  color: white;
-  border: 1px solid #666666;
-  background-color: #303030;
- }
-
-QPushButton:hover
-{
-  background-color: #343A43;
-  border: 1px solid #609aff;
-}</string>
+     font-size: 13px;
+ }</string>
    </property>
    <property name="text">
     <string>Show All Stadiums and Teams</string>

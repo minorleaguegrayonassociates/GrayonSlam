@@ -26,7 +26,6 @@ CONFIG += c++14
 
 SOURCES += \
     src/main.cpp \
-    src/utils/stringfunctions.cpp \
     src/windows/mainwindow.cpp \
     src/windows/login.cpp \
     src/utils/parser.cpp \

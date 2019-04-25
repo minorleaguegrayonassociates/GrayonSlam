@@ -34,6 +34,18 @@ background-color: #A4CC66;
 QWidget#adminView {
 background-image: url(:/res/background_icons_orange.png);
 background-color: white;
+}
+QPushButton
+{
+  color: white;
+  border: 1px solid #666666;
+  background-color: #303030;
+ }
+
+QPushButton:hover
+{
+  background-color: #343A43;
+  border: 1px solid #609aff;
 }</string>
    </property>
    <widget class="QWidget" name="NavBarWidget" native="true">
