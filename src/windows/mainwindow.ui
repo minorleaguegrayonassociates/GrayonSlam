@@ -14,28 +14,29 @@
    <string>GrayonSlam</string>
   </property>
   <property name="windowIcon">
-   <iconset theme=":/res/Minor_League_Grayons_With_Arms.png"/>
+   <iconset theme=":/res/Minor_League_Grayons_With_Arms.png">
+    <normaloff>.</normaloff>.</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
    <property name="styleSheet">
     <string notr="true">
 QWidget#dashboardView {
-background-image: url(:/res/background_icons_red.png);
+background-image: url(:/res/backgrounds/background_icons_red.png);
 background-color: #66A2CC;
 }
 
 QWidget#planVacationView {
-background-image: url(:/res/background_icons_purple.png);
+background-image: url(:/res/backgrounds/background_icons_purple.png);
 background-color: #66CC96;
 }
 
 QWidget#viewTeamView {
-background-image: url(:/res/background_icons_blue.png);
+background-image: url(:/res/backgrounds/background_icons_blue.png);
 background-color: #A4CC66;
 }
 
 QWidget#adminView {
-background-image: url(:/res/background_icons_orange.png);
+background-image: url(:/res/backgrounds/background_icons_orange.png);
 background-color: white;
 }
 QPushButton
