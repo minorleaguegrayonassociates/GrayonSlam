@@ -19,11 +19,11 @@ SouvenirShop::SouvenirShop(QWidget* parent)
     m_vacationSouvenirCart->setFlow(QListView::TopToBottom);
     m_vacationSouvenirCart->showQty(true);
 
-    // Demo - Delete after
-    setCurrentStadiumId(50);
-
-    // set text for checkout button
+    // set icon for checkout button
     m_ui->checkout->setText("\uf218");
+
+    // ---  Demo - Delete after
+    setCurrentStadiumId(50);
 }
 
 /* Destructor */
