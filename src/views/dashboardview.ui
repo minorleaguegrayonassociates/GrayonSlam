@@ -17,9 +17,9 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>160</y>
+     <y>239</y>
      <width>711</width>
-     <height>400</height>
+     <height>351</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -34,9 +34,9 @@
   <widget class="QLabel" name="label_splash">
    <property name="geometry">
     <rect>
-     <x>130</x>
-     <y>50</y>
-     <width>451</width>
+     <x>110</x>
+     <y>130</y>
+     <width>491</width>
      <height>41</height>
     </rect>
    </property>
@@ -58,28 +58,28 @@
   <widget class="QLabel" name="label_welcome">
    <property name="geometry">
     <rect>
-     <x>130</x>
-     <y>10</y>
-     <width>451</width>
-     <height>41</height>
+     <x>0</x>
+     <y>0</y>
+     <width>711</width>
+     <height>121</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">QLabel
 {
 	background-color: #303030;
-	color: white;
-	font-size: 20px;
 }</string>
    </property>
-   <property name="text">
-    <string>Welcome to GrayonSlam</string>
+   <property name="pixmap">
+    <pixmap resource="../../res.qrc">:/res/worded_logo.png</pixmap>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../res.qrc"/>
+ </resources>
  <connections/>
 </ui>

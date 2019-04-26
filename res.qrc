@@ -19,5 +19,6 @@
         <file>res/slideshow/wrigleyfront.jpg</file>
         <file>res/slideshow/bitgo.png</file>
         <file>res/splash.csv</file>
+        <file>res/worded_logo.png</file>
     </qresource>
 </RCC>
