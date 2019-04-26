@@ -2,14 +2,12 @@
     <qresource prefix="/">
         <file>res/fontawesome-webfont.ttf</file>
         <file>res/Minor_League_Grayons_With_Arms.png</file>
-        <file>res/background_icons_red.png</file>
-        <file>res/background_icons_purple.png</file>
-        <file>res/background_icons_blue.png</file>
-        <file>res/background_icons_orange.png</file>
-        <file>res/DistanceBetweenExpansionStadium.csv</file>
-        <file>res/DistanceBetweenStadiums.csv</file>
-        <file>res/MLBInformation.csv</file>
-        <file>res/MLBInformationExpansion.csv</file>
+        <file>res/backgrounds/background_icons_red.png</file>
+        <file>res/backgrounds/background_icons_purple.png</file>
+        <file>res/backgrounds/background_icons_blue.png</file>
+        <file>res/backgrounds/background_icons_orange.png</file>
+        <file>res/data-files/DistanceBetweenStadiums.csv</file>
+        <file>res/data-files/MLBInformation.csv</file>
         <file>res/airplane.png</file>
         <file>res/map_background.png</file>
         <file>res/slideshow/BigLeagueChew.png</file>
