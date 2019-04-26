@@ -26,6 +26,8 @@ CONFIG += c++14
 
 SOURCES += \
     src/main.cpp \
+    src/views/dashboardview.cpp \
+    src/widgets/imageslideshow.cpp \
     src/windows/mainwindow.cpp \
     src/windows/login.cpp \
     src/utils/parser.cpp \
@@ -47,6 +49,8 @@ SOURCES += \
 
 HEADERS += \
     src/utils/stringfunctions.hpp \
+    src/views/dashboardview.hpp \
+    src/widgets/imageslideshow.hpp \
     src/windows/mainwindow.hpp \
     src/windows/login.hpp \
     src/utils/exceptions.hpp \
@@ -71,6 +75,7 @@ HEADERS += \
     src/widgets/beacon.hpp
 
 FORMS += \
+    src/views/dashboardview.ui \
     src/windows/mainwindow.ui \
     src/windows/login.ui \
     src/widgets/navbaritem.ui \
