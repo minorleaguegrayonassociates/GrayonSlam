@@ -16,16 +16,17 @@
   <widget class="QWidget" name="widget_slideshow" native="true">
    <property name="geometry">
     <rect>
-     <x>150</x>
-     <y>100</y>
-     <width>410</width>
+     <x>0</x>
+     <y>160</y>
+     <width>711</width>
      <height>400</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">QWidget
 {
-	border: 5px solid black;
+	border-top: 3px solid black;
+	border-bottom: 3px solid black;
 	background-color: #303030;
 }</string>
    </property>

@@ -2,6 +2,17 @@
 #include <QLabel>
 #include <vector>
 
+/**
+ * @class ImageSlideshow class
+ *
+ * Acts as an animated slideshow for images. Once
+ * images are added to the object with @a addImage(),
+ * call @a start() on the object to begin the slideshow.
+ * The slideshow is pausable as well with @a pause().
+ * If a desired interval is wanted for the slideshow,
+ * use @a setInterval and pass in the desired milliseconds
+ * that each image will show for.
+ */
 class ImageSlideshow : public QLabel
 {
     Q_OBJECT

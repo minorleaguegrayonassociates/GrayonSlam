@@ -61,8 +61,7 @@ void ImageSlideshow::loop()
         return;
 
     setPixmap(m_images[m_currentIndex]);
-
+    setAlignment(Qt::AlignCenter);
     m_currentIndex = (m_currentIndex + 1) % m_images.size();
-
     QTimer::singleShot(m_msecInterval, this, &ImageSlideshow::loop);
 }
