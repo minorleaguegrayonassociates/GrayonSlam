@@ -14,8 +14,8 @@
    <string>GrayonSlam</string>
   </property>
   <property name="windowIcon">
-   <iconset theme=":/res/Minor_League_Grayons_With_Arms.png">
-    <normaloff>.</normaloff>.</iconset>
+   <iconset resource="../../res.qrc">
+    <normaloff>:/res/Minor_League_Grayons_With_Arms.png</normaloff>:/res/Minor_League_Grayons_With_Arms.png</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
    <property name="styleSheet">
@@ -139,6 +139,8 @@ QTreeWidget
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="../../res.qrc"/>
+ </resources>
  <connections/>
 </ui>
