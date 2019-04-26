@@ -21,6 +21,9 @@ SouvenirShop::SouvenirShop(QWidget* parent)
 
     // Demo - Delete after
     setCurrentStadiumId(50);
+
+    // set text for checkout button
+    m_ui->checkout->setText("\uf218");
 }
 
 /* Destructor */
