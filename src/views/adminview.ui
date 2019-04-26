@@ -29,10 +29,10 @@
     <widget class="QWidget" name="widget_stadList" native="true">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>10</y>
-       <width>691</width>
-       <height>381</height>
+       <x>0</x>
+       <y>0</y>
+       <width>710</width>
+       <height>321</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -47,7 +47,7 @@
      <property name="geometry">
       <rect>
        <x>290</x>
-       <y>400</y>
+       <y>330</y>
        <width>131</width>
        <height>21</height>
       </rect>
@@ -353,7 +353,7 @@
      <property name="geometry">
       <rect>
        <x>430</x>
-       <y>400</y>
+       <y>330</y>
        <width>271</width>
        <height>21</height>
       </rect>
