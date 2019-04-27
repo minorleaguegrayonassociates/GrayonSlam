@@ -50,6 +50,7 @@ public:
 
 signals:
     void currentSouvenirChanged(IDs) const;
+    void itemQtyChanged();
 
 private slots:
     void rowToIDsEmitter(int) const;
