@@ -25,7 +25,7 @@ SouvenirShop::SouvenirShop(QWidget* parent)
 
     // ---  Demo - Delete after
     setCurrentStadiumId(50);
-    connect(m_vacationSouvenirCart,&SouvenirList::qtyChanged,this,&SouvenirShop::test);
+    connect(m_vacationSouvenirCart,&SouvenirList::itemQtyChanged,this,&SouvenirShop::test);
 }
 
 /* Destructor */
