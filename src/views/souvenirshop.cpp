@@ -1,6 +1,7 @@
 #include "souvenirshop.hpp"
 #include "ui_souvenirshop.h"
 #include "src/datastore/database.hpp"
+#include <QDebug>
 
 /* Constructor */
 SouvenirShop::SouvenirShop(QWidget* parent)
@@ -24,6 +25,7 @@ SouvenirShop::SouvenirShop(QWidget* parent)
 
     // ---  Demo - Delete after
     setCurrentStadiumId(50);
+    connect(m_vacationSouvenirCart,&SouvenirList::qtyChanged,this,&SouvenirShop::test);
 }
 
 /* Destructor */
@@ -127,4 +129,16 @@ void SouvenirShop::on_removeItem_clicked()
 
     // Removes selected item from cart
     m_vacationSouvenirCart->removeItem(item);
+}
+
+void SouvenirShop::test()
+{
+   auto myQtys = m_vacationSouvenirCart->getIDQty();
+   int total = 0;
+   for(auto qty : myQtys)
+       total += qty.second;
+   if(total < 100)
+     qDebug() << QString::number(total);
+   else
+     qDebug() << QString::fromUtf8("99+");
 }

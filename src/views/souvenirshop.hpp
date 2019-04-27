@@ -25,6 +25,9 @@ public:
     void resetView() override;
     void resetUi() override;
 
+public slots:
+    void test();
+
 private slots:
     void on_addToCart_clicked();
     void on_removeItem_clicked();
