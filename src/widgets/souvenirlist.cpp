@@ -188,7 +188,7 @@ void SouvenirList::removeItem(IDs id)
         {
             m_IDQtys.erase(widget->getIDs());
             QListWidget::takeItem(row);
-            emit itemQtyChanged();
+            emit itemQtyChanged(id);
             return;
         }
     }
@@ -275,7 +275,7 @@ void SouvenirList::quantityChangedHandler(IDs id, int qty)
     {
         removeItem(id); //Remove it from the list
     }
-    emit itemQtyChanged();
+    emit itemQtyChanged(id);
 }
 
 /**
