@@ -20,12 +20,12 @@ SouvenirShop::SouvenirShop(QWidget* parent)
     m_vacationSouvenirCart->setFlow(QListView::TopToBottom);
     m_vacationSouvenirCart->showQty(true);
 
-    // set icon for checkout button
-    m_ui->checkout->setText("\uf218");
+    m_ui->checkout->setText("\uf07a");
 
     // ---  Demo - Delete after
     setCurrentStadiumId(50);
     connect(m_vacationSouvenirCart,&SouvenirList::itemQtyChanged,this,&SouvenirShop::test);
+
 }
 
 /* Destructor */
@@ -138,7 +138,7 @@ void SouvenirShop::test()
    for(auto qty : myQtys)
        total += qty.second;
    if(total < 100)
-     qDebug() << QString::number(total);
+       m_ui->qtyLabel->setText(QString::number(total));
    else
-     qDebug() << QString::fromUtf8("99+");
+       m_ui->qtyLabel->setText(QString::fromUtf8("99+"));
 }
