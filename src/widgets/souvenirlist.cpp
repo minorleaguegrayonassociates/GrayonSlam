@@ -176,6 +176,10 @@ void SouvenirList::addAllItems(const Stadium& stadium)
  * each widget into a @a SouvenirListItem. When found, the souvenir
  * is removed from the IDs-quantity map as well as the list.
  *
+ * Before an item is removed from the list and from the map it will
+ * emit a signal with the restaurant id, item id, and qty as
+ * it's parameters.
+ *
  * @param id IDs of the souvenir to remove
  */
 void SouvenirList::removeItem(IDs id)
@@ -186,7 +190,7 @@ void SouvenirList::removeItem(IDs id)
 
         if(widget != nullptr && id == widget->getIDs())
         {
-            emit itemQtyChanged(id, -widget->getIDs().second);
+            emit itemQtyChanged(id, widget->getIDs().second);
             m_IDQtys.erase(widget->getIDs());
             QListWidget::takeItem(row);
             return;
@@ -262,6 +266,10 @@ void SouvenirList::rowToIDsEmitter(int row) const
  * store that new value. If the changing quantity is the minimum
  * quantity, the changed item is removed from the list.
  *
+ * If the qty is above the minimum quantity
+ * it will emit a signal with the restaurant id, item id, and qty as
+ * it's parameters.
+ *
  * @param id IDs of the changed souvenir
  * @param qty New quantity value
  */
@@ -269,13 +277,13 @@ void SouvenirList::quantityChangedHandler(IDs id, int qty)
 {
     if(qty != m_minQty)
     {
+        emit itemQtyChanged(id,qty);
         m_IDQtys[id] = qty; //Store/replace the key with the value
     }
     else
     {
         removeItem(id); //Remove it from the list
     }
-    emit itemQtyChanged(id,qty);
 }
 
 /**
