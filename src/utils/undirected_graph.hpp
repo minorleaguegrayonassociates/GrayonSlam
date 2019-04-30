@@ -92,7 +92,10 @@ bool undirected_graph<Vertex,Weight>::vertexExists(const Vertex& vertex) const
 template<typename Vertex, typename Weight>
 bool undirected_graph<Vertex,Weight>::edgeExists(const Vertex& from, const Vertex& to, const Weight& weight) const
 {
-    /* Get the edges of the "from" vertex and see if the partial edge exists */
+    /*
+     * Get the edges of the "from" vertex and
+     * see if the partial edge exists
+     */
     const VertexEdges& edges = m_edges[from];
     return std::binary_search(edges.cbegin(), edges.cend(), PartialEdge(to, weight)) != edges.cend();
 }
@@ -120,6 +123,11 @@ bool undirected_graph<Vertex,Weight>::emptyEdges() const
     for(const std::pair<Vertex,VertexEdges>& pair : m_edges)
     {
         const VertexEdges& edges = pair.second;
+
+        /*
+         * If at least one vertex's edges isn't empty,
+         * then there are edges in the graph
+         */
         if(!edges.empty())
             return false;
     }
@@ -136,7 +144,15 @@ const std::map<Vertex, typename undirected_graph<Vertex,Weight>::VertexEdges>& u
 template<typename Vertex, typename Weight>
 const typename undirected_graph<Vertex,Weight>::VertexEdges& undirected_graph<Vertex,Weight>::getVertexEdges(const Vertex& vertex) const
 {
-    return m_edges.at(vertex);
+    static VertexEdges error;
+    error = VertexEdges();
+
+    /*
+     * Return the vertex edges if vertex exists;
+     * otherwise return an empty one
+     */
+    auto it = m_edges.find(vertex);
+    return it != m_edges.cend() ? *it : error;
 }
 
 template<typename Vertex, typename Weight>
