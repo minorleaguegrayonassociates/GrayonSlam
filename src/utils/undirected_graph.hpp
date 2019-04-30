@@ -233,7 +233,7 @@ void undirected_graph<Vertex,Weight>::removeEdge(const CompleteEdge& edge)
 }
 
 template<typename Vertex, typename Weight>
-std::pair<typename undirected_graph<Vertex,Weight>::CompleteEdge,Weight> undirected_graph<Vertex,Weight>::depthFirstSearch(const Vertex& start) const
+std::pair<std::list<typename undirected_graph<Vertex,Weight>::CompleteEdge>,Weight> undirected_graph<Vertex,Weight>::depthFirstSearch(const Vertex& start) const
 {
     std::set<Vertex> visited;
     std::list<CompleteEdge> discoveryEdges;
@@ -466,7 +466,7 @@ Weight undirected_graph<Vertex, Weight>::dijkstraTraversal(const Vertex& vertex,
 template<typename Vertex, typename Weight>
 Weight undirected_graph<Vertex,Weight>::DFSHelper(const Vertex& vertex,
                                                   std::set<Vertex>& visited,
-                                                  std::vector<CompleteEdge>& discoveryEdges) const
+                                                  std::list<CompleteEdge>& discoveryEdges) const
 {
     //Visit current vertex
     visited.insert(vertex);
