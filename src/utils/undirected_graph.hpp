@@ -43,15 +43,14 @@ public:
     /* Searches */
     Weight depthFirstSearch(const Vertex& start,
                             std::set<Vertex>& visisted,
-                            std::vector<CompleteEdge>& discoveredEdges,
-                            std::vector<CompleteEdge>& backEdges) const;
+                            std::vector<CompleteEdge>& discoveryEdges) const;
 
-    Weight breadthFirstSearch(const Vertex& start, std::vector<CompleteEdge>& discoveredEdges) const;
+    Weight breadthFirstSearch(const Vertex& start, std::vector<CompleteEdge>& discoveryEdges) const;
 
     /* Shortest-path */
     Weight dijkstraTraversal(const Vertex& vertex,
                              std::set<Vertex>& visisted,
-                             std::vector<CompleteEdge>& discoveredEdges,
+                             std::vector<CompleteEdge>& discoveryEdges,
                              std::map<Vertex,std::pair<Weight,Vertex>>& vertexInfo) const;
 
     /* Minimum spanning tree */
@@ -60,10 +59,8 @@ public:
 private:
     /* Helpers */
     Weight DFSHelper(const Vertex& current,
-                     const Vertex& parent,
                      std::set<Vertex>& visisted,
-                     std::vector<CompleteEdge>& discoveredEdges,
-                     std::vector<CompleteEdge>& backEdges) const;
+                     std::vector<CompleteEdge>& discoveryEdges) const;
 
     std::map<Vertex,VertexEdges> m_edges;
 };
@@ -239,22 +236,20 @@ void undirected_graph<Vertex,Weight>::removeEdge(const CompleteEdge& edge)
 template<typename Vertex, typename Weight>
 Weight undirected_graph<Vertex,Weight>::depthFirstSearch(const Vertex& start,
                                                           std::set<Vertex>& visited,
-                                                          std::vector<CompleteEdge>& discoveredEdges,
-                                                          std::vector<CompleteEdge>& backEdges) const
+                                                          std::vector<CompleteEdge>& discoveryEdges) const
 {
     /* Clear containers */
     visited.clear();
-    discoveredEdges.clear();
-    backEdges.clear();
+    discoveryEdges.clear();
 
-    return DFSHelper(start, Vertex(), visited, discoveredEdges, backEdges);
+    return DFSHelper(start, visited, discoveryEdges);
 }
 
 template <typename Vertex, typename Weight>
-Weight undirected_graph<Vertex, Weight>::breadthFirstSearch(const Vertex& start, std::vector<CompleteEdge>& discoveredEdges) const
+Weight undirected_graph<Vertex, Weight>::breadthFirstSearch(const Vertex& start, std::vector<CompleteEdge>& discoveryEdges) const
 {
     //Clear containers
-    discoveredEdges.clear();
+    discoveryEdges.clear();
 
     Weight totalWeight = Weight();
 
@@ -291,14 +286,14 @@ Weight undirected_graph<Vertex, Weight>::breadthFirstSearch(const Vertex& start,
         const VertexEdges& edges = getVertexEdges(queue.front());
 
         /*
-         * For each edge in edges if the vertex hasn't been visited add to `discoveredEdges`, push
+         * For each edge in edges if the vertex hasn't been visited add to `discoveryEdges`, push
          * the vertex to `queue`, add weight to `totalWeight` and mark vertex as visited
          */
         for(const PartialEdge& edge : edges)
         {
             if(!visited[vertexToId[edge.first]])
             {
-                discoveredEdges.push_back(CompleteEdge(queue.front(), edge.first, edge.second));
+                discoveryEdges.push_back(CompleteEdge(queue.front(), edge.first, edge.second));
                 totalWeight += edge.second;
                 queue.push(edge.first);
                 visited[vertexToId[edge.first]] = true;
@@ -313,10 +308,10 @@ Weight undirected_graph<Vertex, Weight>::breadthFirstSearch(const Vertex& start,
 }
 
 template<typename Vertex, typename Weight>
-Weight undirected_graph<Vertex,Weight>::primsMST(const Vertex& start, std::vector<CompleteEdge>& discoveredEdges)
+Weight undirected_graph<Vertex,Weight>::primsMST(const Vertex& start, std::vector<CompleteEdge>& discoveryEdges)
 {
     //Clear containers
-    discoveredEdges.clear();
+    discoveryEdges.clear();
 
     Weight totalWeight = Weight();
 
@@ -349,8 +344,8 @@ Weight undirected_graph<Vertex,Weight>::primsMST(const Vertex& start, std::vecto
                 CompleteEdge currEdge(vertex, to, weight);
                 CompleteEdge reverseCurrEdge(to, vertex, weight);
 
-                bool currEdgeVisited = std::find(discoveredEdges.cbegin(), discoveredEdges.cend(), currEdge) != discoveredEdges.cend();
-                bool reverseCurrEdgeVisited = std::find(discoveredEdges.cbegin(), discoveredEdges.cend(), reverseCurrEdge) != discoveredEdges.cend();
+                bool currEdgeVisited = std::find(discoveryEdges.cbegin(), discoveryEdges.cend(), currEdge) != discoveryEdges.cend();
+                bool reverseCurrEdgeVisited = std::find(discoveryEdges.cbegin(), discoveryEdges.cend(), reverseCurrEdge) != discoveryEdges.cend();
 
                 /* Check if edge has been discovered */
                 if(!currEdgeVisited && !reverseCurrEdgeVisited)
@@ -379,7 +374,7 @@ Weight undirected_graph<Vertex,Weight>::primsMST(const Vertex& start, std::vecto
             }
         }
 
-        discoveredEdges.push_back(minEdge);
+        discoveryEdges.push_back(minEdge);
 
         //Mark the end vertex of the min edge as visisted
         visited.insert(endVertex);
@@ -394,7 +389,7 @@ Weight undirected_graph<Vertex,Weight>::primsMST(const Vertex& start, std::vecto
 template<typename Vertex, typename Weight>
 Weight undirected_graph<Vertex, Weight>::dijkstraTraversal(const Vertex& vertex,
                                                            std::set<Vertex>& visisted,
-                                                           std::vector<CompleteEdge>& discoveredEdges,
+                                                           std::vector<CompleteEdge>& discoveryEdges,
                                                            std::map<Vertex,std::pair<Weight,Vertex>>& vertexInfo) const
 {
     Weight total = Weight();
@@ -462,7 +457,7 @@ Weight undirected_graph<Vertex, Weight>::dijkstraTraversal(const Vertex& vertex,
                 vertexInfo[endVertex] = std::pair<Weight,Vertex>(totalEdgeWeight,startVertex);
                 visisted.insert(endVertex);
                 externalCloudNodes.push_back(endVertex);
-                discoveredEdges.push_back(CompleteEdge(startVertex, endVertex, edgeWeight));
+                discoveryEdges.push_back(CompleteEdge(startVertex, endVertex, edgeWeight));
                 total += edgeWeight;
             }
         }
@@ -472,10 +467,8 @@ Weight undirected_graph<Vertex, Weight>::dijkstraTraversal(const Vertex& vertex,
 
 template<typename Vertex, typename Weight>
 Weight undirected_graph<Vertex,Weight>::DFSHelper(const Vertex& vertex,
-                                                  const Vertex& parent,
                                                   std::set<Vertex>& visited,
-                                                  std::vector<CompleteEdge>& discoveredEdges,
-                                                  std::vector<CompleteEdge>& backEdges) const
+                                                  std::vector<CompleteEdge>& discoveryEdges) const
 {
     //Visit current vertex
     visited.insert(vertex);
@@ -494,25 +487,13 @@ Weight undirected_graph<Vertex,Weight>::DFSHelper(const Vertex& vertex,
         if(!endVertexVisited)
         {
             //Track the next edge
-            discoveredEdges.push_back(complEdge);
+            discoveryEdges.push_back(complEdge);
 
             //Add the next edge's weight
             totalWeight += edgeWeight;
 
             //Add the weight of future traversals to total
-            totalWeight += DFSHelper(endVertex, vertex, visited, discoveredEdges, backEdges);
-        }
-        else if(visited.size() > 1 && parent != endVertex &&
-                std::find(backEdges.cbegin(), backEdges.cend(), CompleteEdge(endVertex, vertex, edgeWeight)) == backEdges.cend())
-        {
-            /*
-             * If the next vertex was visited before,
-             * we have visited more than 1 vertex,
-             * the parent vertex isn't the next vertex,
-             * and the next edge isn't already in the backedge list,
-             * then the next edge is a backedge.
-             */
-            backEdges.push_back(complEdge);
+            totalWeight += DFSHelper(endVertex, visited, discoveryEdges);
         }
     }
 
