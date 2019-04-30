@@ -42,7 +42,7 @@ public:
     void removeEdge(const CompleteEdge&);
 
     /* Searches */
-    std::pair<CompleteEdge,Weight> depthFirstSearch(const Vertex& start) const;
+    std::pair<std::list<CompleteEdge>,Weight> depthFirstSearch(const Vertex& start) const;
 
     Weight breadthFirstSearch(const Vertex& start, std::vector<CompleteEdge>& discoveryEdges) const;
 
