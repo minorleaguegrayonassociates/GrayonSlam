@@ -244,10 +244,7 @@ Weight undirected_graph<Vertex,Weight>::depthFirstSearch(const Vertex& start,
     discoveredEdges.clear();
     backEdges.clear();
 
-    if(!vertexExists(start))
-        return Weight();
-    else
-        return DFSHelper(start, Vertex(), visited, discoveredEdges, backEdges);
+    return DFSHelper(start, Vertex(), visited, discoveredEdges, backEdges);
 }
 
 template<typename Vertex, typename Weight>
@@ -260,18 +257,18 @@ Weight undirected_graph<Vertex,Weight>::DFSHelper(const Vertex& vertex,
     //Visit current vertex
     visited.insert(vertex);
 
-    Weight totalWeight = Weight();
+    Weight totalWeight;
 
     /* Visit each edge of the current vertex */
     for(const PartialEdge& edge : getVertexEdges(vertex))
     {
-        Vertex endVertex = edge.first;
-        Weight edgeWeight = edge.second;
+        const Vertex& endVertex = edge.first;
+        const Weight& edgeWeight = edge.second;
         CompleteEdge complEdge(vertex, endVertex, edgeWeight);
 
-        bool vertexVisited = visited.count(endVertex) == 1;
+        bool endVertexVisited = visited.count(endVertex) == 1;
 
-        if(!vertexVisited)
+        if(!endVertexVisited)
         {
             //Track the next edge
             discoveredEdges.push_back(complEdge);
@@ -305,7 +302,7 @@ Weight undirected_graph<Vertex,Weight>::primsMST(const Vertex& start, std::vecto
     //Clear containers
     discoveredEdges.clear();
 
-    Weight totalWeight = Weight();
+    Weight totalWeight;
 
     /* Mark start as visited */
     std::set<Vertex> visited;
