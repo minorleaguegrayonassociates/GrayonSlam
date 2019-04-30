@@ -3,6 +3,7 @@
 #include <vector>
 #include <map>
 #include <set>
+#include <queue>
 
 template<typename Vertex, typename Weight>
 class undirected_graph
@@ -44,6 +45,8 @@ public:
                             std::set<Vertex>& visisted,
                             std::vector<CompleteEdge>& discoveredEdges,
                             std::vector<CompleteEdge>& backEdges) const;
+
+    Weight breadthFirstSearch(const Vertex& start, std::vector<CompleteEdge>& discoveredEdges) const;
 
     /* Shortest-path */
     Weight dijkstraTraversal(const Vertex& vertex,
@@ -247,50 +250,63 @@ Weight undirected_graph<Vertex,Weight>::depthFirstSearch(const Vertex& start,
     return DFSHelper(start, Vertex(), visited, discoveredEdges, backEdges);
 }
 
-template<typename Vertex, typename Weight>
-Weight undirected_graph<Vertex,Weight>::DFSHelper(const Vertex& vertex,
-                                                  const Vertex& parent,
-                                                  std::set<Vertex>& visited,
-                                                  std::vector<CompleteEdge>& discoveredEdges,
-                                                  std::vector<CompleteEdge>& backEdges) const
+template <typename Vertex, typename Weight>
+Weight undirected_graph<Vertex, Weight>::breadthFirstSearch(const Vertex& start, std::vector<CompleteEdge>& discoveredEdges) const
 {
-    //Visit current vertex
-    visited.insert(vertex);
+    //Clear containers
+    discoveredEdges.clear();
 
     Weight totalWeight = Weight();
 
-    /* Visit each edge of the current vertex */
-    for(const PartialEdge& edge : getVertexEdges(vertex))
+    //Check if vertex exists
+    if(!vertexExists(start))
+        return Weight();
+
+    std::map<Vertex,int> vertexToId;
+    std::queue<Vertex> queue;
+    bool visited[getVertices().size()];
+    int id = 0;
+    int idStart;
+
+    /* Go through all verticies and assign an id and bool value for visited */
+    for(const Vertex& vertex : getVertices())
     {
-        const Vertex& endVertex = edge.first;
-        const Weight& edgeWeight = edge.second;
-        CompleteEdge complEdge(vertex, endVertex, edgeWeight);
+        visited[id] = false;
+        vertexToId[vertex] = id;
 
-        bool endVertexVisited = visited.count(endVertex) == 1;
+        /* Set idStart to start id */
+        if(vertex == start)
+            idStart = id;
 
-        if(!endVertexVisited)
+        id++;
+    }
+
+    /* Pushing start to the queue and setting idStart to visited */
+    queue.push(start);
+    visited[idStart] = true;
+
+    while(!queue.empty())
+    {
+        //Get edges for the vertex at the front of the queue
+        const VertexEdges& edges = getVertexEdges(queue.front());
+
+        /*
+         * For each edge in edges if the vertex hasn't been visited add to `discoveredEdges`, push
+         * the vertex to `queue`, add weight to `totalWeight` and mark vertex as visited
+         */
+        for(const PartialEdge& edge : edges)
         {
-            //Track the next edge
-            discoveredEdges.push_back(complEdge);
-
-            //Add the next edge's weight
-            totalWeight += edgeWeight;
-
-            //Add the weight of future traversals to total
-            totalWeight += DFSHelper(endVertex, vertex, visited, discoveredEdges, backEdges);
+            if(!visited[vertexToId[edge.first]])
+            {
+                discoveredEdges.push_back(CompleteEdge(queue.front(), edge.first, edge.second));
+                totalWeight += edge.second;
+                queue.push(edge.first);
+                visited[vertexToId[edge.first]] = true;
+            }
         }
-        else if(visited.size() > 1 && parent != endVertex &&
-                std::find(backEdges.cbegin(), backEdges.cend(), CompleteEdge(endVertex, vertex, edgeWeight)) == backEdges.cend())
-        {
-            /*
-             * If the next vertex was visited before,
-             * we have visited more than 1 vertex,
-             * the parent vertex isn't the next vertex,
-             * and the next edge isn't already in the backedge list,
-             * then the next edge is a backedge.
-             */
-            backEdges.push_back(complEdge);
-        }
+
+        //Remove vertex from queue
+        queue.pop();
     }
 
     return totalWeight;
@@ -454,4 +470,51 @@ Weight undirected_graph<Vertex, Weight>::dijkstraTraversal(const Vertex& vertex,
     return total;
 }
 
+template<typename Vertex, typename Weight>
+Weight undirected_graph<Vertex,Weight>::DFSHelper(const Vertex& vertex,
+                                                  const Vertex& parent,
+                                                  std::set<Vertex>& visited,
+                                                  std::vector<CompleteEdge>& discoveredEdges,
+                                                  std::vector<CompleteEdge>& backEdges) const
+{
+    //Visit current vertex
+    visited.insert(vertex);
 
+    Weight totalWeight = Weight();
+
+    /* Visit each edge of the current vertex */
+    for(const PartialEdge& edge : getVertexEdges(vertex))
+    {
+        const Vertex& endVertex = edge.first;
+        const Weight& edgeWeight = edge.second;
+        CompleteEdge complEdge(vertex, endVertex, edgeWeight);
+
+        bool endVertexVisited = visited.count(endVertex) == 1;
+
+        if(!endVertexVisited)
+        {
+            //Track the next edge
+            discoveredEdges.push_back(complEdge);
+
+            //Add the next edge's weight
+            totalWeight += edgeWeight;
+
+            //Add the weight of future traversals to total
+            totalWeight += DFSHelper(endVertex, vertex, visited, discoveredEdges, backEdges);
+        }
+        else if(visited.size() > 1 && parent != endVertex &&
+                std::find(backEdges.cbegin(), backEdges.cend(), CompleteEdge(endVertex, vertex, edgeWeight)) == backEdges.cend())
+        {
+            /*
+             * If the next vertex was visited before,
+             * we have visited more than 1 vertex,
+             * the parent vertex isn't the next vertex,
+             * and the next edge isn't already in the backedge list,
+             * then the next edge is a backedge.
+             */
+            backEdges.push_back(complEdge);
+        }
+    }
+
+    return totalWeight;
+}
