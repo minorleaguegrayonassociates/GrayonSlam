@@ -43,8 +43,7 @@ public:
 
     /* Searches */
     std::pair<std::list<CompleteEdge>,Weight> depthFirstSearch(const Vertex& start) const;
-
-    Weight breadthFirstSearch(const Vertex& start, std::vector<CompleteEdge>& discoveryEdges) const;
+    std::pair<std::list<CompleteEdge>,Weight> breadthFirstSearch(const Vertex& start) const;
 
     /* Shortest-path */
     Weight dijkstraTraversal(const Vertex& vertex,
@@ -244,16 +243,15 @@ std::pair<std::list<typename undirected_graph<Vertex,Weight>::CompleteEdge>,Weig
 }
 
 template <typename Vertex, typename Weight>
-Weight undirected_graph<Vertex, Weight>::breadthFirstSearch(const Vertex& start, std::vector<CompleteEdge>& discoveryEdges) const
+std::pair<std::list<typename undirected_graph<Vertex,Weight>::CompleteEdge>,Weight> undirected_graph<Vertex, Weight>::breadthFirstSearch(const Vertex& start) const
 {
-    //Clear containers
-    discoveryEdges.clear();
+    std::list<CompleteEdge> discoveryEdges;
 
     Weight totalWeight = Weight();
 
-    //Check if vertex exists
+    /* Check if vertex exists */
     if(!vertexExists(start))
-        return Weight();
+        return std::make_pair(discoveryEdges, Weight());
 
     std::map<Vertex,int> vertexToId;
     std::queue<Vertex> queue;
@@ -302,7 +300,7 @@ Weight undirected_graph<Vertex, Weight>::breadthFirstSearch(const Vertex& start,
         queue.pop();
     }
 
-    return totalWeight;
+    return std::make_pair(discoveryEdges, totalWeight);
 }
 
 template<typename Vertex, typename Weight>
