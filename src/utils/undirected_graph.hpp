@@ -152,7 +152,7 @@ const typename undirected_graph<Vertex,Weight>::VertexEdges& undirected_graph<Ve
      * otherwise return an empty one
      */
     auto it = m_edges.find(vertex);
-    return it != m_edges.cend() ? *it : error;
+    return it != m_edges.cend() ? it->second : error;
 }
 
 template<typename Vertex, typename Weight>
