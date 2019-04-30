@@ -257,7 +257,7 @@ Weight undirected_graph<Vertex,Weight>::DFSHelper(const Vertex& vertex,
     //Visit current vertex
     visited.insert(vertex);
 
-    Weight totalWeight;
+    Weight totalWeight = Weight();
 
     /* Visit each edge of the current vertex */
     for(const PartialEdge& edge : getVertexEdges(vertex))
@@ -302,7 +302,7 @@ Weight undirected_graph<Vertex,Weight>::primsMST(const Vertex& start, std::vecto
     //Clear containers
     discoveredEdges.clear();
 
-    Weight totalWeight;
+    Weight totalWeight = Weight();
 
     /* Mark start as visited */
     std::set<Vertex> visited;
