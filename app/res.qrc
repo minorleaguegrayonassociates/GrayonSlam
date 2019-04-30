@@ -22,6 +22,5 @@
         <file>res/receipt_top.png</file>
         <file>res/receipt_bottom.png</file>
         <file>res/IBMPlexMono-Regular.ttf</file>
-        <file>res/cart.png</file>
     </qresource>
 </RCC>

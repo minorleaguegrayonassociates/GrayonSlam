@@ -48,6 +48,22 @@ QWidget#teamHeader
 {
 background-color: #303030;
 color:white;
+}
+
+QWidget#background {
+background-color: white;
+border: 1px solid black;
+}
+
+QLabel#distanceLabel {
+font-size: 24px;
+font: bold;
+color:black;
+}
+
+QLabel#distance {
+font-size: 24px;
+color:black;
 }</string>
   </property>
   <widget class="QStackedWidget" name="planVacationStack">
@@ -100,7 +116,7 @@ color:white;
      </property>
     </widget>
    </widget>
-   <widget class="QWidget" name="tripPreview"/>
+   <widget class="QWidget" name="tripMap"/>
    <widget class="QWidget" name="activeVacation"/>
    <widget class="QWidget" name="vacationReceipt"/>
    <widget class="QWidget" name="vacationDistance">
@@ -118,6 +134,69 @@ color:white;
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+    </widget>
+    <widget class="QWidget" name="background" native="true">
+     <property name="geometry">
+      <rect>
+       <x>49</x>
+       <y>140</y>
+       <width>521</width>
+       <height>161</height>
+      </rect>
+     </property>
+     <widget class="QLabel" name="distance">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>40</y>
+        <width>220</width>
+        <height>80</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="text">
+       <string>miles</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="distanceLabel">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>40</y>
+        <width>220</width>
+        <height>80</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="text">
+       <string>Total Distance:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QPushButton" name="ContinueToNext">
+     <property name="geometry">
+      <rect>
+       <x>250</x>
+       <y>410</y>
+       <width>115</width>
+       <height>26</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color:black;
+background:#D5D5D5;
+border-radius:5px;</string>
+     </property>
+     <property name="text">
+      <string>Continue</string>
      </property>
     </widget>
    </widget>

@@ -4,6 +4,7 @@
 #include "src/widgets/souvenirlist.hpp"
 #include "src/views/souvenirshop.hpp"
 #include "src/views/receiptview.hpp"
+#include "src/views/mapview.hpp"
 
 namespace Ui {
 class PlanVacationView;
@@ -19,25 +20,29 @@ public:
     /* Destructor */
     ~PlanVacationView() override;
 
-    /* Resets */
+    /* Reset */
     void resetView() override;
-    void resetUi() override;
 
 public slots:
     /* Setter */
     void setReceipt(Qtys&);
     void goToNext();
     void activeTrip();
+    void goToShop();
+
+     /* Reset */
+    void resetUi() override;
 
 private:
     Ui::PlanVacationView *m_ui;
     NavBar* m_navbar;
-    std::vector<View*> m_vacationViews;
     SouvenirShop* m_souvenirShop;
     ReceiptView* m_receiptViews;
+    MapView*    m_mapView;
     std::list<int> m_tripList;
     std::vector<Qtys> m_receiptVector;
     int m_previousStadiumId;
     int m_currentStadiumId;
+    bool m_printedGrandTotal;
 };
 

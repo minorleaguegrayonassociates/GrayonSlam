@@ -30,7 +30,7 @@ void AirplanePainter::setRotation(int startingX, int startingY, int endingX, int
 {
     int xComponent = endingX - startingX;
     int yComponent = endingY - startingY;
-    double angle = atan2(yComponent,xComponent) * (180.0 / M_PI);
+    double angle = atan((1.0*yComponent)/xComponent) * (180.0/ M_PI);
     if(xComponent < 0) { angle += 180.0; };
     angleValue = angle;
     repaint();

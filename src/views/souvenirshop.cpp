@@ -20,7 +20,16 @@ SouvenirShop::SouvenirShop(QWidget* parent)
     m_vacationSouvenirCart->setFlow(QListView::TopToBottom);
     m_vacationSouvenirCart->showQty(true);
 
-    m_ui->checkout->setText("\uf07a");
+    QFont cartFont;
+    cartFont.setFamily("Font Awesome 5 Free");
+    cartFont.setWeight(50);
+    cartFont.setPointSize(38);
+    m_ui->cartWidget->setFont(cartFont);
+    m_ui->cartWidget->setText("\uf07a");
+    m_ui->cartWidget->setAlignment(Qt::AlignCenter);
+    m_ui->skipCheckout->setText("Skip\nCheckout");
+
+//    connect(m_vacationSouvenirCart,&SouvenirList::)
 }
 
 /* Destructor */
@@ -163,12 +172,12 @@ QMessageBox::StandardButton SouvenirShop::promptToContinue()
  * if the cart is empty or it prompt the user if they're sure
  * they'd like to move on and clears the cart before moving on
  */
-void SouvenirShop::on_next_clicked()
+void SouvenirShop::on_skipCheckout_clicked()
 {
     // Proceed to the next stadium if the cart is empty
     if(m_vacationSouvenirCart->count() == 0)
     {
-        emit goToNext();
+        emit skipCheckout();
     }
     else if (m_vacationSouvenirCart->count() > 0)
     {
@@ -177,7 +186,7 @@ void SouvenirShop::on_next_clicked()
         {
             m_vacationSouvenirCart->resetQty();
             m_vacationSouvenirCart->clear();
-            emit goToNext();
+            emit skipCheckout();
         }
     }
 }

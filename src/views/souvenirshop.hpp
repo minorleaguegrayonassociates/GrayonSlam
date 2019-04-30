@@ -28,10 +28,10 @@ public slots:
 
 signals:
     void goToReceipt(Qtys&);
-    void goToNext();
+    void skipCheckout();
 
 private slots:
-    void on_next_clicked();
+    void on_skipCheckout_clicked();
     void on_checkout_clicked();
     void on_removeItem_clicked();
     void on_addToCart_clicked();
