@@ -52,7 +52,7 @@ public:
                              std::map<Vertex,std::pair<Weight,Vertex>>& vertexInfo) const;
 
     /* Minimum spanning tree */
-    Weight primsMST(const Vertex& start, std::vector<CompleteEdge>& discoveryEdges);
+    std::pair<std::list<CompleteEdge>,Weight> primsMST(const Vertex& start) const;
 
 private:
     /* Helpers */
@@ -236,17 +236,16 @@ std::pair<std::list<typename undirected_graph<Vertex,Weight>::CompleteEdge>,Weig
 {
     std::set<Vertex> visited;
     std::list<CompleteEdge> discoveryEdges;
-
     Weight totalWeight = DFSHelper(start, visited, discoveryEdges);
 
     return std::make_pair(discoveryEdges, totalWeight);
 }
 
-template <typename Vertex, typename Weight>
+template<typename Vertex, typename Weight>
 std::pair<std::list<typename undirected_graph<Vertex,Weight>::CompleteEdge>,Weight> undirected_graph<Vertex, Weight>::breadthFirstSearch(const Vertex& start) const
 {
+    /* Returned variables */
     std::list<CompleteEdge> discoveryEdges;
-
     Weight totalWeight = Weight();
 
     /* Check if vertex exists */
@@ -304,11 +303,10 @@ std::pair<std::list<typename undirected_graph<Vertex,Weight>::CompleteEdge>,Weig
 }
 
 template<typename Vertex, typename Weight>
-Weight undirected_graph<Vertex,Weight>::primsMST(const Vertex& start, std::vector<CompleteEdge>& discoveryEdges)
+std::pair<std::list<typename undirected_graph<Vertex,Weight>::CompleteEdge>,Weight> undirected_graph<Vertex,Weight>::primsMST(const Vertex& start) const
 {
-    //Clear containers
-    discoveryEdges.clear();
-
+    /* Returned variables */
+    std::list<CompleteEdge> discoveryEdges;
     Weight totalWeight = Weight();
 
     /* Mark start as visited */
@@ -379,7 +377,7 @@ Weight undirected_graph<Vertex,Weight>::primsMST(const Vertex& start, std::vecto
         totalWeight += minEdgeWeight;
     }
 
-    return totalWeight;
+    return std::make_pair(discoveryEdges, totalWeight);
 }
 
 template<typename Vertex, typename Weight>
