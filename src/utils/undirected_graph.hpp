@@ -1,6 +1,7 @@
 #pragma once
 #include <algorithm>
 #include <vector>
+#include <list>
 #include <map>
 #include <set>
 #include <queue>
@@ -41,9 +42,7 @@ public:
     void removeEdge(const CompleteEdge&);
 
     /* Searches */
-    Weight depthFirstSearch(const Vertex& start,
-                            std::set<Vertex>& visisted,
-                            std::vector<CompleteEdge>& discoveryEdges) const;
+    std::pair<CompleteEdge,Weight> depthFirstSearch(const Vertex& start) const;
 
     Weight breadthFirstSearch(const Vertex& start, std::vector<CompleteEdge>& discoveryEdges) const;
 
@@ -60,7 +59,7 @@ private:
     /* Helpers */
     Weight DFSHelper(const Vertex& current,
                      std::set<Vertex>& visisted,
-                     std::vector<CompleteEdge>& discoveryEdges) const;
+                     std::list<CompleteEdge>& discoveryEdges) const;
 
     std::map<Vertex,VertexEdges> m_edges;
 };
@@ -234,15 +233,14 @@ void undirected_graph<Vertex,Weight>::removeEdge(const CompleteEdge& edge)
 }
 
 template<typename Vertex, typename Weight>
-Weight undirected_graph<Vertex,Weight>::depthFirstSearch(const Vertex& start,
-                                                          std::set<Vertex>& visited,
-                                                          std::vector<CompleteEdge>& discoveryEdges) const
+std::pair<typename undirected_graph<Vertex,Weight>::CompleteEdge,Weight> undirected_graph<Vertex,Weight>::depthFirstSearch(const Vertex& start) const
 {
-    /* Clear containers */
-    visited.clear();
-    discoveryEdges.clear();
+    std::set<Vertex> visited;
+    std::list<CompleteEdge> discoveryEdges;
 
-    return DFSHelper(start, visited, discoveryEdges);
+    Weight totalWeight = DFSHelper(start, visited, discoveryEdges);
+
+    return std::make_pair(discoveryEdges, totalWeight);
 }
 
 template <typename Vertex, typename Weight>
