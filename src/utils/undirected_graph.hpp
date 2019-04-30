@@ -28,7 +28,7 @@ public:
     std::set<Vertex> getVertices() const;
     const std::map<Vertex,VertexEdges>& getEdges() const;
     const VertexEdges& getVertexEdges(const Vertex&) const;
-    
+
     /* Adders */
     void addVertex(const Vertex&);
     void addEdge(const Vertex& from, const Vertex& to, const Weight&);
@@ -252,7 +252,7 @@ Weight undirected_graph<Vertex,Weight>::DFSHelper(const Vertex& vertex,
         Vertex endVertex = edge.first;
         Weight edgeWeight = edge.second;
         CompleteEdge complEdge(vertex, endVertex, edgeWeight);
-        
+
         bool vertexVisited = visited.count(endVertex) == 1;
 
         if(!vertexVisited)
@@ -366,75 +366,75 @@ template<typename Vertex, typename Weight>
 Weight undirected_graph<Vertex, Weight>::dijkstraTraversal(const Vertex& vertex,
                                                            std::set<Vertex>& visisted,
                                                            std::vector<CompleteEdge>& discoveredEdges,
-														   std::map<Vertex,std::pair<Weight,Vertex>>& vertexInfo) const
+                                                           std::map<Vertex,std::pair<Weight,Vertex>>& vertexInfo) const
 {
-	Weight total = Weight();
-	using VertexInfo = std::pair<Weight,Vertex>;
+    Weight total = Weight();
+    using VertexInfo = std::pair<Weight,Vertex>;
     if(!vertexExists(vertex))
         return total;
     else
     {
-    	//add starting vertex to the cloud and visited verticies
-    	std::vector<Vertex> externalCloudNodes;
-    	vertexInfo[vertex] = std::pair<Weight,Vertex>(Weight(),vertex);
-    	externalCloudNodes.push_back(vertex);
-    	visisted.insert(vertex);
-    	//actual dijkstra's starts here
+        //add starting vertex to the cloud and visited verticies
+        std::vector<Vertex> externalCloudNodes;
+        vertexInfo[vertex] = std::pair<Weight,Vertex>(Weight(),vertex);
+        externalCloudNodes.push_back(vertex);
+        visisted.insert(vertex);
+        //actual dijkstra's starts here
         while(externalCloudNodes.size() != 0)
         {
-        	//make first element in externalCloudNode the starting node
-        	Vertex startVertex = externalCloudNodes[0];
-        	Vertex endVertex = startVertex;
-        	Weight edgeWeight, totalEdgeWeight;
-        	//collect in first non visited edge from external node cloud
-        	for(const PartialEdge& edge: getVertexEdges(externalCloudNodes[0]))
-        	{
-        		//if not visited add this to current vertex to denote the starting edge
-        		if(visisted.count(edge.first) != 1)
-        		{
-        			endVertex = edge.first;
-        			edgeWeight = edge.second;
-        			totalEdgeWeight = (*vertexInfo.find(externalCloudNodes[0])).second.first +edge.second;
-        			break;
-        		}
-        	}
-        	//loop through all external cloud nodes and find edge of least weight and of a non visited node
-        	for(typename std::vector<Vertex>::iterator it = externalCloudNodes.begin(); it != externalCloudNodes.end(); ++it)
-        	{
-        		int externalNonvisitedChildren = 0; //used to tell if node becomes internal
-        		//loop through all edges of an external node to find the least costly edge
-        		for(const PartialEdge& edge : getVertexEdges(*it))
-        		{
-        			//get the current cost to travel to that node from the current external node
-        			typename std::map<Vertex,VertexInfo>::iterator currentCost = vertexInfo.find(*it);
-        			bool  needToVisit = visisted.count(edge.first) != 1;
-        			if(needToVisit) ++externalNonvisitedChildren; //if has unvisited connections increment
-        			//if connected node is unvisited and has the cheapest cost set it to currently cheapest edge
-        		    if(needToVisit &&  (currentCost != vertexInfo.end() && (*currentCost).second.first + edge.second < totalEdgeWeight))
-        		    {
-        		        startVertex = *it;
-        		        endVertex = edge.first;
-        		        edgeWeight = edge.second;
-        		        totalEdgeWeight = (*currentCost).second.first + edge.second;
-        		    }
-        		}
-        		//make node internal if it has no external connections
-        		if(externalNonvisitedChildren == 0)
-        		{
-        			typename std::vector<Vertex>::iterator tmp = std::find(externalCloudNodes.begin(), externalCloudNodes.end(),*it);
-        			int dist = tmp - externalCloudNodes.begin();
-        			externalCloudNodes.erase(tmp);
-        			it = externalCloudNodes.begin() +(dist-1);
-        		}
-        	}
-        	//if found a suitable edge, add it to the cloud, discovered edges, and add the weight of the edge to running total
+            //make first element in externalCloudNode the starting node
+            Vertex startVertex = externalCloudNodes[0];
+            Vertex endVertex = startVertex;
+            Weight edgeWeight, totalEdgeWeight;
+            //collect in first non visited edge from external node cloud
+            for(const PartialEdge& edge: getVertexEdges(externalCloudNodes[0]))
+            {
+                //if not visited add this to current vertex to denote the starting edge
+                if(visisted.count(edge.first) != 1)
+                {
+                    endVertex = edge.first;
+                    edgeWeight = edge.second;
+                    totalEdgeWeight = (*vertexInfo.find(externalCloudNodes[0])).second.first +edge.second;
+                    break;
+                }
+            }
+            //loop through all external cloud nodes and find edge of least weight and of a non visited node
+            for(typename std::vector<Vertex>::iterator it = externalCloudNodes.begin(); it != externalCloudNodes.end(); ++it)
+            {
+                int externalNonvisitedChildren = 0; //used to tell if node becomes internal
+                //loop through all edges of an external node to find the least costly edge
+                for(const PartialEdge& edge : getVertexEdges(*it))
+                {
+                    //get the current cost to travel to that node from the current external node
+                    typename std::map<Vertex,VertexInfo>::iterator currentCost = vertexInfo.find(*it);
+                    bool  needToVisit = visisted.count(edge.first) != 1;
+                    if(needToVisit) ++externalNonvisitedChildren; //if has unvisited connections increment
+                    //if connected node is unvisited and has the cheapest cost set it to currently cheapest edge
+                    if(needToVisit &&  (currentCost != vertexInfo.end() && (*currentCost).second.first + edge.second < totalEdgeWeight))
+                    {
+                        startVertex = *it;
+                        endVertex = edge.first;
+                        edgeWeight = edge.second;
+                        totalEdgeWeight = (*currentCost).second.first + edge.second;
+                    }
+                }
+                //make node internal if it has no external connections
+                if(externalNonvisitedChildren == 0)
+                {
+                    typename std::vector<Vertex>::iterator tmp = std::find(externalCloudNodes.begin(), externalCloudNodes.end(),*it);
+                    int dist = tmp - externalCloudNodes.begin();
+                    externalCloudNodes.erase(tmp);
+                    it = externalCloudNodes.begin() +(dist-1);
+                }
+            }
+            //if found a suitable edge, add it to the cloud, discovered edges, and add the weight of the edge to running total
             if(endVertex != startVertex)
             {
-            	vertexInfo[endVertex] = std::pair<Weight,Vertex>(totalEdgeWeight,startVertex);
-        	    visisted.insert(endVertex);
-        	    externalCloudNodes.push_back(endVertex);
-        	    discoveredEdges.push_back(CompleteEdge(startVertex, endVertex, edgeWeight));
-        	    total += edgeWeight;
+                vertexInfo[endVertex] = std::pair<Weight,Vertex>(totalEdgeWeight,startVertex);
+                visisted.insert(endVertex);
+                externalCloudNodes.push_back(endVertex);
+                discoveredEdges.push_back(CompleteEdge(startVertex, endVertex, edgeWeight));
+                total += edgeWeight;
             }
         }
     }
