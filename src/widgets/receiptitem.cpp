@@ -13,10 +13,10 @@
  * @param thisTemplate - Receipt State indicates which template is used ReceiptItemStates::body
  */
 ReceiptItem::ReceiptItem(QWidget* parent, const QString& total_restName, const ReceiptItemStates& thisTemplate)
-    : QWidget(parent), m_ui(new Ui::ReceiptItem)
+    : QWidget(parent), m_ui(new Ui::ReceiptItem), m_defaultFontSyle("IBM Plex Mono")
 {
     m_ui->setupUi(this);
-    m_defaultFontSyle.setFamily("IBM Plex Mono");
+//    m_defaultFontSyle.setFamily("IBM Plex Mono");
 
     switch(thisTemplate)
     {
@@ -100,7 +100,7 @@ ReceiptItem::ReceiptItem(QWidget* parent, const int& qty, const std::string& ite
     m_ui->setupUi(this);
 
     // Set font to IBM Plex Mono
-    m_defaultFontSyle.setFamily("IBM Plex Mono");
+//    m_defaultFontSyle.setFamily("IBM Plex Mono");
 
     // Flip stack widget to "body" page
     m_ui->receiptStack->setCurrentWidget(m_ui->body);
@@ -111,16 +111,9 @@ ReceiptItem::ReceiptItem(QWidget* parent, const int& qty, const std::string& ite
     m_ui->price->setText("$"+QString::number(price,'f',2));
 
     /* Set font */
-    m_ui->qty_2->setFont(m_defaultFontSyle);
-    m_ui->item_2->setFont(m_defaultFontSyle);
-    m_ui->price_2->setFont(m_defaultFontSyle);
-
-    // Sales tax doesn't need qty, if 0 hide qty
-    if(qty == 0)
-    {
-        m_ui->qty->setHidden(true);
-        m_ui->item->setAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
-    }
+    m_ui->qty->setFont(m_defaultFontSyle);
+    m_ui->item->setFont(m_defaultFontSyle);
+    m_ui->price->setFont(m_defaultFontSyle);
 }
 
 /* Destructor */

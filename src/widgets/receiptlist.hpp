@@ -11,7 +11,7 @@ public:
     /* Setters */
     double makeReciept(Qtys& souvenirData, bool);
     void grandTotal(std::vector<Qtys>&, double&);
-    QListWidgetItem* itemWidget(ReceiptList*);
+    QListWidgetItem* itemWidget();
 
 private:
     static const QSize receiptSizeHint;
