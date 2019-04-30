@@ -72,7 +72,8 @@ HEADERS += \
     src/views/adminview.hpp \
     src/widgets/mappainter.hpp \
     src/widgets/airplanepainter.hpp \
-    src/widgets/beacon.hpp
+    src/widgets/beacon.hpp \
+    src/utils/undirected_graph.hpp
 
 FORMS += \
     src/views/dashboardview.ui \
