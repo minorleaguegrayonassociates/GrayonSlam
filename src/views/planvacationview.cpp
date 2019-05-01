@@ -10,9 +10,10 @@ PlanVacationView::PlanVacationView(QWidget *parent, NavBar* bar)
 {
     m_ui->setupUi(this);
 
-    /* Initialize stadium list */
+    /* Initialize stadium list and the stadium list planner - clear the planner before starting */
     m_stadiumList = new StadiumList(m_ui->stadiumListWidget);
     m_stadiumListPlanner = new StadiumList(m_ui->stadiumListPlannerWidget);
+    m_stadiumListPlanner->clear();
 
     /* Initialize views */
     m_souvenirShop = new SouvenirShop(m_ui->activeVacation);
@@ -42,8 +43,9 @@ PlanVacationView::PlanVacationView(QWidget *parent, NavBar* bar)
     connect(m_receiptViews,&ReceiptView::goToNext,this,&PlanVacationView::goToNext);
     connect(m_mapView,&MapView::goToShop,this,&PlanVacationView::goToShop);
     connect(m_ui->ContinueToNext,&QAbstractButton::clicked,this,&PlanVacationView::resetUi);
-    activeTrip();
     connect(m_stadiumList,&StadiumList::stadiumClicked,this,&PlanVacationView::addToTrip);
+    connect(m_stadiumListPlanner,&StadiumList::stadiumClicked,this,&PlanVacationView::removeFromTrip);
+    activeTrip();
 }
 
 /* Destructor */
@@ -183,17 +185,44 @@ void PlanVacationView::addToTrip(int id)
 {
     Stadium tempStadium  = Database::findStadiumById(id);
     Team tempTeam = Database::findTeamById(tempStadium.getTeamId());
-    m_planList.push_back(std::pair<Team,Stadium>(tempTeam,tempStadium));
 
+    /*  */
     auto checkIfDuplicate = [&tempStadium](const std::pair<Team,Stadium> a)
     {
         return a.second.getId() == tempStadium.getId();
     };
-
     auto notADuplicate = find_if(m_planList.begin(),m_planList.end(),checkIfDuplicate) == m_planList.end();
 
-    qDebug() << notADuplicate;
-
+    /* If stadiumId isn't already in the list, add it to the vector and repopulate `m_stadiumListPlanner` with `m_planList` */
     if(notADuplicate)
+    {
+        m_planList.push_back(std::pair<Team,Stadium>(tempTeam,tempStadium));
         m_stadiumListPlanner->populateWidget(m_planList);
+    }
+}
+
+void PlanVacationView::removeFromTrip(int id)
+{
+    Stadium tempStadium  = Database::findStadiumById(id);
+    Team tempTeam = Database::findTeamById(tempStadium.getTeamId());
+
+    /* Lamda to find matching pair of stadium id's, use std::find_if to use `checkIfExists` */
+    auto checkIfExists = [&tempStadium](const std::pair<Team,Stadium> a)
+    {
+        return a.second.getId() == tempStadium.getId();
+    };
+    auto exists = std::find_if(m_planList.begin(),m_planList.end(),checkIfExists);
+
+    // Check if iterator points to the end of the vector
+    if(exists != m_planList.end())
+    {
+        /* If the id exsists remove from vector and if the vector is now empty clear `stadiumListPlanner`,
+         *  else reload list with remaining items in the vector
+         */
+        m_planList.erase(exists);
+        if(m_planList.empty())
+            m_stadiumListPlanner->clear();
+        else
+            m_stadiumListPlanner->populateWidget(m_planList);
+    }
 }

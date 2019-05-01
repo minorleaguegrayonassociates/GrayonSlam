@@ -40,6 +40,7 @@ public slots:
 private slots:
     void on_Enter_clicked();
     void addToTrip(int);
+    void removeFromTrip(int);
 
 private:
     Ui::PlanVacationView *m_ui;
