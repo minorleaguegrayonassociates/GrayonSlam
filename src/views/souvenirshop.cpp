@@ -166,7 +166,7 @@ void SouvenirShop::updateQty()
 QMessageBox::StandardButton SouvenirShop::promptToContinue()
 {
     QMessageBox::StandardButton reply;
-    reply = QMessageBox::question(this,"Warning",
+    reply = QMessageBox::question(nullptr,"Warning",
                                   "You have items in your cart, are you sure you want to proceed to the next location?",
                                   QMessageBox::Yes|QMessageBox::No);
     return reply;

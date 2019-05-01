@@ -84,7 +84,7 @@ border: 1px solid black;
     <string notr="true"/>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="chooseType">
     <property name="styleSheet">
@@ -341,7 +341,7 @@ border: 1px solid black;
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>520</width>
+       <width>711</width>
        <height>50</height>
       </rect>
      </property>
@@ -356,6 +356,68 @@ border: 1px solid black;
      </property>
      <property name="text">
       <string>Plan Vacation View</string>
+     </property>
+     <property name="scaledContents">
+      <bool>false</bool>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QWidget" name="stadiumListWidget" native="true">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>50</y>
+       <width>710</width>
+       <height>271</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QTreeWidget
+{
+	color: white;
+	background-color: #303030;
+}</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="stadiumListPlannerWidget" native="true">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>370</y>
+       <width>710</width>
+       <height>231</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QTreeWidget
+{
+	color: white;
+	background-color: #303030;
+}</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="teamHeader_2">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>320</y>
+       <width>711</width>
+       <height>50</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Microsoft Sans Serif</family>
+       <pointsize>18</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="text">
+      <string>Selected Stadiums</string>
      </property>
      <property name="scaledContents">
       <bool>false</bool>

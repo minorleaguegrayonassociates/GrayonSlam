@@ -5,6 +5,7 @@
 #include "src/views/souvenirshop.hpp"
 #include "src/views/receiptview.hpp"
 #include "src/views/mapview.hpp"
+#include "src/widgets/stadiumlist.hpp"
 
 namespace Ui {
 class PlanVacationView;
@@ -36,9 +37,15 @@ public slots:
      /* Reset */
     void resetUi() override;
 
+private slots:
+    void on_Enter_clicked();
+    void addToTrip(int);
+
 private:
     Ui::PlanVacationView *m_ui;
     NavBar* m_navbar;
+    StadiumList* m_stadiumList;
+    StadiumList* m_stadiumListPlanner;
     SouvenirShop* m_souvenirShop;
     ReceiptView* m_receiptViews;
     MapView*    m_mapView;
@@ -47,5 +54,7 @@ private:
     int m_previousStadiumId;
     int m_currentStadiumId;
     bool m_printedGrandTotal;
+    PlanType m_vacationType;
+    std::vector<std::pair<Team,Stadium>> m_planList;
 };
 

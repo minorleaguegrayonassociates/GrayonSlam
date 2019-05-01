@@ -10,6 +10,11 @@ PlanVacationView::PlanVacationView(QWidget *parent, NavBar* bar)
 {
     m_ui->setupUi(this);
 
+    /* Initialize stadium list */
+    m_stadiumList = new StadiumList(m_ui->stadiumListWidget);
+    m_stadiumListPlanner = new StadiumList(m_ui->stadiumListPlannerWidget);
+
+    /* Initialize views */
     m_souvenirShop = new SouvenirShop(m_ui->activeVacation);
     m_receiptViews = new ReceiptView(m_ui->vacationReceipt);
     m_mapView = new MapView(m_ui->tripMap);
@@ -31,18 +36,21 @@ PlanVacationView::PlanVacationView(QWidget *parent, NavBar* bar)
     m_ui->vacationType->addItem(tr("Depth First Search"), PlanVacationView::DFS);
     m_ui->vacationType->addItem(tr("Breadth First Search"), PlanVacationView::BFS);
 
-    connect(m_souvenirShop,SIGNAL(goToReceipt(Qtys&)), this, SLOT(setReceipt(Qtys&)));
+    /* Connecting signals to slots */
+    connect(m_souvenirShop,&SouvenirShop::goToReceipt, this,&PlanVacationView::setReceipt);
     connect(m_souvenirShop,&SouvenirShop::skipCheckout,this,&PlanVacationView::goToNext);
     connect(m_receiptViews,&ReceiptView::goToNext,this,&PlanVacationView::goToNext);
     connect(m_mapView,&MapView::goToShop,this,&PlanVacationView::goToShop);
     connect(m_ui->ContinueToNext,&QAbstractButton::clicked,this,&PlanVacationView::resetUi);
     activeTrip();
+    connect(m_stadiumList,&StadiumList::stadiumClicked,this,&PlanVacationView::addToTrip);
 }
 
 /* Destructor */
 PlanVacationView::~PlanVacationView()
 {
     delete m_ui;
+    delete m_stadiumList;
     delete m_souvenirShop;
     delete m_receiptViews;
     delete m_mapView;
@@ -51,7 +59,7 @@ PlanVacationView::~PlanVacationView()
 /* Resets */
 void PlanVacationView::resetView()
 {
-    m_ui->planVacationStack->setCurrentWidget(m_ui->activeVacation);
+    m_ui->planVacationStack->setCurrentWidget(m_ui->chooseType);
 }
 
 void PlanVacationView::resetUi()
@@ -96,6 +104,11 @@ void PlanVacationView::goToNext()
     PlanVacationView::activeTrip();
 }
 
+/**
+ * This function takes care of loading in the next stadiumId from `m_tripList`
+ * if `m_tripList`is empty then it will print out the grandTotal Receipt if anything
+ * was purchased on the trip. Otherwise it will
+ */
 void PlanVacationView::activeTrip()
 {
     /* If the `tripList` isn't empty go to the next stadium, otherwise, if the receiptVector isn't empty
@@ -108,7 +121,9 @@ void PlanVacationView::activeTrip()
         m_currentStadiumId = m_tripList.front();
         m_souvenirShop->setCurrentStadiumId(m_currentStadiumId);
 
-        /* If the value of `m_previousStadiumId` has been set then turn stack to `tripMap` and set animation */
+        /* If the value of `m_previousStadiumId` has been set then turn stack to `tripMap` and set animation
+         * Won't animate when `m_previousStadiumId` hasn't been set (i.e. the first stadium)
+         */
         if(m_previousStadiumId != -1)
         {
             m_ui->planVacationStack->setCurrentWidget(m_ui->tripMap);
@@ -117,6 +132,10 @@ void PlanVacationView::activeTrip()
     }
     else if(!m_receiptVector.empty())
     {
+        /* Will keep track if a grandTotal has been printed to not print total distance afterwards,
+         * flips `planVacationStack` page to `vacationReceipt` and prints `grandTotal` then
+         * clears `m_receiptVector`
+         */
         m_printedGrandTotal = true;
         m_ui->planVacationStack->setCurrentWidget(m_ui->vacationReceipt);
         m_receiptViews->grandTotal(m_receiptVector, 0.0);
@@ -124,11 +143,15 @@ void PlanVacationView::activeTrip()
     }
     else if(!m_printedGrandTotal)
     {
+        /* If nothing was purchased on the trip this will execute, `planVacationStack` will be set to
+         * `vacationDistance` and set's the QLabel `distance` to the miles traveled
+         */
         m_ui->planVacationStack->setCurrentWidget(m_ui->vacationDistance);
         m_ui->distance->setText(QString::fromStdString("0.0 miles"));
     }
     else
     {
+        // If the trip is done reset
         PlanVacationView::resetUi();
     }
 }
@@ -142,4 +165,35 @@ void PlanVacationView::goToShop()
 {
     // Switch `planVacationStack` page to `activeVacation`
     m_ui->planVacationStack->setCurrentWidget(m_ui->activeVacation);
+}
+
+/**
+ * Set the vacationType and switch `planVacationStack` page
+ * to `planVacation` if selection isn't equal to `None`
+ */
+void PlanVacationView::on_Enter_clicked()
+{
+    /* Set the vacationType and switch `planVacationStack` page to `planVacation` if selection isn't equal to `None` */
+    m_vacationType = static_cast<PlanType>(m_ui->vacationType->currentData().toInt());
+    if(m_vacationType != PlanType::None)
+        m_ui->planVacationStack->setCurrentWidget(m_ui->planVacation);
+}
+
+void PlanVacationView::addToTrip(int id)
+{
+    Stadium tempStadium  = Database::findStadiumById(id);
+    Team tempTeam = Database::findTeamById(tempStadium.getTeamId());
+    m_planList.push_back(std::pair<Team,Stadium>(tempTeam,tempStadium));
+
+    auto checkIfDuplicate = [&tempStadium](const std::pair<Team,Stadium> a)
+    {
+        return a.second.getId() == tempStadium.getId();
+    };
+
+    auto notADuplicate = find_if(m_planList.begin(),m_planList.end(),checkIfDuplicate) == m_planList.end();
+
+    qDebug() << notADuplicate;
+
+    if(notADuplicate)
+        m_stadiumListPlanner->populateWidget(m_planList);
 }
