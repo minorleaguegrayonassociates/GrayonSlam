@@ -225,7 +225,8 @@ std::set<Vertex> undirected_graph<Vertex,Weight>::getVertices() const
  * @return A map containing all the vertex-edges pairs
  */
 template<typename Vertex, typename Weight>
-const std::map<Vertex, typename undirected_graph<Vertex,Weight>::VertexEdges>& undirected_graph<Vertex,Weight>::getEdges() const
+const std::map<Vertex, typename undirected_graph<Vertex,Weight>::VertexEdges>& //return type
+undirected_graph<Vertex,Weight>::getEdges() const                              //function signature
 {
     return m_edges;
 }
@@ -240,7 +241,8 @@ const std::map<Vertex, typename undirected_graph<Vertex,Weight>::VertexEdges>& u
  * @return A vector of all the edges of the given vertex
  */
 template<typename Vertex, typename Weight>
-const typename undirected_graph<Vertex,Weight>::VertexEdges& undirected_graph<Vertex,Weight>::getVertexEdges(const Vertex& vertex) const
+const typename undirected_graph<Vertex,Weight>::VertexEdges&                //return type
+undirected_graph<Vertex,Weight>::getVertexEdges(const Vertex& vertex) const //function signature
 {
     static VertexEdges error;
     error = VertexEdges();
