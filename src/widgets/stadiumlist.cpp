@@ -56,7 +56,7 @@ void StadiumList::connectWidgetItemToStadium(QTreeWidgetItem* item)
 void StadiumList::populateWidget(const std::vector<std::pair<Team,Stadium>>& stadiumsAndTeams)
 {
     //clears old display
-    m_listDisplay->clear();
+    clear();
     m_listDisplay->setColumnCount(10);
     QStringList headers = { "Team Name", "League", "Stadium Name", "Location", "Date Opened",
     "Seating Capacity", "Typology", "Roof Type", "Playing Surface", "Distance to Center Field"};
@@ -86,7 +86,24 @@ void StadiumList::populateWidget(const std::vector<std::pair<Team,Stadium>>& sta
     m_listDisplay->setEditTriggers(QAbstractItemView::NoEditTriggers);
 }
 
+/**
+ * allowHidden(bool) changes the status of the stadium list to (not) display hidden teams/stadiums
+ * depending on the value of the boolean
+ *
+ * Note: This does not change the stadiums or teams that are currently in the list. It only affects the list
+ * upon population of the list
+ *
+ * @param hidden boolean that tells widget to display the hidden stadiums/teams or not
+ */
 void StadiumList::allowHidden(bool hidden)
 {
     m_showHidden = hidden;
+}
+
+/**
+ * clear() clear the contents of the stadium list of all data
+ */
+void StadiumList::clear()
+{
+    m_listDisplay->clear();
 }
