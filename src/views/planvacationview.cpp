@@ -14,11 +14,22 @@ PlanVacationView::PlanVacationView(QWidget *parent, NavBar* bar)
     m_receiptViews = new ReceiptView(m_ui->vacationReceipt);
     m_mapView = new MapView(m_ui->tripMap);
 
+    // Only used to test/demo trip
     m_tripList.push_back(50);
     m_tripList.push_back(51);
     m_tripList.push_back(52);
     m_tripList.push_back(53);
     m_tripList.push_back(54);
+
+    /* Setting the different options for the QComboBox `vacationType` and their associated values */
+    m_ui->vacationType->addItem(tr("--- Vacation Type ---"), PlanVacationView::None);
+    m_ui->vacationType->addItem(tr("Dijkstra from Anaheim"), PlanVacationView::DijkstraFromAnaheim);
+    m_ui->vacationType->addItem(tr("Shortest path"), PlanVacationView::ShortestPath);
+    m_ui->vacationType->addItem(tr("Shortest Distance from Detroit"), PlanVacationView::ShortestDistanceFromDetroit);
+    m_ui->vacationType->addItem(tr("Next Closest Stadium"), PlanVacationView::nextClosestStadium);
+    m_ui->vacationType->addItem(tr("Prims"), PlanVacationView::Prims);
+    m_ui->vacationType->addItem(tr("Depth First Search"), PlanVacationView::DFS);
+    m_ui->vacationType->addItem(tr("Breadth First Search"), PlanVacationView::BFS);
 
     connect(m_souvenirShop,SIGNAL(goToReceipt(Qtys&)), this, SLOT(setReceipt(Qtys&)));
     connect(m_souvenirShop,&SouvenirShop::skipCheckout,this,&PlanVacationView::goToNext);

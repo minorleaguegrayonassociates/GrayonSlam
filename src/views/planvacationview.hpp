@@ -13,6 +13,9 @@ class PlanVacationView;
 class PlanVacationView : public View
 {
     Q_OBJECT
+
+    /* Enum class for each plan type */
+    enum PlanType { DijkstraFromAnaheim, ShortestPath, ShortestDistanceFromDetroit, nextClosestStadium, Prims, DFS, BFS, None};
 public:
     /* Constructor */
     PlanVacationView(QWidget* parent, NavBar* m_navbar);

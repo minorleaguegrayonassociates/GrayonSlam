@@ -20,6 +20,7 @@ SouvenirShop::SouvenirShop(QWidget* parent)
     m_vacationSouvenirCart->setFlow(QListView::TopToBottom);
     m_vacationSouvenirCart->showQty(true);
 
+    /* Set font type, weight, and point size for `cartWidget` Set text for it and for `skipCheckout` */
     QFont cartFont;
     cartFont.setFamily("Font Awesome 5 Free");
     cartFont.setWeight(50);
@@ -29,7 +30,11 @@ SouvenirShop::SouvenirShop(QWidget* parent)
     m_ui->cartWidget->setAlignment(Qt::AlignCenter);
     m_ui->skipCheckout->setText("Skip\nCheckout");
 
-//    connect(m_vacationSouvenirCart,&SouvenirList::)
+    // Connect `itemQtyChanged` signal from `m_vacationSouvenirCart` to `updateQty` slot, updates `qtyLabel`
+    connect(m_vacationSouvenirCart,&SouvenirList::itemQtyChanged,this,&SouvenirShop::updateQty);
+
+    // set's default `qtyLabel` number to 0
+    m_ui->qtyLabel->setText(QString::fromUtf8("0"));
 }
 
 /* Destructor */
@@ -145,10 +150,10 @@ void SouvenirShop::updateQty()
    int total = 0;
    for(auto qty : myQtys)
        total += qty.second;
-//   if(total < 100)
-//       m_ui->qtyLabel->setText(QString::number(total));
-//   else
-//       m_ui->qtyLabel->setText(QString::fromUtf8("99+"));
+   if(total < 100)
+       m_ui->qtyLabel->setText(QString::number(total));
+   else
+       m_ui->qtyLabel->setText(QString::fromUtf8("99+"));
 }
 
 /**
@@ -187,6 +192,9 @@ void SouvenirShop::on_skipCheckout_clicked()
             m_vacationSouvenirCart->resetQty();
             m_vacationSouvenirCart->clear();
             emit skipCheckout();
+
+            // Reset cart number displayed
+            m_ui->qtyLabel->setText(QString::fromUtf8("0"));
         }
     }
 }
@@ -201,5 +209,8 @@ void SouvenirShop::on_checkout_clicked()
     {
         auto qtys(m_vacationSouvenirCart->getIDQty());
         emit goToReceipt(qtys);
+
+        // Reset cart number displayed
+        m_ui->qtyLabel->setText(QString::fromUtf8("0"));
     }
 }

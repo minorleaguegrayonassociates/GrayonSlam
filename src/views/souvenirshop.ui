@@ -62,7 +62,7 @@ QPushButton#checkout {
 border: 1px solid #666666;
 background-color: #303030;
 color: white;
-font-size: 16px;
+font-size: 14px;
 font: bold;
 }
 
@@ -75,7 +75,7 @@ border: 1px solid #609aff;
 
 QPushButton#skipCheckout
 {
-font-size: 16px;
+font-size: 14px;
 color: white;
 border: 1px solid #666666;
 background-color: #303030;
@@ -617,13 +617,13 @@ QLabel#cartWidget {
       <enum>QFrame::Plain</enum>
      </property>
      <property name="text">
-      <string>TextLabel</string>
+      <string/>
      </property>
     </widget>
-    <widget class="QLabel" name="label">
+    <widget class="QLabel" name="qtyLabel">
      <property name="geometry">
       <rect>
-       <x>38</x>
+       <x>36</x>
        <y>58</y>
        <width>28</width>
        <height>16</height>
@@ -633,7 +633,7 @@ QLabel#cartWidget {
       <string notr="true">color:black</string>
      </property>
      <property name="text">
-      <string>99+</string>
+      <string/>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -681,7 +681,7 @@ QLabel#cartWidget {
    <widget class="QPushButton" name="removeItem">
     <property name="geometry">
      <rect>
-      <x>490</x>
+      <x>480</x>
       <y>75</y>
       <width>115</width>
       <height>30</height>
