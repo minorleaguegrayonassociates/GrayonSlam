@@ -6,6 +6,8 @@
 #include <set>
 #include <queue>
 
+namespace nstd
+{
 template<typename Vertex, typename Weight>
 class undirected_graph
 {
@@ -492,4 +494,5 @@ Weight undirected_graph<Vertex,Weight>::DFSHelper(const Vertex& vertex,
     }
 
     return totalWeight;
+}
 }
