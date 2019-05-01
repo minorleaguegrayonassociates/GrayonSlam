@@ -101,7 +101,7 @@ void StadiumList::allowHidden(bool hidden)
 }
 
 /**
- * clear() clear the contents of the stadium list of all data
+ * clear() clears the contents of the stadium list of all data
  */
 void StadiumList::clear()
 {
