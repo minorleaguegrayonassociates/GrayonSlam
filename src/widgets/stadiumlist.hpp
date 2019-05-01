@@ -30,6 +30,7 @@ public:
     /* Resets */
     void populateWidget(const std::vector<std::pair<Team,Stadium>>&);
     void allowHidden(bool);
+    void clear();
 
     /* Destructor*/
     ~StadiumList() override;
