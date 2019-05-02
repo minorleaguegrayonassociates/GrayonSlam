@@ -72,8 +72,6 @@ public:
 
     /* Shortest-path */
     Weight dijkstraTraversal(const Vertex& vertex,
-                             std::set<Vertex>& visisted,
-                             std::vector<CompleteEdge>& discoveryEdges,
                              std::map<Vertex,std::pair<Weight,Vertex>>& vertexInfo) const;
 
 private:
@@ -619,10 +617,10 @@ undirected_graph<Vertex,Weight>::primsMST(const Vertex& start) const            
  */
 template<typename Vertex, typename Weight>
 Weight undirected_graph<Vertex, Weight>::dijkstraTraversal(const Vertex& vertex,
-                                                           std::set<Vertex>& visisted,
-                                                           std::vector<CompleteEdge>& discoveryEdges,
                                                            std::map<Vertex,std::pair<Weight,Vertex>>& vertexInfo) const
 {
+    std::set<Vertex> visisted;
+    std::vector<CompleteEdge> discoveryEdges;
     Weight total = Weight();
     using VertexInfo = std::pair<Weight,Vertex>;
     if(!vertexExists(vertex))
