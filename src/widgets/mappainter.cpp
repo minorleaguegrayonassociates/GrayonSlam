@@ -245,6 +245,18 @@ void MapPainter::animateTrip(int stadiumOneId, int stadiumTwoId)
     animation->start(QAbstractAnimation::DeleteWhenStopped);
 }
 
+/*
+ * Animates multiple points on a
+ *
+ * @param tripEdges std::list<Database::completedEdge>
+*/
+void MapPainter::animateMultipleTrips(const std::vector<std::pair<std::list<std::pair<int,int>>,int>>& tripEdges)
+{
+    for(auto trip : tripEdges)
+        for(auto edges : trip.first)
+            animateTrip(edges.first,edges.second);
+}
+
 /**
  * @brief Draws all stadiums and all the edges between the stadiums
  */
