@@ -6,6 +6,7 @@
 #include "src/views/receiptview.hpp"
 #include "src/views/mapview.hpp"
 #include "src/widgets/stadiumlist.hpp"
+#include "src/utils/undirected_graph.hpp"
 
 namespace Ui {
 class PlanVacationView;
@@ -42,6 +43,8 @@ private slots:
     void addToTrip(int);
     void removeFromTrip(int);
 
+    void on_startTrip_clicked();
+
 private:
     Ui::PlanVacationView *m_ui;
     NavBar* m_navbar;
@@ -50,6 +53,7 @@ private:
     SouvenirShop* m_souvenirShop;
     ReceiptView* m_receiptViews;
     MapView*    m_mapView;
+    double m_distance;
     std::list<int> m_tripList;
     std::vector<Qtys> m_receiptVector;
     int m_previousStadiumId;
@@ -57,5 +61,6 @@ private:
     bool m_printedGrandTotal;
     PlanType m_vacationType;
     std::vector<std::pair<Team,Stadium>> m_planList;
+    nstd::undirected_graph<int,int> m_graph;
 };
 

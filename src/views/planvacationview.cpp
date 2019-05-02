@@ -20,13 +20,6 @@ PlanVacationView::PlanVacationView(QWidget *parent, NavBar* bar)
     m_receiptViews = new ReceiptView(m_ui->vacationReceipt);
     m_mapView = new MapView(m_ui->tripMap);
 
-    // Only used to test/demo trip
-    m_tripList.push_back(50);
-    m_tripList.push_back(51);
-    m_tripList.push_back(52);
-    m_tripList.push_back(53);
-    m_tripList.push_back(54);
-
     /* Setting the different options for the QComboBox `vacationType` and their associated values */
     m_ui->vacationType->addItem(tr("--- Vacation Type ---"), PlanVacationView::None);
     m_ui->vacationType->addItem(tr("Dijkstra from Anaheim"), PlanVacationView::DijkstraFromAnaheim);
@@ -45,7 +38,6 @@ PlanVacationView::PlanVacationView(QWidget *parent, NavBar* bar)
     connect(m_ui->ContinueToNext,&QAbstractButton::clicked,this,&PlanVacationView::resetUi);
     connect(m_stadiumList,&StadiumList::stadiumClicked,this,&PlanVacationView::addToTrip);
     connect(m_stadiumListPlanner,&StadiumList::stadiumClicked,this,&PlanVacationView::removeFromTrip);
-    activeTrip();
 }
 
 /* Destructor */
@@ -70,6 +62,8 @@ void PlanVacationView::resetUi()
     m_previousStadiumId = -1;
     m_currentStadiumId = -1;
     m_ui->planVacationStack->setCurrentWidget(m_ui->chooseType);
+    m_ui->vacationType->setCurrentIndex(0);
+    m_printedGrandTotal = false;
 }
 
 /**
@@ -91,10 +85,6 @@ void PlanVacationView::setReceipt(Qtys& receipt)
  */
 void PlanVacationView::goToNext()
 {
-    if(m_previousStadiumId == -1)
-    {
-        m_navbar->setHidden(true);
-    }
     // Store previous Id then removing it from the `tripList`
     m_previousStadiumId  = m_tripList.front();
 
@@ -140,7 +130,7 @@ void PlanVacationView::activeTrip()
          */
         m_printedGrandTotal = true;
         m_ui->planVacationStack->setCurrentWidget(m_ui->vacationReceipt);
-        m_receiptViews->grandTotal(m_receiptVector, 0.0);
+        m_receiptViews->grandTotal(m_receiptVector, m_distance);
         m_receiptVector.clear();
     }
     else if(!m_printedGrandTotal)
@@ -149,7 +139,7 @@ void PlanVacationView::activeTrip()
          * `vacationDistance` and set's the QLabel `distance` to the miles traveled
          */
         m_ui->planVacationStack->setCurrentWidget(m_ui->vacationDistance);
-        m_ui->distance->setText(QString::fromStdString("0.0 miles"));
+        m_ui->distance->setText(QString::number(m_distance,'f',2)+" miles");
     }
     else
     {
@@ -178,7 +168,65 @@ void PlanVacationView::on_Enter_clicked()
     /* Set the vacationType and switch `planVacationStack` page to `planVacation` if selection isn't equal to `None` */
     m_vacationType = static_cast<PlanType>(m_ui->vacationType->currentData().toInt());
     if(m_vacationType != PlanType::None)
+    {
+        for(auto edge : Database::getDistances())
+        {
+            m_graph.addEdge(edge);
+        }
+
         m_ui->planVacationStack->setCurrentWidget(m_ui->planVacation);
+        if(m_vacationType == PlanType::DijkstraFromAnaheim)
+        {
+            m_ui->chooseVacationStack->setCurrentWidget(m_ui->fromAngelsStadium);
+            m_ui->fromCombo->addItem("From: Angels Stadium", 62);
+
+            for(auto stadium : Database::getStadiums())
+            {
+                if(stadium.getId() != 62)
+                {
+                    m_ui->toCombo->addItem(QString::fromStdString("To: "+stadium.getName()),stadium.getId());
+                }
+            }
+        }
+    }
+}
+
+void PlanVacationView::on_startTrip_clicked()
+{
+    if(m_vacationType == PlanType::DijkstraFromAnaheim)
+    {
+        std::map<int,std::pair<int,int>> distances;
+
+        m_tripList.clear();
+        m_distance = 0;
+
+        m_graph.dijkstraTraversal(m_ui->fromCombo->currentData().toInt(), distances);
+
+        bool finished = false;
+        m_distance = distances[m_ui->toCombo->currentData().toInt()].first;
+        int parentFrom = distances[m_ui->toCombo->currentData().toInt()].second;
+        int parentTo = m_ui->toCombo->currentData().toInt();
+        while (!finished)
+        {
+            m_tripList.push_front(parentTo);
+            if (parentFrom == m_ui->fromCombo->currentData().toInt())
+            {
+                m_tripList.push_front(parentFrom);
+                finished = true;
+            }
+            else
+            {
+                parentTo = parentFrom;
+                parentFrom = distances[parentFrom].second;
+            }
+        }
+        if(!m_tripList.empty())
+        {
+            m_navbar->setHidden(true);
+            m_ui->planVacationStack->setCurrentWidget(m_ui->activeVacation);
+            activeTrip();
+        }
+    }
 }
 
 void PlanVacationView::addToTrip(int id)
