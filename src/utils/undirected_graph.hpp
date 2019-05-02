@@ -697,7 +697,13 @@ Weight undirected_graph<Vertex, Weight>::dijkstraTraversal(const Vertex& vertex,
     return total;
 }
 
-
+/**
+ * This function takes two verticies and returns all the edges between the
+ * two verticies and the total Weight of all the edges
+ *
+ * @param vertexFrom records all edges starting from this Vertex (origin)
+ * @param vertexTo records all edges between start and this vertex (destination)
+ */
 template<typename Vertex, typename Weight>
 std::pair<std::list<std::pair<Vertex,Vertex>>,Weight>
 undirected_graph<Vertex, Weight>::dijkstraTraversal(const Vertex& vertexFrom, const Vertex& vertexTo) const
@@ -712,11 +718,11 @@ undirected_graph<Vertex, Weight>::dijkstraTraversal(const Vertex& vertexFrom, co
 
         /* Declare and initializing variable needed to trace back from vertexTo until I reach vertexFrom*/
         bool finished = false;
-        int parentFrom = routes[vertexTo].second;
-        int parentTo = vertexTo;
+        Vertex parentFrom = routes[vertexTo].second;
+        Vertex parentTo = vertexTo;
 
         // Record the total distance
-        int totalDistance = routes[vertexTo].first;
+        Weight totalDistance = routes[vertexTo].first;
 
         /* Keep tracing back to the parent until the parent is `vertexFrom` */
         while (!finished)
