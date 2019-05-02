@@ -74,6 +74,9 @@ public:
     Weight dijkstraTraversal(const Vertex& vertex,
                              std::map<Vertex,std::pair<Weight,Vertex>>& vertexInfo) const;
 
+    std::pair<std::list<std::pair<Vertex,Vertex>>,Weight> dijkstraTraversal(const Vertex& vertexFrom,
+                                                                              const Vertex& vertexTo) const;
+
 private:
     /* Helpers */
     Weight DFSHelper(const Vertex& current,
@@ -692,6 +695,46 @@ Weight undirected_graph<Vertex, Weight>::dijkstraTraversal(const Vertex& vertex,
         }
     }
     return total;
+}
+
+
+template<typename Vertex, typename Weight>
+std::pair<std::list<std::pair<Vertex,Vertex>>,Weight>
+undirected_graph<Vertex, Weight>::dijkstraTraversal(const Vertex& vertexFrom, const Vertex& vertexTo) const
+{
+    std::map<Vertex,std::pair<Weight,Vertex>> routes;
+    std::list<std::pair<Vertex,Vertex>> route;
+
+    if(vertexExists(vertexFrom) && vertexExists(vertexFrom))
+    {
+        /* Get all possible routes */
+        dijkstraTraversal(vertexFrom, routes);
+
+        /* Declare and initializing variable needed to trace back from vertexTo until I reach vertexFrom*/
+        bool finished = false;
+        int parentFrom = routes[vertexTo].second;
+        int parentTo = vertexTo;
+
+        // Record the total distance
+        int totalDistance = routes[vertexTo].first;
+
+        /* Keep tracing back to the parent until the parent is `vertexFrom` */
+        while (!finished)
+        {
+            route.push_front(std::pair<Vertex,Vertex>(parentFrom,parentTo));
+            if (parentFrom == vertexFrom)
+            {
+                finished = true;
+            }
+            else
+            {
+                parentTo = parentFrom;
+                parentFrom = routes[parentFrom].second;
+            }
+        }
+        return std::pair<std::list<std::pair<Vertex,Vertex>>,Weight>(route,totalDistance);
+    }
+    return std::pair<std::list<std::pair<Vertex,Vertex>>,Weight>(route,Weight());
 }
 
 /**
