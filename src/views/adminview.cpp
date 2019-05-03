@@ -1,6 +1,6 @@
 #include "adminview.hpp"
 #include "ui_adminview.h"
-#include "src/datastore/database.hpp"
+#include "datastore/database.hpp"
 #include <QFileDialog>
 #include <QTimer>
 

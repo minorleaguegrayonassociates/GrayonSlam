@@ -1,6 +1,6 @@
 #pragma once
-#include "src/views/view.hpp"
-#include "src/widgets/imageslideshow.hpp"
+#include "views/view.hpp"
+#include "widgets/imageslideshow.hpp"
 
 namespace Ui
 {

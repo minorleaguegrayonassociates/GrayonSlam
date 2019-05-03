@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QTreeWidgetItem>
-#include "src/datastore/stadium.hpp"
+#include "datastore/stadium.hpp"
 
 class StadiumListItem : public QTreeWidgetItem
 {

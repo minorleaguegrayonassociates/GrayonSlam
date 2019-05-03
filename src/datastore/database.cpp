@@ -1,6 +1,6 @@
 #include "database.hpp"
-#include "src/utils/parser.hpp"
-#include "src/utils/enumtools.hpp"
+#include "utils/parser.hpp"
+#include "utils/enumtools.hpp"
 
 /* Instantiate static map containers of teams and stadiums */
 nstd::map<int,Team> Database::teams;

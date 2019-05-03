@@ -1,0 +1,23 @@
+Seattle,Chicago,2097
+Seattle,Denver,1331
+Seattle,San Francisco,807
+Chicago,Boston,983
+Chicago,New York,787
+Chicago,Kansas City,533
+Chicago,Denver,1003
+Denver,San Francisco,1267
+Denver,Los Angeles,1015
+Denver,Kansas City,599
+San Francisco,Los Angeles,381
+Boston,New York,214
+New York,Kansas City,1260
+New York,Atlanta,888
+Kansas City,Los Angeles,1663
+Kansas City,Dallas,496
+Kansas City,Atlanta,864
+Los Angeles,Dallas,1435
+Atlanta,Dallas,781
+Atlanta,Houston,810
+Atlanta,Miami,661
+Dallas,Houston,239
+Houston,Miami,1187

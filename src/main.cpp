@@ -1,6 +1,6 @@
-#include "src/windows/mainwindow.hpp"
-#include "src/windows/login.hpp"
-#include "src/datastore/database.hpp"
+#include "windows/mainwindow.hpp"
+#include "windows/login.hpp"
+#include "datastore/database.hpp"
 #include <QApplication>
 #include <QFile>
 

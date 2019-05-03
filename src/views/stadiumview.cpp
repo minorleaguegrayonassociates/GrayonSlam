@@ -1,7 +1,7 @@
 #include "stadiumview.hpp"
 #include "ui_stadiumview.h"
 #include <QMessageBox>
-#include "src/utils/stringfunctions.hpp"
+#include "utils/stringfunctions.hpp"
 
 /**
  * Constructs a Stadium View with a pointer to the parent widget which it will reside in

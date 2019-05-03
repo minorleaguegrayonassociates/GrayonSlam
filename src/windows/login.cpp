@@ -1,6 +1,6 @@
 #include "login.hpp"
 #include "ui_login.h"
-#include "src/utils/exceptions.hpp"
+#include "utils/exceptions.hpp"
 #include <QCryptographicHash>
 #include <QTextStream>
 #include <QTimer>

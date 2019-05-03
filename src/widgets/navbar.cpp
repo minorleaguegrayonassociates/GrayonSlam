@@ -1,5 +1,5 @@
 #include "navbar.hpp"
-#include "src/widgets/navbaritem.hpp"
+#include "widgets/navbaritem.hpp"
 #include <QPropertyAnimation>
 
 /**

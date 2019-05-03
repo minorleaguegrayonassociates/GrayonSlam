@@ -1,14 +1,14 @@
 #include "mainwindow.hpp"
 #include "ui_mainwindow.h"
-#include "src/windows/login.hpp"
-#include "src/datastore/database.hpp"
-#include "src/views/adminview.hpp"
+#include "windows/login.hpp"
+#include "datastore/database.hpp"
+#include "views/adminview.hpp"
 #include <QFontDatabase>
 #include <QMessageBox>
 #include <QDebug>
-#include "src/views/stadiumview.hpp"
+#include "views/stadiumview.hpp"
 #include <algorithm>
-#include "src/views/dashboardview.hpp"
+#include "views/dashboardview.hpp"
 
 /* Constructors */
 MainWindow::MainWindow()

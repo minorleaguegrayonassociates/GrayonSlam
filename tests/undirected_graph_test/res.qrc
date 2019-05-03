@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>data.csv</file>
+        <file>map.png</file>
+    </qresource>
+</RCC>
