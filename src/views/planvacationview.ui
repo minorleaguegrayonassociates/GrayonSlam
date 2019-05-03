@@ -371,7 +371,7 @@ border: 1px solid black;
        <height>600</height>
       </rect>
      </property>
-     <widget class="QWidget" name="testPage1" native="true">
+     <widget class="QWidget" name="testPage1">
       <widget class="QWidget" name="stadiumListPlannerWidget" native="true">
        <property name="geometry">
         <rect>
@@ -552,7 +552,7 @@ border-radius:5px;</string>
         <string>Start Trip</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="ContinueToNext_3">
+      <widget class="QPushButton" name="goToPreview">
        <property name="geometry">
         <rect>
          <x>400</x>

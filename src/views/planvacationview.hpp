@@ -42,8 +42,9 @@ private slots:
     void on_Enter_clicked();
     void addToTrip(int);
     void removeFromTrip(int);
-
     void on_startTrip_clicked();
+    void on_goToPreview_clicked();
+    void goBack();
 
 private:
     Ui::PlanVacationView *m_ui;
@@ -62,5 +63,6 @@ private:
     PlanType m_vacationType;
     std::vector<std::pair<Team,Stadium>> m_planList;
     nstd::undirected_graph<int,int> m_graph;
+    std::vector<std::pair<std::list<std::pair<int,int>>,int>> test;
 };
 

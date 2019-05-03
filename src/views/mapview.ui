@@ -28,7 +28,7 @@ border-image: url(:/res/map_background.png) 0 0 0 0 strech strech;
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="goToShop">
+  <widget class="QPushButton" name="continueToNext">
    <property name="geometry">
     <rect>
      <x>270</x>

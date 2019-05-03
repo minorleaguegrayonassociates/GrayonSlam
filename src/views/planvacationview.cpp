@@ -1,7 +1,7 @@
 #include "planvacationview.hpp"
 #include "ui_planvacationview.h"
 #include "src/datastore/database.hpp"
-#include <QDebug>
+#include <QTimer>
 
 /* Constructor */
 PlanVacationView::PlanVacationView(QWidget *parent, NavBar* bar)
@@ -34,7 +34,8 @@ PlanVacationView::PlanVacationView(QWidget *parent, NavBar* bar)
     connect(m_souvenirShop,&SouvenirShop::goToReceipt, this,&PlanVacationView::setReceipt);
     connect(m_souvenirShop,&SouvenirShop::skipCheckout,this,&PlanVacationView::goToNext);
     connect(m_receiptViews,&ReceiptView::goToNext,this,&PlanVacationView::goToNext);
-    connect(m_mapView,&MapView::goToShop,this,&PlanVacationView::goToShop);
+    connect(m_mapView,&MapView::continueToNext,this,&PlanVacationView::goToShop);
+    connect(m_mapView,&MapView::goBackToPlan,this,&PlanVacationView::goBack);
     connect(m_ui->ContinueToNext,&QAbstractButton::clicked,this,&PlanVacationView::resetUi);
     connect(m_stadiumList,&StadiumList::stadiumClicked,this,&PlanVacationView::addToTrip);
     connect(m_stadiumListPlanner,&StadiumList::stadiumClicked,this,&PlanVacationView::removeFromTrip);
@@ -54,6 +55,7 @@ PlanVacationView::~PlanVacationView()
 void PlanVacationView::resetView()
 {
     m_ui->planVacationStack->setCurrentWidget(m_ui->chooseType);
+    m_ui->vacationType->setCurrentIndex(0);
 }
 
 void PlanVacationView::resetUi()
@@ -200,30 +202,28 @@ void PlanVacationView::on_startTrip_clicked()
         m_tripList.clear();
         m_distance = 0;
 
-        m_graph.dijkstraTraversal(m_ui->fromCombo->currentData().toInt(), distances);
+        auto list = m_graph.dijkstraTraversal(m_ui->fromCombo->currentData().toInt(), m_ui->toCombo->currentData().toInt());
 
-        bool finished = false;
-        m_distance = distances[m_ui->toCombo->currentData().toInt()].first;
-        int parentFrom = distances[m_ui->toCombo->currentData().toInt()].second;
-        int parentTo = m_ui->toCombo->currentData().toInt();
-        while (!finished)
+
+        m_distance = list.second;
+
+        for(auto vertex : list.first)
         {
-            m_tripList.push_front(parentTo);
-            if (parentFrom == m_ui->fromCombo->currentData().toInt())
+            if(list.first.front() == vertex)
             {
-                m_tripList.push_front(parentFrom);
-                finished = true;
+                m_tripList.push_back(vertex.first);
+                m_tripList.push_back(vertex.second);
             }
             else
             {
-                parentTo = parentFrom;
-                parentFrom = distances[parentFrom].second;
+                m_tripList.push_back(vertex.second);
             }
         }
         if(!m_tripList.empty())
         {
             m_navbar->setHidden(true);
-            m_ui->planVacationStack->setCurrentWidget(m_ui->activeVacation);
+            m_mapView->setState(MapView::MapState::Trip);
+            m_ui->planVacationStack->setCurrentWidget(m_ui->activeVacation); 
             activeTrip();
         }
     }
@@ -273,4 +273,20 @@ void PlanVacationView::removeFromTrip(int id)
         else
             m_stadiumListPlanner->populateWidget(m_planList);
     }
+}
+
+void PlanVacationView::on_goToPreview_clicked()
+{
+    auto list = m_graph.dijkstraTraversal(m_ui->fromCombo->currentData().toInt(), m_ui->toCombo->currentData().toInt());
+    test.clear();
+    test.push_back(list);
+    m_ui->planVacationStack->setCurrentWidget(m_ui->tripMap);
+
+    m_mapView->setHighlight(test);
+    m_mapView->setAnimation(test[0]);
+}
+
+void PlanVacationView::goBack()
+{
+    m_ui->planVacationStack->setCurrentWidget(m_ui->planVacation);
 }
