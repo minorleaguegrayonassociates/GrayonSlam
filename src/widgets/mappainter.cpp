@@ -264,24 +264,23 @@ void MapPainter::animateTrip(std::vector<std::pair<std::list<std::pair<int,int>>
         if(i != tripSize-1)
         {
             /* While the last destination of a list isn't equal to the start of the next destination on the next list
-             * trace back.
+             * it will trace back and pop the inverese edge and check if
              */
             while(tripEdges[i].first.back().second != tripEdges[i+1].first.front().first)
             {
-                    std::list<std::pair<int,int>>::const_iterator it = tripEdges[i].first.end();
-                    if( it == tripEdges[i].first.end())
-                        --it;
-                    if(it->second != tripEdges[i+1].first.front().first)
-                    {
-                        tripEdges[i].first.push_back(std::pair<int,int>(it->second,it->first));
-                    }
-                    else
-                    {
-                        break;
-                    }
+                std::list<std::pair<int,int>>::const_iterator it = tripEdges[i].first.end();
+                if( it == tripEdges[i].first.end())
+                    --it;
+                if(it->second != tripEdges[i+1].first.front().first)
+                {
+                    tripEdges[i].first.push_back(std::pair<int,int>(it->second,it->first));
+                }
+                else
+                {
+                    break;
+                }
             }
         }
-
     }
 }
 
