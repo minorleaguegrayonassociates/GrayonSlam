@@ -27,6 +27,7 @@ CONFIG += c++14
 SOURCES += \
     src/main.cpp \
     src/views/dashboardview.cpp \
+    src/views/graphview.cpp \
     src/widgets/imageslideshow.cpp \
     src/windows/mainwindow.cpp \
     src/windows/login.cpp \
@@ -50,6 +51,7 @@ SOURCES += \
 HEADERS += \
     src/utils/stringfunctions.hpp \
     src/views/dashboardview.hpp \
+    src/views/graphview.hpp \
     src/widgets/imageslideshow.hpp \
     src/windows/mainwindow.hpp \
     src/windows/login.hpp \
@@ -77,6 +79,7 @@ HEADERS += \
 
 FORMS += \
     src/views/dashboardview.ui \
+    src/views/graphview.ui \
     src/windows/mainwindow.ui \
     src/windows/login.ui \
     src/widgets/navbaritem.ui \
