@@ -159,18 +159,17 @@ void MapPainter::highlightEdge(QPainter& painter, const QPoint& stadiumCoord1, c
  * made to highlight a trips discovered edges
  *
  * @param painter QPainter
- * @param discoveredEdges vector of completedEdges [tuple(stadiumId,stadiumId,weight)]
+ * @param discoveredEdges vector of std::pair<std::list<std::pair<int,int>>,int>
  */
-void MapPainter::highlightDiscoveredEdges(QPainter& painter, std::vector<Database::completedEdge>& discoveredEdges)
+void MapPainter::highlightDiscoveredEdges(QPainter& painter, std::vector<std::pair<std::list<std::pair<int,int>>,int>>& discoveredEdges)
 {
      std::map<int,Database::coords> coords(Database::getCoordinates());
-    for(auto edge: discoveredEdges)
-    {
-        highlightEdge(painter, QPoint(coords.find(std::get<0>(edge))->second.first,
-                                      coords.find(std::get<0>(edge))->second.second),
-                               QPoint(coords.find(std::get<1>(edge))->second.first,
-                                      coords.find(std::get<1>(edge))->second.second));
-    }
+    for(auto edges: discoveredEdges)
+        for(auto edge : edges.first)
+        highlightEdge(painter, QPoint(coords.find(edge.first)->second.first,
+                                      coords.find(edge.first)->second.second),
+                                QPoint(coords.find(edge.second)->second.first,
+                                      coords.find(edge.second)->second.second));
 }
 
 /**

@@ -16,7 +16,7 @@ public:
     ~MapPainter() override;
 
     /* setters */
-    void setDiscoveredVector(const std::vector<Database::completedEdge>&);
+    void setDiscoveredVector(const std::vector<std::pair<std::list<std::pair<int,int>>,int>>&);
 
     /* reset */
     void resetMap();
@@ -26,7 +26,7 @@ private:
     void paintStadiums(QPainter& painter, int id, const QPoint& stadiumPoint, const QString& StadiumName);
     void paintEdge(QPainter& painter, const QPoint& stdmCoord1, const QPoint& stdmCoord2);
     void highlightEdge(QPainter& painter, const QPoint& stadiumCoord1, const QPoint& stadiumCoord2);
-    void highlightDiscoveredEdges(QPainter& painter, std::vector<Database::completedEdge>& discoveredEdges);
+    void highlightDiscoveredEdges(QPainter& painter, std::vector<std::pair<std::list<std::pair<int,int>>,int>>& discoveredEdges);
     void paintText(QPainter& painter, const QPoint& , const QString&);
 
     /* Animations */
@@ -39,7 +39,7 @@ private:
 
     AirplanePainter* m_airplane;
     Beacon* m_beacon;
-    std::vector<Database::completedEdge> m_discoveredEdges;
+    std::vector<std::pair<std::list<std::pair<int,int>>,int>> m_discoveredEdges;
 };
 
 
