@@ -1,5 +1,5 @@
 #pragma once
-#include "src/views/view.hpp"
+#include "view.hpp"
 #include "src/widgets/imageslideshow.hpp"
 
 namespace Ui
