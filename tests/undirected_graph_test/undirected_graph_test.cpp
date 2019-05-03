@@ -302,4 +302,4 @@ void undirected_graph_test::testDijkstraTraversal()
 
 QTEST_APPLESS_MAIN(undirected_graph_test)
 
-#include "tst_undirected_graph_test.moc"
+#include "undirected_graph_test.moc"
