@@ -1,22 +1,21 @@
-#ifndef GRAPHVIEW_HPP
-#define GRAPHVIEW_HPP
+#pragma once
 
-#include <QWidget>
+#include "view.hpp"
+#include "src/widgets/mappainter.hpp"
 
 namespace Ui {
 class GraphView;
 }
 
-class GraphView : public QWidget
+class GraphView : public View
 {
     Q_OBJECT
 
 public:
     explicit GraphView(QWidget *parent = nullptr);
-    ~GraphView();
+    virtual ~GraphView();
 
 private:
     Ui::GraphView *ui;
+    MapPainter* m_mapPainter;
 };
-
-#endif // GRAPHVIEW_HPP
