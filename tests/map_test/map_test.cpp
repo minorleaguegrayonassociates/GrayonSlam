@@ -1,5 +1,7 @@
 #include <QtTest>
-
+#include <string>
+#include "csvparser.hpp"
+#include "src/utils/map.hpp"
 // add necessary includes here
 
 class map_test : public QObject
