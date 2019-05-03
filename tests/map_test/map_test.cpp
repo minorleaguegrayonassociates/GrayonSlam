@@ -19,7 +19,8 @@ private slots:
 
 map_test::map_test()
 {
-
+    //Copy resource file to compile folder
+    QFile(":/data.csv").copy("data.csv");
 }
 
 map_test::~map_test()
@@ -29,7 +30,8 @@ map_test::~map_test()
 
 void map_test::test_case1()
 {
-
+    //Parse data file
+    std::vector<std::vector<std::string>> data = loadData("data.csv");
 }
 
 QTEST_APPLESS_MAIN(map_test)
