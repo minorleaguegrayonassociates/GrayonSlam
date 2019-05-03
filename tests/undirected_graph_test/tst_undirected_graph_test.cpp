@@ -14,6 +14,7 @@ public:
 private slots:
     void testLoadData();
     void testDepthFirstSearch();
+    void testBreadthFirstSearch();
 
 private:
     nstd::undirected_graph<std::string,int> m_graph;
@@ -143,7 +144,49 @@ void undirected_graph_test::testLoadData()
 
 void undirected_graph_test::testDepthFirstSearch()
 {
+                                                                                                /*
+                                                                                                 * In the previous test, use "vertexExists" instead
+                                                                                                 * of "vertices.count(vertex) == 1"
+                                                                                                 */
+    QVERIFY(m_graph.vertexExists("Dallas"));
 
+    /* Obtain DFS data from the graph */
+    auto dfsData = m_graph.depthFirstSearch("Dallas");
+    auto discoveryEdges = dfsData.first;
+    int totalWeight = dfsData.second;
+
+    QCOMPARE(discoveryEdges.size(), 11);
+    QCOMPARE(totalWeight, 7314);
+
+    /*
+     * Check the discovery edges, then
+     * pop the front so that we can seet
+     * the next edge.
+     */
+    QCOMPARE(discoveryEdges.front(), std::make_tuple(std::string("Dallas"), std::string("Houston"), 239));
+    discoveryEdges.pop_front();
+    QCOMPARE(discoveryEdges.front(), std::make_tuple(std::string("Houston"), std::string("Atlanta"), 810));
+    discoveryEdges.pop_front();
+    QCOMPARE(discoveryEdges.front(), std::make_tuple(std::string("Atlanta"), std::string("Miami"), 661));
+    discoveryEdges.pop_front();
+    QCOMPARE(discoveryEdges.front(), std::make_tuple(std::string("Atlanta"), std::string("Kansas City"), 864));
+    discoveryEdges.pop_front();
+    QCOMPARE(discoveryEdges.front(), std::make_tuple(std::string("Kansas City"), std::string("Chicago"), 533));
+    discoveryEdges.pop_front();
+    QCOMPARE(discoveryEdges.front(), std::make_tuple(std::string("Chicago"), std::string("New York"), 787));
+    discoveryEdges.pop_front();
+    QCOMPARE(discoveryEdges.front(), std::make_tuple(std::string("New York"), std::string("Boston"), 214));
+    discoveryEdges.pop_front();
+    QCOMPARE(discoveryEdges.front(), std::make_tuple(std::string("Chicago"), std::string("Denver"), 1003));
+    discoveryEdges.pop_front();
+    QCOMPARE(discoveryEdges.front(), std::make_tuple(std::string("Denver"), std::string("Los Angeles"), 1015));
+    discoveryEdges.pop_front();
+    QCOMPARE(discoveryEdges.front(), std::make_tuple(std::string("Los Angeles"), std::string("San Francisco"), 381));
+    discoveryEdges.pop_front();
+    QCOMPARE(discoveryEdges.front(), std::make_tuple(std::string("San Francisco"), std::string("Seattle"), 807));
+    discoveryEdges.pop_front();
+
+    QVERIFY(discoveryEdges.empty());
 }
 
 QTEST_APPLESS_MAIN(undirected_graph_test)
