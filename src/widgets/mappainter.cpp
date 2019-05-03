@@ -246,15 +246,55 @@ void MapPainter::animateTrip(int stadiumOneId, int stadiumTwoId)
 }
 
 /*
- * Animates multiple points on a
+ * Animates a whole trip, meant to simulate a whole trip
+ * as a preview
+ *
+ * @param tripEdges std::vector<std::pair<std::list<std::pair<int,int>>,int>>
+*/
+void MapPainter::animateTrip(std::vector<std::pair<std::list<std::pair<int,int>>,int>>& tripEdges)
+{
+    /* As long as you're not on the very last list in the vector always go through all the last edge of a list
+     * and check if the last distination is different from the start of the next destination on the next set of
+     * edges if so then trace back and pop in the inverse of the original edge until you get to the vertex where
+     * the route diviated
+     */
+    size_t tripSize = tripEdges.size();
+    for(size_t i = 0; i < tripSize; ++i)
+    {
+        if(i != tripSize-1)
+        {
+            /* While the last destination of a list isn't equal to the start of the next destination on the next list
+             * trace back.
+             */
+            while(tripEdges[i].first.back().second != tripEdges[i+1].first.front().first)
+            {
+                    std::list<std::pair<int,int>>::const_iterator it = tripEdges[i].first.end();
+                    if( it == tripEdges[i].first.end())
+                        --it;
+                    if(it->second != tripEdges[i+1].first.front().first)
+                    {
+                        tripEdges[i].first.push_back(std::pair<int,int>(it->second,it->first));
+                    }
+                    else
+                    {
+                        break;
+                    }
+            }
+        }
+
+    }
+}
+
+/*
+ * Animates a set of edges
  *
  * @param tripEdges std::list<Database::completedEdge>
 */
-void MapPainter::animateMultipleTrips(const std::vector<std::pair<std::list<std::pair<int,int>>,int>>& tripEdges)
+void MapPainter::animateTrip(const std::pair<std::list<std::pair<int,int>>,int>& tripEdges)
 {
-    for(auto trip : tripEdges)
-        for(auto edges : trip.first)
-            animateTrip(edges.first,edges.second);
+    /* Animate all edges within the list */
+    for(auto edge : tripEdges.first)
+        MapPainter::animateTrip(edge.first,edge.second);
 }
 
 /**
