@@ -298,7 +298,7 @@ namespace nstd
         int hashAlgo(std::string k, int j,int capacity)const
         {
             int hash = static_cast<int>(std::hash<std::string>{}(k)) + (j*j);
-            return hash%capacity;
+            return std::abs(hash%capacity);
         }
         /**
          * This method is the static version of operator()

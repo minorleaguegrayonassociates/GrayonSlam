@@ -1,5 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>data.csv</file>
+        <file>map_data.csv</file>
     </qresource>
 </RCC>
