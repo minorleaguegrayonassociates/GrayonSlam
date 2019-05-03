@@ -13,3 +13,13 @@ GraphView::~GraphView()
 {
     delete ui;
 }
+
+void GraphView::resetView()
+{
+
+}
+
+void GraphView::resetUi()
+{
+
+}

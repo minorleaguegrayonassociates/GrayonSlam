@@ -14,6 +14,8 @@ class GraphView : public View
 public:
     explicit GraphView(QWidget *parent = nullptr);
     virtual ~GraphView();
+    virtual void resetView();
+    virtual void resetUi();
 
 private:
     Ui::GraphView *ui;

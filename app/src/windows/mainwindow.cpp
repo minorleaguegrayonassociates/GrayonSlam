@@ -9,6 +9,7 @@
 #include "src/views/stadiumview.hpp"
 #include <algorithm>
 #include "src/views/dashboardview.hpp"
+#include "src/views/graphview.hpp"
 
 /* Constructors */
 MainWindow::MainWindow()
@@ -27,6 +28,7 @@ MainWindow::MainWindow()
     connect(m_navbar, &NavBar::currentRowChanged, this, &MainWindow::changeView);
     m_navbar->addItem("\uf0c9", "Dashboard");
     m_navbar->addItem("\uf5b0", "Plan\na Vacation");
+    m_navbar->addItem("\uf279", "Display\nMap");
     m_navbar->addItem("\uf433", "View\nTeams");
     if(Login::getType() == Login::Type::ADMIN)
         m_navbar->addItem("\uf085", "Inventory\nManagement");
@@ -36,6 +38,7 @@ MainWindow::MainWindow()
     m_views.push_back(new AdminView(m_ui->adminView));
     m_views.push_back(new StadiumView(m_ui->viewTeamView));
     m_views.push_back(new DashboardView(m_ui->dashboardView));
+    m_views.push_back(new GraphView(m_ui->graphView));
 }
 
 MainWindow::~MainWindow()
@@ -54,8 +57,8 @@ void MainWindow::changeView(int view)
     Login::Type type = Login::getType();
 
     /* Change view */
-    if((view == 3 && type == Login::Type::USER) || //Logout
-       (view == 4 && type == Login::Type::ADMIN))
+    if((view == 4 && type == Login::Type::USER) || //Logout
+       (view == 5 && type == Login::Type::ADMIN))
     {
         QMessageBox::StandardButton reply = QMessageBox::question(this, "Logout", "Are you sure you want to logout?", QMessageBox::Yes | QMessageBox::No);
         if(reply == QMessageBox::Yes)

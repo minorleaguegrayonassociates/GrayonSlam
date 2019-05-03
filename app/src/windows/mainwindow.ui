@@ -39,6 +39,11 @@ QWidget#adminView {
 background-image: url(:/res/backgrounds/background_icons_orange.png);
 background-color: white;
 }
+
+QWidget#graphView {
+background-image: url(:/res/backgrounds/background_icons_orange.png);
+background-color: #30a07b;
+}
 QPushButton
 {
   color: white;
@@ -88,7 +93,7 @@ QTreeWidget
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="dashboardView">
      <property name="styleSheet">
@@ -116,23 +121,11 @@ QTreeWidget
       </property>
      </widget>
     </widget>
+    <widget class="QWidget" name="graphView"/>
     <widget class="QWidget" name="viewTeamView">
      <property name="styleSheet">
       <string notr="true"/>
      </property>
-     <widget class="QLabel" name="label_2">
-      <property name="geometry">
-       <rect>
-        <x>80</x>
-        <y>70</y>
-        <width>110</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Team Listings</string>
-      </property>
-     </widget>
     </widget>
     <widget class="QWidget" name="adminView"/>
    </widget>
