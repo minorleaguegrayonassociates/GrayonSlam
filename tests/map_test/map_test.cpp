@@ -36,6 +36,7 @@ void map_test::testLoadData()
     for(const std::vector<std::string>& row : data)
         m_map[std::stoi(row[3])] = row[4];
 
+    QVERIFY(!m_map.empty());
     QVERIFY(static_cast<unsigned int>(m_map.size()) == data.size());
 
 
@@ -98,6 +99,7 @@ void map_test::testIterator()
        backwardIterations.push_back(*it);
     }
     //check that I have the same amount of traversals
+    QVERIFY(backwardIterations.size() == static_cast<unsigned int>(m_map.size()));
     QVERIFY(backwardIterations.size() == forwardIterations.size());
 
     std::reverse(backwardIterations.begin(),backwardIterations.end());
