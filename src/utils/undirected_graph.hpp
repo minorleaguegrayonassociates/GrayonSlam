@@ -72,9 +72,10 @@ public:
 
     /* Shortest-path */
     Weight dijkstraTraversal(const Vertex& vertex,
-                             std::set<Vertex>& visisted,
-                             std::vector<CompleteEdge>& discoveryEdges,
                              std::map<Vertex,std::pair<Weight,Vertex>>& vertexInfo) const;
+
+    std::pair<std::list<std::pair<Vertex,Vertex>>,Weight> dijkstraTraversal(const Vertex& vertexFrom,
+                                                                              const Vertex& vertexTo) const;
 
 private:
     /* Helpers */
@@ -619,10 +620,10 @@ undirected_graph<Vertex,Weight>::primsMST(const Vertex& start) const            
  */
 template<typename Vertex, typename Weight>
 Weight undirected_graph<Vertex, Weight>::dijkstraTraversal(const Vertex& vertex,
-                                                           std::set<Vertex>& visisted,
-                                                           std::vector<CompleteEdge>& discoveryEdges,
                                                            std::map<Vertex,std::pair<Weight,Vertex>>& vertexInfo) const
 {
+    std::set<Vertex> visisted;
+    std::vector<CompleteEdge> discoveryEdges;
     Weight total = Weight();
     using VertexInfo = std::pair<Weight,Vertex>;
     if(!vertexExists(vertex))
@@ -694,6 +695,52 @@ Weight undirected_graph<Vertex, Weight>::dijkstraTraversal(const Vertex& vertex,
         }
     }
     return total;
+}
+
+/**
+ * This function takes two verticies and returns all the edges between the
+ * two verticies and the total Weight of all the edges
+ *
+ * @param vertexFrom records all edges starting from this Vertex (origin)
+ * @param vertexTo records all edges between start and this vertex (destination)
+ */
+template<typename Vertex, typename Weight>
+std::pair<std::list<std::pair<Vertex,Vertex>>,Weight>
+undirected_graph<Vertex, Weight>::dijkstraTraversal(const Vertex& vertexFrom, const Vertex& vertexTo) const
+{
+    std::map<Vertex,std::pair<Weight,Vertex>> routes;
+    std::list<std::pair<Vertex,Vertex>> route;
+
+    if(vertexExists(vertexFrom) && vertexExists(vertexTo))
+    {
+        /* Get all possible routes */
+        dijkstraTraversal(vertexFrom, routes);
+
+        /* Declare and initializing variable needed to trace back from vertexTo until I reach vertexFrom*/
+        bool finished = false;
+        Vertex parentFrom = routes[vertexTo].second;
+        Vertex parentTo = vertexTo;
+
+        // Record the total distance
+        Weight totalDistance = routes[vertexTo].first;
+
+        /* Keep tracing back to the parent until the parent is `vertexFrom` */
+        while (!finished)
+        {
+            route.push_front(std::pair<Vertex,Vertex>(parentFrom,parentTo));
+            if (parentFrom == vertexFrom)
+            {
+                finished = true;
+            }
+            else
+            {
+                parentTo = parentFrom;
+                parentFrom = routes[parentFrom].second;
+            }
+        }
+        return std::pair<std::list<std::pair<Vertex,Vertex>>,Weight>(route,totalDistance);
+    }
+    return std::pair<std::list<std::pair<Vertex,Vertex>>,Weight>(route,Weight());
 }
 
 /**
