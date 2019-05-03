@@ -2,7 +2,6 @@
 #include <string>
 #include "csvparser.hpp"
 #include "src/utils/map.hpp"
-// add necessary includes here
 
 class map_test : public QObject
 {
@@ -39,9 +38,7 @@ void map_test::testLoadData()
     QVERIFY(!m_map.empty());
     QVERIFY(static_cast<unsigned int>(m_map.size()) == data.size());
 
-
    //make sure all stadiums are read in and present in the map
-
     QCOMPARE("Angel Stadium", *m_map.find(62));
     QCOMPARE("Dodger Stadium", *m_map.find(63));
     QCOMPARE("Marlins Park", *m_map.find(64));
@@ -73,7 +70,6 @@ void map_test::testLoadData()
     QCOMPARE("Minute Maid Park", *m_map.find(60));
     QCOMPARE("Kauffman Stadium", *m_map.find(61));
 
-
     //testing negative hash with positive hash and repeat keys
     m_map[-1] = "harro";
     m_map[1] = "hi";
@@ -88,28 +84,29 @@ void map_test::testIterator()
 {
     std::vector<std::string> forwardIterations;
     std::vector<std::string> backwardIterations;
+
     //test iteratiing forward through the map
     for(nstd::map<int,std::string>::iterator it = m_map.begin(); it != m_map.end(); ++it)
     {
         forwardIterations.push_back(*it);
     }
+
     //testing iterating backwards through the map
     for(nstd::map<int,std::string>::iterator it = (--m_map.end());!it.isNull();--it)
     {
        backwardIterations.push_back(*it);
     }
+
     //check that I have the same amount of traversals
     QVERIFY(backwardIterations.size() == static_cast<unsigned int>(m_map.size()));
     QVERIFY(backwardIterations.size() == forwardIterations.size());
 
-    std::reverse(backwardIterations.begin(),backwardIterations.end());
-
     //check if the elements are the same
+    std::reverse(backwardIterations.begin(),backwardIterations.end());
     for(unsigned int i = 0; i < backwardIterations.size(); ++i)
     {
         QCOMPARE(backwardIterations[i], forwardIterations[i]);
     }
-
 }
 
 void map_test::testStringHash()
