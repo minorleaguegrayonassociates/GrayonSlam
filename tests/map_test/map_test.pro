@@ -16,3 +16,6 @@ HEADERS += \
 
 SOURCES += \ 
     map_test.cpp
+
+RESOURCES += \
+    res.qrc
