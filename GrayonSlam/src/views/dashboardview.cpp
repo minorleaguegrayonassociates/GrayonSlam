@@ -1,6 +1,6 @@
 #include "dashboardview.hpp"
 #include "ui_dashboardview.h"
-#include "utils/parser.hpp"
+#include "src/utils/parser.hpp"
 #include <QRandomGenerator>
 
 /* Static variables */

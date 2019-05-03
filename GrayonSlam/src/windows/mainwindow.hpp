@@ -1,8 +1,8 @@
 #pragma once
 #include <QMainWindow>
 #include <vector>
-#include "widgets/navbar.hpp"
-#include "views/view.hpp"
+#include "src/widgets/navbar.hpp"
+#include "src/views/view.hpp"
 
 namespace Ui
 {

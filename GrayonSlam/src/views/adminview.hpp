@@ -1,7 +1,7 @@
 #pragma once
 #include "view.hpp"
-#include "widgets/souvenirlist.hpp"
-#include "widgets/stadiumlist.hpp"
+#include "src/widgets/souvenirlist.hpp"
+#include "src/widgets/stadiumlist.hpp"
 #include <QPushButton>
 
 namespace Ui

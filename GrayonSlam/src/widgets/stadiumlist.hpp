@@ -1,8 +1,8 @@
 #pragma once
 #include <QTreeWidget>
-#include "datastore/database.hpp"
+#include "src/datastore/database.hpp"
 #include "stadiumlistitem.hpp"
-#include "utils/stringfunctions.hpp"
+#include "src/utils/stringfunctions.hpp"
 
 /**
  * @brief StadiumList class

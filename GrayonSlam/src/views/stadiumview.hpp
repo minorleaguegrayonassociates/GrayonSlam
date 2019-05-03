@@ -2,8 +2,8 @@
 
 #include <QWidget>
 #include "view.hpp"
-#include "widgets/stadiumlist.hpp"
-#include "datastore/database.hpp"
+#include "src/widgets/stadiumlist.hpp"
+#include "src/datastore/database.hpp"
 
 
 namespace Ui {

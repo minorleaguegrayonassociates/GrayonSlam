@@ -1,10 +1,10 @@
 #pragma once
 
 #include <vector>
-#include "datastore/souvenir.hpp"
-#include "datastore/stadium.hpp"
-#include "datastore/team.hpp"
-#include "utils/map.hpp"
+#include "src/datastore/souvenir.hpp"
+#include "src/datastore/stadium.hpp"
+#include "src/datastore/team.hpp"
+#include "src/utils/map.hpp"
 
 /**
  * @class Database class

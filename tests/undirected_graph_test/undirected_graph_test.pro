@@ -6,11 +6,11 @@ CONFIG -= app_bundle
 
 TEMPLATE = app
 
-INCDIR = ../../src
+INCDIR = ../../GrayonSlam
 INCLUDEPATH += $$INCDIR
 
 HEADERS += \
-    $$INCDIR/utils/undirected_graph.hpp \
+    $$INCDIR/src/utils/undirected_graph.hpp \
     csvparser.hpp
 
 SOURCES += \

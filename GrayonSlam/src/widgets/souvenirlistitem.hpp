@@ -1,6 +1,6 @@
 #pragma once
 #include <QWidget>
-#include "datastore/stadium.hpp"
+#include "src/datastore/stadium.hpp"
 
 using StadiumId = int;
 using SouvenirId = int;

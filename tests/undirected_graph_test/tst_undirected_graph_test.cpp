@@ -1,6 +1,6 @@
 #include <QtTest>
 #include <string>
-#include "utils/undirected_graph.hpp"
+#include "src/utils/undirected_graph.hpp"
 #include "csvparser.hpp"
 
 class undirected_graph_test : public QObject
