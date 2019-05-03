@@ -85,7 +85,7 @@ FORMS += \
     views/adminview.ui
 
 RESOURCES += \
-    ../res.qrc
+    res.qrc
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
