@@ -14,7 +14,7 @@ HEADERS += \
     csvparser.hpp
 
 SOURCES += \
-    tst_undirected_graph_test.cpp
+    undirected_graph_test.cpp
 
 RESOURCES += \
     res.qrc
