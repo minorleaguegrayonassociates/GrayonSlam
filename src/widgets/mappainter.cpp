@@ -35,7 +35,7 @@ MapPainter::~MapPainter()
  *
  * @param discoveredEdges list of completed edges
  */
-void MapPainter::setDiscoveredList(const std::list<Database::completedEdge>& discoveredEdges)
+void MapPainter::setDiscovered(const std::list<Database::completedEdge>& discoveredEdges)
 {
     /* If alternate list is empty then set vector */
     if(m_discoveredEdgesVector.empty())
@@ -49,7 +49,7 @@ void MapPainter::setDiscoveredList(const std::list<Database::completedEdge>& dis
  *
  * @param discoveredEdges vector std::pair<std::list<std::pair<int,int>>,int> list constains edge(s)
  */
-void MapPainter::setDiscoveredVector(const std::vector<std::pair<std::list<std::pair<int,int>>,int>>& discoveredEdges)
+void MapPainter::setDiscovered(const std::vector<std::pair<std::list<std::pair<int,int>>,int>>& discoveredEdges)
 {
     /* If alternate list is empty then set vector */
     if(m_discoveredEdgesList.empty())
