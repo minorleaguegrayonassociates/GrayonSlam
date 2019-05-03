@@ -711,7 +711,7 @@ undirected_graph<Vertex, Weight>::dijkstraTraversal(const Vertex& vertexFrom, co
     std::map<Vertex,std::pair<Weight,Vertex>> routes;
     std::list<std::pair<Vertex,Vertex>> route;
 
-    if(vertexExists(vertexFrom) && vertexExists(vertexFrom))
+    if(vertexExists(vertexFrom) && vertexExists(vertexTo))
     {
         /* Get all possible routes */
         dijkstraTraversal(vertexFrom, routes);
