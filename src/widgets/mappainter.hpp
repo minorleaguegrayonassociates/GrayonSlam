@@ -16,8 +16,8 @@ public:
     ~MapPainter() override;
 
     /* setters */
-    void setDiscovered(const std::list<Database::completedEdge>&);
-    void setDiscovered(const std::vector<std::pair<std::list<std::pair<int,int>>,int>>&);
+    void setDiscoveredEdges(const std::list<Database::completedEdge>&);
+    void setDiscoveredEdges(const std::vector<std::pair<std::list<std::pair<int,int>>,int>>&);
 
     /* reset */
     void resetMap();
