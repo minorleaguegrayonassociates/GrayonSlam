@@ -6,7 +6,7 @@ CONFIG -= app_bundle
 
 TEMPLATE = app
 
-INCDIR = ../../GrayonSlam
+INCDIR = ../../app
 INCLUDEPATH += $$INCDIR
 
 HEADERS += \
