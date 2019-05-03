@@ -10,7 +10,7 @@ INCDIR = ../../app
 INCLUDEPATH += $$INCDIR
 
 HEADERS += \
-    $$INCDIR/src/utils/undirected_graph.hpp \
+    $$INCDIR/src/utils/map.hpp \
     csvparser.hpp
 
 
