@@ -14,7 +14,7 @@ public:
 private slots:
     void testLoadData();
     void testDepthFirstSearch();
-    void testBreadthFirstSearch();
+    void testBreadthFirstSearch() {}
 
 private:
     nstd::undirected_graph<std::string,int> m_graph;
@@ -35,7 +35,6 @@ void undirected_graph_test::testLoadData()
     for(const std::vector<std::string>& row : data)
         m_graph.addEdge(row[0], row[1], std::stoi(row[2]));
 
-    std::set<std::string> vertices = m_graph.getVertices();
     std::vector<std::pair<std::string,int>> vertexEdges;
     std::string vertex;
 
@@ -48,7 +47,7 @@ void undirected_graph_test::testLoadData()
      */
 
     vertex = "Atlanta";
-    QVERIFY(vertices.count(vertex) == 1);
+    QVERIFY(m_graph.vertexExists(vertex));
     vertexEdges = m_graph.getVertexEdges(vertex);
     QCOMPARE(vertexEdges[0], std::make_pair(std::string("Miami"), 661));
     QCOMPARE(vertexEdges[1], std::make_pair(std::string("Dallas"), 781));
@@ -57,13 +56,13 @@ void undirected_graph_test::testLoadData()
     QCOMPARE(vertexEdges[4], std::make_pair(std::string("New York"), 888));
 
     vertex = "Boston";
-    QVERIFY(vertices.count(vertex) == 1);
+    QVERIFY(m_graph.vertexExists(vertex));
     vertexEdges = m_graph.getVertexEdges(vertex);
     QCOMPARE(vertexEdges[0], std::make_pair(std::string("New York"), 214));
     QCOMPARE(vertexEdges[1], std::make_pair(std::string("Chicago"), 983));
 
     vertex = "Chicago";
-    QVERIFY(vertices.count(vertex) == 1);
+    QVERIFY(m_graph.vertexExists(vertex));
     vertexEdges = m_graph.getVertexEdges(vertex);
     QCOMPARE(vertexEdges[0], std::make_pair(std::string("Kansas City"), 533));
     QCOMPARE(vertexEdges[1], std::make_pair(std::string("New York"), 787));
@@ -72,7 +71,7 @@ void undirected_graph_test::testLoadData()
     QCOMPARE(vertexEdges[4], std::make_pair(std::string("Seattle"), 2097));
 
     vertex = "Dallas";
-    QVERIFY(vertices.count(vertex) == 1);
+    QVERIFY(m_graph.vertexExists(vertex));
     vertexEdges = m_graph.getVertexEdges(vertex);
     QCOMPARE(vertexEdges[0], std::make_pair(std::string("Houston"), 239));
     QCOMPARE(vertexEdges[1], std::make_pair(std::string("Kansas City"), 496));
@@ -80,7 +79,7 @@ void undirected_graph_test::testLoadData()
     QCOMPARE(vertexEdges[3], std::make_pair(std::string("Los Angeles"), 1435));
 
     vertex = "Denver";
-    QVERIFY(vertices.count(vertex) == 1);
+    QVERIFY(m_graph.vertexExists(vertex));
     vertexEdges = m_graph.getVertexEdges(vertex);
     QCOMPARE(vertexEdges[0], std::make_pair(std::string("Kansas City"), 599));
     QCOMPARE(vertexEdges[1], std::make_pair(std::string("Chicago"), 1003));
@@ -89,14 +88,14 @@ void undirected_graph_test::testLoadData()
     QCOMPARE(vertexEdges[4], std::make_pair(std::string("Seattle"), 1331));\
 
     vertex = "Houston";
-    QVERIFY(vertices.count(vertex) == 1);
+    QVERIFY(m_graph.vertexExists(vertex));
     vertexEdges = m_graph.getVertexEdges(vertex);
     QCOMPARE(vertexEdges[0], std::make_pair(std::string("Dallas"), 239));
     QCOMPARE(vertexEdges[1], std::make_pair(std::string("Atlanta"), 810));
     QCOMPARE(vertexEdges[2], std::make_pair(std::string("Miami"), 1187));
 
     vertex = "Kansas City";
-    QVERIFY(vertices.count(vertex) == 1);
+    QVERIFY(m_graph.vertexExists(vertex));
     vertexEdges = m_graph.getVertexEdges(vertex);
     QCOMPARE(vertexEdges[0], std::make_pair(std::string("Dallas"), 496));
     QCOMPARE(vertexEdges[1], std::make_pair(std::string("Chicago"), 533));
@@ -106,7 +105,7 @@ void undirected_graph_test::testLoadData()
     QCOMPARE(vertexEdges[5], std::make_pair(std::string("Los Angeles"), 1663));
 
     vertex = "Los Angeles";
-    QVERIFY(vertices.count(vertex) == 1);
+    QVERIFY(m_graph.vertexExists(vertex));
     vertexEdges = m_graph.getVertexEdges(vertex);
     QCOMPARE(vertexEdges[0], std::make_pair(std::string("San Francisco"), 381));
     QCOMPARE(vertexEdges[1], std::make_pair(std::string("Denver"), 1015));
@@ -114,13 +113,13 @@ void undirected_graph_test::testLoadData()
     QCOMPARE(vertexEdges[3], std::make_pair(std::string("Kansas City"), 1663));
 
     vertex = "Miami";
-    QVERIFY(vertices.count(vertex) == 1);
+    QVERIFY(m_graph.vertexExists(vertex));
     vertexEdges = m_graph.getVertexEdges(vertex);
     QCOMPARE(vertexEdges[0], std::make_pair(std::string("Atlanta"), 661));
     QCOMPARE(vertexEdges[1], std::make_pair(std::string("Houston"), 1187));
 
     vertex = "New York";
-    QVERIFY(vertices.count(vertex) == 1);
+    QVERIFY(m_graph.vertexExists(vertex));
     vertexEdges = m_graph.getVertexEdges(vertex);
     QCOMPARE(vertexEdges[0], std::make_pair(std::string("Boston"), 214));
     QCOMPARE(vertexEdges[1], std::make_pair(std::string("Chicago"), 787));
@@ -128,14 +127,14 @@ void undirected_graph_test::testLoadData()
     QCOMPARE(vertexEdges[3], std::make_pair(std::string("Kansas City"), 1260));
 
     vertex = "San Francisco";
-    QVERIFY(vertices.count(vertex) == 1);
+    QVERIFY(m_graph.vertexExists(vertex));
     vertexEdges = m_graph.getVertexEdges(vertex);
     QCOMPARE(vertexEdges[0], std::make_pair(std::string("Los Angeles"), 381));
     QCOMPARE(vertexEdges[1], std::make_pair(std::string("Seattle"), 807));
     QCOMPARE(vertexEdges[2], std::make_pair(std::string("Denver"), 1267));
 
     vertex = "Seattle";
-    QVERIFY(vertices.count(vertex) == 1);
+    QVERIFY(m_graph.vertexExists(vertex));
     vertexEdges = m_graph.getVertexEdges(vertex);
     QCOMPARE(vertexEdges[0], std::make_pair(std::string("San Francisco"), 807));
     QCOMPARE(vertexEdges[1], std::make_pair(std::string("Denver"), 1331));
@@ -144,10 +143,6 @@ void undirected_graph_test::testLoadData()
 
 void undirected_graph_test::testDepthFirstSearch()
 {
-                                                                                                /*
-                                                                                                 * In the previous test, use "vertexExists" instead
-                                                                                                 * of "vertices.count(vertex) == 1"
-                                                                                                 */
     QVERIFY(m_graph.vertexExists("Dallas"));
 
     /* Obtain DFS data from the graph */
