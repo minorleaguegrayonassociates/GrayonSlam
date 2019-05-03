@@ -29,14 +29,31 @@ MapPainter::~MapPainter()
 }
 
 /**
+ * Set's distcoveredEdges list so that the
+ * painter can highlight the discovered path
+ * alternate container to `m_discoveredEdgesVector`
+ *
+ * @param discoveredEdges list of completed edges
+ */
+void MapPainter::setDiscoveredEdges(const std::list<Database::completedEdge>& discoveredEdges)
+{
+    /* If alternate list is empty then set vector */
+    if(m_discoveredEdgesVector.empty())
+        m_discoveredEdgesList = discoveredEdges;
+}
+
+/**
  * Set's distcoveredEdges vector so that the
  * painter can highlight the discovered path
+ * alternate container to `m_discoveredEdgesList`
  *
- * @param discoveredEdges vector of completed edges
+ * @param discoveredEdges vector std::pair<std::list<std::pair<int,int>>,int> list constains edge(s)
  */
-void MapPainter::setDiscoveredVector(const std::vector<Database::completedEdge>& discoveredEdges)
+void MapPainter::setDiscoveredEdges(const std::vector<std::pair<std::list<std::pair<int,int>>,int>>& discoveredEdges)
 {
-    m_discoveredEdges = discoveredEdges;
+    /* If alternate list is empty then set vector */
+    if(m_discoveredEdgesList.empty())
+        m_discoveredEdgesVector = discoveredEdges;
 }
 
 /**
@@ -49,8 +66,11 @@ void MapPainter::resetMap()
     // Set coordinates outside of widget coordinates
     m_beacon->setCoords(Beacon::outerBound);
 
-    if(!m_discoveredEdges.empty())
-        m_discoveredEdges.clear();
+    if(!m_discoveredEdgesVector.empty())
+        m_discoveredEdgesVector.clear();
+
+    if(!m_discoveredEdgesList.empty())
+        m_discoveredEdgesList.clear();
 }
 
 /**
@@ -161,9 +181,9 @@ void MapPainter::highlightEdge(QPainter& painter, const QPoint& stadiumCoord1, c
  * @param painter QPainter
  * @param discoveredEdges vector of completedEdges [tuple(stadiumId,stadiumId,weight)]
  */
-void MapPainter::highlightDiscoveredEdges(QPainter& painter, std::vector<Database::completedEdge>& discoveredEdges)
+void MapPainter::highlightDiscoveredEdges(QPainter& painter, std::list<Database::completedEdge>& discoveredEdges)
 {
-     std::map<int,Database::coords> coords(Database::getCoordinates());
+    std::map<int,Database::coords> coords(Database::getCoordinates());
     for(auto edge: discoveredEdges)
     {
         highlightEdge(painter, QPoint(coords.find(std::get<0>(edge))->second.first,
@@ -171,6 +191,24 @@ void MapPainter::highlightDiscoveredEdges(QPainter& painter, std::vector<Databas
                                QPoint(coords.find(std::get<1>(edge))->second.first,
                                       coords.find(std::get<1>(edge))->second.second));
     }
+}
+
+/**
+ * highlights lines between the container of edges provided
+ * made to highlight a trips discovered edges
+ *
+ * @param painter QPainter
+ * @param discoveredEdges vector of std::pair<std::list<std::pair<int,int>>,int>
+ */
+void MapPainter::highlightDiscoveredEdges(QPainter& painter, std::vector<std::pair<std::list<std::pair<int,int>>,int>>& discoveredEdges)
+{
+    std::map<int,Database::coords> coords(Database::getCoordinates());
+    for(auto edges: discoveredEdges)
+        for(auto edge : edges.first)
+        highlightEdge(painter, QPoint(coords.find(edge.first)->second.first,
+                                      coords.find(edge.first)->second.second),
+                          QPoint(coords.find(edge.second)->second.first,
+                                 coords.find(edge.second)->second.second));
 }
 
 /**
@@ -245,6 +283,57 @@ void MapPainter::animateTrip(int stadiumOneId, int stadiumTwoId)
     animation->start(QAbstractAnimation::DeleteWhenStopped);
 }
 
+/*
+ * Animates a whole trip, meant to simulate a whole trip
+ * as a preview
+ *
+ * @param tripEdges std::vector<std::pair<std::list<std::pair<int,int>>,int>>
+*/
+void MapPainter::animateTrip(std::vector<std::pair<std::list<std::pair<int,int>>,int>>& tripEdges)
+{
+    /* As long as you're not on the very last list in the vector always go through all the last edge of a list
+     * and check if the last distination is different from the start of the next destination on the next set of
+     * edges if so then trace back and pop in the inverse of the original edge until you get to the vertex where
+     * the route diviated
+     */
+    size_t tripSize = tripEdges.size();
+    for(size_t i = 0; i < tripSize; ++i)
+    {
+        if(i != tripSize-1)
+        {
+            /* While the last destination of a list isn't equal to the start of the next destination on the next list
+             * it will trace back and pop the inverese edge and check if
+             */
+            while(tripEdges[i].first.back().second != tripEdges[i+1].first.front().first)
+            {
+                std::list<std::pair<int,int>>::const_iterator it = tripEdges[i].first.end();
+                if( it == tripEdges[i].first.end())
+                    --it;
+                if(it->second != tripEdges[i+1].first.front().first)
+                {
+                    tripEdges[i].first.push_back(std::pair<int,int>(it->second,it->first));
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+    }
+}
+
+/*
+ * Animates a set of edges
+ *
+ * @param tripEdges std::list<Database::completedEdge>
+*/
+void MapPainter::animateTrip(const std::pair<std::list<std::pair<int,int>>,int>& tripEdges)
+{
+    /* Animate all edges within the list */
+    for(auto edge : tripEdges.first)
+        MapPainter::animateTrip(edge.first,edge.second);
+}
+
 /**
  * @brief Draws all stadiums and all the edges between the stadiums
  */
@@ -254,10 +343,16 @@ void MapPainter::paintEvent(QPaintEvent*)
 
     std::map<int,Database::coords> tempCoords(Database::getCoordinates());
 
-    /* If m_discoverEdges is populated with edges, highlight discovered edges */
-    if(!m_discoveredEdges.empty())
+    /* If m_discoverEdgesList is populated with edges, highlight discovered edges */
+    if(!m_discoveredEdgesList.empty())
     {
-        highlightDiscoveredEdges(painter, m_discoveredEdges);
+        highlightDiscoveredEdges(painter, m_discoveredEdgesList);
+    }
+
+    /* If m_discoverEdgesVector is populated with edges, highlight discovered edges */
+    if(!m_discoveredEdgesVector.empty())
+    {
+        highlightDiscoveredEdges(painter, m_discoveredEdgesVector);
     }
 
     /* Paint edge between stadiums */
