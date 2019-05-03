@@ -16,6 +16,7 @@ private slots:
     void testDepthFirstSearch();
     void testBreadthFirstSearch();
     void testPrimsMST();
+    void testDijkstraTraversal();
 
 private:
     nstd::undirected_graph<std::string,int> m_graph;
@@ -189,10 +190,10 @@ void undirected_graph_test::testBreadthFirstSearch()
 {
     QVERIFY(m_graph.vertexExists("Dallas"));
 
-    /* Obtain DFS data from the graph */
-    auto dfsData = m_graph.breadthFirstSearch("Dallas");
-    auto discoveryEdges = dfsData.first;
-    int totalWeight = dfsData.second;
+    /* Obtain BFS data from the graph */
+    auto bfsData = m_graph.breadthFirstSearch("Dallas");
+    auto discoveryEdges = bfsData.first;
+    int totalWeight = bfsData.second;
 
     QCOMPARE(discoveryEdges.size(), 11);
     QCOMPARE(totalWeight, 9991);
@@ -232,10 +233,10 @@ void undirected_graph_test::testPrimsMST()
 {
     QVERIFY(m_graph.vertexExists("Dallas"));
 
-    /* Obtain DFS data from the graph */
-    auto dfsData = m_graph.primsMST("Dallas");
-    auto discoveryEdges = dfsData.first;
-    int totalWeight = dfsData.second;
+    /* Obtain Prim's MST data from the graph */
+    auto primsData = m_graph.primsMST("Dallas");
+    auto discoveryEdges = primsData.first;
+    int totalWeight = primsData.second;
 
     QCOMPARE(discoveryEdges.size(), 11);
     QCOMPARE(totalWeight, 6513);
@@ -266,6 +267,34 @@ void undirected_graph_test::testPrimsMST()
     QCOMPARE(discoveryEdges.front(), std::make_tuple(std::string("Los Angeles"), std::string("San Francisco"), 381));
     discoveryEdges.pop_front();
     QCOMPARE(discoveryEdges.front(), std::make_tuple(std::string("San Francisco"), std::string("Seattle"), 807));
+    discoveryEdges.pop_front();
+
+    QVERIFY(discoveryEdges.empty());
+}
+
+void undirected_graph_test::testDijkstraTraversal()
+{
+    QVERIFY(m_graph.vertexExists("Dallas"));
+    QVERIFY(m_graph.vertexExists("Seattle"));
+
+    /* Obtain Dijkstra's Traversal data from the graph */
+    auto dijkstraData = m_graph.dijkstraTraversal("Dallas", "Seattle");
+    auto discoveryEdges = dijkstraData.first;
+    int totalWeight = dijkstraData.second;
+
+    QCOMPARE(discoveryEdges.size(), 3);
+    QCOMPARE(totalWeight, 2426);
+
+    /*
+     * Check the discovery edges, then
+     * pop the front so that we can seet
+     * the next edge.
+     */
+    QCOMPARE(discoveryEdges.front(), std::make_pair(std::string("Dallas"), std::string("Kansas City")));
+    discoveryEdges.pop_front();
+    QCOMPARE(discoveryEdges.front(), std::make_pair(std::string("Kansas City"), std::string("Denver")));
+    discoveryEdges.pop_front();
+    QCOMPARE(discoveryEdges.front(), std::make_pair(std::string("Denver"), std::string("Seattle")));
     discoveryEdges.pop_front();
 
     QVERIFY(discoveryEdges.empty());
