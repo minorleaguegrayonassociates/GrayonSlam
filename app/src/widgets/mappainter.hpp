@@ -16,10 +16,11 @@ public:
     ~MapPainter() override;
 
     /* setters */
+    void setBeaconCoords(int);
     void setDiscoveredEdges(const std::list<Database::completedEdge>&);
     void setDiscoveredEdges(const std::vector<std::pair<std::list<std::pair<int,int>>,int>>&);
 
-    /* reset */
+    /* Reset */
     void resetMap();
 
     /* Animations */
@@ -28,7 +29,7 @@ public:
     void animateTrip(std::vector<std::pair<std::list<std::pair<int,int>>,int>>& tripEdges);
 
 private:
-    /*Paint Methods */
+    /* Paint Methods */
     void paintStadiums(QPainter& painter, int id, const QPoint& stadiumPoint, const QString& StadiumName);
     void paintEdge(QPainter& painter, const QPoint& stdmCoord1, const QPoint& stdmCoord2);
     void highlightEdge(QPainter& painter, const QPoint& stadiumCoord1, const QPoint& stadiumCoord2);
@@ -41,6 +42,8 @@ private:
 
     AirplanePainter* m_airplane;
     Beacon* m_beacon;
+    Beacon* m_publicBeacon;
+    QPoint m_coords;
     std::list<Database::completedEdge> m_discoveredEdgesList;
     std::vector<std::pair<std::list<std::pair<int,int>>,int>> m_discoveredEdgesVector;
 };
