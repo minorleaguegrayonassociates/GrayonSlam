@@ -3,6 +3,7 @@
 #include "src/widgets/receiptitem.hpp"
 #include <QFont>
 #include <QDebug>
+#include <QLocale>
 
 // Alias for ReceiptItem enum
 using receiptState = ReceiptItem::ReceiptItemStates;
@@ -138,7 +139,7 @@ void ReceiptList::grandTotal(std::vector<Qtys>& receipts, double& distance)
 
     /* Set the QListWidgetItem to hold a ReceiptItem */
     QListWidgetItem* iwGtDistance = itemWidget();
-    ReceiptItem* gTDistance = new ReceiptItem(this, QString::number(distance,'f',1), receiptState::GrandTotalDistance);
+    ReceiptItem* gTDistance = new ReceiptItem(this, QLocale(QLocale::English).toString(distance), receiptState::GrandTotalDistance);
     QListWidget::setItemWidget(iwGtDistance, gTDistance);
 
     /* Set the QListWidgetItem to hold a ReceiptItem */

@@ -28,6 +28,9 @@ public:
     /* Reset */
     void resetView() override;
 
+    void findNextClosest(int, std::vector<int>&);
+    void findShortestPath(int, std::vector<int>&);
+
 public slots:
     /* Setter */
     void setReceipt(Qtys&);
@@ -44,6 +47,8 @@ private slots:
     void removeFromTrip(int);
     void on_startTrip_clicked();
     void on_goToPreview_clicked();
+    void on_goToPreview_2_clicked();
+    void on_goToPreview_3_clicked();
     void goBack();
     void updateList();
 
@@ -51,11 +56,12 @@ private:
     Ui::PlanVacationView *m_ui;
     NavBar* m_navbar;
     StadiumList* m_stadiumList;
+    StadiumList* m_stadiumList_2;
     StadiumList* m_stadiumListPlanner;
     SouvenirShop* m_souvenirShop;
     ReceiptView* m_receiptViews;
     MapView*    m_mapView;
-    double m_distance;
+    int m_distance;
     std::list<int> m_tripList;
     std::vector<Qtys> m_receiptVector;
     int m_previousStadiumId;
