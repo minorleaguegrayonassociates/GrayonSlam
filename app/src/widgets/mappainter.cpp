@@ -1,6 +1,7 @@
 #include "mappainter.hpp"
 #include <QPainter>
 #include <QPropertyAnimation>
+#include <QSequentialAnimationGroup>
 
 // Adjust given coordinates by these coordinates before printing stadium names
 const QPoint textAdjustment(25,-2);
@@ -16,9 +17,13 @@ MapPainter::MapPainter(QWidget* parent)
     /* Make an instance of an AirplanePainter with MapPainter as it's parent and set it's size */
     m_airplane = new AirplanePainter(this);
     m_airplane->resize(AirplanePainter::planeSize);
+    m_airplane->setHidden(true);
 
     /* Making an instance of Beacon - signals `To` location when animating */
     m_beacon = new Beacon(this);
+
+    /* Making an instance of Beacon that show's if the coordinates are set publicly */
+    m_publicBeacon = new Beacon(this);
 }
 
 /* Destuctor */
@@ -26,6 +31,17 @@ MapPainter::~MapPainter()
 {
     delete m_airplane;
     delete m_beacon;
+}
+
+void MapPainter::setBeaconCoords(int stadiumId)
+{
+    // Get map of stadium coordinates
+    std::map<int,Database::coords> coords(Database::getCoordinates());
+
+    // find Stadium id x,y coordinates and set `m_coords`
+    m_coords = QPoint(coords.find(stadiumId)->second.first,coords.find(stadiumId)->second.second);
+    m_publicBeacon->setCoords(m_coords);
+    m_publicBeacon->update();
 }
 
 /**
@@ -63,8 +79,11 @@ void MapPainter::resetMap()
 {
     // Set to hidden
     m_airplane->setHidden(true);
-    // Set coordinates outside of widget coordinates
+
+    /* Set beacon coordinates outside of widget coordinates */
     m_beacon->setCoords(Beacon::outerBound);
+    m_coords = Beacon::outerBound;
+    m_publicBeacon->setCoords(Beacon::outerBound);
 
     if(!m_discoveredEdgesVector.empty())
         m_discoveredEdgesVector.clear();
@@ -188,8 +207,8 @@ void MapPainter::highlightDiscoveredEdges(QPainter& painter, std::list<Database:
     {
         highlightEdge(painter, QPoint(coords.find(std::get<0>(edge))->second.first,
                                       coords.find(std::get<0>(edge))->second.second),
-                               QPoint(coords.find(std::get<1>(edge))->second.first,
-                                      coords.find(std::get<1>(edge))->second.second));
+                      QPoint(coords.find(std::get<1>(edge))->second.first,
+                             coords.find(std::get<1>(edge))->second.second));
     }
 }
 
@@ -276,10 +295,10 @@ void MapPainter::animateTrip(int stadiumOneId, int stadiumTwoId)
     animation->setDuration(600);
     animation->setStartValue(QRect(QPoint(tempCoords[stadiumOneId].first-m_airplane->size().width()/2,
                                           tempCoords[stadiumOneId].second-m_airplane->size().height()/2),
-                                          m_airplane->size()));
+                                   m_airplane->size()));
     animation->setEndValue(QRect(QPoint(tempCoords[stadiumTwoId].first-m_airplane->size().width()/2,
                                         tempCoords[stadiumTwoId].second-m_airplane->size().height()/2),
-                                        m_airplane->size()));
+                                 m_airplane->size()));
     animation->start(QAbstractAnimation::DeleteWhenStopped);
 }
 
@@ -301,24 +320,57 @@ void MapPainter::animateTrip(std::vector<std::pair<std::list<std::pair<int,int>>
     {
         if(i != tripSize-1)
         {
-            /* While the last destination of a list isn't equal to the start of the next destination on the next list
+        /* While the last destination of a list isn't equal to the start of the next destination on the next list
              * it will trace back and pop the inverese edge and check if
              */
-            while(tripEdges[i].first.back().second != tripEdges[i+1].first.front().first)
+        while(tripEdges[i].first.back().second != tripEdges[i+1].first.front().first)
+        {
+            std::list<std::pair<int,int>>::const_iterator it = tripEdges[i].first.end();
+            if( it == tripEdges[i].first.end())
+                --it;
+            if(it->second != tripEdges[i+1].first.front().first)
             {
-                std::list<std::pair<int,int>>::const_iterator it = tripEdges[i].first.end();
-                if( it == tripEdges[i].first.end())
-                    --it;
-                if(it->second != tripEdges[i+1].first.front().first)
-                {
-                    tripEdges[i].first.push_back(std::pair<int,int>(it->second,it->first));
-                }
-                else
-                {
-                    break;
-                }
+                tripEdges[i].first.push_back(std::pair<int,int>(it->second,it->first));
+            }
+            else
+            {
+                break;
             }
         }
+        }
+
+        QSequentialAnimationGroup* group = new QSequentialAnimationGroup;
+
+        // Always set airplane visable before use
+        m_airplane->setHidden(false);
+
+        // Getting the coordinates of all the stadiums
+        std::map<int,Database::coords> tempCoords(Database::getCoordinates());
+
+        for(auto trips : tripEdges)
+        {
+            for(auto trip : trips.first)
+            {
+                // Insert coordinates to calculate the planes angle
+                m_airplane->setRotation(tempCoords[trip.first].first,tempCoords[trip.first].second,
+                                        tempCoords[trip.second].first,tempCoords[trip.second].second);
+
+                // Set beacon at `to` location, stadiumTwo
+                m_beacon->setCoords(QPoint(tempCoords[trip.second].first,tempCoords[trip.second].second));
+
+                /* setting up m_airplane to animate between two stadium coordinates */
+                QPropertyAnimation* animation = new QPropertyAnimation(m_airplane, "geometry");
+                animation->setDuration(600);
+                animation->setStartValue(QRect(QPoint(tempCoords[trip.first].first-m_airplane->size().width()/2,
+                                                      tempCoords[trip.first].second-m_airplane->size().height()/2),
+                                               m_airplane->size()));
+                animation->setEndValue(QRect(QPoint(tempCoords[trip.second].first-m_airplane->size().width()/2,
+                                                    tempCoords[trip.second].second-m_airplane->size().height()/2),
+                                             m_airplane->size()));
+                group->addAnimation(animation);
+            }
+        }
+        group->start(QAbstractAnimation::DeleteWhenStopped);
     }
 }
 
@@ -329,9 +381,34 @@ void MapPainter::animateTrip(std::vector<std::pair<std::list<std::pair<int,int>>
 */
 void MapPainter::animateTrip(const std::pair<std::list<std::pair<int,int>>,int>& tripEdges)
 {
-    /* Animate all edges within the list */
-    for(auto edge : tripEdges.first)
-        MapPainter::animateTrip(edge.first,edge.second);
+    QSequentialAnimationGroup* group = new QSequentialAnimationGroup;
+    // Always set airplane visable before use
+    m_airplane->setHidden(false);
+
+    // Getting the coordinates of all the stadiums
+    std::map<int,Database::coords> tempCoords(Database::getCoordinates());
+
+    for(auto trip : tripEdges.first)
+    {
+        // Insert coordinates to calculate the planes angle
+        m_airplane->setRotation(tempCoords[trip.first].first,tempCoords[trip.first].second,
+                                tempCoords[trip.second].first,tempCoords[trip.second].second);
+
+        // Set beacon at `to` location, stadiumTwo
+        m_beacon->setCoords(QPoint(tempCoords[trip.second].first,tempCoords[trip.second].second));
+
+        /* setting up m_airplane to animate between two stadium coordinates */
+        QPropertyAnimation* animation = new QPropertyAnimation(m_airplane, "geometry");
+        animation->setDuration(600);
+        animation->setStartValue(QRect(QPoint(tempCoords[trip.first].first-m_airplane->size().width()/2,
+                                              tempCoords[trip.first].second-m_airplane->size().height()/2),
+                                       m_airplane->size()));
+         animation->setEndValue(QRect(QPoint(tempCoords[trip.second].first-m_airplane->size().width()/2,
+                                            tempCoords[trip.second].second-m_airplane->size().height()/2),
+                                     m_airplane->size()));
+         group->addAnimation(animation);
+    }
+    group->start(QAbstractAnimation::DeleteWhenStopped);
 }
 
 /**
@@ -360,8 +437,8 @@ void MapPainter::paintEvent(QPaintEvent*)
     {
         paintEdge(painter,QPoint(tempCoords.find(std::get<0>(edge))->second.first,
                                  tempCoords.find(std::get<0>(edge))->second.second),
-                          QPoint(tempCoords.find(std::get<1>(edge))->second.first,
-                                 tempCoords.find(std::get<1>(edge))->second.second));
+                  QPoint(tempCoords.find(std::get<1>(edge))->second.first,
+                         tempCoords.find(std::get<1>(edge))->second.second));
     }
 
     /* Paint stadium (red or blue based on league) and print the name of the stadium */
