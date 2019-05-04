@@ -64,24 +64,24 @@ void GraphView::resetUi()
      switch(m_displayStatus)
      {
         case DisplayType::DFS:
-            returnVal =  m_graph.depthFirstSearch(m_stadiumIds[ui->LocationsComboBox->currentIndex()]);
+            returnVal =  m_graph.depthFirstSearch(m_stadiumIds[static_cast<unsigned int>(ui->LocationsComboBox->currentIndex())]);
             m_mapPainter->setDiscoveredEdges(returnVal.first);
             totalMilage = returnVal.second;
-            m_mapPainter->setBeaconCoords(m_stadiumIds[ui->LocationsComboBox->currentIndex()]);
+            m_mapPainter->setBeaconCoords(m_stadiumIds[static_cast<unsigned int>(ui->LocationsComboBox->currentIndex())]);
             break;
 
         case DisplayType::BFS:
-            returnVal = m_graph.breadthFirstSearch(m_stadiumIds[ui->LocationsComboBox->currentIndex()]);
+            returnVal = m_graph.breadthFirstSearch(m_stadiumIds[static_cast<unsigned int>(ui->LocationsComboBox->currentIndex())]);
             m_mapPainter->setDiscoveredEdges(returnVal.first);
             totalMilage = returnVal.second;
-            m_mapPainter->setBeaconCoords(m_stadiumIds[ui->LocationsComboBox->currentIndex()]);
+            m_mapPainter->setBeaconCoords(m_stadiumIds[static_cast<unsigned int>(ui->LocationsComboBox->currentIndex())]);
             break;
 
         case DisplayType::MST:
-            returnVal = m_graph.primsMST(m_stadiumIds[ui->LocationsComboBox->currentIndex()]);
+            returnVal = m_graph.primsMST(m_stadiumIds[static_cast<unsigned int>(ui->LocationsComboBox->currentIndex())]);
             m_mapPainter->setDiscoveredEdges(returnVal.first);
             totalMilage = returnVal.second;
-            m_mapPainter->setBeaconCoords(m_stadiumIds[ui->LocationsComboBox->currentIndex()]);
+            m_mapPainter->setBeaconCoords(m_stadiumIds[static_cast<unsigned int>(ui->LocationsComboBox->currentIndex())]);
             break;
 
         case DisplayType::UNSELECTED:
