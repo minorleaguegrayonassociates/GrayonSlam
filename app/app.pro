@@ -46,7 +46,13 @@ SOURCES += \
     src/views/adminview.cpp \
     src/widgets/mappainter.cpp \
     src/widgets/airplanepainter.cpp \
-    src/widgets/beacon.cpp
+    src/widgets/beacon.cpp \
+    src/views/receiptview.cpp \
+    src/views/souvenirshop.cpp \
+    src/views/mapview.cpp \
+    src/views/planvacationview.cpp \
+    src/widgets/receiptitem.cpp \
+    src/widgets/receiptlist.cpp
 
 HEADERS += \
     src/utils/stringfunctions.hpp \
@@ -75,7 +81,13 @@ HEADERS += \
     src/widgets/mappainter.hpp \
     src/widgets/airplanepainter.hpp \
     src/widgets/beacon.hpp \
-    src/utils/undirected_graph.hpp
+    src/utils/undirected_graph.hpp \
+    src/views/receiptview.hpp \
+    src/views/souvenirshop.hpp \
+    src/views/mapview.hpp \
+    src/views/planvacationview.hpp \
+    src/widgets/receiptitem.hpp \
+    src/widgets/receiptlist.hpp
 
 FORMS += \
     src/views/dashboardview.ui \
@@ -85,7 +97,12 @@ FORMS += \
     src/widgets/navbaritem.ui \
     src/widgets/souvenirlistitem.ui \
     src/views/stadiumview.ui \
-    src/views/adminview.ui
+    src/views/adminview.ui \
+    src/views/receiptview.ui \
+    src/views/souvenirshop.ui \
+    src/views/mapview.ui \
+    src/views/planvacationview.ui \
+    src/widgets/receiptitem.ui
 
 RESOURCES += \
     res.qrc
