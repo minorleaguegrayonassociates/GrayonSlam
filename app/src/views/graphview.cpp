@@ -67,18 +67,21 @@ void GraphView::resetUi()
             returnVal =  m_graph.depthFirstSearch(m_stadiumIds[ui->LocationsComboBox->currentIndex()]);
             m_mapPainter->setDiscoveredEdges(returnVal.first);
             totalMilage = returnVal.second;
+            m_mapPainter->setBeaconCoords(m_stadiumIds[ui->LocationsComboBox->currentIndex()]);
             break;
 
         case DisplayType::BFS:
             returnVal = m_graph.breadthFirstSearch(m_stadiumIds[ui->LocationsComboBox->currentIndex()]);
             m_mapPainter->setDiscoveredEdges(returnVal.first);
             totalMilage = returnVal.second;
+            m_mapPainter->setBeaconCoords(m_stadiumIds[ui->LocationsComboBox->currentIndex()]);
             break;
 
         case DisplayType::MST:
             returnVal = m_graph.primsMST(m_stadiumIds[ui->LocationsComboBox->currentIndex()]);
             m_mapPainter->setDiscoveredEdges(returnVal.first);
             totalMilage = returnVal.second;
+            m_mapPainter->setBeaconCoords(m_stadiumIds[ui->LocationsComboBox->currentIndex()]);
             break;
 
         case DisplayType::UNSELECTED:
