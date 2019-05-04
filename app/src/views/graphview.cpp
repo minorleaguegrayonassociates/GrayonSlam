@@ -32,6 +32,7 @@ GraphView::~GraphView()
  */
 void GraphView::resetView()
 {
+    ui->LocationsComboBox->clear();
     m_displayStatus = DisplayType::UNSELECTED;
     /* add edges to internal graph */
     for(auto edge : Database::getDistances())
