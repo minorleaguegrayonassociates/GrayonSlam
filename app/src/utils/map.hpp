@@ -601,6 +601,7 @@ namespace nstd
     {
         int findPosition = -1;
         node* found = insertFind(k, findPosition);
+        if(found != NULL && found->available) ++m_numOfElems;
         if(found != NULL) found->available = false;
         node* tmp;
         unsigned int hashCode = 0;
