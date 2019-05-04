@@ -78,6 +78,16 @@ void map_test::testLoadData()
     QCOMPARE("harro", *m_map.find(-1));
     QCOMPARE("hi", *m_map.find(1));
     QCOMPARE("hi", *m_map.find(2));
+
+    /*
+     * making sure same hash doesn't overrwrite and make sure elems
+     * are counted properly
+     */
+    m_map.remove(-1);
+    QCOMPARE("hi", *m_map.find(1));
+    m_map[-1] = "ho";
+    QCOMPARE("ho", *m_map.find(-1));
+
 }
 
 void map_test::testIterator()
