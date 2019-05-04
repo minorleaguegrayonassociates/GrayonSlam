@@ -83,6 +83,12 @@
      <height>31</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">        font-size: 13px;
+        color: white;
+		border: 2px solid white;
+        background-color: #303030;</string>
+   </property>
    <property name="text">
     <string>Total Mileage:</string>
    </property>
