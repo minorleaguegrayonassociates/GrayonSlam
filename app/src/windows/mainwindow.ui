@@ -41,7 +41,7 @@ background-color: white;
 }
 
 QWidget#graphView {
-background-image: url(:/res/backgrounds/background_icons_orange.png);
+background-image: url(:/res/backgrounds/background_icons_yellow.png);
 background-color: #30a07b;
 }
 QPushButton
@@ -93,7 +93,7 @@ QTreeWidget
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="dashboardView">
      <property name="styleSheet">

@@ -27,18 +27,20 @@ class GraphView : public View
     Q_OBJECT
 
 public:
-    explicit GraphView(QWidget *parent = nullptr);
-    virtual ~GraphView();
-    virtual void resetView();
-    virtual void resetUi();
+    /* Constructor */
+    explicit GraphView(QWidget* parent);
+
+    /* Destructor */
+    virtual ~GraphView() override;
+
+    /* Resets */
+    virtual void resetView() override;
+    virtual void resetUi() override;
 
 private slots:
     void on_DFSButton_clicked();
-
     void on_BFSButton_clicked();
-
     void on_MSTButton_clicked();
-
     void on_LocationsComboBox_currentIndexChanged(int index);
 
 private:
@@ -50,6 +52,10 @@ private:
         UNSELECTED
     };
 
+    /* Setters */
+    void setDisplayStatus(DisplayType);
+
+    /* Data Members*/
     Ui::GraphView *ui;
     MapPainter* m_mapPainter;
     DisplayType m_displayStatus;

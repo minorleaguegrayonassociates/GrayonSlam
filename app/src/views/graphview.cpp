@@ -7,7 +7,7 @@
  *
  * @param parent pointer to widget it will reside in
  */
-GraphView::GraphView(QWidget *parent) :
+GraphView::GraphView(QWidget* parent) :
     View(parent),
     ui(new Ui::GraphView),
     m_displayStatus(DisplayType::UNSELECTED)
@@ -94,15 +94,28 @@ void GraphView::resetUi()
 }
 
 /**
+ * setDisplayStatus() will change the state of the map to the enum type
+ * and reset the Ui
+ *
+ * Note: it will only change if there is a selected index in the qcombobox
+ *
+ * @param displayStatus the state of the view to be changed to
+ */
+void GraphView::setDisplayStatus(DisplayType displayStatus)
+{
+    if(ui->LocationsComboBox->currentIndex() != -1)
+    {
+        m_displayStatus = displayStatus;
+        resetUi();
+    }
+}
+
+/**
  * on_DFSButton_clicked puts the View into the DFS state and will highlight edges accordingly
  */
 void GraphView::on_DFSButton_clicked()
 {
-    if(ui->LocationsComboBox->currentIndex() != -1)
-    {
-        m_displayStatus = DisplayType::DFS;
-        resetUi();
-    }
+        setDisplayStatus(DisplayType::DFS);
 }
 
 /**
@@ -110,11 +123,7 @@ void GraphView::on_DFSButton_clicked()
  */
 void GraphView::on_BFSButton_clicked()
 {
-    if(ui->LocationsComboBox->currentIndex() != -1)
-    {
-        m_displayStatus = DisplayType::BFS;
-        resetUi();
-    }
+    setDisplayStatus(DisplayType::BFS);
 }
 
 /**
@@ -122,11 +131,7 @@ void GraphView::on_BFSButton_clicked()
  */
 void GraphView::on_MSTButton_clicked()
 {
-    if(ui->LocationsComboBox->currentIndex() != -1)
-    {
-        m_displayStatus = DisplayType::MST;
-        resetUi();
-    }
+    setDisplayStatus(DisplayType::MST);
 }
 
 /**
@@ -134,11 +139,7 @@ void GraphView::on_MSTButton_clicked()
  *
  * @param index the index of the current value inside the combobox
  */
-void GraphView::on_LocationsComboBox_currentIndexChanged(int index)
+void GraphView::on_LocationsComboBox_currentIndexChanged(int)
 {
-    if(index != -1)
-    {
-        m_displayStatus = DisplayType::UNSELECTED;
-        resetUi();
-    }
+    setDisplayStatus(DisplayType::UNSELECTED);
 }
