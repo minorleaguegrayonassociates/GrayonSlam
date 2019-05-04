@@ -2,6 +2,7 @@
 #include "ui_planvacationview.h"
 #include "src/datastore/database.hpp"
 #include <QTimer>
+#include <QComboBox>
 
 /* Constructor */
 PlanVacationView::PlanVacationView(QWidget *parent, NavBar* bar)
@@ -26,9 +27,6 @@ PlanVacationView::PlanVacationView(QWidget *parent, NavBar* bar)
     m_ui->vacationType->addItem(tr("Shortest path"), PlanVacationView::ShortestPath);
     m_ui->vacationType->addItem(tr("Shortest Distance from Detroit"), PlanVacationView::ShortestDistanceFromDetroit);
     m_ui->vacationType->addItem(tr("Next Closest Stadium"), PlanVacationView::nextClosestStadium);
-    m_ui->vacationType->addItem(tr("Prims"), PlanVacationView::Prims);
-    m_ui->vacationType->addItem(tr("Depth First Search"), PlanVacationView::DFS);
-    m_ui->vacationType->addItem(tr("Breadth First Search"), PlanVacationView::BFS);
 
     /* Connecting signals to slots */
     connect(m_souvenirShop,&SouvenirShop::goToReceipt, this,&PlanVacationView::setReceipt);
@@ -39,6 +37,7 @@ PlanVacationView::PlanVacationView(QWidget *parent, NavBar* bar)
     connect(m_ui->ContinueToNext,&QAbstractButton::clicked,this,&PlanVacationView::resetUi);
     connect(m_stadiumList,&StadiumList::stadiumClicked,this,&PlanVacationView::addToTrip);
     connect(m_stadiumListPlanner,&StadiumList::stadiumClicked,this,&PlanVacationView::removeFromTrip);
+    connect(m_ui->fromCombo_2,qOverload<int>(&QComboBox::currentIndexChanged),this,&PlanVacationView::updateList);
 }
 
 /* Destructor */
@@ -190,6 +189,17 @@ void PlanVacationView::on_Enter_clicked()
                 }
             }
         }
+        else if(m_vacationType == PlanType::ShortestPath)
+        {
+            m_ui->chooseVacationStack->setCurrentWidget(m_ui->shortestPath);
+            for(auto stadium : Database::getStadiums())
+            {
+                if(stadium.getId() != 62)
+                {
+                    m_ui->fromCombo_2->addItem(QString::fromStdString("From: "+stadium.getName()),stadium.getId());
+                }
+            }
+        }
     }
 }
 
@@ -219,13 +229,18 @@ void PlanVacationView::on_startTrip_clicked()
                 m_tripList.push_back(vertex.second);
             }
         }
-        if(!m_tripList.empty())
-        {
-            m_navbar->setHidden(true);
-            m_mapView->setState(MapView::MapState::Trip);
-            m_ui->planVacationStack->setCurrentWidget(m_ui->activeVacation); 
-            activeTrip();
-        }
+    }
+    else if(m_vacationType == PlanType::ShortestPath)
+    {
+
+    }
+
+    if(!m_tripList.empty())
+    {
+        m_navbar->setHidden(true);
+        m_mapView->setState(MapView::MapState::Trip);
+        m_ui->planVacationStack->setCurrentWidget(m_ui->activeVacation);
+        activeTrip();
     }
 }
 
@@ -278,15 +293,26 @@ void PlanVacationView::removeFromTrip(int id)
 void PlanVacationView::on_goToPreview_clicked()
 {
     auto list = m_graph.dijkstraTraversal(m_ui->fromCombo->currentData().toInt(), m_ui->toCombo->currentData().toInt());
-    test.clear();
-    test.push_back(list);
+    tripEdges.clear();
+    tripEdges.push_back(list);
     m_ui->planVacationStack->setCurrentWidget(m_ui->tripMap);
 
-    m_mapView->setHighlight(test);
-    m_mapView->setAnimation(test[0]);
+    m_mapView->setHighlight(tripEdges);
+    m_mapView->setAnimation(tripEdges[0]);
 }
 
 void PlanVacationView::goBack()
 {
     m_ui->planVacationStack->setCurrentWidget(m_ui->planVacation);
+}
+
+/**
+ * FromCombo_2 is a QComboBox used in `ShortestDistance` type trip
+ * if the value changes this slot is called and basically just checks if id is
+ * in the list and if it's found it's removed.
+ * Don't want `From` and `To` To have the same stadium Id
+ */
+void PlanVacationView::updateList()
+{
+    PlanVacationView::removeFromTrip(m_ui->fromCombo_2->currentData().toInt());
 }

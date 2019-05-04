@@ -17,7 +17,7 @@ class PlanVacationView : public View
     Q_OBJECT
 
     /* Enum class for each plan type */
-    enum PlanType { DijkstraFromAnaheim, ShortestPath, ShortestDistanceFromDetroit, nextClosestStadium, Prims, DFS, BFS, None};
+    enum PlanType { DijkstraFromAnaheim, ShortestPath, ShortestDistanceFromDetroit, nextClosestStadium, None};
 public:
     /* Constructor */
     PlanVacationView(QWidget* parent, NavBar* m_navbar);
@@ -45,6 +45,7 @@ private slots:
     void on_startTrip_clicked();
     void on_goToPreview_clicked();
     void goBack();
+    void updateList();
 
 private:
     Ui::PlanVacationView *m_ui;
@@ -63,6 +64,6 @@ private:
     PlanType m_vacationType;
     std::vector<std::pair<Team,Stadium>> m_planList;
     nstd::undirected_graph<int,int> m_graph;
-    std::vector<std::pair<std::list<std::pair<int,int>>,int>> test;
+    std::vector<std::pair<std::list<std::pair<int,int>>,int>> tripEdges;
 };
 
