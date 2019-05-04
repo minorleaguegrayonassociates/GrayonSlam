@@ -13,11 +13,17 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QLabel
+{
+	font-size: 13px;
+}</string>
+  </property>
   <widget class="QWidget" name="map_widget" native="true">
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>200</y>
+     <y>0</y>
      <width>710</width>
      <height>399</height>
     </rect>
@@ -28,6 +34,80 @@
     border-image: url(:/res/map_background.png) 0 0 0 0 strech strech;
 }</string>
    </property>
+  </widget>
+  <widget class="QPushButton" name="MSTButton">
+   <property name="geometry">
+    <rect>
+     <x>530</x>
+     <y>420</y>
+     <width>81</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Show MST</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="BFSButton">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>420</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Show BFS</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="DFSButton">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>420</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Show DFS</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="totalMileageLabel">
+   <property name="geometry">
+    <rect>
+     <x>380</x>
+     <y>470</y>
+     <width>191</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Total Mileage:</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>470</y>
+     <width>281</width>
+     <height>44</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QLabel" name="startingLocationLabel">
+      <property name="text">
+       <string>Starting Location: </string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QComboBox" name="LocationsComboBox"/>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>
