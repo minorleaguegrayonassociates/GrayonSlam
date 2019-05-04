@@ -33,6 +33,12 @@ MapPainter::~MapPainter()
     delete m_beacon;
 }
 
+/**
+ * Finds the coodinates (x,y) of the stadium id passed in and creates a QPoint
+ * that is assigned to `m_coords`, set's `m_publicBeacon` to `m_coords`
+ *
+ * @param stadiumId stadium id
+ */
 void MapPainter::setBeaconCoords(int stadiumId)
 {
     // Get map of stadium coordinates
