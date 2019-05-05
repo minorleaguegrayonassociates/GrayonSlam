@@ -27,6 +27,9 @@ public:
     explicit StadiumList(QWidget* parent = nullptr);
     explicit StadiumList(const std::vector<std::pair<Team,Stadium>>&, QWidget* parent = nullptr);
 
+    /* Setters */
+    void setSorting(bool);
+
     /* Resets */
     void populateWidget(const std::vector<std::pair<Team,Stadium>>&);
     void allowHidden(bool);
@@ -47,4 +50,5 @@ private:
     /* Member variables*/
     QTreeWidget* m_listDisplay;
     bool m_showHidden;
+    bool sortingStatus;
 };
