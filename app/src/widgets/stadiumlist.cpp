@@ -16,7 +16,7 @@ StadiumList::StadiumList(QWidget* parent)
  * @param parent pointer to the parent widet
  */
 StadiumList::StadiumList(const std::vector<std::pair<Team,Stadium>>& stadiumList, QWidget* parent) :
-    QWidget(parent), m_showHidden(false)
+    QWidget(parent), m_showHidden(false), sortingStatus(true)
 {
     //creates new tree widget
     m_listDisplay = new QTreeWidget(this);
@@ -33,6 +33,16 @@ StadiumList::StadiumList(const std::vector<std::pair<Team,Stadium>>& stadiumList
 StadiumList::~StadiumList()
 {
     delete m_listDisplay;
+}
+
+/**
+ * setSorting enables or disables the sorting of the list depending on what is passed in
+ * @param sortStat boolean describing if sorting is enabled or disabled for the list
+ */
+void StadiumList::setSorting(bool sortStat)
+{
+    sortingStatus = sortStat;
+     m_listDisplay->setSortingEnabled(sortingStatus);
 }
 
 /**
@@ -82,7 +92,7 @@ void StadiumList::populateWidget(const std::vector<std::pair<Team,Stadium>>& sta
         new StadiumListItem(m_listDisplay,stadiumAndTeam.second,tmpList);
     }
     //Does not allow users to edit the cells directly
-    m_listDisplay->setSortingEnabled(true);
+    m_listDisplay->setSortingEnabled(sortingStatus);
     m_listDisplay->setEditTriggers(QAbstractItemView::NoEditTriggers);
 }
 
