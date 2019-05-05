@@ -30,20 +30,17 @@ public slots:
     void resetUi() override;
     void resetView() override;
 
+private slots:
     /* Setter */
     void setReceipt(Qtys&);
     void goToNext();
     void activeTrip();
-    void goToShop();   
-
-private slots:
+    void goToShop();
     void on_Enter_clicked();
+    void on_goToPreview_clicked();
+    void on_startTrip_clicked();
     void addToTrip(int);
     void removeFromTrip(int);
-    void on_startTrip_clicked();
-    void on_goToPreview_clicked();
-    void on_goToPreview_2_clicked();
-    void on_goToPreview_3_clicked();
     void goBack();
     void updateList();
 

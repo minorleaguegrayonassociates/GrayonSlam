@@ -41,6 +41,8 @@ PlanVacationView::PlanVacationView(QWidget *parent, NavBar* bar)
     connect(m_ui->fromCombo_2,qOverload<int>(&QComboBox::currentIndexChanged),this,&PlanVacationView::updateList);
     connect(m_ui->startTrip_2,&QAbstractButton::clicked,this,&PlanVacationView::on_startTrip_clicked);
     connect(m_ui->startTrip_3,&QAbstractButton::clicked,this,&PlanVacationView::on_startTrip_clicked);
+    connect(m_ui->goToPreview_2,&QAbstractButton::clicked,this,&PlanVacationView::on_goToPreview_clicked);
+    connect(m_ui->goToPreview_3,&QAbstractButton::clicked,this,&PlanVacationView::on_goToPreview_clicked);
 }
 
 /* Destructor */
@@ -226,6 +228,66 @@ void PlanVacationView::on_Enter_clicked()
     }
 }
 
+/**
+ * Get's the edges, distance, and inputs the stadiums to visit in the trip list
+ * according to the trip that was choosen (held in `m_vacationType`) and does an
+ * animation previewing the route(s) that will be taken
+ */
+void PlanVacationView::on_goToPreview_clicked()
+{
+    tripEdges.clear();
+    m_tripList.clear();
+    m_distance = 0;
+    if(m_vacationType == PlanType::DijkstraFromAnaheim)
+    {
+        auto list = m_graph.dijkstraTraversal(m_ui->fromCombo->currentData().toInt(), m_ui->toCombo->currentData().toInt());
+        tripEdges.push_back(list);
+    }
+    else if(!m_planList.empty() && (m_vacationType == PlanType::ShortestPath ||m_vacationType == PlanType::nextClosestStadium))
+    {
+        std::vector<int> stadiumIds;
+
+        for(auto dataPair : m_planList )
+        {
+            stadiumIds.push_back(dataPair.second.getId());
+        }
+
+        m_tripList.push_back(m_ui->fromCombo_2->currentData().toInt());
+
+        if(m_vacationType == PlanType::ShortestPath)
+            findShortestPath(m_ui->fromCombo_2->currentData().toInt(),stadiumIds);
+        else if(m_vacationType == PlanType::nextClosestStadium)
+            findNextClosest(m_ui->fromCombo_2->currentData().toInt(),stadiumIds);
+    }
+    else if(m_vacationType == PlanType::ShortestDistanceFromDetroit)
+    {
+        std::vector<int> stadiumIds;
+        for(auto stadium : Database::getStadiums())
+        {
+            if(stadium.getId() != 59)
+                stadiumIds.push_back(stadium.getId());
+        }
+
+        m_tripList.push_back(m_ui->fromCombo_3->currentData().toInt());
+        findNextClosest(m_ui->fromCombo_3->currentData().toInt(),stadiumIds);
+
+        m_ui->planVacationStack->setCurrentWidget(m_ui->tripMap);
+        m_mapView->setHighlight(tripEdges);
+        m_mapView->setAnimation(tripEdges);
+    }
+    if(!m_tripList.empty())
+    {
+        m_ui->planVacationStack->setCurrentWidget(m_ui->tripMap);
+        m_mapView->setHighlight(tripEdges);
+        m_mapView->setAnimation(tripEdges);
+    }
+}
+
+/**
+ * Get's the edges, distance, and inputs the stadiums to visit in the trip list
+ * according to the trip that was choosen (held in `m_vacationType`) and starts
+ * the trip
+ */
 void PlanVacationView::on_startTrip_clicked()
 {
     m_tripList.clear();
@@ -294,6 +356,12 @@ void PlanVacationView::on_startTrip_clicked()
     }
 }
 
+/**
+ * Adds an item to `m_planList`
+ * and repopulates `m_stadiumListPlanner`
+ *
+ * @param id stadium id
+ */
 void PlanVacationView::addToTrip(int id)
 {
     Stadium tempStadium  = Database::findStadiumById(id);
@@ -314,6 +382,12 @@ void PlanVacationView::addToTrip(int id)
     }
 }
 
+/**
+ * Removes an item to `m_planList`
+ * and repopulates `m_stadiumListPlanner`
+ *
+ * @param id
+ */
 void PlanVacationView::removeFromTrip(int id)
 {
     Stadium tempStadium  = Database::findStadiumById(id);
@@ -340,69 +414,6 @@ void PlanVacationView::removeFromTrip(int id)
     }
 }
 
-void PlanVacationView::on_goToPreview_clicked()
-{
-    auto list = m_graph.dijkstraTraversal(m_ui->fromCombo->currentData().toInt(), m_ui->toCombo->currentData().toInt());
-    tripEdges.clear();
-    tripEdges.push_back(list);
-    m_ui->planVacationStack->setCurrentWidget(m_ui->tripMap);
-
-    m_mapView->setHighlight(tripEdges);
-    m_mapView->setAnimation(tripEdges[0]);
-}
-
-void PlanVacationView::on_goToPreview_2_clicked()
-{
-    tripEdges.clear();
-    m_tripList.clear();
-    m_distance = 0;
-
-    if(!m_planList.empty())
-    {
-        std::vector<int> stadiumIds;
-
-        for(auto dataPair : m_planList )
-        {
-            stadiumIds.push_back(dataPair.second.getId());
-        }
-
-        m_tripList.push_back(m_ui->fromCombo_2->currentData().toInt());
-
-        if(m_vacationType == PlanType::ShortestPath)
-            findShortestPath(m_ui->fromCombo_2->currentData().toInt(),stadiumIds);
-        else if(m_vacationType == PlanType::nextClosestStadium)
-            findNextClosest(m_ui->fromCombo_2->currentData().toInt(),stadiumIds);
-
-        m_ui->planVacationStack->setCurrentWidget(m_ui->tripMap);
-        m_mapView->setHighlight(tripEdges);
-        m_mapView->setAnimation(tripEdges);
-    }
-}
-
-/**
- * Get's all the data for
- */
-void PlanVacationView::on_goToPreview_3_clicked()
-{
-    std::vector<int> stadiumIds;
-    tripEdges.clear();
-    m_tripList.clear();
-    m_distance = 0;
-
-    for(auto stadium : Database::getStadiums())
-    {
-        if(stadium.getId() != 59)
-            stadiumIds.push_back(stadium.getId());
-    }
-
-    m_tripList.push_back(m_ui->fromCombo_3->currentData().toInt());
-    findNextClosest(m_ui->fromCombo_3->currentData().toInt(),stadiumIds);
-
-    m_ui->planVacationStack->setCurrentWidget(m_ui->tripMap);
-    m_mapView->setHighlight(tripEdges);
-    m_mapView->setAnimation(tripEdges);
-}
-
 /**
  * Switches `planVacationStack` current widget to `planVacation`
  */
@@ -422,6 +433,14 @@ void PlanVacationView::updateList()
     PlanVacationView::removeFromTrip(m_ui->fromCombo_2->currentData().toInt());
 }
 
+/**
+ * Goes through all the vertices, pusheds the smallest weight onto the `m_tripList`
+ * pushes it's edges into the tripEdges, and takes off the visited stadiums from `vertices`
+ * it keeps calling itself recursively until all all the stadiums have been visited
+ *
+ * @param currentStadium - Stadium id of the starting location
+ * @param verticies - all the other stadiums that will be visited
+ */
 void PlanVacationView::findNextClosest(int currentStadium, std::vector<int>& verticies)
 {
     int smallestWeight = std::numeric_limits<int>::max();
@@ -458,6 +477,13 @@ void PlanVacationView::findNextClosest(int currentStadium, std::vector<int>& ver
         findNextClosest(tempStorage.first,verticies);
 }
 
+/**
+ * Goes through `verticies` and finds the shortest path to the next stadium until all of the verticies
+ * have been visited
+ *
+ * @param currentStadium - Stadium id of the starting location
+ * @param verticies - all the other stadiums that will be visited
+ */
 void PlanVacationView::findShortestPath(int currentStadium, std::vector<int>& verticies)
 {
     int nextStadium = currentStadium;
