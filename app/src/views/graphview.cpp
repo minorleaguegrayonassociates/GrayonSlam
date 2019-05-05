@@ -2,6 +2,8 @@
 #include "ui_graphview.h"
 #include "src/widgets/beacon.hpp"
 
+using completedEdge = std::tuple<int,int,int>;
+
 /**
  * Constructs a Stadium View with a pointer to the parent widget which it will reside in
  *
