@@ -4,8 +4,6 @@
 #include "src/widgets/mappainter.hpp"
 #include "src/utils/undirected_graph.hpp"
 
-using completedEdge = std::tuple<int,int,int>;
-
 namespace Ui {
 class GraphView;
 }
