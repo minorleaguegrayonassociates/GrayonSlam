@@ -118,7 +118,7 @@ void GraphView::setDisplayStatus(DisplayType displayStatus)
  */
 void GraphView::on_DFSButton_clicked()
 {
-        setDisplayStatus(DisplayType::DFS);
+    setDisplayStatus(DisplayType::DFS);
 }
 
 /**
