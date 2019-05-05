@@ -353,6 +353,10 @@ void PlanVacationView::on_goToPreview_clicked()
 
 void PlanVacationView::on_goToPreview_2_clicked()
 {
+    tripEdges.clear();
+    m_tripList.clear();
+    m_distance = 0;
+
     if(!m_planList.empty())
     {
         std::vector<int> stadiumIds;
@@ -375,13 +379,20 @@ void PlanVacationView::on_goToPreview_2_clicked()
     }
 }
 
+/**
+ * Get's all the data for
+ */
 void PlanVacationView::on_goToPreview_3_clicked()
 {
     std::vector<int> stadiumIds;
+    tripEdges.clear();
+    m_tripList.clear();
+    m_distance = 0;
 
     for(auto stadium : Database::getStadiums())
     {
-        stadiumIds.push_back(stadium.getId());
+        if(stadium.getId() != 59)
+            stadiumIds.push_back(stadium.getId());
     }
 
     m_tripList.push_back(m_ui->fromCombo_3->currentData().toInt());
@@ -392,6 +403,9 @@ void PlanVacationView::on_goToPreview_3_clicked()
     m_mapView->setAnimation(tripEdges);
 }
 
+/**
+ * Switches `planVacationStack` current widget to `planVacation`
+ */
 void PlanVacationView::goBack()
 {
     m_ui->planVacationStack->setCurrentWidget(m_ui->planVacation);

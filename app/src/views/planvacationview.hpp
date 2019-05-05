@@ -25,21 +25,16 @@ public:
     /* Destructor */
     ~PlanVacationView() override;
 
+public slots:
     /* Reset */
+    void resetUi() override;
     void resetView() override;
 
-    void findNextClosest(int, std::vector<int>&);
-    void findShortestPath(int, std::vector<int>&);
-
-public slots:
     /* Setter */
     void setReceipt(Qtys&);
     void goToNext();
     void activeTrip();
-    void goToShop();
-
-     /* Reset */
-    void resetUi() override;
+    void goToShop();   
 
 private slots:
     void on_Enter_clicked();
@@ -53,6 +48,10 @@ private slots:
     void updateList();
 
 private:
+    /* Sorts */
+    void findNextClosest(int, std::vector<int>&);
+    void findShortestPath(int, std::vector<int>&);
+
     Ui::PlanVacationView *m_ui;
     NavBar* m_navbar;
     StadiumList* m_stadiumList;
