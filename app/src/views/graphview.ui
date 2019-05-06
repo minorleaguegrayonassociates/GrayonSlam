@@ -14,9 +14,13 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QLabel
-{
-	font-size: 13px;
+   <string notr="true">QLabel#totalMileageLabel {
+background-color: white;
+border-radius: 3px;
+border: 1px solid black;
+font-size: 14;
+font: bold;
+color:black;
 }</string>
   </property>
   <widget class="QWidget" name="map_widget" native="true">
@@ -38,7 +42,7 @@
   <widget class="QPushButton" name="MSTButton">
    <property name="geometry">
     <rect>
-     <x>530</x>
+     <x>510</x>
      <y>420</y>
      <width>81</width>
      <height>21</height>
@@ -51,7 +55,7 @@
   <widget class="QPushButton" name="BFSButton">
    <property name="geometry">
     <rect>
-     <x>290</x>
+     <x>310</x>
      <y>420</y>
      <width>75</width>
      <height>23</height>
@@ -64,7 +68,7 @@
   <widget class="QPushButton" name="DFSButton">
    <property name="geometry">
     <rect>
-     <x>40</x>
+     <x>120</x>
      <y>420</y>
      <width>75</width>
      <height>23</height>
@@ -77,29 +81,29 @@
   <widget class="QLabel" name="totalMileageLabel">
    <property name="geometry">
     <rect>
-     <x>380</x>
-     <y>470</y>
-     <width>191</width>
+     <x>255</x>
+     <y>368</y>
+     <width>280</width>
      <height>31</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">        font-size: 13px;
-        color: white;
-		border: 2px solid white;
-        background-color: #303030;</string>
+    <string notr="true"/>
    </property>
    <property name="text">
     <string>Total Mileage:</string>
    </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>40</x>
+     <x>210</x>
      <y>470</y>
      <width>281</width>
-     <height>44</height>
+     <height>55</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">

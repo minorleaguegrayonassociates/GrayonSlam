@@ -288,6 +288,7 @@ void PlanVacationView::on_goToPreview_clicked()
     if(!m_tripList.empty())
     {
         m_ui->planVacationStack->setCurrentWidget(m_ui->tripMap);
+        m_mapView->setDistance("Distance: "+QLocale(QLocale::English).toString(m_distance)+" mi.");
         m_mapView->setHighlight(tripEdges);
         m_mapView->setAnimation(tripEdges);
     }

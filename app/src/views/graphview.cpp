@@ -1,6 +1,7 @@
 #include "graphview.hpp"
 #include "ui_graphview.h"
 #include "src/widgets/beacon.hpp"
+#include "src/utils/stringfunctions.hpp"
 
 using completedEdge = std::tuple<int,int,int>;
 
@@ -92,7 +93,7 @@ void GraphView::resetUi()
             break;
      }
      std::string mileage = "Total Mileage: ";
-     mileage += std::to_string(totalMileage) + " mi.";
+     mileage += commaSeparate(std::to_string(totalMileage)) + " mi.";
      ui->totalMileageLabel->setText(QString::fromStdString(mileage));
 }
 
