@@ -20,6 +20,10 @@
   <widget class="QWidget" name="centralWidget">
    <property name="styleSheet">
     <string notr="true">
+QWidget#centralWidget {
+background-color: #303030;
+}
+
 QWidget#dashboardView {
 background-image: url(:/res/backgrounds/background_icons_red.png);
 background-color: #66A2CC;

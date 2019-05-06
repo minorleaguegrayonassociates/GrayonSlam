@@ -242,6 +242,19 @@ void PlanVacationView::on_goToPreview_clicked()
     {
         auto list = m_graph.dijkstraTraversal(m_ui->fromCombo->currentData().toInt(), m_ui->toCombo->currentData().toInt());
         tripEdges.push_back(list);
+        m_distance = list.second;
+        for(auto vertex : list.first)
+        {
+            if(list.first.front() == vertex)
+            {
+                m_tripList.push_back(vertex.first);
+                m_tripList.push_back(vertex.second);
+            }
+            else
+            {
+                m_tripList.push_back(vertex.second);
+            }
+        }
     }
     else if(!m_planList.empty() && (m_vacationType == PlanType::ShortestPath ||m_vacationType == PlanType::nextClosestStadium))
     {
@@ -270,10 +283,6 @@ void PlanVacationView::on_goToPreview_clicked()
 
         m_tripList.push_back(m_ui->fromCombo_3->currentData().toInt());
         findNextClosest(m_ui->fromCombo_3->currentData().toInt(),stadiumIds);
-
-        m_ui->planVacationStack->setCurrentWidget(m_ui->tripMap);
-        m_mapView->setHighlight(tripEdges);
-        m_mapView->setAnimation(tripEdges);
     }
     if(!m_tripList.empty())
     {
