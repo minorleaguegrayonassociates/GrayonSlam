@@ -32,6 +32,22 @@ void MapView::resetUi()
     m_mapPainter->resetMap();
 }
 
+/**
+ * Set's the text for the `distanceLabel`
+ *
+ * @param distance current trip distance
+ */
+void MapView::setDistance(const QString& distance)
+{
+    m_ui->distanceLabel->setText(distance);
+}
+
+/**
+ * This function is in charge of setting setting the state changing
+ * the text on the button and showing or hiding the `distanceLabel`
+ *
+ * @param state either preview state or trip state
+ */
 void MapView::setState(MapState state)
 {
     if(state == MapState::Preview || state == MapState::Trip)
@@ -39,9 +55,15 @@ void MapView::setState(MapState state)
         m_state = state;
 
         if(m_state == MapState::Preview)
+        {
             m_ui->continueToNext->setText(QString("Go Back"));
+            m_ui->distanceLabel->setHidden(false);
+        }
         else
+        {
             m_ui->continueToNext->setText(QString("Continue"));
+            m_ui->distanceLabel->setHidden(true);
+        }
     }
 }
 

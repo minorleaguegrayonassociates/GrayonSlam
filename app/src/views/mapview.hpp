@@ -24,6 +24,7 @@ public:
     void resetUi() override;
 
     /* setter */
+    void setDistance(const QString&);
     void setState(MapState);
     void setAnimation(const int&, const int&);
     void setAnimation(const std::pair<std::list<std::pair<int,int>>,int>& tripEdges);
