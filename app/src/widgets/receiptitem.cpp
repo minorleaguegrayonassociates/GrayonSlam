@@ -16,7 +16,6 @@ ReceiptItem::ReceiptItem(QWidget* parent, const QString& total_restName, const R
     : QWidget(parent), m_ui(new Ui::ReceiptItem), m_defaultFontSyle("IBM Plex Mono")
 {
     m_ui->setupUi(this);
-//    m_defaultFontSyle.setFamily("IBM Plex Mono");
 
     switch(thisTemplate)
     {
@@ -93,14 +92,10 @@ ReceiptItem::ReceiptItem(QWidget* parent, const QString& total_restName, const R
  * @param itemName - item name
  * @param price - total price of item (price * qty)
  */
-ReceiptItem::ReceiptItem(QWidget* parent, const int& qty, const std::string& itemName, const double& price) :
-    QWidget(parent),
-    m_ui(new Ui::ReceiptItem)
+ReceiptItem::ReceiptItem(QWidget* parent, const int& qty, const std::string& itemName, const double& price)
+    : QWidget(parent), m_ui(new Ui::ReceiptItem), m_defaultFontSyle("IBM Plex Mono")
 {
     m_ui->setupUi(this);
-
-    // Set font to IBM Plex Mono
-//    m_defaultFontSyle.setFamily("IBM Plex Mono");
 
     // Flip stack widget to "body" page
     m_ui->receiptStack->setCurrentWidget(m_ui->body);
