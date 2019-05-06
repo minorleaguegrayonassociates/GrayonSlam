@@ -3,6 +3,7 @@
 #include <QPropertyAnimation>
 #include <QSequentialAnimationGroup>
 #include "airplanerotationanimation.hpp"
+#include <cmath>
 
 // Adjust given coordinates by these coordinates before printing stadium names
 const QPoint textAdjustment(25,-2);
@@ -354,16 +355,22 @@ void MapPainter::animateTrip(std::vector<std::pair<std::list<std::pair<int,int>>
         // Getting the coordinates of all the stadiums
         std::map<int,Database::coords> tempCoords(Database::getCoordinates());
 
+        double prevEndAngle = 0;
+        double endAngle = 0;
         for(auto trips : tripEdges)
         {
             for(auto trip : trips.first)
             {
                 /* Set up for plane rotation */
+                prevEndAngle = endAngle;
+                endAngle = atan2(tempCoords[trip.second].second-tempCoords[trip.first].second,tempCoords[trip.second].first-tempCoords[trip.first].first)*(180.0/M_PI);
                 AirplaneRotationAnimation* rotation = new AirplaneRotationAnimation(m_airplane);
                 rotation->setEasingCurve(QEasingCurve::OutExpo);
                 rotation->setDuration(50);
-
+                rotation->setStartValue(QVariant(prevEndAngle));
+                rotation->setEndValue(QVariant(endAngle));
                 group->addAnimation(rotation);
+
                 /* setting up m_airplane to animate between two stadium coordinates */
                 QPropertyAnimation* animation = new QPropertyAnimation(m_airplane, "geometry");
                 animation->setDuration(600);
@@ -398,8 +405,20 @@ void MapPainter::animateTrip(const std::pair<std::list<std::pair<int,int>>,int>&
     // Getting the coordinates of all the stadiums
     std::map<int,Database::coords> tempCoords(Database::getCoordinates());
 
+    double prevEndAngle = 0;
+    double endAngle = 0;
     for(auto trip : tripEdges.first)
     {
+        /* Set up for plane rotation */
+        prevEndAngle = endAngle;
+        endAngle = atan2(tempCoords[trip.second].second-tempCoords[trip.first].second,tempCoords[trip.second].first-tempCoords[trip.first].first)*(180.0/M_PI);
+        AirplaneRotationAnimation* rotation = new AirplaneRotationAnimation(m_airplane);
+        rotation->setEasingCurve(QEasingCurve::OutExpo);
+        rotation->setDuration(50);
+        rotation->setStartValue(QVariant(prevEndAngle));
+        rotation->setEndValue(QVariant(endAngle));
+        group->addAnimation(rotation);
+
         /* setting up m_airplane to animate between two stadium coordinates */
         QPropertyAnimation* animation = new QPropertyAnimation(m_airplane, "geometry");
         animation->setDuration(600);
