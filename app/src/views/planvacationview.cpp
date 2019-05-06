@@ -15,6 +15,7 @@ PlanVacationView::PlanVacationView(QWidget *parent, NavBar* bar)
     m_stadiumList = new StadiumList(m_ui->stadiumListWidget);
     m_stadiumList_2 =  new StadiumList(m_ui->stadiumListWidget_2);
     m_stadiumListPlanner = new StadiumList(m_ui->stadiumListPlannerWidget);
+    m_stadiumListPlanner->setSorting(false);
     m_stadiumListPlanner->clear();
 
     /* Initialize views */
