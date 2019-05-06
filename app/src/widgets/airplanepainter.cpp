@@ -34,12 +34,22 @@ void AirplanePainter::setRotation(int startingX, int startingY, int endingX, int
     setAngle(angle);
 }
 
+/**
+ * Given an angle rotate the plane to that angle and repaint it
+ *
+ * @param angle the new angle to set the plane to
+ */
 void AirplanePainter::setAngle(double angle)
 {
     angleValue = angle;
     update();
 }
 
+/**
+ * Returns the currecnt angle of the plane
+ *
+ * @return the current angle of the plane
+ */
 double AirplanePainter::getAngle()
 {
     return angleValue;
