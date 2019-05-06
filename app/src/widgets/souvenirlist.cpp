@@ -277,8 +277,8 @@ void SouvenirList::quantityChangedHandler(IDs id, int qty)
 {
     if(qty != m_minQty)
     {
-        m_IDQtys[id] = qty; //Store/replace the key with the value
         emit itemQtyChanged(id,qty);
+        m_IDQtys[id] = qty; //Store/replace the key with the value
     }
     else
     {
