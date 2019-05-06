@@ -26,7 +26,15 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">QWidget#rightBar 
+    <string notr="true">QLabel#qtyLabel {
+color:black;
+}
+
+QLabel#cartWidget {
+color:white;
+}
+
+QWidget#rightBar 
 {
 background-color: #303030;
 }
@@ -622,10 +630,10 @@ QPushButton#skipCheckout:hover
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">color:black</string>
+      <string notr="true"/>
      </property>
      <property name="text">
-      <string/>
+      <string>0</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
