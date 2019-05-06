@@ -90,6 +90,34 @@ QPushButton#skipCheckout:hover
   border: 1px solid #609aff;
 }
 
+QPushButton#removeItem {
+border: 1px solid #666666;
+background-color: #303030;
+color: white;
+font-size: 14px;
+font: bold;
+}
+
+QPushButton#removeItem:hover
+{
+background-color: #343A43;
+border: 1px solid #609aff;
+}
+
+QPushButton#addToCart
+{
+font-size: 14px;
+color: white;
+border: 1px solid #666666;
+background-color: #303030;
+font: bold;
+}
+
+QPushButton#addToCart:hover
+{
+  background-color: #343A43;
+  border: 1px solid #609aff;
+}
 
 </string>
    </property>
@@ -688,7 +716,7 @@ QPushButton#skipCheckout:hover
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">color:black;</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>Remove Item</string>
@@ -723,7 +751,7 @@ QPushButton#skipCheckout:hover
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">color:black;</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>Add To Cart</string>
