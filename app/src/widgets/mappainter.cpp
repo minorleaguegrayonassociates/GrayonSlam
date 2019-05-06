@@ -6,7 +6,7 @@
 // Adjust given coordinates by these coordinates before printing stadium names
 const QPoint textAdjustment(25,-2);
 // Size of rectangle that hold text
-const QSize textRect(50,40);
+const QSize textRect(55,40);
 
 /* Constuctor */
 MapPainter::MapPainter(QWidget* parent)
@@ -136,7 +136,7 @@ void MapPainter::paintStadiums(QPainter& painter,int id, const QPoint& stadiumCo
     painter.setPen(myPen);
 
     // Draw stadium
-    painter.drawEllipse(stadiumCoordinate, 1, 1);
+    painter.drawEllipse(stadiumCoordinate, 2, 2);
 
     // Draw stadium name
     paintText(painter, stadiumCoordinate, stadiumName);
@@ -256,9 +256,9 @@ void MapPainter::paintText(QPainter& painter, const QPoint& coordinate, const QS
 
     /* set font info */
     QFont myFont=painter.font() ;
-    myFont.setPointSize (7);
-    myFont.setWeight(QFont::Thin);
-    myFont.setFamily(QString::fromUtf8("Trebuchet MS"));
+    myFont.setPointSize (6);
+    myFont.setWeight(QFont::Light);
+    myFont.setFamily("Trebuchet MS");
 
     /* set pen and font to myPen and myFont */
     painter.setPen(myPen);
