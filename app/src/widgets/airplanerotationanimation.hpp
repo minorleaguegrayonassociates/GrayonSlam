@@ -6,8 +6,9 @@ class AirplaneRotationAnimation : public QVariantAnimation
 {
     Q_OBJECT
 public:
+    AirplaneRotationAnimation(AirplanePainter* airplanePainter, QObject* parent) : QVariantAnimation(parent), m_airplanePainter(airplanePainter){}
     virtual void updateCurrentValue(const QVariant &value) override;
-    AirplaneRotationAnimation(AirplanePainter*, QObject *parent);
+
 private:
-     AirplanePainter* aPainter;
+     AirplanePainter* m_airplanePainter;
 };
