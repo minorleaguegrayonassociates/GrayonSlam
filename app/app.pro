@@ -28,6 +28,7 @@ SOURCES += \
     src/main.cpp \
     src/views/dashboardview.cpp \
     src/views/graphview.cpp \
+    src/widgets/airplanerotationanimation.cpp \
     src/widgets/imageslideshow.cpp \
     src/windows/mainwindow.cpp \
     src/windows/login.cpp \
@@ -58,6 +59,7 @@ HEADERS += \
     src/utils/stringfunctions.hpp \
     src/views/dashboardview.hpp \
     src/views/graphview.hpp \
+    src/widgets/airplanerotationanimation.hpp \
     src/widgets/imageslideshow.hpp \
     src/windows/mainwindow.hpp \
     src/windows/login.hpp \

@@ -31,8 +31,28 @@ void AirplanePainter::setRotation(int startingX, int startingY, int endingX, int
     int xComponent = endingX - startingX;
     int yComponent = endingY - startingY;
     double angle = atan2((1.0*yComponent),(1.0*xComponent)) * (180.0/ M_PI);
+    setAngle(angle);
+}
+
+/**
+ * Given an angle rotate the plane to that angle and repaint it
+ *
+ * @param angle the new angle to set the plane to
+ */
+void AirplanePainter::setAngle(double angle)
+{
     angleValue = angle;
-    repaint();
+    update();
+}
+
+/**
+ * Returns the currecnt angle of the plane
+ *
+ * @return the current angle of the plane
+ */
+double AirplanePainter::getAngle()
+{
+    return angleValue;
 }
 
 /**
