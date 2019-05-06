@@ -7,17 +7,6 @@ ReceiptView::ReceiptView(QWidget* parent)
 {
     m_ui->setupUi(this);
     m_receipt = new ReceiptList(m_ui->ReceiptWidget);
-
-    connect(m_receipt,&QListWidget::itemChanged,this,[&](){
-        if(m_receipt->count() >= 10)
-        {
-            m_receipt->resize(430,500);
-        }
-        else
-        {
-            m_receipt->resize(400,500);
-        }
-    });
 }
 
 /* Destructor */

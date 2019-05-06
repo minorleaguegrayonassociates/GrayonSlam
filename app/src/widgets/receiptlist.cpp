@@ -16,7 +16,7 @@ ReceiptList::ReceiptList(QWidget* parent)
 {
     /* List widget settings */
     QListWidget::setStyleSheet("QListWidget { background-color: #303030; color: white; }");
-    QListWidget::resize(parent->size());
+    QListWidget::resize(QSize(420,500));
     QListWidget::setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     QListWidget::setUniformItemSizes(true);
     QListWidget::setWrapping(false);
