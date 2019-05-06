@@ -6,7 +6,7 @@
  *
  * @param angle angle at which the plane gets updated to
  */
-void AirplaneRotationAnimation::updateCurrentValue(const QVariant &angle)
+void AirplaneRotationAnimation::updateCurrentValue(const QVariant& angle)
 {
     bool* ok = new bool;
     double angle2 = angle.toDouble(ok);
