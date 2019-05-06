@@ -190,9 +190,9 @@ void SouvenirList::removeItem(IDs id)
 
         if(widget != nullptr && id == widget->getIDs())
         {
-            emit itemQtyChanged(id, widget->getIDs().second);
             m_IDQtys.erase(widget->getIDs());
             QListWidget::takeItem(row);
+            emit itemQtyChanged(id, widget->getIDs().second);
             return;
         }
     }
@@ -277,8 +277,8 @@ void SouvenirList::quantityChangedHandler(IDs id, int qty)
 {
     if(qty != m_minQty)
     {
-        emit itemQtyChanged(id,qty);
         m_IDQtys[id] = qty; //Store/replace the key with the value
+        emit itemQtyChanged(id,qty);
     }
     else
     {
