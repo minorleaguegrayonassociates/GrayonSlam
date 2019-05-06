@@ -2,6 +2,7 @@
 #include <QPainter>
 #include <QPropertyAnimation>
 #include <QSequentialAnimationGroup>
+#include "airplanerotationanimation.hpp"
 
 // Adjust given coordinates by these coordinates before printing stadium names
 const QPoint textAdjustment(25,-2);
@@ -357,6 +358,12 @@ void MapPainter::animateTrip(std::vector<std::pair<std::list<std::pair<int,int>>
         {
             for(auto trip : trips.first)
             {
+                /* Set up for plane rotation */
+                AirplaneRotationAnimation* rotation = new AirplaneRotationAnimation(m_airplane);
+                rotation->setEasingCurve(QEasingCurve::OutExpo);
+                rotation->setDuration(50);
+
+                group->addAnimation(rotation);
                 /* setting up m_airplane to animate between two stadium coordinates */
                 QPropertyAnimation* animation = new QPropertyAnimation(m_airplane, "geometry");
                 animation->setDuration(600);
