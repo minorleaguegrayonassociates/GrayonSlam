@@ -531,6 +531,9 @@ QListWidget { background-color: #303030; }</string>
      <property name="prefix">
       <string>$</string>
      </property>
+     <property name="maximum">
+      <double>1000.000000000000000</double>
+     </property>
     </widget>
     <widget class="QPushButton" name="pushButton_souvConfirmAdd">
      <property name="geometry">
@@ -620,6 +623,9 @@ QListWidget { background-color: #303030; }</string>
      </property>
      <property name="prefix">
       <string>$</string>
+     </property>
+     <property name="maximum">
+      <double>1000.000000000000000</double>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton_souvReturn">
