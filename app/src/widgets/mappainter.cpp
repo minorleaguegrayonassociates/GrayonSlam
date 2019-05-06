@@ -357,13 +357,6 @@ void MapPainter::animateTrip(std::vector<std::pair<std::list<std::pair<int,int>>
         {
             for(auto trip : trips.first)
             {
-                // Insert coordinates to calculate the planes angle
-                m_airplane->setRotation(tempCoords[trip.first].first,tempCoords[trip.first].second,
-                                        tempCoords[trip.second].first,tempCoords[trip.second].second);
-
-                // Set beacon at `to` location, stadiumTwo
-                m_beacon->setCoords(QPoint(tempCoords[trip.second].first,tempCoords[trip.second].second));
-
                 /* setting up m_airplane to animate between two stadium coordinates */
                 QPropertyAnimation* animation = new QPropertyAnimation(m_airplane, "geometry");
                 animation->setDuration(600);
@@ -376,6 +369,10 @@ void MapPainter::animateTrip(std::vector<std::pair<std::list<std::pair<int,int>>
                 group->addAnimation(animation);
             }
         }
+
+        // Set beacon last stadium location in the preview
+        m_beacon->setCoords(QPoint(tempCoords[tripEdges.back().first.back().second].first,tempCoords[tripEdges.back().first.back().second].second));
+
         group->start(QAbstractAnimation::DeleteWhenStopped);
     }
 }
@@ -396,13 +393,6 @@ void MapPainter::animateTrip(const std::pair<std::list<std::pair<int,int>>,int>&
 
     for(auto trip : tripEdges.first)
     {
-        // Insert coordinates to calculate the planes angle
-        m_airplane->setRotation(tempCoords[trip.first].first,tempCoords[trip.first].second,
-                                tempCoords[trip.second].first,tempCoords[trip.second].second);
-
-        // Set beacon at `to` location, stadiumTwo
-        m_beacon->setCoords(QPoint(tempCoords[trip.second].first,tempCoords[trip.second].second));
-
         /* setting up m_airplane to animate between two stadium coordinates */
         QPropertyAnimation* animation = new QPropertyAnimation(m_airplane, "geometry");
         animation->setDuration(600);
@@ -414,6 +404,10 @@ void MapPainter::animateTrip(const std::pair<std::list<std::pair<int,int>>,int>&
                                      m_airplane->size()));
          group->addAnimation(animation);
     }
+
+    // Set beacon last stadium location in the preview
+    m_beacon->setCoords(QPoint(tempCoords[tripEdges.first.back().second].first,tempCoords[tripEdges.first.back().second].second));
+
     group->start(QAbstractAnimation::DeleteWhenStopped);
 }
 
