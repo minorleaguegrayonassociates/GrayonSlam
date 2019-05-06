@@ -3,6 +3,7 @@
 #include "src/windows/login.hpp"
 #include "src/datastore/database.hpp"
 #include "src/views/adminview.hpp"
+#include "src/views/planvacationview.hpp"
 #include <QFontDatabase>
 #include <QMessageBox>
 #include <QDebug>
@@ -20,8 +21,9 @@ MainWindow::MainWindow()
     //Doesn't allow window resizing
     setWindowFlags(Qt::MSWindowsFixedSizeDialogHint);
 
-    /* Loading in font - "Font Awesome 5 Free" */
+    /* Loading in font - "Font Awesome 5 Free" and "IBM Plex Mono" */
     if(QFontDatabase::addApplicationFont(":/res/fontawesome-webfont.ttf") == -1){qWarning() << "FontAwesome cannot be loaded !";}
+    if(QFontDatabase::addApplicationFont(":/res/IBMPlexMono-Regular.ttf") == -1){qWarning() << "IBMPlexMono-Regular cannot be loaded !";}
 
     /* Initialize navigation bar and items */
     m_navbar = new NavBar(m_ui->NavBarWidget, 90, 220);
@@ -36,6 +38,7 @@ MainWindow::MainWindow()
 
     /* Create views */
     m_views.push_back(new AdminView(m_ui->adminView));
+    m_views.push_back(new PlanVacationView(m_ui->planVacationView, m_navbar));
     m_views.push_back(new StadiumView(m_ui->viewTeamView));
     m_views.push_back(new DashboardView(m_ui->dashboardView));
     m_views.push_back(new GraphView(m_ui->graphView));

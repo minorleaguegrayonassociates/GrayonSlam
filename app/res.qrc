@@ -19,5 +19,9 @@
         <file>res/slideshow/bitgo.png</file>
         <file>res/splash.csv</file>
         <file>res/worded_logo.png</file>
+        <file>res/receipt_top.png</file>
+        <file>res/receipt_bottom.png</file>
+        <file>res/IBMPlexMono-Regular.ttf</file>
+        <file>res/arrow.png</file>
     </qresource>
 </RCC>
