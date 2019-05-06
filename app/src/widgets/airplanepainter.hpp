@@ -10,6 +10,8 @@ public:
 
     /*Setters*/
     void setRotation(int startingX, int startingY, int endingX, int endingY);
+    void setAngle(double angle);
+    double getAngle();
 
     /* Static Variable */
     static const QSize planeSize;
