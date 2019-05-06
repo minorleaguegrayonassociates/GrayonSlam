@@ -46,7 +46,7 @@ color:black;
      </rect>
     </property>
     <property name="text">
-     <string>Distance: 10293801832 mi.</string>
+     <string/>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
