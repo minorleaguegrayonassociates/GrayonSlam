@@ -1,6 +1,7 @@
 #include "adminview.hpp"
 #include "ui_adminview.h"
 #include "src/datastore/database.hpp"
+#include "src/utils/exceptions.hpp"
 #include <QFileDialog>
 #include <QTimer>
 
@@ -314,9 +315,18 @@ void AdminView::on_pushButton_stadAddFromFile_clicked()
         return;
     }
 
-    /* Use the files to load data into the database */
-    Database::loadFromFile(stadFile.toStdString());
-    Database::loadDistancesFromFile(distFile.toStdString());
+    try
+    {
+        /* Use the files to load data into the database */
+        Database::loadFromFile(stadFile.toStdString());
+        Database::loadDistancesFromFile(distFile.toStdString());
+    }
+    catch(...)
+    {
+        GeneralException("An error has occurred when using the files provided").errorWindow();
+    }
+
+    resetUi();
 }
 
 /**
