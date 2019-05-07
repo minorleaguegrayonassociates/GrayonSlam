@@ -325,6 +325,8 @@ void AdminView::on_pushButton_stadAddFromFile_clicked()
     {
         GeneralException("An error has occurred when using the files provided").errorWindow();
     }
+
+    resetUi();
 }
 
 /**
