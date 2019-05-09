@@ -23,5 +23,6 @@
         <file>res/receipt_bottom.png</file>
         <file>res/IBMPlexMono-Regular.ttf</file>
         <file>res/arrow.png</file>
+        <file>res/airplane.wav</file>
     </qresource>
 </RCC>

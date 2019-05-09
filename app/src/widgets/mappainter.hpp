@@ -3,6 +3,7 @@
 #include "airplanepainter.hpp"
 #include "beacon.hpp"
 #include <QWidget>
+#include <QSoundEffect>
 
 class MapPainter : public QWidget
 {
@@ -46,6 +47,7 @@ private:
     QPoint m_coords;
     std::list<Database::completedEdge> m_discoveredEdgesList;
     std::vector<std::pair<std::list<std::pair<int,int>>,int>> m_discoveredEdgesVector;
+    QSoundEffect* effect;
 };
 
 

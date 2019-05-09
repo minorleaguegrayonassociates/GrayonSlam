@@ -17,13 +17,16 @@ int main(int argc, char *argv[])
     /* Copy the resource files into the filesystem */
     QFile(":/res/data-files/MLBInformation.csv").copy("MLBInformation.csv");
     QFile(":/res/data-files/DistanceBetweenStadiums.csv").copy("DistanceBetweenStadiums.csv");
+    QFile(":/res/airplane.wav").copy("airplane.wav");
     QFile(":/res/splash.csv").copy("splash.csv");
 
     /* Set permissions for the new files */
     QFile mlbInfo("MLBInformation.csv");
     QFile distance("DistanceBetweenStadiums.csv");
+    QFile airplaneWav(":/res/airplane.wav");
     mlbInfo.setPermissions(QFileDevice::Permissions(07700));
     distance.setPermissions(QFileDevice::Permissions(07700));
+    airplaneWav.setPermissions(QFileDevice::Permissions(07700));
 
     /* Load data into database */
     Database::loadFromFile("MLBInformation.csv");

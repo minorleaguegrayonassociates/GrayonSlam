@@ -26,6 +26,11 @@ MapPainter::MapPainter(QWidget* parent)
 
     /* Making an instance of Beacon that show's if the coordinates are set publicly */
     m_publicBeacon = new Beacon(this);
+
+    effect = new QSoundEffect;
+    effect->setSource(QUrl::fromLocalFile("airplane.wav"));
+    effect->setLoopCount(1);
+    effect->setVolume(.5);
 }
 
 /* Destuctor */
@@ -300,7 +305,7 @@ void MapPainter::animateTrip(int stadiumOneId, int stadiumTwoId)
 
     /* setting up m_airplane to animate between two stadium coordinates */
     QPropertyAnimation* animation = new QPropertyAnimation(m_airplane, "geometry");
-    animation->setDuration(600);
+    animation->setDuration(1000);
     animation->setStartValue(QRect(QPoint(tempCoords[stadiumOneId].first-m_airplane->size().width()/2,
                                           tempCoords[stadiumOneId].second-m_airplane->size().height()/2),
                                    m_airplane->size()));
@@ -308,6 +313,7 @@ void MapPainter::animateTrip(int stadiumOneId, int stadiumTwoId)
                                         tempCoords[stadiumTwoId].second-m_airplane->size().height()/2),
                                  m_airplane->size()));
     animation->start(QAbstractAnimation::DeleteWhenStopped);
+    effect->play();
 }
 
 /*
