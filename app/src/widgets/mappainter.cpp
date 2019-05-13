@@ -3,6 +3,7 @@
 #include <QPropertyAnimation>
 #include <QSequentialAnimationGroup>
 #include "airplanerotationanimation.hpp"
+#include "airplanesoundeffect.hpp"
 #include <cmath>
 
 // Adjust given coordinates by these coordinates before printing stadium names
@@ -361,7 +362,7 @@ void MapPainter::animateTrip(std::vector<std::pair<std::list<std::pair<int,int>>
         // Getting the coordinates of all the stadiums
         std::map<int,Database::coords> tempCoords(Database::getCoordinates());
 
-        double prevEndAngle = 0;
+        double prevEndAngle = -1;
         double endAngle = 0;
         for(auto trips : tripEdges)
         {
@@ -375,18 +376,26 @@ void MapPainter::animateTrip(std::vector<std::pair<std::list<std::pair<int,int>>
                 rotation->setDuration(50);
                 rotation->setStartValue(QVariant(prevEndAngle));
                 rotation->setEndValue(QVariant(endAngle));
-                group->addAnimation(rotation);
+                if(static_cast<int>(prevEndAngle) != -1)
+                    group->addAnimation(rotation);
+
+                airplaneSoundEffect* eff = new airplaneSoundEffect();
+                eff->setDuration(1);
+                eff->setStartValue(QVariant());
+                eff->setEndValue(QVariant());
 
                 /* setting up m_airplane to animate between two stadium coordinates */
                 QPropertyAnimation* animation = new QPropertyAnimation(m_airplane, "geometry");
-                animation->setDuration(600);
+                animation->setDuration(1000);
                 animation->setStartValue(QRect(QPoint(tempCoords[trip.first].first-m_airplane->size().width()/2,
                                                       tempCoords[trip.first].second-m_airplane->size().height()/2),
                                                m_airplane->size()));
                 animation->setEndValue(QRect(QPoint(tempCoords[trip.second].first-m_airplane->size().width()/2,
                                                     tempCoords[trip.second].second-m_airplane->size().height()/2),
                                              m_airplane->size()));
+                group->addAnimation(eff);
                 group->addAnimation(animation);
+
             }
         }
 

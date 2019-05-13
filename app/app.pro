@@ -53,7 +53,8 @@ SOURCES += \
     src/views/mapview.cpp \
     src/views/planvacationview.cpp \
     src/widgets/receiptitem.cpp \
-    src/widgets/receiptlist.cpp
+    src/widgets/receiptlist.cpp \
+    src/widgets/airplanesoundeffect.cpp
 
 HEADERS += \
     src/utils/stringfunctions.hpp \
@@ -89,7 +90,8 @@ HEADERS += \
     src/views/mapview.hpp \
     src/views/planvacationview.hpp \
     src/widgets/receiptitem.hpp \
-    src/widgets/receiptlist.hpp
+    src/widgets/receiptlist.hpp \
+    src/widgets/airplanesoundeffect.hpp
 
 FORMS += \
     src/views/dashboardview.ui \
